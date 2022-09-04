@@ -22,6 +22,9 @@ func NewLogin(l *log.Logger) *Login {
 	return &Login{l}
 }
 
+func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
+}
+
 /*
  * The ServeHTTP function will be a method of the Register struct
  * The idea with this method is that Register struct will be "inherited"

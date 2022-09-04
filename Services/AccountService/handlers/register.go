@@ -1,9 +1,12 @@
 package handlers
 
 import (
+	"crypto/rand"
+	"crypto/sha256"
 	"log"
 	"net/http"
 	"willow/accountservice/data"
+	"willow/accountservice/database"
 	"willow/accountservice/errors"
 
 	"github.com/go-playground/validator/v10"
@@ -15,15 +18,60 @@ import (
  * service
  */
 type Register struct {
-	l *log.Logger
+	l      *log.Logger
+	dbConn *database.Connection
 }
 
 /*
  * The NewRegister function will create a new object of the Register struct
  * Factory method for creating an object of Register easily
  */
-func NewRegister(l *log.Logger) *Register {
-	return &Register{l}
+func NewRegister(l *log.Logger, dbConn *database.Connection) *Register {
+	return &Register{l: l, dbConn: dbConn}
+}
+
+/*
+ * This function will insert an account into the database, it will also create the password salt and the password hash
+ * and will add them to the account structure that will be inserted. (salt will be 6 random bytes and hash-algorithm will be sha2-256)
+ * If the query to the database server fails then an error will be returned
+ * If the query succeds then nil will be returned
+ */
+func (register *Register) insertUser(regAcc *data.RegisterAccount) error {
+	//Create an object of data.Account with the fields that are required in the register
+	//The object has the Username, DisplayName, Email and Password set from the login
+
+	//Generate the salt for the password
+	salt := make([]byte, 6)
+	count, err := rand.Read(salt)
+	if count != 6 || err != nil {
+		//The salt generation failed
+		register.l.Println("Salt generation failed")
+		return err
+	}
+
+	//Concatenate the salt to the password
+	hashdata := []byte(regAcc.Password)
+	hashdata = append(hashdata, salt...)
+	hashDataLen := len(hashdata)
+
+	//Compute the sha2-256 hash of the password concatenated with the salt
+	hash := sha256.New()
+	hashResult := hash.Sum(hashdata)
+	register.l.Println("Hash computed: ", hashDataLen, hashResult)
+
+	//acc := &data.Account{Username: regAcc.Username, DisplayName: regAcc.DisplayName, Email: regAcc.Email, PasswordHash: regAcc.Password}
+	//err = data.AddAccount(acc)
+	return nil
+}
+
+/*
+ * This function will validate that the data received in the request body is a valid json
+ * If the data is valid then nil will be returned
+ * Else an error will be sent to the client and an error will be returned from the function
+ */
+func (register *Register) validateRequestData(rw http.ResponseWriter, r *http.Request) error {
+	//
+	return nil
 }
 
 /*
@@ -33,7 +81,7 @@ func NewRegister(l *log.Logger) *Register {
  * If there are no errors in the data received from the user then the account will be registered and status created will be sent to user
  * If the data received has errors then an error will be sent to the user specifing the problem with the data
  */
-func (register *Register) registerAccount(rw http.ResponseWriter, r *http.Request) {
+func (register *Register) RegisterAccount(rw http.ResponseWriter, r *http.Request) {
 	//Log that the endpoint has been reached by a user
 	register.l.Println("Endpoint /register reached (POST method)")
 
@@ -75,9 +123,20 @@ func (register *Register) registerAccount(rw http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	register.l.Println("Inserting the account into the database")
 	//User input passed the checks so the account can be registered
-	rw.WriteHeader(http.StatusCreated)
-	rw.Write([]byte("User created!"))
+	err = register.insertUser(data)
+	if err != nil {
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError := &errors.JsonError{Message: "Account registration failed"}
+		jsonError.ToJSON(rw)
+		return
+	}
+	register.l.Printf("Account has been added, username = %v", data.Username)
+
+	//Send the success message back to the client
+	rw.WriteHeader(http.StatusInternalServerError)
+	rw.Write([]byte("Account created!"))
 }
 
 /*
@@ -93,7 +152,7 @@ func (register *Register) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	//Check if the method is post, else send back to the user that the method is not allowed
 	if r.Method == http.MethodPost {
 		//Register a new account with the data specified by the user in the body of the request
-		register.registerAccount(rw, r)
+		register.RegisterAccount(rw, r)
 
 		//Return because the request has been handled
 		return
