@@ -1,17 +1,17 @@
 package main
 
 import (
-	"willow/accountservice/server"
+	"willow/gateway/server"
 )
 
 func main() {
-	err := server.InitServer(":8080")
+	err := server.InitServer(":8081")
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
 
 	err = server.RunServer()
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
 }
