@@ -14,9 +14,9 @@ import (
  * It has less data because some fields are not required during registration (Id, Password, Salt, LastOnline, Status, JoinDate)
  */
 type RegisterAccount struct {
-	Username    string `json:"username" validate:"required,username"`       //Account username (TO DO...Set a minimum and a maximum length)
-	Password    string `json:"password" validate:"required,password"`       //Account password (TO DO... Set a minimum and a maximum length (maybe casing and numbers))
-	DisplayName string `json:"displayName" validate:"required,displayname"` //Account name that will be available publicly (TO DO... Set a minimum and a maximum length)
+	Username    string `json:"username" validate:"required,username"`       //Account username
+	Password    string `json:"password" validate:"required,password"`       //Account password
+	DisplayName string `json:"displayName" validate:"required,displayname"` //Account name that will be available publicly
 	Email       string `json:"email" validate:"required,email"`             //Account email
 }
 
