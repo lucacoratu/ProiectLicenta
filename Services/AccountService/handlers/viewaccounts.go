@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"willow/accountservice/data"
-	"willow/accountservice/errors"
+	jsonerrors "willow/accountservice/errors"
 
 	"github.com/gorilla/mux"
 )
@@ -42,7 +42,7 @@ func (viewAccounts *ViewAccounts) GetAccount(rw http.ResponseWriter, r *http.Req
 
 		account := data.GetAccount(id)
 		if account == nil {
-			jsonError := &errors.JsonError{Message: "Invalid id"}
+			jsonError := &jsonerrors.JsonError{Message: "Invalid id"}
 			rw.WriteHeader(http.StatusInternalServerError)
 			jsonError.ToJSON(rw)
 			return
