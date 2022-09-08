@@ -8,6 +8,8 @@ import (
 	"os"
 	"os/signal"
 	"time"
+	handlers "willow/gateway/handlers/account"
+	"willow/gateway/logging"
 
 	"github.com/gorilla/mux"
 )
@@ -19,7 +21,8 @@ import (
  * They are initialized as nil at the start and after calling the InitServer function
  * they will hold the addresses of the coresponding objects
  */
-var serverLogger *log.Logger
+//var serverLogger *log.Logger
+var serverLogger logging.ILogger
 var server *http.Server
 
 /*
@@ -38,18 +41,22 @@ func InitServer(address string) error {
 	}
 
 	//Initialize the logger that the server will use
-	serverLogger = log.New(os.Stdout, "[*] - Gateway - ", log.LstdFlags)
-	serverLogger.Println("Logger has been initialized")
+	//serverLogger = log.New(os.Stdout, "[*] - Gateway - ", log.LstdFlags)
+	serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Gateway - ", log.LstdFlags), "[INFO]", "[WARNING]", "[ERROR]")
+	serverLogger.Info("Logger has been initialized")
 
 	//Create the handlers that will be passed to the serverMux
+	handlerRegister := handlers.NewAccountRegister(serverLogger)
+	handlerLogin := handlers.NewAccountLogin(serverLogger)
 
 	//Initialize the server serveMux which will hold the handlers to the paths handled by the service
 	//serveMux := http.NewServeMux()
 	serveMux := mux.NewRouter()
-	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
-	getRouter.HandleFunc("/{id:[0-9]+}")
 
 	//Add the handlers to the serveMux (path and callback function)
+	getRouter := serveMux.Methods(http.MethodPost).Subrouter()
+	getRouter.HandleFunc("/accounts/register", handlerRegister.RegisterAccount)
+	getRouter.HandleFunc("/accounts/login", handlerLogin.LoginIntoAccount)
 
 	/*
 	 * Intialize the http.Server object which will have some timeout times for diferent events
@@ -64,7 +71,7 @@ func InitServer(address string) error {
 	}
 
 	//Server finished initialization
-	serverLogger.Println("server has been initialized")
+	serverLogger.Info("server has been initialized")
 	return nil
 }
 
@@ -89,7 +96,7 @@ func RunServer() error {
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil {
-			serverLogger.Fatal(err.Error())
+			serverLogger.Error(err.Error())
 		}
 	}()
 
@@ -101,7 +108,7 @@ func RunServer() error {
 
 	//Wait for a signal to occur
 	sig := <-chanSig
-	serverLogger.Println("Received signal to terminate, exiting gracefully", sig)
+	serverLogger.Info("Received signal to terminate, exiting gracefully", sig)
 
 	//Let the server run for some time so it can finish with the clients then exit, if the timeout end then exit
 	tc, _ := context.WithTimeout(context.Background(), 30*time.Second)

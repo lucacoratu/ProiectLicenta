@@ -71,7 +71,7 @@ func (register *Register) insertUser(regAcc *data.RegisterAccount) error {
 
 	//Convert the salt into hex
 	saltHex := hex.EncodeToString(salt)
-	//register.l.Print(saltHex)
+	register.l.Print(saltHex)
 
 	//Create the object of the account structure that will hold the information abount the new account to be registered
 	newAcc := &data.Account{Username: regAcc.Username, DisplayName: regAcc.DisplayName, Email: regAcc.Email, PasswordHash: hashHex, Salt: saltHex}
@@ -170,27 +170,4 @@ func (register *Register) RegisterAccount(rw http.ResponseWriter, r *http.Reques
 	//Send the success message back to the client
 	rw.WriteHeader(http.StatusOK)
 	rw.Write([]byte("Account created!"))
-}
-
-/*
- * The ServeHTTP function will be a method of the Register struct
- * The idea with this method is that Register struct will be "inherited"
- * from the Http.Handler interface so now this Request struct can be used
- * as a handler for the http server (making a custom handler that holds data)
- * so the functionality of the handler can be extended
- */
-func (register *Register) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	//Here will be the code for what the server will do if the path is /register
-
-	//Check if the method is post, else send back to the user that the method is not allowed
-	if r.Method == http.MethodPost {
-		//Register a new account with the data specified by the user in the body of the request
-		register.RegisterAccount(rw, r)
-
-		//Return because the request has been handled
-		return
-	}
-
-	//If the method is not POST the return method not allowed
-	rw.WriteHeader(http.StatusMethodNotAllowed)
 }
