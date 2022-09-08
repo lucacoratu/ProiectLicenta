@@ -52,13 +52,10 @@ func InitServer(address string) error {
 
 	//Create the handlers that the server will have (paths and functions to where the server will respond)
 	//Create the /login handler
-	handlerLogin := handlers.NewLogin(serverLogger)
+	handlerLogin := handlers.NewLogin(serverLogger, serverDbConn)
 
 	//Create the /register handler and add the database handle to the struct
 	handlerRegister := handlers.NewRegister(serverLogger, serverDbConn)
-
-	//Create the /viewaccounts handler
-	handlerViewAccounts := handlers.NewViewAccounts(serverLogger)
 
 	//Create the serve mux where the handlers will be assigned so can then be used by the http.Server object
 	//serveMuxServer := http.NewServeMux()
@@ -68,10 +65,6 @@ func InitServer(address string) error {
 	postRouter := serveMuxServer.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/login", handlerLogin.LoginAccount)
 	postRouter.HandleFunc("/register", handlerRegister.RegisterAccount)
-
-	getRounter := serveMuxServer.Methods(http.MethodGet).Subrouter()
-	getRounter.HandleFunc("/viewaccounts", handlerViewAccounts.GetAccounts)
-	getRounter.HandleFunc("/viewaccounts/{id:[0-9]+}", handlerViewAccounts.GetAccount)
 
 	//Log that the handlers have been added
 	serverLogger.Println("Handlers added to the serve mux of the server")

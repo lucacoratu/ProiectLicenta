@@ -191,7 +191,7 @@ func (conn *Connection) InsertAccount(acc *data.Account) error {
 	//Prepare the query that will be executed with the values from the acc structure
 	stmtInsert, err := conn.db.Prepare("INSERT INTO accounts (Username, DisplayName, Email, PasswordHash, Salt) VALUES (?, ?, ?, ?, ?)")
 	if err != nil {
-		conn.l.Println("Error occured when preparing the insert account query")
+		conn.l.Println("Error occured when preparing the insert account query", err.Error())
 		return err
 	}
 	//Close the statment at the end of the function
@@ -200,9 +200,95 @@ func (conn *Connection) InsertAccount(acc *data.Account) error {
 	//Execute the query with the data in the structure
 	_, err = stmtInsert.Exec(acc.Username, acc.DisplayName, acc.Email, acc.PasswordHash, acc.Salt)
 	if err != nil {
-		conn.l.Println("Error occured when executing the insert account query")
+		conn.l.Println("Error occured when executing the insert account query", err.Error())
 		return err
 	}
 
 	return nil
+}
+
+/*
+ * This function will get the salt the user with the username specified in the parameter
+ * If an error occurs during the retrieving of the salt it will be returned and the salt stirng will be empty
+ * If no errors occur the the erorr will be nil and the salt will be returned
+ */
+func (conn *Connection) GetSalt(username string) (string, error) {
+	//Prepare the select statement for extracting the salt
+	stmtSalt, err := conn.db.Prepare("SELECT salt FROM accounts where Username = ?")
+	if err != nil {
+		//An error occured when preparing the statement for salt selection
+		conn.l.Println("Error occured during select for salt ", err.Error())
+		return "", err
+	}
+	//Close the statment for salt when the function finishes
+	defer stmtSalt.Close()
+
+	//Execute the query for selecting the salt with the username
+	row := stmtSalt.QueryRow(username)
+	if row.Err() != nil {
+		//An error occured during the select statement
+		conn.l.Println("Error occured during select for salt ", err.Error())
+		return "", row.Err()
+	}
+
+	//Extract the salt
+	var salt string
+	err = row.Scan(&salt)
+	if err != nil && err == sql.ErrNoRows {
+		//The salt could not be retrieved which means the username does not exist
+		return "", errors.New("invalid credentials")
+	}
+	if err != nil {
+		//Another error occured
+		conn.l.Println("Error occured when executing the select for salt ", row.Err().Error())
+		return "", err
+	}
+
+	//The salt can be extract so return it
+	return salt, nil
+}
+
+/*
+ * This function will check if the username and password specified by the user
+ * can be found in the database. If they are found it means that the user logged in succesfully
+ * If they cannot be found then the credentials are invalid
+ * The function will return an account if the login was successful
+ * Else it will return nil and an error
+ */
+func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (*data.Account, error) {
+	//Prepare the statement that will check if the credentials are correct
+	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.Username, accounts.DisplayName, accounts.Email, accounts.JoinDate, accounts.LastOnline, accountstatus.Status FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.Username = ? and accounts.PasswordHash = ?")
+	if err != nil {
+		//An error occured during the preparation of the select query
+		conn.l.Println("Error occured when preparing select for login ", err.Error())
+		return nil, err
+	}
+	//Close the statement after the function finishes
+	defer stmtSelect.Close()
+
+	//Execute the select statment
+	res := stmtSelect.QueryRow(username, passwordHash)
+	//Check if an error occured during the select statment
+	if res.Err() != nil {
+		//An error occured during the select statment
+		conn.l.Println("Error occured when executing select for login ", res.Err().Error())
+		return nil, res.Err()
+	}
+
+	//The select statement was successful, now retieve the data
+	acc := &data.Account{}
+	err = res.Scan(&acc.ID, &acc.Username, &acc.DisplayName, &acc.Email, &acc.JoinDate, &acc.LastOnline, &acc.Status)
+	//Check if an error occured during data retrieve
+	if err != nil && err == sql.ErrNoRows {
+		//An error occured but it is sql.ErrNoRows which means that the login failed (invalid credentials)
+		return nil, errors.New("invalid credentials")
+	}
+	if err != nil {
+		//Another error occured
+		conn.l.Println("Error occured when fetching data for login ", err.Error())
+		return nil, err
+	}
+
+	//The user logged in successfully
+	return acc, nil
 }
