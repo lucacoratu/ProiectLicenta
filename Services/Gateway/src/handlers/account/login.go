@@ -31,7 +31,7 @@ func (login *AccountLogin) LoginIntoAccount(rw http.ResponseWriter, r *http.Requ
 	login.logger.Debug("Sending data to Account Service")
 
 	//Forward the request to the Account Service /login
-	response, err := http.Post("http://localhost:8080/login", "application/json", r.Body)
+	response, err := http.Post("http://localhost:8081/login", "application/json", r.Body)
 	//Check if there was an error during the POST request
 	if err != nil {
 		//There was an error in the request so notify the client about it
@@ -50,8 +50,21 @@ func (login *AccountLogin) LoginIntoAccount(rw http.ResponseWriter, r *http.Requ
 		rw.Write([]byte("Bad request"))
 	}
 
-	//The Account Service responsed, so forward the response to the client
+	//The Account Service responded, so forward the response to the client
 	login.logger.Info("Received response from Account Service")
+
+	//Delete the list of headers
+	for k := range rw.Header() {
+		delete(rw.Header(), k)
+	}
+
+	//Add the headers received from the Account Service
+	for key, value := range response.Header {
+		rw.Header().Add(key, value[0])
+		login.logger.Debug(key, value)
+	}
+
+	//Send data to client
 	rw.WriteHeader(response.StatusCode)
 	rw.Write(respBody)
 }

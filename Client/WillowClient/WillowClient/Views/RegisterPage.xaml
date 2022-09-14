@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:Class="WillowClient.Views.RegisterPage"
+             x:DataType="viewmodel:RegisterViewModel"
+             BackgroundColor="#303030"
+             Shell.NavBarIsVisible="False">
+
+    <VerticalStackLayout>
+        <Grid ColumnDefinitions="20,*,*,*,20" RowDefinitions="40,*,*,*,20" BackgroundColor="#484848" IsVisible="False" IsEnabled="False">
+            <Border 
+                Grid.Column="1" 
+                Grid.ColumnSpan="3" 
+                Grid.Row="1" 
+                Grid.RowSpan="3" 
+                BackgroundColor="#303030" 
+                Padding="10"
+                Stroke="#7B68EE"
+                StrokeShape="RoundRectangle 40,0,0,40"
+                MaximumWidthRequest="500"
+                MaximumHeightRequest="650"
+                StrokeThickness="4"
+                >
+                <VerticalStackLayout Padding="10,0,0,0" Spacing="10">
+                    <Image WidthRequest="96" HeightRequest="96" Source="register.png"/>
+                    <VerticalStackLayout Spacing="3">
+                        <HorizontalStackLayout>
+                            <Image WidthRequest="32" HeightRequest="32" Aspect="Fill" Source="login_username.png"></Image>
+                            <Label Text="Username" VerticalOptions="Center" FontSize="16"></Label>
+                        </HorizontalStackLayout>
+                        <Entry Placeholder="Enter username" TextColor="WhiteSmoke" Text="{Binding Username}" ClearButtonVisibility="WhileEditing"></Entry>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="5">
+                        <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                            <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
+                            <Label Text="Password" VerticalOptions="Center" FontSize="16"></Label>
+                        </HorizontalStackLayout>
+                        <Entry Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" ClearButtonVisibility="WhileEditing"></Entry>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="5">
+                        <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                            <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
+                            <Label Text="Confirm password" VerticalOptions="Center" FontSize="16" ></Label>
+                        </HorizontalStackLayout>
+                        <Entry Placeholder="Confirm password" IsPassword="True" Text="{Binding ConfirmPassword}" ClearButtonVisibility="WhileEditing"></Entry>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="3">
+                        <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                            <Image WidthRequest="24" HeightRequest="24" Aspect="Fill" Source="register_email.png"></Image>
+                            <Label Text="Email" VerticalOptions="Center" FontSize="16"></Label>
+                        </HorizontalStackLayout>
+                        <Entry Placeholder="Enter email" TextColor="WhiteSmoke" Text="{Binding Email}" ClearButtonVisibility="WhileEditing"></Entry>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="3">
+                        <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                            <Image WidthRequest="24" HeightRequest="24" Aspect="Fill" Source="register_display_name.png"></Image>
+                            <Label Text="Display name" VerticalOptions="Center" FontSize="16"></Label>
+                        </HorizontalStackLayout>
+                        <Entry Placeholder="Enter name" TextColor="WhiteSmoke" Text="{Binding DisplayName}" ClearButtonVisibility="WhileEditing"></Entry>
+                    </VerticalStackLayout>
+                    <Button Margin="0,10,0,0" Text="Register" BackgroundColor="#7B68EE" TextColor="WhiteSmoke" Command="{Binding RegisterCommand}"></Button>
+                    <Label Text="{Binding Error}" TextColor="OrangeRed" HorizontalTextAlignment="Center"></Label>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+        <VerticalStackLayout Padding="50" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="500">
+            <Image WidthRequest="96" HeightRequest="96" Source="register.png"/>
+            <VerticalStackLayout Spacing="3">
+                <HorizontalStackLayout>
+                    <Image WidthRequest="32" HeightRequest="32" Aspect="Fill" Source="login_username.png"></Image>
+                    <Label Text="Username" VerticalOptions="Center" FontSize="16"></Label>
+                </HorizontalStackLayout>
+                <Entry Placeholder="Enter username" TextColor="WhiteSmoke" Text="{Binding Username}" ClearButtonVisibility="WhileEditing"></Entry>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="5">
+                <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                    <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
+                    <Label Text="Password" VerticalOptions="Center" FontSize="16"></Label>
+                </HorizontalStackLayout>
+                <Entry Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" ClearButtonVisibility="WhileEditing"></Entry>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="5">
+                <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                    <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
+                    <Label Text="Confirm password" VerticalOptions="Center" FontSize="16" ></Label>
+                </HorizontalStackLayout>
+                <Entry Placeholder="Confirm password" IsPassword="True" Text="{Binding ConfirmPassword}" ClearButtonVisibility="WhileEditing"></Entry>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="3">
+                <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                    <Image WidthRequest="24" HeightRequest="24" Aspect="Fill" Source="register_email.png"></Image>
+                    <Label Text="Email" VerticalOptions="Center" FontSize="16"></Label>
+                </HorizontalStackLayout>
+                <Entry Placeholder="Enter email" TextColor="WhiteSmoke" Text="{Binding Email}" ClearButtonVisibility="WhileEditing"></Entry>
+            </VerticalStackLayout>
+            <VerticalStackLayout Spacing="3">
+                <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
+                    <Image WidthRequest="24" HeightRequest="24" Aspect="Fill" Source="register_display_name.png"></Image>
+                    <Label Text="Display name" VerticalOptions="Center" FontSize="16"></Label>
+                </HorizontalStackLayout>
+                <Entry Placeholder="Enter name" TextColor="WhiteSmoke" Text="{Binding DisplayName}" ClearButtonVisibility="WhileEditing"></Entry>
+            </VerticalStackLayout>
+            <Button Margin="0,10,0,0" Text="Register" BackgroundColor="#7B68EE" TextColor="WhiteSmoke" Command="{Binding RegisterCommand}"></Button>
+            <Label Text="{Binding Error}" TextColor="OrangeRed" HorizontalTextAlignment="Center"></Label>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

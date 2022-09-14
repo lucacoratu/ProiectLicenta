@@ -8,6 +8,7 @@ import (
 	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
+	"willow/accountservice/jwt"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -110,9 +111,20 @@ func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	//Generate the JWT token for the session of the client
+	token, err := jwt.GenerateJWT(uint64(acc.ID), acc.DisplayName, acc.Email)
+	if err != nil {
+		login.l.Println("JWT Token generation failed!")
+		jsonErr := jsonerrors.JsonError{Message: "Something happened"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonErr.ToJSON(rw)
+		return
+	}
+
+	login.l.Println("Token:", token)
 
 	//The login succeded so return the account data to the client
 	login.l.Println("Login succeded, username", acc.Username)
+	rw.Header().Add("Set-Cookie", "session="+token)
 	rw.WriteHeader(http.StatusOK)
 	acc.ToJSON(rw)
 }

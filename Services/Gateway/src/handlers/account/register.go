@@ -32,7 +32,7 @@ func (reg *AccountRegister) RegisterAccount(rw http.ResponseWriter, r *http.Requ
 	reg.logger.Debug("Sending data to Account Service")
 
 	//Forward the request to the Account Service /register
-	response, err := http.Post("http://localhost:8080/register", "application/json", r.Body)
+	response, err := http.Post("http://localhost:8081/register", "application/json", r.Body)
 	//Check if there was an error in the POST request
 	if err != nil {
 		//There was an error so notify the client

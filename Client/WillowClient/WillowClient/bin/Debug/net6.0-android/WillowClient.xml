@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WillowClient</name>
+    </assembly>
+    <members>
+        <member name="P:WillowClient.ViewModel.BaseViewModel.IsBusy">
+            <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.isBusy"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.BaseViewModel.Error">
+            <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.error"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.Username">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.username"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.Password">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.password"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.Session">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.session"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Username">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.username"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Password">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.password"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.ConfirmPassword">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.confirmPassword"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Email">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.email"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.DisplayName">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.displayName"/>
+        </member>
+    </members>
+</doc>
