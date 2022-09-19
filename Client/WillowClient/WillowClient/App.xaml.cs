@@ -8,8 +8,8 @@ namespace WillowClient;
 
 public partial class App : Application
 {
-    const int WindowWidth = 500;
-    const int WindowHeight = 700;
+    const int WindowWidth = 1000;
+    const int WindowHeight = 800;
     public App()
 	{
 		InitializeComponent();

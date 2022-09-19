@@ -5,10 +5,91 @@
              x:Class="WillowClient.App">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <!--<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>-->
+            <!--Dark mode colors-->
+            <Color x:Key="PageDarkBackgroundColor">#303030</Color>
+            <Color x:Key="TextDarkColor">WhiteSmoke</Color>
+            <Color x:Key="AccentDarkColor">#7B68EE</Color>
+            <Color x:Key="ErrorDarkColor">OrangeRed</Color>
+            <Color x:Key="ButtonDarkBorderColor">#3e2f94</Color>
+            <Color x:Key="ButtonDarkHoverColor">#362791</Color>
+            <Color x:Key="ButtonDarkPressedColor">#3e2f94</Color>
+
+            <!--Light mode colors-->
+            <Color x:Key="PageLightBackgroundColor">WhiteSmoke</Color>
+            <Color x:Key="TextLightColor">Black</Color>
+            <Color x:Key="AccentLightColor">#7B68EE</Color>
+            <Color x:Key="ErrorLightColor">OrangeRed</Color>
+            <Color x:Key="ButtonLightBorderColor">#3e2f94</Color>
+            <Color x:Key="ButtonLightHoverColor">#362791</Color>
+            <Color x:Key="ButtonLightPressedColor">#3e2f94</Color>
+
+            <!--Button border width-->
+            <x:Double x:Key="ButtonBorderWidth">1.5</x:Double>
+            
+            <!--Font-->
+            <x:Double x:Key="ButtonFontSize">14</x:Double>
+            <x:Double x:Key="ApplicationFontSize">12</x:Double>
+
+            <!--Button style-->
+            <Style x:Key="WillowButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentLightColor}, Dark={StaticResource AccentDarkColor}}"></Setter>
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource ButtonLightBorderColor}, Dark={StaticResource ButtonDarkBorderColor}}"/>
+                <Setter Property="BorderWidth" Value="{StaticResource ButtonBorderWidth}"/>
+                <Setter Property="FontSize" Value="{StaticResource ButtonFontSize}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextLightColor}, Dark={StaticResource TextDarkColor}}"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentLightColor}, Dark={StaticResource AccentDarkColor}}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource ButtonLightPressedColor}, Dark={StaticResource ButtonDarkPressedColor}}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            
+            <!--Label style-->
+            <Style x:Key="WillowLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextLightColor}, Dark={StaticResource TextDarkColor}}"/>
+                <Setter Property="FontSize" Value="{StaticResource ApplicationFontSize}"/>
+            </Style>
+
+            <Style x:Key="WillowMediumLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextLightColor}, Dark={StaticResource TextDarkColor}}"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+            
+            <!--Link label style-->
+            <Style x:Key="WillowLinkLabelStyle" TargetType="Label">
+                <Setter Property="TextDecorations" Value="Underline"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentLightColor}, Dark={StaticResource AccentDarkColor}}"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="16"/>
+            </Style>
+            
+            <!--Error Label style-->
+            <Style x:Key="WillowErrorLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource ErrorLightColor}, Dark={StaticResource ErrorDarkColor}}"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            </Style>
+            
+            <!--Entry style-->
+            <!--<Style x:Key="WillowEntryStyle" TargetType="Entry">
+            </Style>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

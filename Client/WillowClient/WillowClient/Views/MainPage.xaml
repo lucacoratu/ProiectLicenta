@@ -2,9 +2,94 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WillowClient.Views.MainPage"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
              Shell.NavBarIsVisible="False"
-             Shell.PresentationMode="ModalAnimated">
-    <Grid BackgroundColor="#484848">
-        
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="#303030">
+
+    <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="*,*,*">
+        <Grid x:Name="MenuGrid" IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" RowDefinitions="*,Auto" Grid.Column="2">
+            <!--Friends list-->
+            <VerticalStackLayout HorizontalOptions="End" Grid.Row="0">
+                <ImageButton Source="x_sign.png" WidthRequest="30" HeightRequest="30" Clicked="CloseMenu" HorizontalOptions="End"></ImageButton>
+                <CollectionView Margin="0,0,20,0">
+                    <CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type model:FriendModel}">
+                            <model:FriendModel 
+                                ProfilePicture="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                DisplayName="LucaCoratu"
+                                Status="Online"
+                                />
+                            <model:FriendModel 
+                                ProfilePicture="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/capuchin.jpg"
+                                DisplayName="Ionut"
+                                Status="Online"
+                                />
+                            <model:FriendModel 
+                                ProfilePicture="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
+                                DisplayName="AndreiAndreiAndrei"
+                                Status="1"
+                                />
+                        </x:Array>
+                    </CollectionView.ItemsSource>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:FriendModel">
+                            <HorizontalStackLayout Padding="10" Spacing="6">
+                                <ImageButton
+                                    Aspect="Center"
+                                    HeightRequest="50"
+                                    Source="{Binding ProfilePicture}"
+                                    WidthRequest="50"
+                                    BorderWidth="1.3"
+                                    BorderColor="WhiteSmoke"
+                                    CornerRadius="32"
+                                    />
+                                <VerticalStackLayout Spacing="13">
+                                    <Label VerticalOptions="Center" TextColor="Gray">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} | {1}">
+                                                <Binding Path="DisplayName" />
+                                                <Binding Path="Status" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10,10,10,10"/>
+                                        </Border.StrokeShape>
+                                    </Border>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+            <!--Profile preview-->
+            <VerticalStackLayout Grid.Row="1" HeightRequest="70" HorizontalOptions="End" Padding="0,0,20,0">
+                <HorizontalStackLayout >
+                    <Image Source="default_profile_icon.png" WidthRequest="50" HeightRequest="50" Aspect="AspectFill"></Image>
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer>
+                                
+                            </TapGestureRecognizer>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Label Text="{Binding Account.DisplayName}" TextColor="WhiteSmoke"></Label>
+                        <Label Text="{Binding HexID}" TextColor="WhiteSmoke"></Label>
+                    </VerticalStackLayout>
+                    <ImageButton Source="settings_icon.png" WidthRequest="30" HeightRequest="30" Aspect="AspectFill"></ImageButton>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+        <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="0" Grid.ColumnSpan="3">
+            <ImageButton WidthRequest="30" HeightRequest="30" Source="open_menu.png" HorizontalOptions="End" VerticalOptions="Start">
+                <ImageButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="MenuClicked"/>
+                </ImageButton.GestureRecognizers>
+            </ImageButton>
+        </Grid>
     </Grid>
 </ContentPage>

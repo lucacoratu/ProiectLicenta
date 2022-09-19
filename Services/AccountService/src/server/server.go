@@ -57,6 +57,12 @@ func InitServer(address string) error {
 	//Create the /register handler and add the database handle to the struct
 	handlerRegister := handlers.NewRegister(serverLogger, serverDbConn)
 
+	//Create the /profile handler and add the database handle to the struct
+	handlerProfile := handlers.NewProfile(serverLogger, serverDbConn)
+
+	//Create the authentication middleware
+	handlerAuth := handlers.NewAuthentication(serverLogger, serverDbConn)
+
 	//Create the serve mux where the handlers will be assigned so can then be used by the http.Server object
 	//serveMuxServer := http.NewServeMux()
 	serveMuxServer := mux.NewRouter()
@@ -65,6 +71,16 @@ func InitServer(address string) error {
 	postRouter := serveMuxServer.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/login", handlerLogin.LoginAccount)
 	postRouter.HandleFunc("/register", handlerRegister.RegisterAccount)
+
+	//Create the subrouter for the GET method which will use the Authentication middleware
+	getRouter := serveMuxServer.Methods(http.MethodGet).Subrouter()
+	getRouter.HandleFunc("/profile", handlerProfile.ViewProfile)
+	getRouter.Use(handlerAuth.ValidateSessionCookie)
+
+	//Create the subrouter for the PUT method which will use the Authentication middleware and will handle updates on the account data
+	putRouter := serveMuxServer.Methods(http.MethodPut).Subrouter()
+	putRouter.HandleFunc("/status", handlerProfile.UpdateStatus)
+	putRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Log that the handlers have been added
 	serverLogger.Println("Handlers added to the serve mux of the server")

@@ -7,8 +7,6 @@
     xmlns:view="clr-namespace:WillowClient.Views"
     Shell.FlyoutBehavior="Disabled"
     TabBarBackgroundColor="#483D8B"
-    WidthRequest="700"
-    HeightRequest="700"
     >
     
     <ShellContent

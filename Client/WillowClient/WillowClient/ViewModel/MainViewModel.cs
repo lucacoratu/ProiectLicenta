@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ using WillowClient.Model;
 
 namespace WillowClient.ViewModel
 {
+    [QueryProperty(nameof(Account), "account")]
+    [QueryProperty(nameof(HexID), "hexID")]
     public partial class MainViewModel : BaseViewModel
     {
         [ObservableProperty]
@@ -16,9 +19,13 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private string session;
 
+        [ObservableProperty]
+        private string hexID;
+
         public MainViewModel()
         {
 
         }
+
     }
 }

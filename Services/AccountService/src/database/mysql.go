@@ -292,3 +292,74 @@ func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (
 	//The user logged in successfully
 	return acc, nil
 }
+
+/*
+ * This function will validate if the jwt data represents and account from the database
+ * It will check that the ID, Email and DisplayName can be found on an account
+ * If there is no such account return an error, else return nil
+ */
+
+func (conn *Connection) ValidateJWTPayload(ID int, DisplayName string) error {
+	//Prepare the query that will be executed
+	sqlStmt, err := conn.db.Prepare("SELECT Username FROM accounts WHERE ID = ? AND DisplayName = ?")
+	if err != nil {
+		conn.l.Println("Error occured when preparing select for jwt validation", err.Error())
+		return err
+	}
+	defer sqlStmt.Close()
+
+	res := sqlStmt.QueryRow(ID, DisplayName)
+	if res.Err() != nil {
+		//An error occured during the select statement
+		conn.l.Println("Error occured when executing select for jwt validation ", res.Err().Error())
+		return res.Err()
+	}
+
+	//Check if any rows are returned from the statement using scan
+	var selUsername string
+	err = res.Scan(&selUsername)
+	if err != nil && err != sql.ErrNoRows {
+		//Another error than the one we are looking for occured
+		conn.l.Print("Error occured when fetching the rows in the jwt validation select ", err.Error())
+		return err
+	}
+
+	if selUsername == "" {
+		return errors.New("account does not exist")
+	}
+
+	return nil
+}
+
+/*
+ * This function will update the status of the account with the new status specified
+ * If there are no errors and the status has been update then nil will be returned
+ * Else an error will be returned
+ */
+func (conn *Connection) UpdateStatus(ID int, DisplayName string, status string) error {
+	//Prepare the update query
+	updStmt, err := conn.db.Prepare("UPDATE accounts SET Status = (SELECT ID FROM accountstatus WHERE Status = ?) WHERE ID = ? AND DisplayName = ?")
+	if err != nil {
+		conn.l.Println("Error occured during the preparation of the update status query", err.Error())
+		return err
+	}
+
+	res, err := updStmt.Exec(status, ID, DisplayName)
+	if err != nil {
+		conn.l.Println("Error occured during execution of update status query", err.Error())
+		return err
+	}
+
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		conn.l.Println("Error occured during fetching the number of rows affected of update status query", err.Error())
+		return err
+	}
+
+	if rowsAffected != 1 {
+		conn.l.Println("Number of rows affected during status update is not 1")
+		return errors.New("number of rows affected during status update is not 1")
+	}
+
+	return nil
+}

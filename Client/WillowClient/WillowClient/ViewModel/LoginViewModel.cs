@@ -123,9 +123,18 @@ public partial class LoginViewModel : BaseViewModel
 
                 string session = this.m_LoginService.GetSessionCookie();
                 Error = session;
+                string idHex = accountModel.Id.ToString("X");
+                int lenPadding = 6 - idHex.Length;
+                string hexID = "#";
+                for(int i =0; i < lenPadding; i++)
+                {
+                    hexID += "0";
+                }
+                hexID += idHex;
                 await Shell.Current.GoToAsync(nameof(MainPage), true, new Dictionary<string, object>
                 {
-                    {"account", accountModel }
+                    {"account", accountModel },
+                    {"hexID", hexID}
                 });
             }
         }

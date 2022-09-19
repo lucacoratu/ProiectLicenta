@@ -18,7 +18,6 @@ var jwtKey = []byte("accountsupersecretjwtkey")
 type JWTClaim struct {
 	ID          uint64 `json:"id"`
 	DisplayName string `json:"displayName"`
-	Email       string `json:"email"`
 	jwt.StandardClaims
 }
 
@@ -27,14 +26,13 @@ type JWTClaim struct {
  * If an error occurs during the JWT generation then this function will return an error
  * Else the function will return nil for error
  */
-func GenerateJWT(id uint64, displayName string, email string) (string, error) {
+func GenerateJWT(id uint64, displayName string) (string, error) {
 	//Set the expiration time to be in an hour from the time of generation
 	expirationTime := time.Now().Add(time.Hour * 1).Unix()
 	//Create the data of the JWT
 	claims := &JWTClaim{
 		ID:          id,
 		DisplayName: displayName,
-		Email:       email,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime,
 		},
@@ -48,7 +46,7 @@ func GenerateJWT(id uint64, displayName string, email string) (string, error) {
 /*
  * This function will validate the JWT token
  */
-func ValidateJWT(signedToken string) error {
+func ValidateJWT(signedToken string) (*JWTClaim, error) {
 	//Try to parse the token received (general format)
 	token, err := jwt.ParseWithClaims(
 		signedToken,
@@ -60,7 +58,7 @@ func ValidateJWT(signedToken string) error {
 	//Check if an erorr occured during parsing
 	if err != nil {
 		//An error occured (invalid format of the JWT)
-		return err
+		return nil, err
 	}
 
 	//Try to convert the data in the JWT to the JWTClaim structure
@@ -68,15 +66,41 @@ func ValidateJWT(signedToken string) error {
 	//Check if the convertion was ok
 	if !ok {
 		//The conversion was no ok
-		return errors.New("couldn't parse the claims")
+		return nil, errors.New("couldn't parse the claims")
 	}
 
 	//Check if the token is still valid
 	if claims.ExpiresAt < time.Now().Local().Unix() {
 		//The token expired
-		return errors.New("token expired")
+		return nil, errors.New("token expired")
 	}
 
 	//The token is valid
-	return nil
+	return claims, nil
+}
+
+func ExtractClaims(signedToken string) (*JWTClaim, error) {
+	//Try to parse the token received (general format)
+	token, err := jwt.ParseWithClaims(
+		signedToken,
+		&JWTClaim{},
+		func(t *jwt.Token) (interface{}, error) {
+			return []byte(jwtKey), nil
+		},
+	)
+	//Check if an erorr occured during parsing
+	if err != nil {
+		//An error occured (invalid format of the JWT)
+		return nil, err
+	}
+
+	//Try to convert the data in the JWT to the JWTClaim structure
+	claims, ok := token.Claims.(*JWTClaim)
+	//Check if the convertion was ok
+	if !ok {
+		//The conversion was no ok
+		return nil, errors.New("couldn't parse the claims")
+	}
+
+	return claims, nil
 }

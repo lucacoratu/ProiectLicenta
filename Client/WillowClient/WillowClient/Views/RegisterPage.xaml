@@ -18,7 +18,7 @@
                 Padding="10"
                 Stroke="#7B68EE"
                 StrokeShape="RoundRectangle 40,0,0,40"
-                MaximumWidthRequest="500"
+                MaximumWidthRequest="600"
                 MaximumHeightRequest="650"
                 StrokeThickness="4"
                 >
@@ -64,45 +64,45 @@
                 </VerticalStackLayout>
             </Border>
         </Grid>
-        <VerticalStackLayout Padding="50" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="500">
+        <VerticalStackLayout Padding="40" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="600">
             <Image WidthRequest="96" HeightRequest="96" Source="register.png"/>
             <VerticalStackLayout Spacing="3">
                 <HorizontalStackLayout>
                     <Image WidthRequest="32" HeightRequest="32" Aspect="Fill" Source="login_username.png"></Image>
-                    <Label Text="Username" VerticalOptions="Center" FontSize="16"></Label>
+                    <Label Text="Username" Style="{StaticResource WillowMediumLabelStyle}"></Label>
                 </HorizontalStackLayout>
                 <Entry Placeholder="Enter username" TextColor="WhiteSmoke" Text="{Binding Username}" ClearButtonVisibility="WhileEditing"></Entry>
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="5">
                 <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
                     <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
-                    <Label Text="Password" VerticalOptions="Center" FontSize="16"></Label>
+                    <Label Text="Password" Style="{StaticResource WillowMediumLabelStyle}"></Label>
                 </HorizontalStackLayout>
                 <Entry Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" ClearButtonVisibility="WhileEditing"></Entry>
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="5">
                 <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
                     <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
-                    <Label Text="Confirm password" VerticalOptions="Center" FontSize="16" ></Label>
+                    <Label Text="Confirm password" Style="{StaticResource WillowMediumLabelStyle}" ></Label>
                 </HorizontalStackLayout>
                 <Entry Placeholder="Confirm password" IsPassword="True" Text="{Binding ConfirmPassword}" ClearButtonVisibility="WhileEditing"></Entry>
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="3">
                 <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
                     <Image WidthRequest="24" HeightRequest="24" Aspect="Fill" Source="register_email.png"></Image>
-                    <Label Text="Email" VerticalOptions="Center" FontSize="16"></Label>
+                    <Label Text="Email" Style="{StaticResource WillowMediumLabelStyle}"></Label>
                 </HorizontalStackLayout>
                 <Entry Placeholder="Enter email" TextColor="WhiteSmoke" Text="{Binding Email}" ClearButtonVisibility="WhileEditing"></Entry>
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="3">
                 <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
                     <Image WidthRequest="24" HeightRequest="24" Aspect="Fill" Source="register_display_name.png"></Image>
-                    <Label Text="Display name" VerticalOptions="Center" FontSize="16"></Label>
+                    <Label Text="Display name" Style="{StaticResource WillowMediumLabelStyle}"></Label>
                 </HorizontalStackLayout>
                 <Entry Placeholder="Enter name" TextColor="WhiteSmoke" Text="{Binding DisplayName}" ClearButtonVisibility="WhileEditing"></Entry>
             </VerticalStackLayout>
-            <Button Margin="0,10,0,0" Text="Register" BackgroundColor="#7B68EE" TextColor="WhiteSmoke" Command="{Binding RegisterCommand}"></Button>
-            <Label Text="{Binding Error}" TextColor="OrangeRed" HorizontalTextAlignment="Center"></Label>
+            <Button Margin="0,10,0,0" Text="Register" Style="{StaticResource WillowButtonStyle}" Command="{Binding RegisterCommand}"></Button>
+            <Label Text="{Binding Error}" Style="{StaticResource WillowErrorLabelStyle}"></Label>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

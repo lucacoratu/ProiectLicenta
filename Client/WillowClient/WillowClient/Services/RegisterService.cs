@@ -19,7 +19,7 @@ namespace WillowClient.Services
 
         public async Task<string> RegisterAccount(RegisterModel model)
         {
-            var url = "http://localhost:8080/accounts/register";
+            var url = Constants.serverURL + "/accounts/register";
             var result = await this.m_HttpClient.PostAsync(url, JsonContent.Create(model));
             return await result.Content.ReadAsStringAsync();
         }

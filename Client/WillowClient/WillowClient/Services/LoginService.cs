@@ -26,14 +26,14 @@ public class LoginService
 
     public async Task<string> LoginIntoAccount(LoginModel loginData)
     {
-        var url = "http://localhost:8080/accounts/login";
+        var url = Constants.serverURL + "/accounts/login";
         var response = await this.m_httpClient.PostAsync(url, JsonContent.Create(loginData));
         return await response.Content.ReadAsStringAsync();
     }
 
     public string GetSessionCookie()
     {
-        Uri uri = new Uri("http://localhost:8080/accounts/login");
+        Uri uri = new Uri(Constants.serverURL + "/accounts/login");
         IEnumerable<Cookie> responseCookies = this.m_cookieContainer.GetCookies(uri).Cast<Cookie>();
         foreach (Cookie cookie in responseCookies)
             if(cookie.Name == "session")

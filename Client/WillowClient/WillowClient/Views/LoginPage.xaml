@@ -4,7 +4,7 @@
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
              x:Class="WillowClient.Views.LoginPage"
              x:DataType="viewmodel:LoginViewModel"
-             BackgroundColor="#303030"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              >
     <VerticalStackLayout>
         <Grid x:Name="WindowsGrid" ColumnDefinitions="10,*,*,*,10" RowDefinitions="40,*,*,*,40" BackgroundColor="#484848" IsVisible="False" IsEnabled="False">
@@ -17,7 +17,7 @@
                 Padding="10"
                 Stroke="#7B68EE"
                 StrokeShape="RoundRectangle 40,0,0,40"
-                MaximumWidthRequest="500"
+                MaximumWidthRequest="650"
                 MaximumHeightRequest="500"
                 StrokeThickness="4"
                 >
@@ -54,36 +54,37 @@
                 </VerticalStackLayout>
             </Border>
         </Grid>
-        <VerticalStackLayout x:Name="PhoneLayout" Padding="50" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="500">
+        <VerticalStackLayout x:Name="PhoneLayout" Padding="40" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="600">
             <Image HorizontalOptions="Center" WidthRequest="96" HeightRequest="96" Source="login_user.png"/>
             <VerticalStackLayout Spacing="3">
                 <HorizontalStackLayout>
                     <Image WidthRequest="32" HeightRequest="32" Aspect="Fill" Source="login_username.png"></Image>
-                    <Label Text="Username" VerticalOptions="Center" FontSize="16"></Label>
+                    <Label Text="Username" Style="{StaticResource WillowMediumLabelStyle}"/>
                 </HorizontalStackLayout>
                 <Entry Placeholder="Enter username" TextColor="WhiteSmoke" Text="{Binding Username}" Keyboard="Default" ClearButtonVisibility="WhileEditing" MaxLength="20"></Entry>
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="5">
                 <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
                     <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
-                    <Label Text="Password" VerticalOptions="Center" FontSize="16"></Label>
+                    <Label Text="Password" Style="{StaticResource WillowMediumLabelStyle}"/>
                 </HorizontalStackLayout>
                 <Entry Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" Keyboard="Default" ClearButtonVisibility="WhileEditing" MaxLength="20"></Entry>
             </VerticalStackLayout>
             <HorizontalStackLayout>
                 <CheckBox Color="#7B68EE" HorizontalOptions="Start" Margin="0,0,-90,0"/>
-                <Label Text="Remember me?" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="Center"></Label>
+                <Label Text="Remember me?" Style="{StaticResource WillowMediumLabelStyle}"></Label>
             </HorizontalStackLayout>
-            <Button Text="Login" BackgroundColor="#7B68EE" TextColor="WhiteSmoke" Command="{Binding LoginCommand}"></Button>
+            <!--<Button Text="Login" BackgroundColor="#7B68EE" TextColor="WhiteSmoke" Command="{Binding LoginCommand}"></Button>-->
+            <Button Text="Login" Style="{StaticResource WillowButtonStyle}" Command="{Binding LoginCommand}"></Button>
             <HorizontalStackLayout Spacing="20">
-                <Label Text="Don't have an account?"></Label>
-                <Label Text="Signup" TextColor="#1E90FF" TextDecorations="Underline">
+                <Label Text="Don't have an account?" Style="{StaticResource WillowMediumLabelStyle}"></Label>
+                <Label Text="Signup" Style="{StaticResource WillowLinkLabelStyle}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GoToRegisterCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>
-            <Label Text="{Binding Error}" TextColor="OrangeRed" HorizontalTextAlignment="Center"></Label>
+            <Label Text="{Binding Error}" Style="{StaticResource WillowErrorLabelStyle}"></Label>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

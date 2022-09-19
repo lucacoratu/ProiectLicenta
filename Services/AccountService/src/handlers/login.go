@@ -111,7 +111,7 @@ func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	//Generate the JWT token for the session of the client
-	token, err := jwt.GenerateJWT(uint64(acc.ID), acc.DisplayName, acc.Email)
+	token, err := jwt.GenerateJWT(uint64(acc.ID), acc.DisplayName)
 	if err != nil {
 		login.l.Println("JWT Token generation failed!")
 		jsonErr := jsonerrors.JsonError{Message: "Something happened"}
