@@ -1,9 +1,9 @@
 package main
 
-import "willow/sessionservice/server"
+import "willow/friendservice/server"
 
 func main() {
-	err := server.InitServer(":8082")
+	err := server.InitServer(":8084")
 	if err != nil {
 		panic(err.Error())
 	}

@@ -25,7 +25,7 @@ func InitServer(address string) error {
 		return errors.New("cannot initialize the server twice")
 	}
 	//Initialize the logger
-	serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Friend Request Service -", log.LstdFlags), "[INFO]", "[WARNINGS]", "[ERROR]")
+	serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Friend Request Service - ", log.LstdFlags), "[INFO]", "[WARNING]", "[ERROR]")
 	serverLogger.Info("Logger has been initialized")
 
 	//Initialize the database connection
@@ -49,10 +49,14 @@ func InitServer(address string) error {
 	postSubrouter.HandleFunc("/add", handlerFriendRequest.AddFriendRequest)
 	//Add the handle function which will delete a friend request from the database
 	postSubrouter.HandleFunc("/delete", handlerFriendRequest.DeleteFriendRequest)
+	//Add the handle function which will return if the accounts have a friend request
+	postSubrouter.HandleFunc("/arefriends", handlerFriendRequest.ExistsFriendRequest)
 
 	//Create the subrouter that will handle GET methods
 	getSubrouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getSubrouter.HandleFunc("/view/{id:[0-9]+}", handlerFriendRequest.GetFriendRequests)
+	//Add the function to view the friend requests sent by the user
+	getSubrouter.HandleFunc("/viewsent/{id:[0-9]+}", handlerFriendRequest.GetSentFriendRequests)
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 
