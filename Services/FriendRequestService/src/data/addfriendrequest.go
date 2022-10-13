@@ -24,15 +24,12 @@ func (frReq *FriendRequest) FromJSON(r io.Reader) error {
 
 func validateID(fl validator.FieldLevel) bool {
 	//Check if the ID can be converted to an int
-	if fl.Field().CanInt() == false {
+	if !fl.Field().CanInt() {
 		return false
 	}
 	id := fl.Field().Int()
 	//The ID should not be negative
-	if id <= 0 {
-		return false
-	}
-	return true
+	return id > 0
 }
 
 func (frReq *FriendRequest) Validate() error {

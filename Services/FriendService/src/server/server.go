@@ -25,7 +25,7 @@ func InitServer(address string) error {
 		return errors.New("cannot initialize the server twice")
 	}
 	//Initialize the logger
-	serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Friend Service -", log.LstdFlags), "[INFO]", "[WARNINGS]", "[ERROR]")
+	serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Friend Service - ", log.LstdFlags), "[INFO]", "[WARNINGS]", "[ERROR]")
 	serverLogger.Info("Logger has been initialized")
 
 	dbConn = database.NewConnection(serverLogger)
