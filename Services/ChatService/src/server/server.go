@@ -8,19 +8,19 @@ import (
 	"os"
 	"os/signal"
 	"time"
-	"willow/friendrequestservice/data"
-	"willow/friendrequestservice/database"
-	"willow/friendrequestservice/handlers"
-	"willow/friendrequestservice/logging"
+	"willow/chatservice/data"
+	"willow/chatservice/logging"
+	"willow/chatservice/database"
 
 	"github.com/gorilla/mux"
 )
 
 var serverLogger logging.ILogger
 var server *http.Server = nil
-var serverDb *database.Connection = nil
+var serverDb database.IConnection
+var serverConfiguration *data.Configuration = nil
 
-var configurationFile string = "../test.conf"
+var configurationFile string = "chatservice.conf"
 
 func InitServer(address string) error {
 	//Check if the server has not been initialized before
@@ -41,18 +41,19 @@ func InitServer(address string) error {
 		log.Println("Cannot initialize the configuration settings from file")
 		return err
 	}
+	serverConfiguration = &svc
 
 	//Initialize the logger
 	//serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Friend Request Service - ", log.LstdFlags), "[INFO]", "[WARNING]", "[ERROR]")
 	if svc.DebugEnabled {
-		serverLogger = logging.NewDebugLogger(log.New(os.Stdout, "[*] - Friend Request Service - ", log.LstdFlags), svc.InfoPrefix, svc.WarningPrefix, svc.ErrorPrefix, svc.DebugPrefix)
+		serverLogger = logging.NewDebugLogger(log.New(os.Stdout, "[*] - Chat Service - ", log.LstdFlags), svc.InfoPrefix, svc.WarningPrefix, svc.ErrorPrefix, svc.DebugPrefix)
 	} else {
-		serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Friend Request Service - ", log.LstdFlags), svc.InfoPrefix, svc.WarningPrefix, svc.ErrorPrefix)
+		serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Chat Service - ", log.LstdFlags), svc.InfoPrefix, svc.WarningPrefix, svc.ErrorPrefix)
 	}
 	serverLogger.Info("Logger has been initialized")
 
 	//Initialize the database connection
-	serverDb = database.NewConnection(serverLogger)
+	serverDb = database.NewConnection(serverLogger, serverConfiguration)
 	err = serverDb.InitializeConnection()
 	if err != nil {
 		return err
@@ -62,29 +63,17 @@ func InitServer(address string) error {
 	serverLogger.Info("Database connection has been initialized")
 
 	//Create the routes
-	handlerFriendRequest := handlers.NewFriendRequest(serverLogger, serverDb)
+	handlerChat := handlers.NewChat(dbConn, serverLogger)
 
 	//Initialize the gorilla servemux
 	serveMux := mux.NewRouter()
 	//Create the subrouter that will handle POST methods
-	postSubrouter := serveMux.Methods(http.MethodPost).Subrouter()
-	//Add the handle function which will add a friend request in the database
-	postSubrouter.HandleFunc("/add", handlerFriendRequest.AddFriendRequest)
-	//Add the handle function which will delete a friend request from the database
-	postSubrouter.HandleFunc("/delete", handlerFriendRequest.DeleteFriendRequest)
-	//Add the handle function which will return if the accounts have a friend request
-	postSubrouter.HandleFunc("/arefriends", handlerFriendRequest.ExistsFriendRequest)
-
-	//Create the subrouter that will handle GET methods
-	getSubrouter := serveMux.Methods(http.MethodGet).Subrouter()
-	getSubrouter.HandleFunc("/view/{id:[0-9]+}", handlerFriendRequest.GetFriendRequests)
-	//Add the function to view the friend requests sent by the user
-	getSubrouter.HandleFunc("/viewsent/{id:[0-9]+}", handlerFriendRequest.GetSentFriendRequests)
+	//postSubrouter := serveMux.Methods(http.MethodPost).Subrouter()
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 
 	server = &http.Server{
-		Addr:         address,
+		Addr:         svc.Address,
 		Handler:      serveMux,
 		IdleTimeout:  120 * time.Second,
 		WriteTimeout: 1 * time.Second,
@@ -104,9 +93,10 @@ func RunServer() error {
 
 	//Test the connection to the database
 	err := serverDb.TestConnection()
-	if err != nil {
+	if err != nil{
 		return err
 	}
+	serverLogger.Info("Service is connected to the database")
 
 	go func() {
 		err := server.ListenAndServe()

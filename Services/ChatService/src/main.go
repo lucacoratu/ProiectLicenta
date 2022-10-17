@@ -1,6 +1,6 @@
 package main
 
-import "willow/friendrequestservice/server"
+import "willow/chatservice/server"
 
 func main() {
 	err := server.InitServer(":8083")
