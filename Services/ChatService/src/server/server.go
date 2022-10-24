@@ -11,6 +11,8 @@ import (
 	"willow/chatservice/data"
 	"willow/chatservice/logging"
 	"willow/chatservice/database"
+	"willow/chatservice/handlers"
+	"willow/chatservice/websocket"
 
 	"github.com/gorilla/mux"
 )
@@ -62,13 +64,21 @@ func InitServer(address string) error {
 	//The database connection is active
 	serverLogger.Info("Database connection has been initialized")
 
+	//Create the pool
+	pool := websocket.NewPool()
+	go pool.Start()
+
 	//Create the routes
-	handlerChat := handlers.NewChat(dbConn, serverLogger)
+	handlerChat := handlers.NewChat(serverDb, serverLogger)
 
 	//Initialize the gorilla servemux
 	serveMux := mux.NewRouter()
 	//Create the subrouter that will handle POST methods
-	//postSubrouter := serveMux.Methods(http.MethodPost).Subrouter()
+	getSubrouter := serveMux.Methods(http.MethodGet).Subrouter()
+	getSubrouter.HandleFunc("/rooms/{id:[0-9]+}", handlerChat.GetRooms)
+	serveMux.HandleFunc("/ws", func(rw http.ResponseWriter, r* http.Request){
+		handlerChat.ServeWs(pool, rw, r)
+	})
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 
@@ -81,7 +91,7 @@ func InitServer(address string) error {
 	}
 
 	//Server finished initialization
-	serverLogger.Info("Server finished initialization")
+	serverLogger.Info("Server finished initialization - Listening on", svc.Address)
 	return nil
 }
 

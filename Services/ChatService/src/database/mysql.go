@@ -72,3 +72,9 @@ func (conn *MysqlConnection) CloseConnection() error {
 	conn.logger.Info("Closed the connection to the database")
 	return conn.db.Close()
 }
+
+/*
+ * This function will get all the rooms the user is in from the database
+ * In order to get the rooms where the user is registered in from the mysql database you have to
+ * extract the data from (users_rooms table which will have (user_id, room_id) rows and the rooms table which will have room id and details)  
+ */
