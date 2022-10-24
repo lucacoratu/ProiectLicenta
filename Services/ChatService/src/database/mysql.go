@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"time"
+	"errors"
 	"willow/chatservice/data"
 	"willow/chatservice/logging"
 
@@ -85,13 +86,13 @@ func (conn *MysqlConnection) CreatePrivateRoom() (int64, error) {
 		return -1, err
 	}
 	//Return the id of the room that was created
-	return res.LastInsertId()	
+	return res.LastInsertId()
 }
 
 /*
  * This function will insert a userId into a room. It will return an error if the insert statement fails
  */
-func (conn *MysqlConnection) InsertUserIntoRoom(int64 userId, int64 roomId) error{
+func (conn *MysqlConnection) InsertUserIntoRoom(userId int64, roomId int64) error{
 	//TO DO ... check if the room exists
 	res, err := conn.db.Exec("INSERT INTO user_room (UserId, RoomID) VALUES (?, ?)", userId, roomId)
 	//Check if an error occured during the execution of the insert statement
@@ -111,7 +112,7 @@ func (conn *MysqlConnection) InsertUserIntoRoom(int64 userId, int64 roomId) erro
 	//Check if only 1 row was affected by the insert
 	if numberRows != 1{
 		conn.logger.Error("Zero or more than 1 row was affected by the userid insert into romm")
-		return errors.new("more than one (or none) row was affected, insert userid into room")
+		return errors.New("more than one (or none) row was affected, insert userid into room")
 	}
 	//Everything went ok
 	return nil

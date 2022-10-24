@@ -10,4 +10,8 @@ type IConnection interface {
 	InitializeConnection() error
 	TestConnection() error
 	CloseConnection() error
+
+	//Chat functionality functions
+	CreatePrivateRoom() (int64, error)
+	InsertUserIntoRoom(userId int64, roomId int64) error
 }

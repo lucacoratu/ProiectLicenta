@@ -79,6 +79,8 @@ func InitServer(address string) error {
 	serveMux.HandleFunc("/ws", func(rw http.ResponseWriter, r* http.Request){
 		handlerChat.ServeWs(pool, rw, r)
 	})
+	postSubrouter := serveMux.Methods(http.MethodPost).Subrouter()
+	postSubrouter.HandleFunc("/privateroom/create",  handlerChat.CreatePrivateRoom)
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 
