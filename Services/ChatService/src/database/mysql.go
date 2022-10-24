@@ -74,6 +74,50 @@ func (conn *MysqlConnection) CloseConnection() error {
 }
 
 /*
+ * This function will create a new room and return the id of the room that it inserted
+ * An error will also be returned if the room could not be created
+ */
+func (conn *MysqlConnection) CreatePrivateRoom() (int64, error) {
+	//Prepare the statement that will be executed when creating a new room
+	res, err := conn.db.Exec("INSERT INTO rooms (isGroup) VALUES (false)")
+	if err != nil{
+		conn.logger.Info("Error occured while creating the room", err.Error())
+		return -1, err
+	}
+	//Return the id of the room that was created
+	return res.LastInsertId()	
+}
+
+/*
+ * This function will insert a userId into a room. It will return an error if the insert statement fails
+ */
+func (conn *MysqlConnection) InsertUserIntoRoom(int64 userId, int64 roomId) error{
+	//TO DO ... check if the room exists
+	res, err := conn.db.Exec("INSERT INTO user_room (UserId, RoomID) VALUES (?, ?)", userId, roomId)
+	//Check if an error occured during the execution of the insert statement
+	if err != nil{
+		//An error occured
+		conn.logger.Error("Error occured while inserting user into room", err.Error())
+		return err
+	}
+	//Get the number of rows affected by the insert statement
+	numberRows, err := res.RowsAffected()
+	//Check if an error occured during the fetch of the number of affected rows
+	if err != nil{
+		//An error occured
+		conn.logger.Error("Error occured while fetching the number of affected rows during insert of user into room", err.Error())
+		return err
+	}
+	//Check if only 1 row was affected by the insert
+	if numberRows != 1{
+		conn.logger.Error("Zero or more than 1 row was affected by the userid insert into romm")
+		return errors.new("more than one (or none) row was affected, insert userid into room")
+	}
+	//Everything went ok
+	return nil
+}
+
+/*
  * This function will get all the rooms the user is in from the database
  * In order to get the rooms where the user is registered in from the mysql database you have to
  * extract the data from (users_rooms table which will have (user_id, room_id) rows and the rooms table which will have room id and details)  
