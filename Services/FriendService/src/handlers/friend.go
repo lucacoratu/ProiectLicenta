@@ -149,6 +149,7 @@ func (fr *Friend) DeleteFriend(rw http.ResponseWriter, r *http.Request) {
  * so send an error message back to the client
  */
 func (fr *Friend) GetFriends(rw http.ResponseWriter, r *http.Request) {
+	fr.logger.Info("Endpoint /friend/view/{id} hit (GET Method)")
 	//Get the id from the mux vars
 	vars := mux.Vars(r)
 	//Convert the id string into a number

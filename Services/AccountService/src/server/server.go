@@ -68,9 +68,11 @@ func InitServer(address string) error {
 	//Create the handler for friendrequests
 	handlerFriendRequests := handlers.NewFriendRequest(serverLogger, serverDbConn)
 
+	//Create the handler for friends
+	handlerFriends := handlers.NewFriends(serverLogger, serverDbConn)
+
 	//Create the authentication middleware
 	handlerAuth := handlers.NewAuthentication(serverLogger, serverDbConn)
-
 
 	//Create the serve mux where the handlers will be assigned so can then be used by the http.Server object
 	//serveMuxServer := http.NewServeMux()
@@ -87,6 +89,8 @@ func InitServer(address string) error {
 	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.ViewFriendRequests)
 	//Add the function to get the sent friend request
 	getRouter.HandleFunc("/friendrequest/viewsent/{id:[0-9]+}", handlerFriendRequests.ViewSentFriendRequests)
+	//Add the function to get the friendships
+	getRouter.HandleFunc("/friend/view/{id:[0-9]+}", handlerFriends.GetFriends)
 	getRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Create the subrouter for the PUT method which will use the Authentication middleware and will handle updates on the account data

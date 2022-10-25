@@ -49,6 +49,7 @@ func InitServer(address string) error {
 	handlerRegister := handlers.NewAccountRegister(serverLogger)
 	handlerLogin := handlers.NewAccountLogin(serverLogger)
 	handlerFriendRequests := handlers.NewFriendRequest(serverLogger)
+	handlerFriend := handlers.NewFriend(serverLogger)
 
 	//Initialize the server serveMux which will hold the handlers to the paths handled by the service
 	//serveMux := http.NewServeMux()
@@ -64,6 +65,7 @@ func InitServer(address string) error {
 	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.GetFriendRequests)
 	getRouter.HandleFunc("/friendrequest/viewsent/{id:[0-9]+}", handlerFriendRequests.GetSentFriendRequests)
+	getRouter.HandleFunc("/friend/view/{id:[0-9]+}", handlerFriend.GetFriends)
 
 	/*
 	 * Intialize the http.Server object which will have some timeout times for diferent events
