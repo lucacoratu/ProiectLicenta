@@ -20,7 +20,7 @@ var serverLogger logging.ILogger
 var server *http.Server = nil
 var serverDb *database.Connection = nil
 
-var configurationFile string = "../test.conf"
+var configurationFile string = "test.conf"
 
 func InitServer(address string) error {
 	//Check if the server has not been initialized before

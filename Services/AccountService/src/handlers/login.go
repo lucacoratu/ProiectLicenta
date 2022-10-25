@@ -3,12 +3,12 @@ package handlers
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"log"
 	"net/http"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
 	"willow/accountservice/jwt"
+	"willow/accountservice/logging"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -19,7 +19,7 @@ import (
  * service
  */
 type Login struct {
-	l      *log.Logger
+	l      logging.ILogger
 	dbConn *database.Connection
 }
 
@@ -27,7 +27,7 @@ type Login struct {
  * The NewLogin function will create a new object of the Register struct
  * Factory method for creating an object of Login easily
  */
-func NewLogin(l *log.Logger, dbConn *database.Connection) *Login {
+func NewLogin(l logging.ILogger, dbConn *database.Connection) *Login {
 	return &Login{l: l, dbConn: dbConn}
 }
 
@@ -36,7 +36,7 @@ func NewLogin(l *log.Logger, dbConn *database.Connection) *Login {
  * will check if the credentials are corrent. If the credentials are correct then
  */
 func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
-	login.l.Println("Endpoint /login reached (POST method)")
+	login.l.Info("Endpoint /login reached (POST method)")
 	data := &data.LoginAccount{}
 	//Convert the data in the request body from json to the LoginAcount structure
 	err := data.FromJSON(r.Body)
@@ -75,7 +75,7 @@ func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
 	//Decode the hash from hex
 	salt, err := hex.DecodeString(saltHex)
 	if err != nil {
-		login.l.Println("Error occured during decoding the salt from hex")
+		login.l.Error("Error occured during decoding the salt from hex")
 		jsonErr := jsonerrors.JsonError{Message: "Invalid credentials"}
 		rw.WriteHeader(http.StatusBadRequest)
 		jsonErr.ToJSON(rw)
@@ -89,7 +89,7 @@ func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
 	hash := sha256.New()
 	_, err = hash.Write(hashdata)
 	if err != nil {
-		login.l.Println("Cannot compute the hash for the password", err.Error())
+		login.l.Error("Cannot compute the hash for the password", err.Error())
 		jsonErr := jsonerrors.JsonError{Message: "Invalid credentials"}
 		rw.WriteHeader(http.StatusBadRequest)
 		jsonErr.ToJSON(rw)
@@ -103,7 +103,7 @@ func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
 	acc, err := login.dbConn.LoginIntoAccount(data.Username, hashHex)
 	//Check if the login failed (error is not nil)
 	if err != nil {
-		login.l.Println("Login failed for username ", data.Username)
+		login.l.Error("Login failed for username ", data.Username)
 		jsonErr := jsonerrors.JsonError{Message: "Invalid credentials"}
 		rw.WriteHeader(http.StatusBadRequest)
 		jsonErr.ToJSON(rw)
@@ -113,17 +113,17 @@ func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
 	//Generate the JWT token for the session of the client
 	token, err := jwt.GenerateJWT(uint64(acc.ID), acc.DisplayName)
 	if err != nil {
-		login.l.Println("JWT Token generation failed!")
+		login.l.Error("JWT Token generation failed!")
 		jsonErr := jsonerrors.JsonError{Message: "Something happened"}
 		rw.WriteHeader(http.StatusInternalServerError)
 		jsonErr.ToJSON(rw)
 		return
 	}
 
-	login.l.Println("Token:", token)
+	login.l.Info("Token:", token)
 
 	//The login succeded so return the account data to the client
-	login.l.Println("Login succeded, username", acc.Username)
+	login.l.Info("Login succeded, username", acc.Username)
 	rw.Header().Add("Set-Cookie", "session="+token)
 	rw.WriteHeader(http.StatusOK)
 	acc.ToJSON(rw)

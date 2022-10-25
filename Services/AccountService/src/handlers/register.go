@@ -5,10 +5,10 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
-	"log"
 	"net/http"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
+	"willow/accountservice/logging"
 	jsonerrors "willow/accountservice/errors"
 
 	"github.com/go-playground/validator/v10"
@@ -20,7 +20,7 @@ import (
  * service
  */
 type Register struct {
-	l      *log.Logger
+	l      logging.ILogger
 	dbConn *database.Connection
 }
 
@@ -28,7 +28,7 @@ type Register struct {
  * The NewRegister function will create a new object of the Register struct
  * Factory method for creating an object of Register easily
  */
-func NewRegister(l *log.Logger, dbConn *database.Connection) *Register {
+func NewRegister(l logging.ILogger, dbConn *database.Connection) *Register {
 	return &Register{l: l, dbConn: dbConn}
 }
 
@@ -47,7 +47,7 @@ func (register *Register) insertUser(regAcc *data.RegisterAccount) error {
 	count, err := rand.Read(salt)
 	if count != 6 || err != nil {
 		//The salt generation failed
-		register.l.Println("Salt generation failed")
+		register.l.Error("Salt generation failed")
 		return err
 	}
 
@@ -59,7 +59,7 @@ func (register *Register) insertUser(regAcc *data.RegisterAccount) error {
 	hash := sha256.New()
 	_, err = hash.Write(hashdata)
 	if err != nil {
-		register.l.Println("Cannot compute the hash for the password", err.Error())
+		register.l.Error("Cannot compute the hash for the password", err.Error())
 		return err
 	}
 	//Compute the hash of the concatenated data
@@ -71,7 +71,7 @@ func (register *Register) insertUser(regAcc *data.RegisterAccount) error {
 
 	//Convert the salt into hex
 	saltHex := hex.EncodeToString(salt)
-	register.l.Print(saltHex)
+	register.l.Info(saltHex)
 
 	//Create the object of the account structure that will hold the information abount the new account to be registered
 	newAcc := &data.Account{Username: regAcc.Username, DisplayName: regAcc.DisplayName, Email: regAcc.Email, PasswordHash: hashHex, Salt: saltHex}
@@ -82,13 +82,13 @@ func (register *Register) insertUser(regAcc *data.RegisterAccount) error {
 
 	//If there was an internal error when interacting with the database server
 	if err != nil && (err.Error() != "username already exists" && err.Error() != "email already exists") {
-		register.l.Println("Error occured during interaction with the database server")
+		register.l.Error("Error occured during interaction with the database server")
 		return errors.New("account registration failed")
 	}
 
 	//The username or the email already exists in the database so the account cannot be registered
 	if err != nil {
-		register.l.Println("Cannot insert account,", err.Error())
+		register.l.Error("Cannot insert account,", err.Error())
 		if err != nil {
 			return err
 		}
@@ -116,7 +116,7 @@ func (register *Register) validateRequestData(rw http.ResponseWriter, r *http.Re
  */
 func (register *Register) RegisterAccount(rw http.ResponseWriter, r *http.Request) {
 	//Log that the endpoint has been reached by a user
-	register.l.Println("Endpoint /register reached (POST method)")
+	register.l.Info("Endpoint /register reached (POST method)")
 
 	//Get the data from the request body (POST request)
 	data := &data.RegisterAccount{}
@@ -127,7 +127,7 @@ func (register *Register) RegisterAccount(rw http.ResponseWriter, r *http.Reques
 	//If an error occured during the json decode then send error to user
 	if err != nil {
 		//Log the error and send it back to the user
-		register.l.Println("JSON decode error: ", err)
+		register.l.Error("JSON decode error: ", err)
 
 		//Send the error back to the user
 		rw.WriteHeader(http.StatusBadRequest)
@@ -152,11 +152,11 @@ func (register *Register) RegisterAccount(rw http.ResponseWriter, r *http.Reques
 			break
 		}
 		//Log the error(s)
-		register.l.Println(err.Error())
+		register.l.Error(err.Error())
 		return
 	}
 
-	register.l.Println("Inserting the account into the database")
+	register.l.Info("Inserting the account into the database")
 	//User input passed the checks so the account can be registered
 	err = register.insertUser(data)
 	if err != nil {
@@ -165,7 +165,7 @@ func (register *Register) RegisterAccount(rw http.ResponseWriter, r *http.Reques
 		jsonError.ToJSON(rw)
 		return
 	}
-	register.l.Printf("Account has been added, username = %v", data.Username)
+	register.l.Info("Account has been added, username = " + data.Username)
 
 	//Send the success message back to the client
 	rw.WriteHeader(http.StatusOK)

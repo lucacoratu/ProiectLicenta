@@ -119,7 +119,10 @@ func (conn *MysqlConnection) InsertUserIntoRoom(userId int64, roomId int64) erro
 }
 
 /*
- * This function will get all the rooms the user is in from the database
+ * This function will get all the private rooms the user is in from the database
  * In order to get the rooms where the user is registered in from the mysql database you have to
  * extract the data from (users_rooms table which will have (user_id, room_id) rows and the rooms table which will have room id and details)  
  */
+func GetUserPrivateRooms(userId int64) (data.Rooms, error) {
+	//Prepare the select statement which will get all the rooms the user with userID is into
+}

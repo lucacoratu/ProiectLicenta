@@ -3,9 +3,9 @@ package database
 import (
 	"database/sql"
 	"errors"
-	"log"
 	"time"
 	"willow/accountservice/data"
+	"willow/accountservice/logging"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -15,7 +15,7 @@ import (
  * The structure will also have a reference to the server logger so that messages can be logged if anything happens
  */
 type Connection struct {
-	l  *log.Logger
+	l  logging.ILogger
 	db *sql.DB
 }
 
@@ -24,7 +24,7 @@ type Connection struct {
  * It will not initialize the mysql database handle, for that the InitializeConnection function should be called
  * using the returned object
  */
-func NewConnection(l *log.Logger) *Connection {
+func NewConnection(l logging.ILogger) *Connection {
 	return &Connection{l: l, db: nil}
 }
 
@@ -42,7 +42,7 @@ func (conn *Connection) InitializeConnection() error {
 	dbConn, err := sql.Open("mysql", dbUser+":"+dbPassword+"@tcp("+dbHost+":3306)/"+dbName)
 	//dbConn, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/test")
 	if err != nil {
-		conn.l.Println(err.Error())
+		conn.l.Error(err.Error())
 		return err
 	}
 	conn.db = dbConn
@@ -69,7 +69,7 @@ func (conn *Connection) TestConnection() error {
  * Else nil will be returned
  */
 func (conn *Connection) CloseConnection() error {
-	conn.l.Println("Closed the connection to the database")
+	conn.l.Info("Closed the connection to the database")
 	return conn.db.Close()
 }
 
@@ -85,7 +85,7 @@ func (conn *Connection) checkUsernameExists(username string) (bool, error) {
 	stmtCheck, err := conn.db.Prepare("SELECT Username FROM accounts WHERE Username = ?")
 
 	if err != nil {
-		conn.l.Println("Error occured when preparing the select for username checking")
+		conn.l.Error("Error occured when preparing the select for username checking")
 		return true, err
 	}
 	//Close the statement at the end of the function
@@ -95,7 +95,7 @@ func (conn *Connection) checkUsernameExists(username string) (bool, error) {
 	res := stmtCheck.QueryRow(username)
 	if res.Err() != nil {
 		//An error occured during the select statement
-		conn.l.Println("Error occured when executing select for username check ", err.Error())
+		conn.l.Error("Error occured when executing select for username check ", err.Error())
 		return true, res.Err()
 	}
 
@@ -104,7 +104,7 @@ func (conn *Connection) checkUsernameExists(username string) (bool, error) {
 	err = res.Scan(&selUsername)
 	if err != nil && err != sql.ErrNoRows {
 		//Another error than the one we are looking for occured
-		conn.l.Print("Error occured when fetching the rows in the select ", err.Error())
+		conn.l.Error("Error occured when fetching the rows in the select ", err.Error())
 		return true, err
 	}
 
@@ -127,7 +127,7 @@ func (conn *Connection) checkEmailExists(email string) (bool, error) {
 	//Prepare the statement that will check if the email exists
 	stmtCheck, err := conn.db.Prepare("SELECT Email FROM accounts WHERE Email = ?")
 	if err != nil {
-		conn.l.Println("Error occured when fetching the rows in the select!")
+		conn.l.Error("Error occured when fetching the rows in the select!")
 		return true, err
 	}
 	//Close the statement object when the function finishes execution
@@ -137,14 +137,14 @@ func (conn *Connection) checkEmailExists(email string) (bool, error) {
 	res := stmtCheck.QueryRow(email)
 	if res.Err() != nil {
 		//An error occured when executing the select statement
-		conn.l.Println("Error occured when executing select for email check ", res.Err())
+		conn.l.Error("Error occured when executing select for email check ", res.Err())
 		return true, res.Err()
 	}
 	var selEmail string
 	err = res.Scan(&selEmail)
 	if err != nil && err != sql.ErrNoRows {
 		//An error other than the expected one occured
-		conn.l.Print("Error occured when fetching the rows in the select ", err.Error())
+		conn.l.Error("Error occured when fetching the rows in the select ", err.Error())
 		return true, err
 	}
 
@@ -191,7 +191,7 @@ func (conn *Connection) InsertAccount(acc *data.Account) error {
 	//Prepare the query that will be executed with the values from the acc structure
 	stmtInsert, err := conn.db.Prepare("INSERT INTO accounts (Username, DisplayName, Email, PasswordHash, Salt) VALUES (?, ?, ?, ?, ?)")
 	if err != nil {
-		conn.l.Println("Error occured when preparing the insert account query", err.Error())
+		conn.l.Error("Error occured when preparing the insert account query", err.Error())
 		return err
 	}
 	//Close the statment at the end of the function
@@ -200,7 +200,7 @@ func (conn *Connection) InsertAccount(acc *data.Account) error {
 	//Execute the query with the data in the structure
 	_, err = stmtInsert.Exec(acc.Username, acc.DisplayName, acc.Email, acc.PasswordHash, acc.Salt)
 	if err != nil {
-		conn.l.Println("Error occured when executing the insert account query", err.Error())
+		conn.l.Error("Error occured when executing the insert account query", err.Error())
 		return err
 	}
 
@@ -217,7 +217,7 @@ func (conn *Connection) GetSalt(username string) (string, error) {
 	stmtSalt, err := conn.db.Prepare("SELECT salt FROM accounts where Username = ?")
 	if err != nil {
 		//An error occured when preparing the statement for salt selection
-		conn.l.Println("Error occured during select for salt ", err.Error())
+		conn.l.Error("Error occured during select for salt ", err.Error())
 		return "", err
 	}
 	//Close the statment for salt when the function finishes
@@ -227,7 +227,7 @@ func (conn *Connection) GetSalt(username string) (string, error) {
 	row := stmtSalt.QueryRow(username)
 	if row.Err() != nil {
 		//An error occured during the select statement
-		conn.l.Println("Error occured during select for salt ", err.Error())
+		conn.l.Error("Error occured during select for salt ", err.Error())
 		return "", row.Err()
 	}
 
@@ -240,7 +240,7 @@ func (conn *Connection) GetSalt(username string) (string, error) {
 	}
 	if err != nil {
 		//Another error occured
-		conn.l.Println("Error occured when executing the select for salt ", row.Err().Error())
+		conn.l.Error("Error occured when executing the select for salt ", row.Err().Error())
 		return "", err
 	}
 
@@ -260,7 +260,7 @@ func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (
 	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.Username, accounts.DisplayName, accounts.Email, accounts.JoinDate, accounts.LastOnline, accountstatus.Status FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.Username = ? and accounts.PasswordHash = ?")
 	if err != nil {
 		//An error occured during the preparation of the select query
-		conn.l.Println("Error occured when preparing select for login ", err.Error())
+		conn.l.Error("Error occured when preparing select for login ", err.Error())
 		return nil, err
 	}
 	//Close the statement after the function finishes
@@ -271,7 +271,7 @@ func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (
 	//Check if an error occured during the select statment
 	if res.Err() != nil {
 		//An error occured during the select statment
-		conn.l.Println("Error occured when executing select for login ", res.Err().Error())
+		conn.l.Error("Error occured when executing select for login ", res.Err().Error())
 		return nil, res.Err()
 	}
 
@@ -285,7 +285,7 @@ func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (
 	}
 	if err != nil {
 		//Another error occured
-		conn.l.Println("Error occured when fetching data for login ", err.Error())
+		conn.l.Error("Error occured when fetching data for login ", err.Error())
 		return nil, err
 	}
 
@@ -303,7 +303,7 @@ func (conn *Connection) ValidateJWTPayload(ID int, DisplayName string) error {
 	//Prepare the query that will be executed
 	sqlStmt, err := conn.db.Prepare("SELECT Username FROM accounts WHERE ID = ? AND DisplayName = ?")
 	if err != nil {
-		conn.l.Println("Error occured when preparing select for jwt validation", err.Error())
+		conn.l.Error("Error occured when preparing select for jwt validation", err.Error())
 		return err
 	}
 	defer sqlStmt.Close()
@@ -311,7 +311,7 @@ func (conn *Connection) ValidateJWTPayload(ID int, DisplayName string) error {
 	res := sqlStmt.QueryRow(ID, DisplayName)
 	if res.Err() != nil {
 		//An error occured during the select statement
-		conn.l.Println("Error occured when executing select for jwt validation ", res.Err().Error())
+		conn.l.Error("Error occured when executing select for jwt validation ", res.Err().Error())
 		return res.Err()
 	}
 
@@ -320,7 +320,7 @@ func (conn *Connection) ValidateJWTPayload(ID int, DisplayName string) error {
 	err = res.Scan(&selUsername)
 	if err != nil && err != sql.ErrNoRows {
 		//Another error than the one we are looking for occured
-		conn.l.Print("Error occured when fetching the rows in the jwt validation select ", err.Error())
+		conn.l.Error("Error occured when fetching the rows in the jwt validation select ", err.Error())
 		return err
 	}
 
@@ -340,24 +340,24 @@ func (conn *Connection) UpdateStatus(ID int, DisplayName string, status string) 
 	//Prepare the update query
 	updStmt, err := conn.db.Prepare("UPDATE accounts SET Status = (SELECT ID FROM accountstatus WHERE Status = ?) WHERE ID = ? AND DisplayName = ?")
 	if err != nil {
-		conn.l.Println("Error occured during the preparation of the update status query", err.Error())
+		conn.l.Error("Error occured during the preparation of the update status query", err.Error())
 		return err
 	}
 
 	res, err := updStmt.Exec(status, ID, DisplayName)
 	if err != nil {
-		conn.l.Println("Error occured during execution of update status query", err.Error())
+		conn.l.Error("Error occured during execution of update status query", err.Error())
 		return err
 	}
 
 	rowsAffected, err := res.RowsAffected()
 	if err != nil {
-		conn.l.Println("Error occured during fetching the number of rows affected of update status query", err.Error())
+		conn.l.Error("Error occured during fetching the number of rows affected of update status query", err.Error())
 		return err
 	}
 
 	if rowsAffected != 1 {
-		conn.l.Println("Number of rows affected during status update is not 1")
+		conn.l.Error("Number of rows affected during status update is not 1")
 		return errors.New("number of rows affected during status update is not 1")
 	}
 

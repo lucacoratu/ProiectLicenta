@@ -48,15 +48,22 @@ func InitServer(address string) error {
 	//Create the handlers that will be passed to the serverMux
 	handlerRegister := handlers.NewAccountRegister(serverLogger)
 	handlerLogin := handlers.NewAccountLogin(serverLogger)
+	handlerFriendRequests := handlers.NewFriendRequest(serverLogger)
 
 	//Initialize the server serveMux which will hold the handlers to the paths handled by the service
 	//serveMux := http.NewServeMux()
 	serveMux := mux.NewRouter()
 
 	//Add the handlers to the serveMux (path and callback function)
-	getRouter := serveMux.Methods(http.MethodPost).Subrouter()
-	getRouter.HandleFunc("/accounts/register", handlerRegister.RegisterAccount)
-	getRouter.HandleFunc("/accounts/login", handlerLogin.LoginIntoAccount)
+	postRouter := serveMux.Methods(http.MethodPost).Subrouter()
+	postRouter.HandleFunc("/accounts/register", handlerRegister.RegisterAccount)
+	postRouter.HandleFunc("/accounts/login", handlerLogin.LoginIntoAccount)
+	postRouter.HandleFunc("/friendrequest/add", handlerFriendRequests.AddFriendRequest)
+	postRouter.HandleFunc("/friendrequest/delete", handlerFriendRequests.DeleteFriendRequest)
+
+	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
+	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.GetFriendRequests)
+	getRouter.HandleFunc("/friendrequest/viewsent/{id:[0-9]+}", handlerFriendRequests.GetSentFriendRequests)
 
 	/*
 	 * Intialize the http.Server object which will have some timeout times for diferent events

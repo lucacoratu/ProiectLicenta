@@ -1,26 +1,26 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
 	"willow/accountservice/jwt"
+	"willow/accountservice/logging"
 )
 
 type Profile struct {
-	l      *log.Logger
+	l      logging.ILogger
 	dbConn *database.Connection
 }
 
-func NewProfile(l *log.Logger, db *database.Connection) *Profile {
+func NewProfile(l logging.ILogger, db *database.Connection) *Profile {
 	return &Profile{l: l, dbConn: db}
 }
 
 func (prof *Profile) ViewProfile(rw http.ResponseWriter, r *http.Request) {
 	//This function should send the profile of the account that it is connected to back to the client
-	prof.l.Println("Endpoint /profile reached")
+	prof.l.Info("Endpoint /profile reached")
 	jsonErr := jsonerrors.JsonError{Message: "ProfileViewed"}
 	rw.WriteHeader(http.StatusOK)
 	jsonErr.ToJSON(rw)
@@ -33,7 +33,7 @@ func (prof *Profile) ViewProfile(rw http.ResponseWriter, r *http.Request) {
  * as a JSON string with field status
  */
 func (prof *Profile) UpdateStatus(rw http.ResponseWriter, r *http.Request) {
-	prof.l.Println("Endpoint /status PUT reached")
+	prof.l.Info("Endpoint /status PUT reached")
 
 	//Get the JWTClaims where ID, DisplayName and Email can be found
 	cookie, err := r.Cookie("session")

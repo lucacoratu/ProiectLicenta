@@ -10,6 +10,7 @@ import (
 	"time"
 	"willow/accountservice/database"
 	"willow/accountservice/handlers"
+	"willow/accountservice/logging"
 
 	"github.com/gorilla/mux"
 )
@@ -20,7 +21,7 @@ import (
  * It will initialize the logger that will be used in the application
  */
 var server *http.Server = nil
-var serverLogger *log.Logger = nil
+var serverLogger logging.ILogger = nil
 var serverDbConn *database.Connection = nil
 
 /*
@@ -39,14 +40,18 @@ func InitServer(address string) error {
 	}
 
 	//Initialize the logger to be on stdout and with the correct prefix for this service
-	serverLogger = log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags)
-	serverLogger.Println("Logger initialized")
+	//serverLogger = log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags)
+	//serverLogger.Info("Logger initialized")
+
+	//Initialize the logger
+	serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags), "[INFO]", "[WARNINGS]", "[ERROR]")
+	serverLogger.Info("Logger has been initialized")
 
 	//Create the connection object from the database package
 	serverDbConn = database.NewConnection(serverLogger)
 	err := serverDbConn.InitializeConnection()
 	if err != nil {
-		serverLogger.Println("Database connection initialization failed: " + err.Error())
+		serverLogger.Info("Database connection initialization failed: " + err.Error())
 		return err
 	}
 
@@ -60,21 +65,28 @@ func InitServer(address string) error {
 	//Create the /profile handler and add the database handle to the struct
 	handlerProfile := handlers.NewProfile(serverLogger, serverDbConn)
 
+	//Create the handler for friendrequests
+	handlerFriendRequests := handlers.NewFriendRequest(serverLogger, serverDbConn)
+
 	//Create the authentication middleware
 	handlerAuth := handlers.NewAuthentication(serverLogger, serverDbConn)
+
 
 	//Create the serve mux where the handlers will be assigned so can then be used by the http.Server object
 	//serveMuxServer := http.NewServeMux()
 	serveMuxServer := mux.NewRouter()
 
-	//Create the subrouter for the POST method which will have the handler functions for the POST requests to specific routes
-	postRouter := serveMuxServer.Methods(http.MethodPost).Subrouter()
-	postRouter.HandleFunc("/login", handlerLogin.LoginAccount)
-	postRouter.HandleFunc("/register", handlerRegister.RegisterAccount)
+	//Create the methods that will handle login and register (this methods do not use authentication middleware)
+	serveMuxServer.HandleFunc("/login", handlerLogin.LoginAccount).Methods("POST")
+	serveMuxServer.HandleFunc("/register", handlerRegister.RegisterAccount).Methods("POST")
 
 	//Create the subrouter for the GET method which will use the Authentication middleware
 	getRouter := serveMuxServer.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/profile", handlerProfile.ViewProfile)
+	//Add the function to get the friend requests
+	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.ViewFriendRequests)
+	//Add the function to get the sent friend request
+	getRouter.HandleFunc("/friendrequest/viewsent/{id:[0-9]+}", handlerFriendRequests.ViewSentFriendRequests)
 	getRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Create the subrouter for the PUT method which will use the Authentication middleware and will handle updates on the account data
@@ -82,8 +94,14 @@ func InitServer(address string) error {
 	putRouter.HandleFunc("/status", handlerProfile.UpdateStatus)
 	putRouter.Use(handlerAuth.ValidateSessionCookie)
 
+	//Create the subrouter for the POST method which will have the handler functions for the POST requests to specific routes
+	postRouter := serveMuxServer.Methods(http.MethodPost).Subrouter()	
+	postRouter.HandleFunc("/friendrequest/add", handlerFriendRequests.AddFriendRequest)
+	postRouter.HandleFunc("/friendrequest/delete", handlerFriendRequests.DeleteFriendRequest)
+
 	//Log that the handlers have been added
-	serverLogger.Println("Handlers added to the serve mux of the server")
+	//serverLogger.Info("Handlers added to the serve mux of the server")
+	serverLogger.Info("Handlers added to the serve mux of the server")
 
 	//Initialize the http.Server object
 	server = &http.Server{
@@ -95,7 +113,7 @@ func InitServer(address string) error {
 	}
 
 	//Log that the server finished initialization
-	serverLogger.Println("Server has been initialized")
+	serverLogger.Info("Server has been initialized")
 	return nil
 }
 
@@ -113,24 +131,24 @@ func RunServer() error {
 		return errors.New("server has to be initialized before running")
 	}
 
-	serverLogger.Println("Testing the connection to the database server")
+	serverLogger.Info("Testing the connection to the database server")
 	//Try to ping the database server to check if the connection can be established
 	errDb := serverDbConn.TestConnection()
 	if errDb != nil {
 		//The server should be able to connect to the database server in order to work
-		serverLogger.Println(errDb.Error())
+		serverLogger.Error(errDb.Error())
 		return errors.New("server cannot connect to the database server")
 	}
 	//Close the connection when before this function returns
 	defer serverDbConn.CloseConnection()
 	//Log that the connection to the database server has been established
-	serverLogger.Println("Database connection has been established")
+	serverLogger.Info("Database connection has been established")
 
 	//Run the server in a go function so the channel for graceful exit can be created
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil {
-			serverLogger.Fatal(err)
+			serverLogger.Error(err)
 		}
 	}()
 
@@ -145,7 +163,7 @@ func RunServer() error {
 	sig := <-chanSig
 
 	//Log that the server will shutdown
-	serverLogger.Println("Received signal to terminate, exiting gracefully", sig)
+	serverLogger.Info("Received signal to terminate, exiting gracefully", sig)
 
 	//Let the server finish the current connection in a timeout of 30 seconds then exit
 	tc, _ := context.WithTimeout(context.Background(), 30*time.Second)

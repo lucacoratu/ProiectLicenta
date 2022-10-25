@@ -1,17 +1,17 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"willow/accountservice/database"
+	"willow/accountservice/logging"
 )
 
 type Friends struct {
-	l      *log.Logger
+	l      logging.ILogger
 	dbConn *database.Connection
 }
 
-func NewFriends(l *log.Logger, db *database.Connection) *Friends {
+func NewFriends(l logging.ILogger, db *database.Connection) *Friends {
 	return &Friends{l: l, dbConn: db}
 }
 

@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
 	"willow/accountservice/jwt"
+	"willow/accountservice/logging"
 )
 
 /*
@@ -13,7 +13,7 @@ import (
  * It will have a logger and the handle for the database connection
  */
 type Authentication struct {
-	l      *log.Logger
+	l      logging.ILogger
 	dbConn *database.Connection
 }
 
@@ -22,7 +22,7 @@ type Authentication struct {
  * The parameters that it needs are logger and database.Connection
  * Returns a new Authentication structure pointer
  */
-func NewAuthentication(l *log.Logger, db *database.Connection) *Authentication {
+func NewAuthentication(l logging.ILogger, db *database.Connection) *Authentication {
 	return &Authentication{l: l, dbConn: db}
 }
 
@@ -38,11 +38,12 @@ func (auth *Authentication) ValidateSessionCookie(next http.Handler) http.Handle
 	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		//Validate the JWT token which is in the cookie with the name session
 		//Extract the cookie with the name session
-		auth.l.Println("Validating jwt token")
+		auth.l.Info("Validating jwt token")
 		cookie, err := r.Cookie("session")
 		//Check if the session cookie exists
 		if err != nil {
 			//The session cookie does not exist so send an error message back to the client
+			auth.l.Error(err.Error())
 			jsonErr := jsonerrors.JsonError{Message: "Invalid session"}
 			rw.WriteHeader(http.StatusBadRequest)
 			jsonErr.ToJSON(rw)
@@ -54,6 +55,7 @@ func (auth *Authentication) ValidateSessionCookie(next http.Handler) http.Handle
 		claim, err := jwt.ValidateJWT(jwtTokenString)
 		if err != nil {
 			//The jwt is not valid so send an error message back to the client
+			auth.l.Error(err.Error())
 			jsonErr := jsonerrors.JsonError{Message: "Invalid session"}
 			rw.WriteHeader(http.StatusBadRequest)
 			jsonErr.ToJSON(rw)
@@ -64,6 +66,7 @@ func (auth *Authentication) ValidateSessionCookie(next http.Handler) http.Handle
 		err = auth.dbConn.ValidateJWTPayload(int(claim.ID), claim.DisplayName)
 		if err != nil {
 			//The account does not exist in the database so the authentication failed
+			auth.l.Error(err.Error())
 			jsonErr := jsonerrors.JsonError{Message: "Invalid session"}
 			rw.WriteHeader(http.StatusBadRequest)
 			jsonErr.ToJSON(rw)

@@ -135,7 +135,10 @@ func (fr *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
 	rw.Write([]byte("Friend added"))
 }
 
-// Delete the friend from the database
+/*
+ * This function will delete a friendship from the database and will notify the client that the friendship has been deleted
+ * 
+ */
 func (fr *Friend) DeleteFriend(rw http.ResponseWriter, r *http.Request) {
 
 }

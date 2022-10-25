@@ -87,9 +87,9 @@ func (ch *Chat) CreatePrivateRoom(rw http.ResponseWriter, r *http.Request) {
  * This function will get all the rooms that the user is in
  * The request that will come to this endpoint will be a get request and will be in this form: /chat/rooms/:userid
  */
-func (ch *Chat) GetRooms(rw http.ResponseWriter, r *http.Request) {
+func (ch *Chat) GetPrivateRooms(rw http.ResponseWriter, r *http.Request) {
 	//Get the id from the request URI (gorilla mux)
-	ch.logger.Info("Endpoint /rooms/{id:[0-9]+} hit (GET Method)")
+	ch.logger.Info("Endpoint /privaterooms/{id:[0-9]+} hit (GET Method)")
 	vars := mux.Vars(r)
 	//Check if the id could be parsed (it should always be, but just to be safe, test it)
 	id, err := strconv.Atoi(vars["id"])

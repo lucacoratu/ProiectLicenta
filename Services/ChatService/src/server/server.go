@@ -75,7 +75,7 @@ func InitServer(address string) error {
 	serveMux := mux.NewRouter()
 	//Create the subrouter that will handle POST methods
 	getSubrouter := serveMux.Methods(http.MethodGet).Subrouter()
-	getSubrouter.HandleFunc("/rooms/{id:[0-9]+}", handlerChat.GetRooms)
+	getSubrouter.HandleFunc("/privaterooms/{id:[0-9]+}", handlerChat.GetPrivateRooms)
 	serveMux.HandleFunc("/ws", func(rw http.ResponseWriter, r* http.Request){
 		handlerChat.ServeWs(pool, rw, r)
 	})
