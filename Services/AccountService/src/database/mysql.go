@@ -363,3 +363,43 @@ func (conn *Connection) UpdateStatus(ID int, DisplayName string, status string) 
 
 	return nil
 }
+
+
+/*
+ * This function will get the details of an account (DisplayName, Status, Last-Online)
+ */
+func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error) {
+	//Prepare the statement that will select the account details from the database
+	stmtSelect, err := conn.db.Prepare("SELECT ID, DisplayName, JoinDate, LastOnline FROM accounts WHERE ID = ?")
+	//Check if an error occured during the preparation of the select statement
+	if err != nil {
+		//An error occured during the preparation of the select statment
+		conn.l.Error("Error occured during the select statment preparation", err.Error())
+		return nil, err
+	}
+	defer stmtSelect.Close()
+
+	//Add the query parameter
+	res := stmtSelect.QueryRow(accountID)
+	if res.Err() != nil {
+		//An error occured during the select statement
+		conn.l.Error("Error occured when executing select for jwt validation ", res.Err().Error())
+		return nil, res.Err()
+	}
+
+	//Check if any rows are returned from the statement using scan
+	account := &data.Account{}
+	err = res.Scan(&account.ID, &account.DisplayName, &account.JoinDate, &account.LastOnline)
+	if err != nil && err != sql.ErrNoRows {
+		//Another error than the one we are looking for occured
+		conn.l.Error("Error occured when fetching the rows in the jwt validation select ", err.Error())
+		return nil, err
+	}
+
+	if account.DisplayName == "" {
+		return nil, errors.New("account does not exist")
+	}
+
+	//conn.l.Info(*account)
+	return account, nil
+}
