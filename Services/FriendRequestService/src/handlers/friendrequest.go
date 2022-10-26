@@ -124,6 +124,7 @@ func (frReq *FriendRequest) GetFriendRequests(rw http.ResponseWriter, r *http.Re
 	frReq.logger.Info("Enpoint /view/{id:[0-9]+} hit (GET Method)")
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
+	frReq.logger.Debug(id)
 	if err != nil {
 		//Send an error message back
 		jsonError := jsonerrors.JsonError{Message: "Invalid id format"}

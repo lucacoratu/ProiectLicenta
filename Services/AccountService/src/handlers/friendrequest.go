@@ -6,6 +6,7 @@ import (
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
 	"willow/accountservice/logging"
+	"willow/accountservice/data"
 
 	"github.com/gorilla/mux"
 )
@@ -97,20 +98,39 @@ func (frReq *FriendRequest) ViewFriendRequests(rw http.ResponseWriter, r *http.R
 		return
 	}
 	//Read the data from the response
-	respBody, err := io.ReadAll(response.Body)
+/* 	respBody, err := io.ReadAll(response.Body)
 	if err != nil {
 		frReq.logger.Error("Cannot read response data from FriendRequestService response", err.Error())
 		jsonError := jsonerrors.JsonError{Message: "Cannot read data from FriendRequestService response body"}
 		rw.WriteHeader(http.StatusInternalServerError)
 		jsonError.ToJSON(rw)
 		return
+	} */
+	respData := &data.FriendRequestResponses{}
+	respData.FromJSON(response.Body)
+	frReq.logger.Info(*respData)
+
+	accs := make(data.FriendRequestAccounts, 0)
+	for _, rd := range *respData {
+		frReq.logger.Info(rd)
+		//Check if an error occured while fetching the details from the database
+		accDetails, err := frReq.dbConn.GetAccountDetails(rd.SenderID)
+		if err != nil {
+			frReq.logger.Info(err.Error())
+			continue
+		}
+		//f.logger.Info(*accDetails)
+		frAccount := data.FriendRequestAccount{AccountID: rd.SenderID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate}
+		frReq.logger.Debug(frAccount)
+		accs = append(accs, frAccount)
 	}
+	frReq.logger.Info(accs)
 
 	//Debug log the response from the FriendRequestService
-	frReq.logger.Debug("Response from FriendRequestService", respBody)
+	//frReq.logger.Debug("Response from FriendRequestService", respBody)
 
 	rw.WriteHeader(response.StatusCode)
-	rw.Write(respBody)
+	accs.ToJSON(rw)
 }
 
 /*
@@ -129,18 +149,38 @@ func (frReq *FriendRequest) ViewSentFriendRequests(rw http.ResponseWriter, r *ht
 		return
 	}
 	//Read the data from the response
-	respBody, err := io.ReadAll(response.Body)
+/* 	respBody, err := io.ReadAll(response.Body)
 	if err != nil {
 		frReq.logger.Error("Cannot read response data from FriendRequestService response", err.Error())
 		jsonError := jsonerrors.JsonError{Message: "Cannot read data from FriendRequestService response body"}
 		rw.WriteHeader(http.StatusInternalServerError)
 		jsonError.ToJSON(rw)
 		return
+	} */
+	respData := &data.FriendRequestResponses{}
+	respData.FromJSON(response.Body)
+	frReq.logger.Info(*respData)
+
+	accs := make(data.FriendRequestAccounts, 0)
+	for _, rd := range *respData {
+		frReq.logger.Info(rd)
+		//Check if an error occured while fetching the details from the database
+		accDetails, err := frReq.dbConn.GetAccountDetails(rd.AccID)
+		if err != nil {
+			frReq.logger.Info(err.Error())
+			continue
+		}
+		//f.logger.Info(*accDetails)
+		frAccount := data.FriendRequestAccount{AccountID: rd.AccID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate}
+		frReq.logger.Debug(frAccount)
+		accs = append(accs, frAccount)
 	}
+	frReq.logger.Info(accs)
 
 	//Debug log the response from the FriendRequestService
-	frReq.logger.Debug("Response from FriendRequestService", respBody)
+	//frReq.logger.Debug("Response from FriendRequestService", respBody)
 
 	rw.WriteHeader(response.StatusCode)
-	rw.Write(respBody)
+	//rw.Write(respBody)
+	accs.ToJSON(rw)
 }
