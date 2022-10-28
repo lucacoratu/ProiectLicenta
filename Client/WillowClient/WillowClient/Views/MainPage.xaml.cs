@@ -55,5 +55,10 @@ public partial class MainPage : ContentPage
             this.MenuOpened = false;
         }
     }
+
+    private void CollectionView_Loaded(object sender, EventArgs e)
+    {
+
+    }
 }
 

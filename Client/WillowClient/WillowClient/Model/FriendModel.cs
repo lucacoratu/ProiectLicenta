@@ -8,8 +8,11 @@ namespace WillowClient.Model
 {
     public class FriendModel
     {
+        public int Id { get; set; }
         public string DisplayName { get; set; }
-        public string ProfilePicture { get; set; }
-        public string Status { get; set; }
+        
+        public string BefriendDate { get; set; }
+        public string LastOnline { get; set; }
+        public string JoinDate { get; set; }
     }
 }

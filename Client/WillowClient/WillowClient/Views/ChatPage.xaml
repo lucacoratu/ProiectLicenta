@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.ChatPage"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:ChatViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             Shell.NavBarIsVisible="True">
+
+    <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="*">
+        <FlexLayout Direction="Row" Grid.Row="0" HeightRequest="50" BackgroundColor="#7B68EE">
+            <ImageButton BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="5,0,10,0"/>
+            <VerticalStackLayout Spacing="5" FlexLayout.AlignSelf="Center">
+                <Label Text="{Binding Friend.DisplayName}" TextColor="WhiteSmoke"></Label>
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Last Online:" TextColor="WhiteSmoke"/>
+                    <Label Text="{Binding Friend.LastOnline}" TextColor="WhiteSmoke"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </FlexLayout>
+        <CollectionView x:Name="messageGrid" Grid.Row="1" BackgroundColor="#505050">
+        </CollectionView>
+        <FlexLayout Grid.Row="2" HeightRequest="30">
+            <Button Text="+" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>
+            <Entry Placeholder="Insert Message" FlexLayout.Basis="82%"/>
+            <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
+            <Button Text=">" FlexLayout.Basis="6%"/>
+        </FlexLayout>
+    </Grid>
+</ContentPage>

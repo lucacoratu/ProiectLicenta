@@ -1,7 +1,7 @@
 @string/appbar_scrolling_view_behavior;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\layout\fragment_backstack.xml
 @string/appbar_scrolling_view_behavior;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\layout\navigationlayout.xml
-adaptive-icon;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\appicon.xml
-adaptive-icon;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\appicon_round.xml
+adaptive-icon;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\willow.xml
+adaptive-icon;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\willow_round.xml
 alpha;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\151\jl\res\anim\enterfromleft.xml
 alpha;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\151\jl\res\anim\exittoleft.xml
 alpha;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\anim\nav_default_enter_anim.xml
@@ -15,8 +15,8 @@ androidx.fragment.app.FragmentContainerView;D:\ProiectLicenta\Client\WillowClien
 androidx.fragment.app.FragmentContainerView;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\layout\navigationlayout.xml
 attr;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\152\jl\res\values\attrs.xml
 attr;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\values\attr.xml
-background;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\appicon.xml
-background;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\appicon_round.xml
+background;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\willow.xml
+background;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\willow_round.xml
 cache-path;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\155\jl\res\xml\microsoft_maui_essentials_fileprovider_file_paths.xml
 color;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\values\colors.xml
 color;obj\Debug\net6.0-android\res\resources\values\maui_colors.xml
@@ -30,8 +30,8 @@ declare-styleable;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\n
 declare-styleable;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\values\attr.xml
 external-cache-path;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\155\jl\res\xml\microsoft_maui_essentials_fileprovider_file_paths.xml
 external-path;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\155\jl\res\xml\microsoft_maui_essentials_fileprovider_file_paths.xml
-foreground;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\appicon.xml
-foreground;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\appicon_round.xml
+foreground;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\willow.xml
+foreground;obj\Debug\net6.0-android\resizetizer\r\mipmap-anydpi-v26\willow_round.xml
 item;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\152\jl\res\values\styles.xml
 item;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\drawable\maui_splash.xml
 item;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\values\styles.xml
@@ -70,3 +70,4 @@ translate;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-an
 translate;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\anim\nav_default_exit_anim.xml
 translate;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\anim\nav_default_pop_enter_anim.xml
 translate;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\lp\154\jl\res\anim\nav_default_pop_exit_anim.xml
+vector;obj\Debug\net6.0-android\resizetizer\r\drawable\willow_foreground.xml

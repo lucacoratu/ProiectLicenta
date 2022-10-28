@@ -99,9 +99,12 @@ func InitServer(address string) error {
 	putRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Create the subrouter for the POST method which will have the handler functions for the POST requests to specific routes
-	postRouter := serveMuxServer.Methods(http.MethodPost).Subrouter()	
+	postRouter := serveMuxServer.Methods(http.MethodPost).Subrouter()
 	postRouter.HandleFunc("/friendrequest/add", handlerFriendRequests.AddFriendRequest)
 	postRouter.HandleFunc("/friendrequest/delete", handlerFriendRequests.DeleteFriendRequest)
+	postRouter.HandleFunc("/friend/add", handlerFriends.AddFriend)
+	postRouter.HandleFunc("/friend/delete", handlerFriends.DeleteFriends)
+	postRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Log that the handlers have been added
 	//serverLogger.Info("Handlers added to the serve mux of the server")

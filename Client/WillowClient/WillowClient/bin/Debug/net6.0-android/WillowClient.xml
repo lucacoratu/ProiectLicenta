@@ -16,11 +16,32 @@
         <member name="P:WillowClient.ViewModel.LoginViewModel.Password">
             <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.password"/>
         </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.WindowsVisibility">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.windowsVisibility"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.PhoneVisibility">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.phoneVisibility"/>
+        </member>
         <member name="P:WillowClient.ViewModel.MainViewModel.Account">
             <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.account"/>
         </member>
         <member name="P:WillowClient.ViewModel.MainViewModel.Session">
             <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.session"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.HexID">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.hexID"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.TapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.Tap(WillowClient.Model.FriendModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.getFriendsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GetFriendsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GetFriendsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GetFriendsAsync"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.RegisterViewModel.Username">
             <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.username"/>

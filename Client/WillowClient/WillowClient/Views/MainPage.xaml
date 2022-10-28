@@ -8,73 +8,85 @@
              xmlns:model="clr-namespace:WillowClient.Model"
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
-             BackgroundColor="#303030">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
-    <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="*,*,*">
-        <Grid x:Name="MenuGrid" IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" RowDefinitions="*,Auto" Grid.Column="2">
-            <!--Friends list-->
-            <VerticalStackLayout HorizontalOptions="End" Grid.Row="0">
-                <ImageButton Source="x_sign.png" WidthRequest="30" HeightRequest="30" Clicked="CloseMenu" HorizontalOptions="End"></ImageButton>
-                <CollectionView Margin="0,0,20,0">
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type model:FriendModel}">
-                            <model:FriendModel 
-                                ProfilePicture="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                                DisplayName="LucaCoratu"
-                                Status="Online"
-                                />
-                            <model:FriendModel 
-                                ProfilePicture="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/capuchin.jpg"
-                                DisplayName="Ionut"
-                                Status="Online"
-                                />
-                            <model:FriendModel 
-                                ProfilePicture="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/douc.jpg"
-                                DisplayName="AndreiAndreiAndrei"
-                                Status="1"
-                                />
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:FriendModel">
-                            <HorizontalStackLayout Padding="10" Spacing="6">
-                                <ImageButton
-                                    Aspect="Center"
+    <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="200,*,*,*,200">
+        <Grid Grid.Column="0">
+            <Label Text="Groups" HorizontalTextAlignment="Center"></Label>
+            <CollectionView>
+                
+            </CollectionView>
+        </Grid>
+        <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*" RowDefinitions="50,*">
+            <FlexLayout Grid.Row="0" HeightRequest="50" VerticalOptions="Start" AlignContent="Stretch" Direction="Row" JustifyContent="SpaceEvenly">
+                <Label Text="Friends" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FlexLayout.AlignSelf="Stretch" FlexLayout.Basis="17%"></Label>
+                <Button Text="Online" FlexLayout.Basis="17%"></Button>
+                <Button Text="All" FlexLayout.Basis="17%"></Button>
+                <Button Text="Pending" FlexLayout.Basis="17%"></Button>
+                <Button Text="Blocked" FlexLayout.Basis="17%"></Button>
+                <Button Text="Add Friend" FlexLayout.Basis="17%"></Button>
+            </FlexLayout>
+            <VerticalStackLayout Grid.Row="1" IsVisible="True" Padding="0,20,0,0">
+                <VerticalStackLayout HeightRequest="100" WidthRequest="200" HorizontalOptions="Center">
+                    <Label Text="Add friend" HorizontalOptions="Center"></Label>
+                    <Entry Placeholder="Insert friend name and id"></Entry>
+                    <Button Text="Add friend" WidthRequest="200"></Button>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            <!--<ImageButton WidthRequest="30" HeightRequest="30" Source="open_menu.png" HorizontalOptions="End" VerticalOptions="Start">
+                <ImageButton.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="MenuClicked"/>
+                </ImageButton.GestureRecognizers>
+            </ImageButton>-->
+        </Grid>
+        <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="20,*,80">
+            <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+            <Button Text="GetFriends" Command="{Binding GetFriendsCommand}"></Button>
+            <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:FriendModel">
+                        <HorizontalStackLayout Padding="10" Spacing="6">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <ImageButton
+                                    Aspect="AspectFill"
                                     HeightRequest="50"
-                                    Source="{Binding ProfilePicture}"
+                                    Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                                     WidthRequest="50"
                                     BorderWidth="1.3"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
                                     />
-                                <VerticalStackLayout Spacing="13">
-                                    <Label VerticalOptions="Center" TextColor="Gray">
-                                        <Label.Text>
-                                            <MultiBinding StringFormat="{}{0} | {1}">
-                                                <Binding Path="DisplayName" />
-                                                <Binding Path="Status" />
-                                            </MultiBinding>
-                                        </Label.Text>
-                                    </Label>
-                                    <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
-                                        <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="10,10,10,10"/>
-                                        </Border.StrokeShape>
-                                    </Border>
-                                </VerticalStackLayout>
-                            </HorizontalStackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
-            <!--Profile preview-->
-            <VerticalStackLayout Grid.Row="1" HeightRequest="70" HorizontalOptions="End" Padding="0,0,20,0">
-                <HorizontalStackLayout >
+                            <VerticalStackLayout Spacing="13">
+                                <!--<Label VerticalOptions="Center" TextColor="Gray">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} | {1}">
+                                            <Binding Path="{Binding DisplayName}" />
+                                            --><!--<Binding Path="{Binding LastOnline}" />--><!--
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>-->
+                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                                <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,10,10"/>
+                                    </Border.StrokeShape>
+                                </Border>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <VerticalStackLayout Grid.Row="2" HeightRequest="80" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Padding="0,0,0,0">
+                <HorizontalStackLayout>
                     <Image Source="default_profile_icon.png" WidthRequest="50" HeightRequest="50" Aspect="AspectFill"></Image>
                     <VerticalStackLayout VerticalOptions="Center">
                         <VerticalStackLayout.GestureRecognizers>
                             <TapGestureRecognizer>
-                                
+
                             </TapGestureRecognizer>
                         </VerticalStackLayout.GestureRecognizers>
                         <Label Text="{Binding Account.DisplayName}" TextColor="WhiteSmoke"></Label>
@@ -83,13 +95,6 @@
                     <ImageButton Source="settings_icon.png" WidthRequest="30" HeightRequest="30" Aspect="AspectFill"></ImageButton>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
-        </Grid>
-        <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="0" Grid.ColumnSpan="3">
-            <ImageButton WidthRequest="30" HeightRequest="30" Source="open_menu.png" HorizontalOptions="End" VerticalOptions="Start">
-                <ImageButton.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="MenuClicked"/>
-                </ImageButton.GestureRecognizers>
-            </ImageButton>
         </Grid>
     </Grid>
 </ContentPage>

@@ -68,7 +68,23 @@ func (f *Friend) GetFriends(rw http.ResponseWriter, r *http.Request){
     returnData, err := f.ForwardRequest("http", "localhost:8081", r)
     if err != nil {
         http.Error(rw, err.Error(), http.StatusInternalServerError)
+        return
     }
     rw.WriteHeader(http.StatusOK)
     rw.Write(returnData)   
+}
+
+/*
+ * Accept a friend request
+ */
+func (f *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
+    f.logger.Info("Endpoint /friend/add hit (GET request)")
+
+    returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+    if err != nil {
+        http.Error(rw, err.Error(), http.StatusInternalServerError)
+        return
+    }
+    rw.WriteHeader(http.StatusOK)
+    rw.Write(returnData)
 }

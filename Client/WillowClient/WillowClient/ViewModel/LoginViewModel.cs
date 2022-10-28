@@ -134,7 +134,8 @@ public partial class LoginViewModel : BaseViewModel
                 await Shell.Current.GoToAsync(nameof(MainPage), true, new Dictionary<string, object>
                 {
                     {"account", accountModel },
-                    {"hexID", hexID}
+                    {"hexID", hexID},
+                    {"session", session }
                 });
             }
         }
