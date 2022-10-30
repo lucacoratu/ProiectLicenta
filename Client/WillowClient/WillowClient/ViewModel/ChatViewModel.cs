@@ -26,7 +26,7 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async Task GoBack()
         {
-            await Shell.Current.GoToAsync(nameof(MainPage), true);
+            await Shell.Current.Navigation.PopAsync(true);
         }
 
         [RelayCommand]

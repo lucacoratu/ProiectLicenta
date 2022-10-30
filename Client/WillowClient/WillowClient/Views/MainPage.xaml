@@ -11,37 +11,36 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
     <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="200,*,*,*,200">
-        <Grid Grid.Column="0">
-            <Label Text="Groups" HorizontalTextAlignment="Center"></Label>
-            <CollectionView>
+        <Grid Grid.Column="0" RowDefinitions="Auto,*">
+            <Label Grid.Row="0" Text="Groups" FontSize="Medium" FontAttributes="Bold" BackgroundColor="#7B68EE" HorizontalTextAlignment="Center"></Label>
+            <CollectionView Grid.Row="1">
                 
             </CollectionView>
         </Grid>
         <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*" RowDefinitions="50,*">
             <FlexLayout Grid.Row="0" HeightRequest="50" VerticalOptions="Start" AlignContent="Stretch" Direction="Row" JustifyContent="SpaceEvenly">
-                <Label Text="Friends" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FlexLayout.AlignSelf="Stretch" FlexLayout.Basis="17%"></Label>
-                <Button Text="Online" FlexLayout.Basis="17%"></Button>
-                <Button Text="All" FlexLayout.Basis="17%"></Button>
-                <Button Text="Pending" FlexLayout.Basis="17%"></Button>
-                <Button Text="Blocked" FlexLayout.Basis="17%"></Button>
-                <Button Text="Add Friend" FlexLayout.Basis="17%"></Button>
+                <Label Text="News" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FlexLayout.AlignSelf="Stretch" FlexLayout.Basis="25%"></Label>
+                <Button Text="Pending" FlexLayout.Basis="25%" Command="{Binding SelectPendingCommand}"></Button>
+                <Button Text="Blocked" FlexLayout.Basis="25%"></Button>
+                <Button Text="Add Friend" FlexLayout.Basis="25%" Command="{Binding SelectAddFriendCommand}"></Button>
             </FlexLayout>
-            <VerticalStackLayout Grid.Row="1" IsVisible="True" Padding="0,20,0,0">
+            <VerticalStackLayout Grid.Row="1" IsVisible="{Binding AddFriendSelected}" IsEnabled="{Binding AddFriendSelected}" Padding="0,20,0,0">
                 <VerticalStackLayout HeightRequest="100" WidthRequest="200" HorizontalOptions="Center">
                     <Label Text="Add friend" HorizontalOptions="Center"></Label>
                     <Entry Placeholder="Insert friend name and id"></Entry>
                     <Button Text="Add friend" WidthRequest="200"></Button>
                 </VerticalStackLayout>
             </VerticalStackLayout>
-            <!--<ImageButton WidthRequest="30" HeightRequest="30" Source="open_menu.png" HorizontalOptions="End" VerticalOptions="Start">
-                <ImageButton.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="MenuClicked"/>
-                </ImageButton.GestureRecognizers>
-            </ImageButton>-->
+            <VerticalStackLayout Grid.Row="1" IsEnabled="{Binding PendingSelected}" IsVisible="{Binding PendingSelected}">
+                <Label Text="Friend requests" FontSize="Medium"/>
+                <CollectionView>
+                
+                </CollectionView>
+            </VerticalStackLayout>
         </Grid>
-        <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="20,*,80">
-            <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-            <Button Text="GetFriends" Command="{Binding GetFriendsCommand}"></Button>
+        <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="Auto,*,80">
+            <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0" BackgroundColor="#7B68EE" FontSize="Medium" FontAttributes="Bold"></Label>
+            <Button Text="GetFriends" Command="{Binding GetFriendsCommand}" Grid.Row="0"></Button>
             <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:FriendModel">
@@ -61,14 +60,6 @@
                                     CornerRadius="32"
                                     />
                             <VerticalStackLayout Spacing="13">
-                                <!--<Label VerticalOptions="Center" TextColor="Gray">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}{0} | {1}">
-                                            <Binding Path="{Binding DisplayName}" />
-                                            --><!--<Binding Path="{Binding LastOnline}" />--><!--
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>-->
                                 <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
                                 <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
                                     <Border.StrokeShape>

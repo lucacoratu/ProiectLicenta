@@ -355,3 +355,5 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\clipboard.scale-100.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\camera.scale-100.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\back.scale-100.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\call.scale-100.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\video.scale-100.png

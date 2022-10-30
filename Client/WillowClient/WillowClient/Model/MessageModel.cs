@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace WillowClient.Model
 {
+    public enum MessageOwner {
+        CurrentUser,
+        OtherUser
+    }
     public class MessageModel
     {
+        public MessageOwner Owner { get; set; }
         public string TimeStamp { get; set; }
         public string Text { get; set; }
     }

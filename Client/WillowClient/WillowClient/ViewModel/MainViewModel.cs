@@ -26,6 +26,12 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private string hexID;
 
+        [ObservableProperty]
+        private bool addFriendSelected;
+
+        [ObservableProperty]
+        private bool pendingSelected;
+
         private FriendService friendService;
 
         public ObservableCollection<FriendModel> Friends { get; } = new();
@@ -75,6 +81,37 @@ namespace WillowClient.ViewModel
             {
 
             }
+        }
+
+        [RelayCommand]
+        async Task SelectAddFriend()
+        {
+            if (PendingSelected == true)
+                PendingSelected = false;
+
+            if (AddFriendSelected == true)
+            {
+                AddFriendSelected = false;
+                return;
+            }
+            AddFriendSelected = true;
+        }
+
+        [RelayCommand]
+        async Task SelectPending()
+        {
+            if (AddFriendSelected)
+            {
+                AddFriendSelected = false;
+            }
+
+            if (PendingSelected == true)
+            {
+                pendingSelected = false;
+                return;
+            }
+
+            PendingSelected = true;
         }
     }
 }

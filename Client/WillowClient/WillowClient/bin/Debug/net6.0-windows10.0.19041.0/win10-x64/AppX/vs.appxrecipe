@@ -29,13 +29,13 @@
     <AppXManifest Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2022-10-28T15:15:18.866</Modified>
+      <Modified>2022-10-30T14:24:59.690</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2022-10-28T15:15:18.465</Modified>
+      <Modified>2022-10-30T14:23:55.234</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\WillowClient.runtimeconfig.json">
       <PackagePath>WillowClient.runtimeconfig.json</PackagePath>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net6.0-windows10.0.19041.0\win10-x64\WillowClient.dll">
       <PackagePath>WillowClient.dll</PackagePath>
-      <Modified>2022-10-28T15:15:17.316</Modified>
+      <Modified>2022-10-30T14:24:57.014</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>WillowClient.exe</PackagePath>
-      <Modified>2022-10-28T15:15:17.421</Modified>
+      <Modified>2022-10-30T14:24:57.144</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.netcore.app.runtime.win-x64\6.0.5\runtimes\win-x64\lib\net6.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -1055,7 +1055,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\WillowClient.deps.json">
       <PackagePath>WillowClient.deps.json</PackagePath>
-      <Modified>2022-10-28T15:15:18.707</Modified>
+      <Modified>2022-10-30T14:24:59.423</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\6.0.312\ref\net6.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
       <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>
@@ -1113,6 +1113,10 @@
       <PackagePath>back.scale-100.png</PackagePath>
       <Modified>2022-10-28T14:58:12.210</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\call.scale-100.png">
+      <PackagePath>call.scale-100.png</PackagePath>
+      <Modified>2022-10-30T10:26:14.393</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\camera.scale-100.png">
       <PackagePath>camera.scale-100.png</PackagePath>
       <Modified>2022-10-28T14:45:06.780</Modified>
@@ -1127,23 +1131,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-100.png">
       <PackagePath>dotnet_bot.scale-100.png</PackagePath>
-      <Modified>2022-10-28T14:56:26.056</Modified>
+      <Modified>2022-10-30T10:44:15.810</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
       <PackagePath>dotnet_bot.scale-125.png</PackagePath>
-      <Modified>2022-10-28T14:56:26.068</Modified>
+      <Modified>2022-10-30T10:44:15.824</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
       <PackagePath>dotnet_bot.scale-150.png</PackagePath>
-      <Modified>2022-10-28T14:56:26.081</Modified>
+      <Modified>2022-10-30T10:44:15.842</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
       <PackagePath>dotnet_bot.scale-200.png</PackagePath>
-      <Modified>2022-10-28T14:56:26.100</Modified>
+      <Modified>2022-10-30T10:44:15.869</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
       <PackagePath>dotnet_bot.scale-400.png</PackagePath>
-      <Modified>2022-10-28T14:56:26.150</Modified>
+      <Modified>2022-10-30T10:44:15.937</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\home_icon.scale-100.png">
       <PackagePath>home_icon.scale-100.png</PackagePath>
@@ -1181,129 +1185,133 @@
       <PackagePath>settings_icon.scale-100.png</PackagePath>
       <Modified>2022-09-19T08:48:38.733</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\video.scale-100.png">
+      <PackagePath>video.scale-100.png</PackagePath>
+      <Modified>2022-10-30T10:42:09.459</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willow.ico">
       <PackagePath>willow.ico</PackagePath>
-      <Modified>2022-10-28T14:58:38.842</Modified>
+      <Modified>2022-10-30T10:44:15.795</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-100.png">
       <PackagePath>willowLargeTile.scale-100.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.971</Modified>
+      <Modified>2022-10-30T10:44:15.993</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-125.png">
       <PackagePath>willowLargeTile.scale-125.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.980</Modified>
+      <Modified>2022-10-30T10:44:16.006</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-150.png">
       <PackagePath>willowLargeTile.scale-150.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.992</Modified>
+      <Modified>2022-10-30T10:44:16.023</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-200.png">
       <PackagePath>willowLargeTile.scale-200.png</PackagePath>
-      <Modified>2022-10-28T14:58:39.010</Modified>
+      <Modified>2022-10-30T10:44:16.053</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-400.png">
       <PackagePath>willowLargeTile.scale-400.png</PackagePath>
-      <Modified>2022-10-28T14:58:39.079</Modified>
+      <Modified>2022-10-30T10:44:16.190</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-100.png">
       <PackagePath>willowLogo.scale-100.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.844</Modified>
+      <Modified>2022-10-30T10:44:15.802</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-125.png">
       <PackagePath>willowLogo.scale-125.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.845</Modified>
+      <Modified>2022-10-30T10:44:15.806</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-150.png">
       <PackagePath>willowLogo.scale-150.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.846</Modified>
+      <Modified>2022-10-30T10:44:15.808</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-200.png">
       <PackagePath>willowLogo.scale-200.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.847</Modified>
+      <Modified>2022-10-30T10:44:15.811</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-400.png">
       <PackagePath>willowLogo.scale-400.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.850</Modified>
+      <Modified>2022-10-30T10:44:15.815</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-100.png">
       <PackagePath>willowMediumTile.scale-100.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.873</Modified>
+      <Modified>2022-10-30T10:44:15.848</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-125.png">
       <PackagePath>willowMediumTile.scale-125.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.876</Modified>
+      <Modified>2022-10-30T10:44:15.852</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-150.png">
       <PackagePath>willowMediumTile.scale-150.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.880</Modified>
+      <Modified>2022-10-30T10:44:15.858</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-200.png">
       <PackagePath>willowMediumTile.scale-200.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.885</Modified>
+      <Modified>2022-10-30T10:44:15.866</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-400.png">
       <PackagePath>willowMediumTile.scale-400.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.902</Modified>
+      <Modified>2022-10-30T10:44:15.893</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-100.png">
       <PackagePath>willowSmallTile.scale-100.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.860</Modified>
+      <Modified>2022-10-30T10:44:15.828</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-125.png">
       <PackagePath>willowSmallTile.scale-125.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.862</Modified>
+      <Modified>2022-10-30T10:44:15.831</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-150.png">
       <PackagePath>willowSmallTile.scale-150.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.863</Modified>
+      <Modified>2022-10-30T10:44:15.833</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-200.png">
       <PackagePath>willowSmallTile.scale-200.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.865</Modified>
+      <Modified>2022-10-30T10:44:15.836</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-400.png">
       <PackagePath>willowSmallTile.scale-400.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.870</Modified>
+      <Modified>2022-10-30T10:44:15.844</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-100.png">
       <PackagePath>willowStoreLogo.scale-100.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.852</Modified>
+      <Modified>2022-10-30T10:44:15.817</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-125.png">
       <PackagePath>willowStoreLogo.scale-125.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.853</Modified>
+      <Modified>2022-10-30T10:44:15.818</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-150.png">
       <PackagePath>willowStoreLogo.scale-150.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.854</Modified>
+      <Modified>2022-10-30T10:44:15.820</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-200.png">
       <PackagePath>willowStoreLogo.scale-200.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.856</Modified>
+      <Modified>2022-10-30T10:44:15.822</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-400.png">
       <PackagePath>willowStoreLogo.scale-400.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.859</Modified>
+      <Modified>2022-10-30T10:44:15.827</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-100.png">
       <PackagePath>willowWideTile.scale-100.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.906</Modified>
+      <Modified>2022-10-30T10:44:15.899</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-125.png">
       <PackagePath>willowWideTile.scale-125.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.911</Modified>
+      <Modified>2022-10-30T10:44:15.906</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-150.png">
       <PackagePath>willowWideTile.scale-150.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.919</Modified>
+      <Modified>2022-10-30T10:44:15.915</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-200.png">
       <PackagePath>willowWideTile.scale-200.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.928</Modified>
+      <Modified>2022-10-30T10:44:15.930</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-400.png">
       <PackagePath>willowWideTile.scale-400.png</PackagePath>
-      <Modified>2022-10-28T14:58:38.965</Modified>
+      <Modified>2022-10-30T10:44:15.984</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-windows10.0.19041.0\win10-x64\resizetizer\r\x_sign.scale-100.png">
       <PackagePath>x_sign.scale-100.png</PackagePath>
