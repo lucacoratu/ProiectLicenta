@@ -9,9 +9,9 @@ import (
 	"os/signal"
 	"time"
 	"willow/chatservice/data"
-	"willow/chatservice/logging"
 	"willow/chatservice/database"
 	"willow/chatservice/handlers"
+	"willow/chatservice/logging"
 	"willow/chatservice/websocket"
 
 	"github.com/gorilla/mux"
@@ -65,7 +65,7 @@ func InitServer(address string) error {
 	serverLogger.Info("Database connection has been initialized")
 
 	//Create the pool
-	pool := websocket.NewPool()
+	pool := websocket.NewPool(serverLogger, serverDb)
 	go pool.Start()
 
 	//Create the routes
@@ -76,11 +76,13 @@ func InitServer(address string) error {
 	//Create the subrouter that will handle POST methods
 	getSubrouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getSubrouter.HandleFunc("/privaterooms/{id:[0-9]+}", handlerChat.GetPrivateRooms)
-	serveMux.HandleFunc("/ws", func(rw http.ResponseWriter, r* http.Request){
+	getSubrouter.HandleFunc("/history/{id:[0-9]+}", handlerChat.GetRoomHistory)
+	serveMux.HandleFunc("/ws", func(rw http.ResponseWriter, r *http.Request) {
 		handlerChat.ServeWs(pool, rw, r)
 	})
 	postSubrouter := serveMux.Methods(http.MethodPost).Subrouter()
-	postSubrouter.HandleFunc("/privateroom/create",  handlerChat.CreatePrivateRoom)
+	postSubrouter.HandleFunc("/privateroom/create", handlerChat.CreatePrivateRoom)
+	postSubrouter.HandleFunc("/privateroom", handlerChat.GetRoomId)
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 
@@ -105,7 +107,7 @@ func RunServer() error {
 
 	//Test the connection to the database
 	err := serverDb.TestConnection()
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	serverLogger.Info("Service is connected to the database")

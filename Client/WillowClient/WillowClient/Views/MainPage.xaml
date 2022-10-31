@@ -8,17 +8,18 @@
              xmlns:model="clr-namespace:WillowClient.Model"
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
+             Loaded="PageLoaded"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
     <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="200,*,*,*,200">
-        <Grid Grid.Column="0" RowDefinitions="Auto,*">
+        <Grid Grid.Column="0" RowDefinitions="30,*">
             <Label Grid.Row="0" Text="Groups" FontSize="Medium" FontAttributes="Bold" BackgroundColor="#7B68EE" HorizontalTextAlignment="Center"></Label>
             <CollectionView Grid.Row="1">
                 
             </CollectionView>
         </Grid>
         <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*" RowDefinitions="50,*">
-            <FlexLayout Grid.Row="0" HeightRequest="50" VerticalOptions="Start" AlignContent="Stretch" Direction="Row" JustifyContent="SpaceEvenly">
+            <FlexLayout Grid.Row="0" HeightRequest="30" VerticalOptions="Start" AlignContent="Stretch" Direction="Row" JustifyContent="SpaceEvenly">
                 <Label Text="News" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FlexLayout.AlignSelf="Stretch" FlexLayout.Basis="25%"></Label>
                 <Button Text="Pending" FlexLayout.Basis="25%" Command="{Binding SelectPendingCommand}"></Button>
                 <Button Text="Blocked" FlexLayout.Basis="25%"></Button>
@@ -38,9 +39,9 @@
                 </CollectionView>
             </VerticalStackLayout>
         </Grid>
-        <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="Auto,*,80">
+        <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="30,*,80">
             <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0" BackgroundColor="#7B68EE" FontSize="Medium" FontAttributes="Bold"></Label>
-            <Button Text="GetFriends" Command="{Binding GetFriendsCommand}" Grid.Row="0"></Button>
+            <!--<Button Text="GetFriends" Command="{Binding GetFriendsCommand}" Grid.Row="0"></Button>-->
             <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:FriendModel">

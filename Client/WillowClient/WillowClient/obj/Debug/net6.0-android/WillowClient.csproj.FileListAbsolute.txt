@@ -1016,3 +1016,7 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\andr
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\android\environment.armeabi-v7a.s
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\android\environment.x86.s
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\android\environment.x86_64.s
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\resizetizer\r\drawable\back.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\resizetizer\r\drawable\call.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\resizetizer\r\drawable\camera.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-android\resizetizer\r\drawable\video.png

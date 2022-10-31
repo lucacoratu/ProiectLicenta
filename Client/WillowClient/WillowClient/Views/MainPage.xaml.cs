@@ -56,9 +56,10 @@ public partial class MainPage : ContentPage
         }
     }
 
-    private void CollectionView_Loaded(object sender, EventArgs e)
+    private void PageLoaded(object sender, EventArgs e)
     {
-
+        var vm = BindingContext as MainViewModel;
+        vm.LoadData();
     }
 }
 

@@ -266,3 +266,7 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\open_menu.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\settings_icon.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\x_sign.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\back.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\call.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\camera.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net6.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\video.png

@@ -1,5 +1,7 @@
 package database
 
+import "willow/chatservice/data"
+
 /*
  * This will be the interface that will define the functions that can be called to interact with the database
  * This is needed because during the testing of the application mysql will be used because the cassandra nodes are expensive
@@ -14,4 +16,8 @@ type IConnection interface {
 	//Chat functionality functions
 	CreatePrivateRoom() (int64, error)
 	InsertUserIntoRoom(userId int64, roomId int64) error
+	InsertMessageIntoRoom(roomId int64, typeName string, senderID int64, data string) error
+	GetPrivateRoomUser(senderID int64, roomId int64) (int64, error)
+	GetRoomId(accountId int64, friendId int64) (int64, error)
+	GetHistory(roomId int64) (data.Messages, error)
 }

@@ -6,6 +6,7 @@
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
              x:DataType="viewmodel:ChatViewModel"
              xmlns:model="clr-namespace:WillowClient.Model"
+             Loaded="PageLoaded"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              Shell.NavBarIsVisible="True">
     <ContentPage.Resources>
@@ -64,45 +65,13 @@
                 <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}">
-            <CollectionView.ItemsSource>
-                <x:Array Type="{x:Type model:MessageModel}">
-                    <model:MessageModel
-                        Owner="OtherUser"
-                        TimeStamp="28 10 2022 18:23PM"
-                        Text="Message received from the friend" />
-                    <model:MessageModel
-                        Owner="CurrentUser"
-                        TimeStamp="28 10 2022 18:23PM"
-                        Text="Message sent by me" />
-                    <model:MessageModel
-                        Owner="CurrentUser"
-                        TimeStamp="28 10 2022 18:23PM"
-                        Text="Second message sent by me" />
-                    <model:MessageModel
-                        Owner="OtherUser"
-                        TimeStamp="28 10 2022 18:23PM"
-                        Text="Message received from the friend that is long to test the maximum width of the grid element in the UI"/>
-                    <model:MessageModel
-                        Owner="OtherUser"
-                        TimeStamp="28 10 2022 18:23PM"
-                        Text="Message received from the friend that is long to test the maximum width of the grid element in the UI"/>
-                    <model:MessageModel
-                        Owner="OtherUser"
-                        TimeStamp="28 10 2022 18:23PM"
-                        Text="Message received from the friend that is long to test the maximum width of the grid element in the UI"/>
-                    <model:MessageModel
-                        Owner="CurrentUser"
-                        TimeStamp="28 10 2022 18:23PM"
-                        Text="Message received from the friend that is long to test the maximum width of the grid element in the UI"/>
-                </x:Array>
-            </CollectionView.ItemsSource>
+        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding Messages}" >
         </CollectionView>
         <FlexLayout Grid.Row="2" HeightRequest="40">
             <Button Text="+" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>
-            <Entry Placeholder="Insert Message" FlexLayout.Basis="82%"/>
+            <Entry Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%"/>
             <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
-            <Button Text=">" FlexLayout.Basis="6%"/>
+            <Button Text=">" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}"/>
         </FlexLayout>
     </Grid>
 </ContentPage>

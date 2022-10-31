@@ -10,6 +10,39 @@
         <member name="P:WillowClient.ViewModel.BaseViewModel.Error">
             <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.error"/>
         </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.Friend">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.friend"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.MessageText">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.messageText"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.takePhotoCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.TakePhoto"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.pickFileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.PickFileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.PickFileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.PickFile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.sendMessageCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.SendMessageCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.SendMessageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.SendMessage"/>.</summary>
+        </member>
         <member name="P:WillowClient.ViewModel.LoginViewModel.Username">
             <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.username"/>
         </member>
@@ -31,6 +64,12 @@
         <member name="P:WillowClient.ViewModel.MainViewModel.HexID">
             <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.hexID"/>
         </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.AddFriendSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.addFriendSelected"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.PendingSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.pendingSelected"/>
+        </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>
         </member>
@@ -42,6 +81,18 @@
         </member>
         <member name="P:WillowClient.ViewModel.MainViewModel.GetFriendsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GetFriendsAsync"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectAddFriendCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectAddFriendCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectAddFriendCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectAddFriend"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectPendingCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectPendingCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectPendingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectPending"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.RegisterViewModel.Username">
             <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.username"/>

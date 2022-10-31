@@ -33,15 +33,38 @@ namespace WillowClient.ViewModel
         private bool pendingSelected;
 
         private FriendService friendService;
-
+        private ChatService chatService;
         public ObservableCollection<FriendModel> Friends { get; } = new();
 
-        public MainViewModel(FriendService friendService)
+        public MainViewModel(FriendService friendService, ChatService chatService)
         {
             this.friendService = friendService;
+            this.chatService = chatService;
+            this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
         }
 
-        public async Task LoadData()
+        //This function will be a callback for when a message will be received on the websocket
+        public int MessageReceivedOnWebsocket(string message)
+        {
+            //Check if the message received is the first message that the server sends
+            if (message.IndexOf("New User") != -1)
+            {
+                //It is the first message received from the server, so set the accountId of the connection
+                string hexString = "";
+                for (int i = 1; i < hexID.Length; i++)
+                    hexString += hexID[i];
+                var accountId = int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
+                string setAccountIdMessage = "{\"setAccountId\":" + accountId.ToString() + "}";
+                this.chatService.SendMessageAsync(setAccountIdMessage);
+                return 0;
+            }
+
+            //It is a message from another user
+
+            return 0;
+        }
+
+        public async void LoadData()
         {
             await GetFriendsAsync();
         }
@@ -52,6 +75,7 @@ namespace WillowClient.ViewModel
             await Shell.Current.GoToAsync(nameof(ChatPage), true, new Dictionary<string, object>
                 {
                     {"friend", f},
+                    {"account", Account},
                 });
         }
 

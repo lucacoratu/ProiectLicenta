@@ -3,13 +3,14 @@ package handlers
 import (
 	"net/http"
 	"willow/chatservice/data"
-	"willow/chatservice/logging"
 	"willow/chatservice/database"
-	"willow/chatservice/websocket"
 	jsonerrors "willow/chatservice/errors"
+	"willow/chatservice/logging"
+	"willow/chatservice/websocket"
+
+	"strconv"
 
 	"github.com/gorilla/mux"
-	"strconv"
 )
 
 /*
@@ -24,7 +25,7 @@ type Chat struct {
 /*
  * This function will create a new Chat structure given the logger parameter and the dbConn parameter
  */
-func NewChat(dbConn database.IConnection, logger logging.ILogger) *Chat{
+func NewChat(dbConn database.IConnection, logger logging.ILogger) *Chat {
 	return &Chat{dbConn: dbConn, logger: logger}
 }
 
@@ -66,7 +67,7 @@ func (ch *Chat) CreatePrivateRoom(rw http.ResponseWriter, r *http.Request) {
 		jsonError := jsonerrors.JsonError{Message: "An error occured"}
 		rw.WriteHeader(http.StatusInternalServerError)
 		jsonError.ToJSON(rw)
-		return 
+		return
 	}
 	//Add the second user into the same room
 	err = ch.dbConn.InsertUserIntoRoom(roomData.ReceiverID, roomID)
@@ -75,7 +76,7 @@ func (ch *Chat) CreatePrivateRoom(rw http.ResponseWriter, r *http.Request) {
 		jsonError := jsonerrors.JsonError{Message: "An error occured"}
 		rw.WriteHeader(http.StatusInternalServerError)
 		jsonError.ToJSON(rw)
-		return 
+		return
 	}
 
 	//Send the succes message to the client
@@ -105,10 +106,10 @@ func (ch *Chat) GetPrivateRooms(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 }
 
-func (ch *Chat) ServeWs(pool *websocket.Pool, rw http.ResponseWriter, r * http.Request) {
+func (ch *Chat) ServeWs(pool *websocket.Pool, rw http.ResponseWriter, r *http.Request) {
 	ch.logger.Info("Endpoint /ws hit")
 	ws, err := websocket.Upgrade(rw, r)
-	if err != nil{
+	if err != nil {
 		ch.logger.Error(err.Error())
 		return
 	}
@@ -120,4 +121,69 @@ func (ch *Chat) ServeWs(pool *websocket.Pool, rw http.ResponseWriter, r * http.R
 
 	pool.Register <- client
 	client.Read()
+}
+
+/*
+ * This function will send the client the room id of a private conversation that it requested
+ */
+func (ch *Chat) GetRoomId(rw http.ResponseWriter, r *http.Request) {
+	//Get the accountid and the friendId from the body of the request
+	ch.logger.Info("Endpoint /privateroom hit (POST request)")
+	bodyData := data.GetRoomId{}
+	err := bodyData.FromJSON(r.Body)
+	ch.logger.Debug(bodyData)
+	if err != nil {
+		//Send an error message back
+		ch.logger.Error(err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Invalid json format"}
+		rw.WriteHeader(http.StatusBadRequest)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Get the roomid the client requested
+	roomId, err := ch.dbConn.GetRoomId(bodyData.AccountID, bodyData.FriendID)
+	if err != nil {
+		//Send an error message back
+		ch.logger.Error(err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+	}
+	//Send the room id back to the client
+	respData := data.RoomIdResponse{RoomID: roomId}
+	rw.WriteHeader(http.StatusOK)
+	respData.ToJSON(rw)
+}
+
+/*
+ * This function will send the room history of messages to the client
+ */
+func (ch *Chat) GetRoomHistory(rw http.ResponseWriter, r *http.Request) {
+	//Get the room id from the uri
+	//Get the id from the request URI (gorilla mux)
+	ch.logger.Info("Endpoint /history/{id:[0-9]+} hit (GET Method)")
+	vars := mux.Vars(r)
+	//Check if the id could be parsed (it should always be, but just to be safe, test it)
+	id, err := strconv.Atoi(vars["id"])
+	ch.logger.Debug(id)
+	if err != nil {
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Invalid id format"}
+		rw.WriteHeader(http.StatusBadRequest)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	//Get all the messages in the database for the room id
+	messages, err := ch.dbConn.GetHistory(int64(id))
+	if err != nil {
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	messages.ToJSON(rw)
 }
