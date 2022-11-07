@@ -4,6 +4,7 @@ using Microsoft.UI.Windowing;
 using Windows.Graphics;
 #endif
 
+using WillowClient.Model;
 using WillowClient.ViewModel;
 
 namespace WillowClient.Views;
@@ -60,6 +61,24 @@ public partial class MainPage : ContentPage
     {
         var vm = BindingContext as MainViewModel;
         vm.LoadData();
+    }
+
+    private void createGroupCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        List<FriendModel> current = new();
+        foreach(var element in e.CurrentSelection)
+        {
+            current.Add(element as FriendModel);
+        }
+        var vm = BindingContext as MainViewModel;
+        if(vm != null)
+            vm.CreateGroupSelectionChanged(current);
+    }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        //Clear the data after creating the group
+        this.createGroupCollectionView.SelectedItems = null;
     }
 }
 

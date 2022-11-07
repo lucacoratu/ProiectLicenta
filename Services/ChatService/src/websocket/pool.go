@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"willow/chatservice/database"
+	jsonerrors "willow/chatservice/errors"
 	"willow/chatservice/logging"
 )
 
@@ -61,15 +62,6 @@ func (pool *Pool) ClientUnregistered() {
 func (pool *Pool) MessageReceived(message Message) {
 	//Log that a message has been received on the websocket
 	pool.logger.Info("Message received on the websocket")
-	/*     fmt.Println("Sending message to all clients in Pool")
-	       //Loop through all the connections and send the message
-	       for client, _ := range pool.Clients {
-	           if err := client.Conn.WriteJSON(message); err != nil {
-	               fmt.Println(err)
-	               return
-	           }
-	       } */
-
 	//Check what type of message it is
 	//Check if it is a set AccountID message
 	setIdData := &SetAccountIDMessage{}
@@ -102,9 +94,145 @@ func (pool *Pool) MessageReceived(message Message) {
 		//Exit the function as the message has been handled
 		return
 	}
+	//Check if the message is create group message
+	createGroupData := CreateGroupMessage{}
+	err = json.Unmarshal([]byte(message.Body), &createGroupData)
+	var isCreateGroup bool = true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isCreateGroup = false
+	}
+
+	pool.logger.Debug(createGroupData)
+
+	if isCreateGroup && createGroupData.CreatorId != 0 {
+		pool.logger.Info("Message is CreateGroupMessage")
+		//Create the group and add all the participants in it
+		//Create a new group (insert a new room into the database)
+		roomId, err := pool.dbConn.CreateGroup(createGroupData.GroupName, createGroupData.CreatorId)
+		if err != nil {
+			pool.logger.Info("Error occured when creating group", err.Error())
+			//Send an error message back
+			jsonError := jsonerrors.JsonError{Message: "Cannot create group"}
+			message.C.Conn.WriteJSON(jsonError)
+			return
+		}
+		//Add all the participants into the group
+		for _, accId := range createGroupData.Participants {
+			err := pool.dbConn.InsertUserIntoRoom(accId, roomId)
+			if err != nil {
+				pool.logger.Error("Error occured when inserting user into group", err.Error())
+				//Send an error message back
+				jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+				message.C.Conn.WriteJSON(jsonError)
+				return
+			}
+		}
+		err = pool.dbConn.InsertUserIntoRoom(createGroupData.CreatorId, roomId)
+		if err != nil {
+			pool.logger.Error("Error occured when inserting creator into group", err.Error())
+			//Send an error message back
+			jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+			message.C.Conn.WriteJSON(jsonError)
+			return
+		}
+
+		groupResponse := CreateGroupResponse{}
+		groupResponse.RoomId = roomId
+		groupResponse.CreatorId = createGroupData.CreatorId
+		groupResponse.GroupName = createGroupData.GroupName
+		groupResponse.Participants = createGroupData.Participants
+		//Notify all the connected clients that have been added in the group
+		var found bool = false
+		for _, id := range createGroupData.Participants {
+			for client, _ := range pool.Clients {
+				if client.Id == id {
+					//Send the message to him
+					found = true
+					err = client.Conn.WriteJSON(groupResponse)
+					if err != nil {
+						pool.logger.Error(err.Error())
+						break
+					}
+					pool.logger.Info("Sent the message to the receiver")
+				}
+			}
+			if !found {
+				pool.logger.Info("The message could not be sent to the receiver, he might be offline")
+			}
+		}
+
+		//Notify the client that sent the request that the group has been created
+		for client, _ := range pool.Clients {
+			if client.Id == createGroupData.CreatorId {
+				err = client.Conn.WriteJSON(groupResponse)
+				if err != nil {
+					pool.logger.Error(err.Error())
+					break
+				}
+			}
+		}
+		return
+	}
+
+	//Check if the message is a chat message
+	chatMessageData := ChatMessage{}
+	err = json.Unmarshal([]byte(message.Body), &chatMessageData)
+	var isChatMessage bool = true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isChatMessage = false
+	}
+
+	if isChatMessage {
+		pool.logger.Info("Chat message received on the socket")
+		err = pool.dbConn.InsertMessageIntoRoom(chatMessageData.RoomID, chatMessageData.MessageType, message.C.Id, chatMessageData.Data)
+		//Check if the insert was succesfull
+		if err != nil {
+			//Return an error message to the client
+			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
+			if err != nil {
+				//Log the error message
+				pool.logger.Error(err.Error())
+			}
+		}
+		pool.logger.Info("The new message has been inserted into the database")
+		//Get the participants ids from the database
+		accIds, err := pool.dbConn.GetRoomParticipants(message.C.Id, chatMessageData.RoomID)
+		if err != nil {
+			//Return an error message to the client
+			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
+			if err != nil {
+				//Log the error message
+				pool.logger.Error(err.Error())
+			}
+		}
+		pool.logger.Info("Found the particapants ids,", accIds)
+		//Check if the other user is connected, if it is then sent the message to the other user as well
+		var found bool = false
+		for _, id := range accIds {
+			for client, _ := range pool.Clients {
+				if client.Id == id {
+					//Send the message to him
+					found = true
+					response := PrivateMessageResponse{SenderID: message.C.Id, RoomID: chatMessageData.RoomID, Data: chatMessageData.Data, MessageType: chatMessageData.MessageType}
+					err = client.Conn.WriteJSON(response)
+					if err != nil {
+						pool.logger.Error(err.Error())
+						break
+					}
+					pool.logger.Info("Sent the message to the receiver")
+				}
+			}
+			if !found {
+				pool.logger.Info("The message could not be sent to the receiver, he might be offline")
+			}
+		}
+		return
+	}
 
 	//Check if the message is a private message to a user
-	privMessageData := &PrivateMessage{}
+	/* privMessageData := &PrivateMessage{}
 	err = json.Unmarshal([]byte(message.Body), &privMessageData)
 	var isPrivateMessage bool = true
 	if err != nil {
@@ -157,6 +285,61 @@ func (pool *Pool) MessageReceived(message Message) {
 		}
 	}
 
+	//Check if the message is a group message
+	groupMessageData := &GroupMessage{}
+	err = json.Unmarshal([]byte(message.Body), &groupMessageData)
+	var isGroupMessage bool = true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isPrivateMessage = false
+	}
+
+	if isGroupMessage {
+		pool.logger.Info("Group message has been received")
+		//Insert the message in the database
+		err = pool.dbConn.InsertMessageIntoRoom(privMessageData.RoomID, privMessageData.MessageType, message.C.Id, privMessageData.Data)
+		//Check if the insert was succesfull
+		if err != nil {
+			//Return an error message to the client
+			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
+			if err != nil {
+				//Log the error message
+				pool.logger.Error(err.Error())
+			}
+		}
+		pool.logger.Info("The new message has been inserted into the database")
+		//Get the participants ids from the database
+		accIds, err := pool.dbConn.GetRoomParticipants(message.C.Id, privMessageData.RoomID)
+		if err != nil {
+			//Return an error message to the client
+			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
+			if err != nil {
+				//Log the error message
+				pool.logger.Error(err.Error())
+			}
+		}
+		pool.logger.Info("Found the particapants ids,", accIds)
+		//Check if the other user is connected, if it is then sent the message to the other user as well
+		var found bool = false
+		for _, id := range accIds {
+			for client, _ := range pool.Clients {
+				if client.Id == id {
+					//Send the message to him
+					found = true
+					response := PrivateMessageResponse{SenderID: message.C.Id, RoomID: privMessageData.RoomID, Data: privMessageData.Data, MessageType: privMessageData.MessageType}
+					err = client.Conn.WriteJSON(response)
+					if err != nil {
+						pool.logger.Error(err.Error())
+						break
+					}
+					pool.logger.Info("Sent the message to the receiver")
+				}
+			}
+			if !found {
+				pool.logger.Info("The message could not be sent to the receiver, he might be offline")
+			}
+		}
+	} */
 }
 
 /*

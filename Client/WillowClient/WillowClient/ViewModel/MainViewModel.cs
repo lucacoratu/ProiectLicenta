@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WillowClient.Model;
 using WillowClient.Services;
@@ -32,9 +33,18 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private bool pendingSelected;
 
+        [ObservableProperty]
+        private bool createGroupSelected;
+
+        [ObservableProperty]
+        private string groupName;
+
         private FriendService friendService;
         private ChatService chatService;
         public ObservableCollection<FriendModel> Friends { get; } = new();
+        public ObservableCollection<FriendModel> CreateGroupSelectedFriends { get; set; } = new();
+
+        public ObservableCollection<GroupModel> Groups { get; } = new();
 
         public MainViewModel(FriendService friendService, ChatService chatService)
         {
@@ -44,7 +54,7 @@ namespace WillowClient.ViewModel
         }
 
         //This function will be a callback for when a message will be received on the websocket
-        public int MessageReceivedOnWebsocket(string message)
+        public async Task MessageReceivedOnWebsocket(string message)
         {
             //Check if the message received is the first message that the server sends
             if (message.IndexOf("New User") != -1)
@@ -56,17 +66,43 @@ namespace WillowClient.ViewModel
                 var accountId = int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
                 string setAccountIdMessage = "{\"setAccountId\":" + accountId.ToString() + "}";
                 this.chatService.SendMessageAsync(setAccountIdMessage);
-                return 0;
+                return;
             }
 
             //It is a message from another user
+            if(message.IndexOf("groupName") != -1)
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
 
-            return 0;
+                //Parse the response
+                CreateGroupResponseModel resp = JsonSerializer.Deserialize<CreateGroupResponseModel>(message, options);
+
+                //Notify that the group has been created (move the client to the group page)
+                //await Shell.Current.DisplayAlert("Group created!", "Group" + resp.GroupName + "has been created", "Ok");
+
+                GroupModel gm = new GroupModel();
+                gm.CreatorId = resp.CreatorId;
+                gm.GroupName = resp.GroupName;
+                gm.RoomId = resp.RoomId;
+                //gm.Participants = resp.Participants as List<int>;
+
+                this.Groups.Insert(0, gm);
+
+                //Clear the friends selected for the group
+                this.CreateGroupSelectedFriends.Clear();
+                this.CreateGroupSelected = false;
+            }
+
+            return;
         }
 
         public async void LoadData()
         {
             await GetFriendsAsync();
+            await GetGroupsAsync();
         }
 
         [RelayCommand]
@@ -75,6 +111,16 @@ namespace WillowClient.ViewModel
             await Shell.Current.GoToAsync(nameof(ChatPage), true, new Dictionary<string, object>
                 {
                     {"friend", f},
+                    {"account", Account},
+                });
+        }
+
+        [RelayCommand]
+        async Task TapGroup(GroupModel group)
+        {
+            await Shell.Current.GoToAsync(nameof(GroupChatPage), true, new Dictionary<string, object>
+                {
+                    {"group", group},
                     {"account", Account},
                 });
         }
@@ -107,11 +153,41 @@ namespace WillowClient.ViewModel
             }
         }
 
+        async Task GetGroupsAsync()
+        {
+            try
+            {
+                string hexString = "";
+                for (int i = 1; i < hexID.Length; i++)
+                    hexString += hexID[i];
+                var groups = await chatService.GetGroups(int.Parse(hexString, System.Globalization.NumberStyles.HexNumber), Session);
+                if (Groups.Count != 0)
+                {
+                    Groups.Clear();
+                }
+
+                foreach (var group in groups)
+                    Groups.Add(group);
+            }
+            catch (Exception e)
+            {
+                //Debug.WriteLine(e);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to get groups: {e.Message}", "OK");
+            }
+            finally
+            {
+
+            }
+        }
+
         [RelayCommand]
         async Task SelectAddFriend()
         {
             if (PendingSelected == true)
                 PendingSelected = false;
+
+            if (CreateGroupSelected == true)
+                CreateGroupSelected = false;
 
             if (AddFriendSelected == true)
             {
@@ -125,17 +201,68 @@ namespace WillowClient.ViewModel
         async Task SelectPending()
         {
             if (AddFriendSelected)
-            {
                 AddFriendSelected = false;
-            }
+
+            if (CreateGroupSelected == true)
+                CreateGroupSelected = false;
 
             if (PendingSelected == true)
             {
-                pendingSelected = false;
+                PendingSelected = false;
                 return;
             }
 
             PendingSelected = true;
+        }
+
+        [RelayCommand]
+        async Task SelectCreateGroup()
+        {
+            if (AddFriendSelected)
+                AddFriendSelected = false;
+
+            if (PendingSelected == true)
+                PendingSelected = false;
+
+            if(CreateGroupSelected == true)
+            {
+                CreateGroupSelected = false;
+                return;
+            }
+
+            CreateGroupSelected = true;
+        }
+
+        public void CreateGroupSelectionChanged(List<FriendModel> newList)
+        {
+            if (newList == null)
+                return;
+            //If the friend already exists in the list then remove it
+            if (this.CreateGroupSelectedFriends.Count != 0)
+                this.CreateGroupSelectedFriends.Clear();
+
+            foreach(FriendModel f in newList) {
+                this.CreateGroupSelectedFriends.Add(f);
+            }
+        }
+
+        [RelayCommand]
+        async Task CreateGroup()
+        {
+            //Create the message to create a group
+            CreateGroupMessageModel createGroupMessageModel = new CreateGroupMessageModel();
+            if (this.GroupName == "")
+                return;
+            createGroupMessageModel.groupName = this.GroupName;
+            createGroupMessageModel.creatorID = this.account.Id;
+            createGroupMessageModel.participants = new();
+            foreach(FriendModel f in this.CreateGroupSelectedFriends)
+            {
+                createGroupMessageModel.participants.Add(f.FriendId);
+            }
+
+            string jsonMessage = JsonSerializer.Serialize(createGroupMessageModel);
+            this.chatService.SendMessageAsync(jsonMessage);
         }
     }
 }

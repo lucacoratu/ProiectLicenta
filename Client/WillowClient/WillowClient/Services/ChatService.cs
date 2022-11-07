@@ -13,7 +13,7 @@ namespace WillowClient.Services
     {
         private ClientWebSocket client;
         private HttpClient httpClient;
-        private List<Func<string, int>> recvCallbacks;
+        private List<Func<string, Task>> recvCallbacks;
         public ChatService()
         {
             client = new ClientWebSocket();
@@ -85,7 +85,13 @@ namespace WillowClient.Services
             return await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
         }
 
-        public void RegisterReadCallback(Func<string, int> callbackFunction)
+        public async Task<List<GroupModel>> GetGroups(int accountId, string session)
+        {
+            var response = await this.httpClient.GetAsync("http://localhost:8087/groups/" + accountId.ToString());
+            return await response.Content.ReadFromJsonAsync<List<GroupModel>>();
+        }
+
+        public void RegisterReadCallback(Func<string, Task> callbackFunction)
         {
             this.recvCallbacks.Add(callbackFunction);
         }

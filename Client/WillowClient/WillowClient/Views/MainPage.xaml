@@ -13,18 +13,45 @@
 
     <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="200,*,*,*,200">
         <Grid Grid.Column="0" RowDefinitions="30,*">
-            <Label Grid.Row="0" Text="Groups" FontSize="Medium" FontAttributes="Bold" BackgroundColor="#7B68EE" HorizontalTextAlignment="Center"></Label>
-            <CollectionView Grid.Row="1">
-                
+            <Label Grid.Row="0" Text="Groups" FontSize="Medium" FontAttributes="Bold" BackgroundColor="#7B68EE" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+            <CollectionView Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:GroupModel">
+                        <HorizontalStackLayout Padding="10" Spacing="6">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapGroupCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <ImageButton
+                                    Aspect="AspectFill"
+                                    HeightRequest="50"
+                                    Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                    WidthRequest="50"
+                                    BorderWidth="1.3"
+                                    BorderColor="WhiteSmoke"
+                                    CornerRadius="32"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapGroupCommand}"
+                                    CommandParameter="{Binding .}"
+                                    />
+                            <VerticalStackLayout Spacing="13">
+                                <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
         <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*" RowDefinitions="50,*">
+            <!-- Middle part buttons -->
             <FlexLayout Grid.Row="0" HeightRequest="30" VerticalOptions="Start" AlignContent="Stretch" Direction="Row" JustifyContent="SpaceEvenly">
-                <Label Text="News" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FlexLayout.AlignSelf="Stretch" FlexLayout.Basis="25%"></Label>
+                <Button Text="News" FlexLayout.Basis="25%"></Button>
                 <Button Text="Pending" FlexLayout.Basis="25%" Command="{Binding SelectPendingCommand}"></Button>
-                <Button Text="Blocked" FlexLayout.Basis="25%"></Button>
+                <Button Text="Create Group" FlexLayout.Basis="25%" Command="{Binding SelectCreateGroupCommand}"></Button>
                 <Button Text="Add Friend" FlexLayout.Basis="25%" Command="{Binding SelectAddFriendCommand}"></Button>
             </FlexLayout>
+            <!-- Middle part controls -->
+            <!-- Add friend -->
             <VerticalStackLayout Grid.Row="1" IsVisible="{Binding AddFriendSelected}" IsEnabled="{Binding AddFriendSelected}" Padding="0,20,0,0">
                 <VerticalStackLayout HeightRequest="100" WidthRequest="200" HorizontalOptions="Center">
                     <Label Text="Add friend" HorizontalOptions="Center"></Label>
@@ -32,12 +59,44 @@
                     <Button Text="Add friend" WidthRequest="200"></Button>
                 </VerticalStackLayout>
             </VerticalStackLayout>
+            <!-- View friend requests -->
             <VerticalStackLayout Grid.Row="1" IsEnabled="{Binding PendingSelected}" IsVisible="{Binding PendingSelected}">
-                <Label Text="Friend requests" FontSize="Medium"/>
-                <CollectionView>
-                
-                </CollectionView>
+                <Label Text="Friend requests" FontSize="Medium" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
+            <!-- Create group -->
+            <ScrollView Grid.Row="1" IsEnabled="{Binding CreateGroupSelected}" IsVisible="{Binding CreateGroupSelected}">
+                <VerticalStackLayout>
+                    <Label Text="Choose a name for the group"/>
+                    <Entry Placeholder="Insert the group name" Text="{Binding GroupName}"/>
+                    <Label Text="Add participants" HorizontalOptions="CenterAndExpand"/>
+                    <CollectionView x:Name="createGroupCollectionView" ItemsSource="{Binding Friends}" SelectionMode="Multiple" SelectionChanged="createGroupCollectionView_SelectionChanged">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:FriendModel">
+                                <HorizontalStackLayout Padding="10" Spacing="6">
+                                    <ImageButton
+                                        Aspect="AspectFill"
+                                        HeightRequest="50"
+                                        Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                        WidthRequest="50"
+                                        BorderWidth="1.3"
+                                        BorderColor="WhiteSmoke"
+                                        CornerRadius="32"
+                                        />
+                                    <VerticalStackLayout Spacing="13">
+                                        <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                                        <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="10,10,10,10"/>
+                                            </Border.StrokeShape>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Button Margin="0,10,0,0" Text="Create group" HorizontalOptions="Center" WidthRequest="150" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
+                </VerticalStackLayout>
+            </ScrollView>
         </Grid>
         <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="30,*,80">
             <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0" BackgroundColor="#7B68EE" FontSize="Medium" FontAttributes="Bold"></Label>
@@ -67,6 +126,7 @@
                                         <RoundRectangle CornerRadius="10,10,10,10"/>
                                     </Border.StrokeShape>
                                 </Border>
+                                <!--<Label Text="{Binding Text}" VerticalOptions="Center" TextColor="WhiteSmoke" x:DataType="model:MessageModel"/>-->
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </DataTemplate>

@@ -65,7 +65,7 @@
                 <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding Messages}" >
+        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding Messages}">
         </CollectionView>
         <FlexLayout Grid.Row="2" HeightRequest="40">
             <Button Text="+" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>

@@ -33,6 +33,9 @@ public static class MauiProgram
 		builder.Services.AddTransient<ChatViewModel>();
 		builder.Services.AddTransient<ChatPage>();
 
+		builder.Services.AddTransient<GroupChatViewModel>();
+		builder.Services.AddTransient<GroupChatPage>();
+
         return builder.Build();
 	}
 }

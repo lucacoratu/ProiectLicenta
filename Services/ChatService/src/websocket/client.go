@@ -53,6 +53,36 @@ type PrivateMessageResponse struct {
 	SenderID    int64  `json:"senderId"`
 }
 
+type GroupMessage struct {
+	RoomID      int64  `json:"roomID"`
+	Data        string `json:"data"`
+	MessageType string `json:"messageType"`
+	SenderID    int64  `json:"senderId"`
+	IsGroup     bool   `json:"isGroup"`
+}
+
+type ChatMessage struct {
+	RoomID      int64  `json:"roomID"`
+	Data        string `json:"data"`
+	MessageType string `json:"messageType"`
+}
+
+type CreateGroupMessage struct {
+	CreatorId    int64   `json:"creatorID"`
+	GroupName    string  `json:"groupName"`
+	Participants []int64 `json:"participants"`
+}
+
+type CreateGroupResponse struct {
+	RoomId       int64   `json:"roomId"`
+	CreatorId    int64   `json:"creatorID"`
+	GroupName    string  `json:"groupName"`
+	Participants []int64 `json:"participants"`
+}
+
+type GetGroupsMessage struct {
+}
+
 /*
  * This function will wait for a message to be sent by the client and based on the message type different functions from the pool will be called
  */

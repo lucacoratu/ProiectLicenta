@@ -41,7 +41,7 @@ namespace WillowClient.ViewModel
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
         }
 
-        public int MessageReceivedOnWebsocket(string message)
+        public async Task MessageReceivedOnWebsocket(string message)
         {
             //Check if the message is from the user in the current conversation
             //Parse the JSON
@@ -70,7 +70,7 @@ namespace WillowClient.ViewModel
                                 Text = privMessageModel.Data,
                                 TimeStamp = DateTime.Now.ToString("HH:mm:ss tt")
                             });
-                            return 0;
+                            return;
                         }
                     }
                 }
@@ -80,7 +80,7 @@ namespace WillowClient.ViewModel
                 }
 
             }
-            return 0;
+            return;
         }
         
         public async void GetHistory()

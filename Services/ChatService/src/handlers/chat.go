@@ -187,3 +187,80 @@ func (ch *Chat) GetRoomHistory(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	messages.ToJSON(rw)
 }
+
+/*
+ * This function will create a new group (room that will have a name)
+ */
+func (ch *Chat) CreateGroup(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /group/create hit (POST request)")
+	//Extract the data from the request body
+	createGroupData := data.CreateGroup{}
+	err := createGroupData.FromJSON(r.Body)
+	if err != nil {
+		ch.logger.Error("Error occured when parsing json", err.Error())
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Create a new group (insert a new room into the database)
+	roomId, err := ch.dbConn.CreateGroup(createGroupData.GroupName, createGroupData.CreatorId)
+	if err != nil {
+		ch.logger.Info("Error occured when creating group", err.Error())
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Cannot create group"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Add all the participants into the group
+	for _, accId := range createGroupData.Participants {
+		err := ch.dbConn.InsertUserIntoRoom(accId, roomId)
+		if err != nil {
+			ch.logger.Error("Error occured when inserting user into group", err.Error())
+			//Send an error message back
+			jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+			rw.WriteHeader(http.StatusInternalServerError)
+			jsonError.ToJSON(rw)
+			return
+		}
+	}
+	groupResponse := data.CreateGroupResponse{}
+	groupResponse.GroupId = roomId
+	rw.WriteHeader(http.StatusOK)
+	groupResponse.ToJSON(rw)
+}
+
+/*
+ * This function will send all the groups back to the user
+ */
+func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /groups/{id:[0-9]+} hit (GET request)")
+	vars := mux.Vars(r)
+	//Check if the id could be parsed (it should always be, but just to be safe, test it)
+	id, err := strconv.Atoi(vars["id"])
+	ch.logger.Debug(id)
+	if err != nil {
+		ch.logger.Error("Error occured when parsing the id", err.Error())
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	//Get all the groups that the user has
+	groups, err := ch.dbConn.GetUserGroups(int64(id))
+	if err != nil {
+		ch.logger.Error("Error occured when getting the groups", err.Error())
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	groups.ToJSON(rw)
+}

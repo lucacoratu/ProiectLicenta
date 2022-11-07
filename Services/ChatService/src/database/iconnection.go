@@ -20,4 +20,7 @@ type IConnection interface {
 	GetPrivateRoomUser(senderID int64, roomId int64) (int64, error)
 	GetRoomId(accountId int64, friendId int64) (int64, error)
 	GetHistory(roomId int64) (data.Messages, error)
+	GetRoomParticipants(senderId int64, roomId int64) ([]int64, error)
+	CreateGroup(groupName string, creatorID int64) (int64, error)
+	GetUserGroups(accountID int64) (data.GetGroups, error)
 }

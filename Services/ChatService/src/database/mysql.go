@@ -242,7 +242,7 @@ func (conn *MysqlConnection) GetPrivateRoomUser(senderID int64, roomId int64) (i
 	var accountID int64
 	err = res.Scan(&accountID)
 	if err != nil && err == sql.ErrNoRows {
-		//The salt could not be retrieved which means the username does not exist
+		//The account id could not be extracted
 		return 0, errors.New("not found")
 	}
 	if err != nil {
@@ -253,6 +253,44 @@ func (conn *MysqlConnection) GetPrivateRoomUser(senderID int64, roomId int64) (i
 
 	//The other account id has been found so return it
 	return accountID, nil
+}
+
+/*
+ * This function will get all the participants in a room, if an error occurs then an error will be returned
+ */
+func (conn *MysqlConnection) GetRoomParticipants(senderId int64, roomId int64) ([]int64, error) {
+	//Prepare the select statement to extract the second account id from the private room
+	stmtSelect, err := conn.db.Prepare("SELECT user_room.UserID from user_room INNER JOIN rooms ON rooms.ID = user_room.RoomID WHERE user_room.UserID != ? AND rooms.ID = ?")
+	//Check if an error occured when preparing the select statement
+	if err != nil {
+		//An error occured when preparing the select statement
+		conn.logger.Error("Error occured when preparing the select statement for other person id (private room)", err.Error())
+		return make([]int64, 0), nil
+	}
+	//Execute the select statement
+	rows, err := stmtSelect.Query(senderId, roomId)
+	//Check if an error occured during the execution of the select statement
+	if err != nil {
+		//An error occured when executing the select statement
+		conn.logger.Error("Error occured when executing the select statement for the other person id (private room)", err.Error())
+		return make([]int64, 0), nil
+	}
+
+	//Extract the participants ids
+	accIds := make([]int64, 0)
+	for rows.Next() {
+		var accountID int64
+		err = rows.Scan(&accountID)
+		if err != nil {
+			//Another error occured
+			conn.logger.Error("Error occured when executing the select statement for the other person id (private room)", err.Error())
+			return make([]int64, 0), err
+		}
+		accIds = append(accIds, accountID)
+	}
+
+	//The other account id has been found so return it
+	return accIds, nil
 }
 
 /*
@@ -291,4 +329,62 @@ func (conn *MysqlConnection) GetHistory(roomId int64) (data.Messages, error) {
 
 	//Return the data
 	return messages, nil
+}
+
+/*
+ * This function will create a new room and return the id of the room that it inserted
+ * An error will also be returned if the room could not be created
+ */
+func (conn *MysqlConnection) CreateGroup(groupName string, creatorID int64) (int64, error) {
+	//Prepare the statement that will be executed when creating a new room
+	res, err := conn.db.Exec("INSERT INTO rooms (isGroup, groupName, CreatorId) VALUES (true, ?, ?)", groupName, creatorID)
+	if err != nil {
+		conn.logger.Info("Error occured while creating the room", err.Error())
+		return -1, err
+	}
+	//Return the id of the room that was created
+	return res.LastInsertId()
+}
+
+/*
+ * This function will return all the groups that an account has. If an error occurs then an error will be returned
+ */
+func (conn *MysqlConnection) GetUserGroups(accountID int64) (data.GetGroups, error) {
+	//Prepare the statement that will get all the groups of an account
+	stmtSelect, err := conn.db.Prepare("SELECT rooms.ID, rooms.groupName, rooms.CreatorId, rooms.creationDate FROM rooms INNER JOIN user_room ON user_room.RoomID = rooms.ID WHERE user_room.UserID = ? AND rooms.isGroup = true")
+	//Check if an error occured while inserting into the database
+	if err != nil {
+		conn.logger.Error("Error occured while preparing the get groups select statment", err.Error())
+		return make(data.GetGroups, 0), err
+	}
+	rows, err := stmtSelect.Query(accountID)
+	if err != nil {
+		conn.logger.Error("Error occured while executing the get groups select statement", err.Error())
+		return make(data.GetGroups, 0), err
+	}
+
+	returnData := make(data.GetGroups, 0)
+	for rows.Next() {
+		aux := data.GetGroup{}
+		err := rows.Scan(&aux.RoomId, &aux.GroupName, &aux.CreatorId, &aux.CreationDate)
+		if err != nil {
+			conn.logger.Error("Error occured while fetching get groups data", err.Error())
+			break
+		}
+		//Add the data into the return array
+		returnData = append(returnData, aux)
+	}
+
+	//Get all the participants in the room
+	for _, retData := range returnData {
+		participants, err := conn.GetRoomParticipants(accountID, retData.RoomId)
+		if err != nil {
+			conn.logger.Error("Error occured when getting the room participants")
+			break
+		}
+		retData.Participants = make([]int64, 0)
+		retData.Participants = append(retData.Participants, participants...)
+	}
+
+	return returnData, nil
 }
