@@ -1,6 +1,9 @@
 ﻿using WillowClient.Services;
 using WillowClient.ViewModel;
 using WillowClient.Views;
+using Syncfusion.Maui.Core;
+using Syncfusion.Maui.Core.Hosting;
+using CommunityToolkit.Maui;
 
 namespace WillowClient;
 
@@ -11,6 +14,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

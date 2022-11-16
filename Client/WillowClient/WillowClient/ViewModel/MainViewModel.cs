@@ -96,7 +96,85 @@ namespace WillowClient.ViewModel
                 this.CreateGroupSelected = false;
             }
 
-            return;
+            if (message.IndexOf("data") != -1)
+            {
+                try
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                    };
+                    //Parse the JSON body of the message
+                    PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
+                    if (privMessageModel != null)
+                    {
+                        //This is a private message received from another user
+                        //Check if the sender is the current user from the private conversation
+                        for (int i = 0; i < this.Friends.Count; i++)
+                        {
+                            if (privMessageModel.RoomId == this.Friends[i].RoomID)
+                            {
+                                if (privMessageModel.SenderId == this.Account.Id)
+                                {
+                                    //Update the last message sent in the conversation
+                                    this.Friends[i].LastMessage = "You: " + privMessageModel.Data;
+                                }
+                                else
+                                {
+                                    this.Friends[i].LastMessage = privMessageModel.Data;
+                                }
+                                //Move the conversation to the top
+                                List<FriendModel> CopyFriends = new();
+                                CopyFriends.Add(this.Friends[i]);
+                                for(int index = 0; index < this.Friends.Count; index++)
+                                {
+                                    if(index != i)
+                                        CopyFriends.Add(this.Friends[index]);
+                                }
+                                //this.Friends.Clear();
+                                //System.Threading.Thread.Sleep(100);
+                                for(int index =0; index < CopyFriends.Count; index++)
+                                    this.Friends[index] = CopyFriends[index];
+
+                                return;
+                            }
+                        }
+                        //Check if the message if from a group
+                        for(int i =0; i < this.Groups.Count; i++)
+                        {
+                            if(privMessageModel.RoomId == this.Groups[i].RoomId)
+                            {
+                                if(privMessageModel.SenderId == this.Account.Id)
+                                {
+                                    this.Groups[i].LastMessage = "You: " + privMessageModel.Data;
+                                }
+                                else
+                                {
+                                    this.Groups[i].LastMessage = privMessageModel.Data;
+                                }
+                                //Move the conversation to the top
+                                List<GroupModel> CopyGroups = new();
+                                CopyGroups.Add(this.Groups[i]);
+                                for (int index = 0; index < this.Groups.Count; index++)
+                                {
+                                    if (index != i)
+                                        CopyGroups.Add(this.Groups[index]);
+                                }
+                                //this.Friends.Clear();
+                                //System.Threading.Thread.Sleep(100);
+                                for (int index = 0; index < CopyGroups.Count; index++)
+                                    this.Groups[index] = CopyGroups[index];
+
+                                return;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+            }
         }
 
         public async void LoadData()

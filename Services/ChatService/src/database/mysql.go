@@ -388,3 +388,39 @@ func (conn *MysqlConnection) GetUserGroups(accountID int64) (data.GetGroups, err
 
 	return returnData, nil
 }
+
+/*
+ * This function will get the last message from a room
+ */
+func (conn *MysqlConnection) GetLastMessageFromRoom(roomID int64) (string, error) {
+	//Prepare the select statment which will extract the last message in the room
+	stmtSelect, err := conn.db.Prepare("SELECT messages.Data FROM rooms INNER JOIN messages ON messages.RoomID = rooms.ID WHERE rooms.ID = ? AND messages.SendDate = (SELECT MAX(messages.SendDate) FROM messages WHERE messages.RoomID = ?);")
+	//Check if an error occured when preparing the select statement
+	if err != nil {
+		conn.logger.Error("Error occured while preparing the select statment for last message", err.Error())
+		return "", err
+	}
+	row := stmtSelect.QueryRow(roomID, roomID)
+	//Check if an error occured during the execution of the select statement
+	if row.Err() != nil {
+		//An error occured when executing the select statement
+		conn.logger.Error("Error occured when executing the select statement for the other person id (private room)", row.Err().Error())
+		return "", row.Err()
+	}
+
+	//Extract the second account id
+	var lastMessage string
+	err = row.Scan(&lastMessage)
+	if err != nil && err == sql.ErrNoRows {
+		//The account id could not be extracted
+		return "", errors.New("not found")
+	}
+	if err != nil {
+		//Another error occured
+		conn.logger.Error("Error occured when executing the select statement for the other person id (private room)", row.Err().Error())
+		return "", err
+	}
+
+	//The other account id has been found so return it
+	return lastMessage, nil
+}

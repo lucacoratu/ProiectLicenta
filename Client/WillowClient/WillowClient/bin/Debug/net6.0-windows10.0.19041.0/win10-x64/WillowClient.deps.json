@@ -13,6 +13,7 @@
           "Microsoft.Maui.Dependencies": "6.0.312",
           "Microsoft.Maui.Extensions": "6.0.312",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22000.194",
+          "Syncfusion.Maui.Core": "20.3.57",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "6.0.5",
           "runtimepack.Microsoft.Maui.Core.Runtime.win": "6.0.312",
           "runtimepack.Microsoft.Maui.Controls.Runtime.win": "6.0.312",
@@ -1099,6 +1100,26 @@
           }
         }
       },
+      "Syncfusion.Licensing/20.3.0.57": {
+        "runtime": {
+          "lib/net6.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "20.3.0.57",
+            "fileVersion": "20.3.0.57"
+          }
+        }
+      },
+      "Syncfusion.Maui.Core/20.3.57": {
+        "dependencies": {
+          "Microsoft.Maui.Dependencies": "6.0.312",
+          "Syncfusion.Licensing": "20.3.0.57"
+        },
+        "runtime": {
+          "lib/net6.0-windows10.0.19041.0/Syncfusion.Maui.Core.dll": {
+            "assemblyVersion": "20.3600.0.57",
+            "fileVersion": "20.3600.0.57"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/6.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
@@ -1249,6 +1270,20 @@
       "sha512": "sha512-lz0MF9OjrUaPZ11GOi1lu/GaoQrWVVojb2uZ4sly7FdkYtGeNZcKNVlhHU7fng9HQkprOLJgn4v2oAwaexV4Sw==",
       "path": "microsoft.windowsappsdk/1.0.3",
       "hashPath": "microsoft.windowsappsdk.1.0.3.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/20.3.0.57": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-l/V7HuB/ZgYaSP0+hfvULMKfn5tJxITv6qCj1bwhAcIjKpHcf2wzQ3FHb/IdD5iCnzvAFdubRddJyHbzG+6ieA==",
+      "path": "syncfusion.licensing/20.3.0.57",
+      "hashPath": "syncfusion.licensing.20.3.0.57.nupkg.sha512"
+    },
+    "Syncfusion.Maui.Core/20.3.57": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zIvJX/PAVZny0VroZxPOvQ8xpXaNlsckfd1rZ4usMnbiLsSY6KS85phamWTk6cE6iCCfwBia+2YwSvjzspasww==",
+      "path": "syncfusion.maui.core/20.3.57",
+      "hashPath": "syncfusion.maui.core.20.3.57.nupkg.sha512"
     },
     "System.Diagnostics.DiagnosticSource/6.0.0": {
       "type": "package",

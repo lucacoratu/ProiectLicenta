@@ -30,7 +30,10 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private string messageText;
 
-        public ObservableCollection<MessageModel> Messages { get; } = new();
+        //public ObservableCollection<MessageModel> Messages { get; } = new();
+        public List<MessageModel> Messages { get; } = new();
+
+        public ObservableCollection<MessageGroupModel> MessageGroups { get; } = new();
 
         private int roomId;
 
@@ -68,7 +71,7 @@ namespace WillowClient.ViewModel
                             {
                                 Owner = MessageOwner.OtherUser,
                                 Text = privMessageModel.Data,
-                                TimeStamp = DateTime.Now.ToString("HH:mm:ss tt")
+                                TimeStamp = DateTime.Now.ToString("HH:mm")
                             });
                             return;
                         }
@@ -94,20 +97,60 @@ namespace WillowClient.ViewModel
             {
                 //Create the MessageModel list
                 if (historyMessage.UserId != this.Account.Id)
-                    this.Messages.Add(new MessageModel 
-                    { 
+                {
+                    //Convert date to a cleaner format
+                    var messageDateString = DateTime.Parse(historyMessage.SendDate);
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else
+                    {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else
+                        {
+                            group = messageDateString.ToString("M Y");
+                        }
+                    }
+
+                    //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    this.Messages.Add(new MessageModel
+                    {
                         Owner = MessageOwner.OtherUser,
                         Text = historyMessage.Data,
-                        TimeStamp = historyMessage.SendDate 
+                        TimeStamp = msgDate,
                     });
+
+                }
                 else
-                    this.Messages.Add(new MessageModel 
+                {
+                    var messageDateString = DateTime.Parse(historyMessage.SendDate);
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else
+                    {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else
+                        {
+                            group = messageDateString.ToString("Y");
+                        }
+                    }
+                    //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    this.Messages.Add(new MessageModel
                     {
                         Owner = MessageOwner.CurrentUser,
                         Text = historyMessage.Data,
-                        TimeStamp = historyMessage.SendDate
+                        TimeStamp = msgDate,
                     });
+                }
             }
+            this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));
         }
 
         public async void GetRoomId()
@@ -172,7 +215,7 @@ namespace WillowClient.ViewModel
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
             this.chatService.SendMessageAsync(jsonMessage);
             //Add the message into the collection view for the current user
-            this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm:ss tt") });
+            this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
             this.MessageText = "";
             //Scroll to the end

@@ -1,12 +1,16 @@
 package handlers
 
 import (
+	"io"
 	"net/http"
 	"strconv"
+	"strings"
 	"willow/friendservice/data"
 	"willow/friendservice/database"
 	jsonerrors "willow/friendservice/errors"
 	"willow/friendservice/logging"
+
+	"encoding/json"
 
 	"github.com/gorilla/mux"
 )
@@ -137,7 +141,7 @@ func (fr *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
 
 /*
  * This function will delete a friendship from the database and will notify the client that the friendship has been deleted
- * 
+ *
  */
 func (fr *Friend) DeleteFriend(rw http.ResponseWriter, r *http.Request) {
 
@@ -154,6 +158,7 @@ func (fr *Friend) GetFriends(rw http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	//Convert the id string into a number
 	id, err := strconv.Atoi(vars["id"])
+	fr.logger.Info(id)
 	//Check if an error occured during the conversion from string to int
 	if err != nil {
 		jsonError := jsonerrors.JsonError{Message: "Could not convert id to int"}
@@ -171,7 +176,31 @@ func (fr *Friend) GetFriends(rw http.ResponseWriter, r *http.Request) {
 		jsonError.ToJSON(rw)
 		return
 	}
+	//Get the last message from every friend
+	friendsMessages := make(data.FriendsAndLastMessages, 0)
+	for _, friend := range friends {
+		//Create the structure for the request
+		reqBody := data.GetRoomId{AccountID: int64(friend.AccountID), FriendID: int64(friend.FriendID)}
+		strData, _ := json.Marshal(reqBody)
+		fr.logger.Debug(strData)
+		reqBodyReader := strings.NewReader(string(strData))
+		//Get the room id of the private conversation of this user with the friend
+		resp, _ := http.Post("http://localhost:8087/privateroom", "application/json", reqBodyReader)
+		//Check for errors
+		roomIdResp := data.RoomIdResponse{}
+		_ = roomIdResp.FromJSON(resp.Body)
+		//Get the last message of the private conversation from the ChatService
+		resp, _ = http.Get("http://localhost:8087/history/" + strconv.FormatInt(roomIdResp.RoomID, 10) + "/lastmessage")
+		lastMessage, _ := io.ReadAll(resp.Body)
+		if string(lastMessage) != "" {
+			friendsMessages = append(friendsMessages, data.FriendAndLastMessage{AccountID: friend.AccountID, FriendID: friend.FriendID, RoomID: roomIdResp.RoomID, BefriendDate: friend.BefriendDate, LastMessage: string(lastMessage)})
+		} else {
+			friendsMessages = append(friendsMessages, data.FriendAndLastMessage{AccountID: friend.AccountID, FriendID: friend.FriendID, RoomID: roomIdResp.RoomID, BefriendDate: friend.BefriendDate, LastMessage: "No available message"})
+		}
+	}
+	fr.logger.Info(friendsMessages)
+
 	//Send the friends back to the client
 	rw.WriteHeader(http.StatusOK)
-	friends.ToJSON(rw)
+	friendsMessages.ToJSON(rw)
 }

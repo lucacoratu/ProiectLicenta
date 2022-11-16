@@ -4,6 +4,7 @@
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
              x:Class="WillowClient.Views.LoginPage"
              x:DataType="viewmodel:LoginViewModel"
+             BackgroundImageSource="page_background.jfif"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              >
     <VerticalStackLayout>
@@ -71,7 +72,7 @@
                 <Entry Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" Keyboard="Default" ClearButtonVisibility="WhileEditing" MaxLength="20"></Entry>
             </VerticalStackLayout>
             <HorizontalStackLayout>
-                <CheckBox Color="#7B68EE" HorizontalOptions="Start" Margin="0,0,-90,0"/>
+                <CheckBox Color="#7B68EE" HorizontalOptions="Start" Margin="0,0,0,0"/>
                 <Label Text="Remember me?" Style="{StaticResource WillowMediumLabelStyle}"></Label>
             </HorizontalStackLayout>
             <!--<Button Text="Login" BackgroundColor="#7B68EE" TextColor="WhiteSmoke" Command="{Binding LoginCommand}"></Button>-->

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:Class="WillowClient.Views.GroupChatPage"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -45,8 +46,9 @@
         <FlexLayout Direction="Row" Grid.Row="0" HeightRequest="50" BackgroundColor="#7B68EE" JustifyContent="SpaceBetween">
             <ImageButton BorderColor="Transparent" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="5,0,10,0"/>
             <HorizontalStackLayout FlexLayout.AlignSelf="Center">
-                <ImageButton Aspect="AspectFill" HeightRequest="40" Margin="0,0,10,0"
-                             Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                <toolkit:AvatarView
+                             HeightRequest="40" Margin="0,0,10,0"
+                             ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                              WidthRequest="40"
                              BorderWidth="1.3"
                              BorderColor="WhiteSmoke"

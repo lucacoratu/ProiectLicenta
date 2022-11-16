@@ -10,6 +10,7 @@ type GetGroup struct {
 	GroupName    string  `json:"groupName"`
 	CreatorId    int64   `json:"creatorId"`
 	CreationDate string  `json:"creationDate"`
+	LastMessage  string  `json:"lastMessage"`
 	Participants []int64 `json:"participants"`
 }
 

@@ -11,7 +11,6 @@ namespace WillowClient.Model
         public int RoomId { get; set; }
         public string Data { get; set; }
         public string MessageType { get; set; }
-
         public int SenderId { get; set; }
     }
 }

@@ -8,11 +8,17 @@ using System.Threading.Tasks;
 
 namespace WillowClient.Model
 {
-    public partial class GroupModel
+    public partial class GroupModel : ObservableObject
     {
         public int RoomId { get; set; }
 	    public int CreatorId { get; set; }
 	    public string GroupName { get; set; }
+        private string lastMessage;
+        public string LastMessage
+        {
+            get => lastMessage;
+            set => SetProperty(ref lastMessage, value);
+        }
         public List<int> Participants { get; set; }
     }
 }

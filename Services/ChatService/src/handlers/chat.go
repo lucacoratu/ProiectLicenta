@@ -156,6 +156,35 @@ func (ch *Chat) GetRoomId(rw http.ResponseWriter, r *http.Request) {
 }
 
 /*
+ * This function will get the last message from a room specified by the
+ */
+func (ch *Chat) GetRoomLastMessage(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /history/{id:[0-9]}/lastmessage hit (GET Method)")
+	vars := mux.Vars(r)
+	//Check if the id could be parsed (it should always be, but just to be safe, test it)
+	id, err := strconv.Atoi(vars["id"])
+	ch.logger.Debug(id)
+	if err != nil {
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Invalid id format"}
+		rw.WriteHeader(http.StatusBadRequest)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Get the last message for the room
+	lastMessage, _ := ch.dbConn.GetLastMessageFromRoom(int64(id))
+	/* 	if err != nil {
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Error occured"}
+		rw.WriteHeader(http.StatusBadRequest)
+		jsonError.ToJSON(rw)
+	} */
+	ch.logger.Debug(string(lastMessage))
+	rw.Write([]byte(lastMessage))
+	rw.WriteHeader(http.StatusOK)
+}
+
+/*
  * This function will send the room history of messages to the client
  */
 func (ch *Chat) GetRoomHistory(rw http.ResponseWriter, r *http.Request) {
@@ -260,6 +289,17 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 		jsonError.ToJSON(rw)
 		return
 	}
+
+	for i, _ := range groups {
+		lastMessage, _ := ch.dbConn.GetLastMessageFromRoom(groups[i].RoomId)
+		ch.logger.Debug(lastMessage)
+		if lastMessage != "" {
+			groups[i].LastMessage = lastMessage
+		} else {
+			groups[i].LastMessage = "No available message"
+		}
+	}
+	ch.logger.Debug(groups)
 
 	rw.WriteHeader(http.StatusOK)
 	groups.ToJSON(rw)

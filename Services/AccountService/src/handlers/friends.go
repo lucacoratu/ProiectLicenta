@@ -4,17 +4,17 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
 	"willow/accountservice/logging"
-	"willow/accountservice/data"
 
 	"github.com/gorilla/mux"
 )
 
 type Friends struct {
-	logger      logging.ILogger
-	dbConn 		*database.Connection
+	logger logging.ILogger
+	dbConn *database.Connection
 }
 
 func NewFriends(l logging.ILogger, db *database.Connection) *Friends {
@@ -99,7 +99,7 @@ func (f *Friends) GetFriends(rw http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		//f.logger.Info(*accDetails)
-		frAccount := data.FriendAccount{FriendID: frID, DisplayName: accDetails.DisplayName, BefriendDate: rd.BefriendDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate}
+		frAccount := data.FriendAccount{FriendID: frID, DisplayName: accDetails.DisplayName, RoomID: rd.RoomID, BefriendDate: rd.BefriendDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate, LastMessage: rd.LastMessage}
 		f.logger.Debug(frAccount)
 		accs = append(accs, frAccount)
 	}

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:Class="WillowClient.Views.ChatPage"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -18,8 +19,8 @@
                             <RoundRectangle CornerRadius="10,10,10,0"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout>
-                            <Label Text="{Binding TimeStamp}" HorizontalTextAlignment="End"/>
-                            <Label Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" LineBreakMode="WordWrap" Padding="0,0,0,10"/>
+                            <Label Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" LineBreakMode="WordWrap" Padding="0,0,0,5" FontSize="14"/>
+                            <Label Text="{Binding TimeStamp}" HorizontalTextAlignment="End" FontSize="12"/>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
@@ -31,8 +32,8 @@
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout VerticalOptions="Start">
-                            <Label Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start"/>
-                            <Label Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,10"/>
+                            <Label Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,5" FontSize="14"/>
+                            <Label Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" FontSize="12"/>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
@@ -45,8 +46,10 @@
         <FlexLayout Direction="Row" Grid.Row="0" HeightRequest="50" BackgroundColor="#7B68EE" JustifyContent="SpaceBetween">
             <ImageButton BorderColor="Transparent" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="5,0,10,0"/>
             <HorizontalStackLayout FlexLayout.AlignSelf="Center">
-                <ImageButton Aspect="AspectFill" HeightRequest="40" Margin="0,0,10,0"
-                             Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                <toolkit:AvatarView 
+                             HeightRequest="40"
+                             Margin="0,0,10,0"
+                             ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                              WidthRequest="40"
                              BorderWidth="1.3"
                              BorderColor="WhiteSmoke"
@@ -65,7 +68,12 @@
                 <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding Messages}">
+        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="model:MessageGroupModel">
+                    <Label Text="{Binding Name}" BackgroundColor="LightGray" FontSize="18" FontAttributes="Bold" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
         </CollectionView>
         <FlexLayout Grid.Row="2" HeightRequest="40">
             <Button Text="+" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>

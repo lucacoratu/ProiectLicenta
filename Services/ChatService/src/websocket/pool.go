@@ -228,6 +228,20 @@ func (pool *Pool) MessageReceived(message Message) {
 				pool.logger.Info("The message could not be sent to the receiver, he might be offline")
 			}
 		}
+		//Send the message back to the client as well
+		for client, _ := range pool.Clients {
+			if client.Id == message.C.Id {
+				//Send the message to him
+				found = true
+				response := PrivateMessageResponse{SenderID: message.C.Id, RoomID: chatMessageData.RoomID, Data: chatMessageData.Data, MessageType: chatMessageData.MessageType}
+				err = client.Conn.WriteJSON(response)
+				if err != nil {
+					pool.logger.Error(err.Error())
+					break
+				}
+				pool.logger.Info("Sent the message to the sender")
+			}
+		}
 		return
 	}
 
