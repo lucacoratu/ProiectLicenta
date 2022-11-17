@@ -33,9 +33,6 @@
                                     CornerRadius="32"
                                     >
                             </toolkit:AvatarView>
-                            <!--Aspect="AspectFill"-->
-                                    <!--Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapGroupCommand}"
-                                    CommandParameter="{Binding .}"-->
                             <VerticalStackLayout Spacing="8">
                                 <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
                                 <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True"></Label>
@@ -76,10 +73,9 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:FriendModel">
                                 <HorizontalStackLayout Padding="10" Spacing="6">
-                                    <ImageButton
-                                        Aspect="AspectFill"
+                                    <toolkit:AvatarView
                                         HeightRequest="50"
-                                        Source="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                        ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                                         WidthRequest="50"
                                         BorderWidth="1.3"
                                         BorderColor="WhiteSmoke"
@@ -103,7 +99,6 @@
         </Grid>
         <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="30,*,80">
             <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0" BackgroundColor="#7B68EE" FontSize="Medium" FontAttributes="Bold"></Label>
-            <!--<Button Text="GetFriends" Command="{Binding GetFriendsCommand}" Grid.Row="0"></Button>-->
             <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:FriendModel">
@@ -129,9 +124,7 @@
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
                                     >
-
                                 </toolkit:AvatarView>
-                                <!--Aspect="AspectFill"-->
                                 <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0" VerticalOptions="End">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10"/>
@@ -148,7 +141,6 @@
             </CollectionView>
             <VerticalStackLayout Grid.Row="2" HeightRequest="80" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Padding="0,0,0,0">
                 <HorizontalStackLayout>
-                    <!--<Image Source="default_profile_icon.png" WidthRequest="50" HeightRequest="50" Aspect="AspectFill"></Image>-->
                     <toolkit:AvatarView ImageSource="default_profile_icon.png">
                         <FlyoutBase.ContextFlyout>
                             <MenuFlyout>
@@ -157,11 +149,6 @@
                         </FlyoutBase.ContextFlyout>
                     </toolkit:AvatarView>
                     <VerticalStackLayout VerticalOptions="Center">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer>
-
-                            </TapGestureRecognizer>
-                        </VerticalStackLayout.GestureRecognizers>
                         <Label Text="{Binding Account.DisplayName}" TextColor="WhiteSmoke"></Label>
                         <Label Text="{Binding HexID}" TextColor="WhiteSmoke"></Label>
                     </VerticalStackLayout>

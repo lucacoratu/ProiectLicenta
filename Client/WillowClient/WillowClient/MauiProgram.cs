@@ -30,6 +30,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<RegisterPage>();
 
 		builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddSingleton<MobileMainPage>();
 		builder.Services.AddSingleton<MainViewModel>();
 		builder.Services.AddSingleton<FriendService>();
 

@@ -1,1 +1,0 @@
-D:\ProiectLicenta\Client\WillowClient\WillowClient\WillowClient.csproj;x64

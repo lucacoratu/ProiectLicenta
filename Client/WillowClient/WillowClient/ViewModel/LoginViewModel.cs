@@ -131,12 +131,21 @@ public partial class LoginViewModel : BaseViewModel
                     hexID += "0";
                 }
                 hexID += idHex;
+#if ANDROID
+                await Shell.Current.GoToAsync(nameof(MobileMainPage), true, new Dictionary<string, object>
+                {
+                    {"account", accountModel },
+                    {"hexID", hexID},
+                    {"session", session }
+                });
+#else
                 await Shell.Current.GoToAsync(nameof(MainPage), true, new Dictionary<string, object>
                 {
                     {"account", accountModel },
                     {"hexID", hexID},
                     {"session", session }
                 });
+#endif
             }
         }
     }

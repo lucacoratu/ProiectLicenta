@@ -14,6 +14,7 @@ using WillowClient.Services;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace WillowClient.ViewModel
 {
@@ -32,6 +33,9 @@ namespace WillowClient.ViewModel
 
         //public ObservableCollection<MessageModel> Messages { get; } = new();
         public List<MessageModel> Messages { get; } = new();
+
+        [ObservableProperty]
+        private bool entryEnabled = true;
 
         public ObservableCollection<MessageGroupModel> MessageGroups { get; } = new();
 
@@ -67,12 +71,20 @@ namespace WillowClient.ViewModel
                         if (privMessageModel.SenderId == this.friend.FriendId)
                         {
                             //This is the friend that sent the message
-                            this.Messages.Add(new MessageModel
+                            //this.Messages.Add(new MessageModel
+                            //{
+                            //    Owner = MessageOwner.OtherUser,
+                            //    Text = privMessageModel.Data,
+                            //    TimeStamp = DateTime.Now.ToString("HH:mm")
+                            //});
+                            foreach (var e in this.MessageGroups)
                             {
-                                Owner = MessageOwner.OtherUser,
-                                Text = privMessageModel.Data,
-                                TimeStamp = DateTime.Now.ToString("HH:mm")
-                            });
+                                if (e.Name == "Today")
+                                {
+                                    e.Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                                    //e.Name = "Today";
+                                }
+                            }
                             return;
                         }
                     }
@@ -91,6 +103,8 @@ namespace WillowClient.ViewModel
             //If there are any elements in the list then clear it
             if (Messages.Count != 0)
                 Messages.Clear();
+
+            Dictionary<string, List<MessageModel>> groupsAndMessages = new();
 
             var historyMessages = await this.chatService.GetMessageHistory(this.roomId);
             foreach(var historyMessage in historyMessages)
@@ -111,11 +125,15 @@ namespace WillowClient.ViewModel
                             group = "Yesterday";
                         else
                         {
-                            group = messageDateString.ToString("M Y");
+                            group = messageDateString.ToString("dd MMMM yyyy");
                         }
                     }
 
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    if (!groupsAndMessages.ContainsKey(group))
+                        groupsAndMessages.Add(group, new List<MessageModel>());
+                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = historyMessage.Data, TimeStamp = msgDate });
+                    
                     this.Messages.Add(new MessageModel
                     {
                         Owner = MessageOwner.OtherUser,
@@ -138,10 +156,14 @@ namespace WillowClient.ViewModel
                             group = "Yesterday";
                         else
                         {
-                            group = messageDateString.ToString("Y");
+                            group = messageDateString.ToString("dd MMMM yyyy");
                         }
                     }
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    if (!groupsAndMessages.ContainsKey(group))
+                        groupsAndMessages.Add(group, new List<MessageModel>());
+                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = historyMessage.Data, TimeStamp = msgDate });
+
                     this.Messages.Add(new MessageModel
                     {
                         Owner = MessageOwner.CurrentUser,
@@ -150,7 +172,11 @@ namespace WillowClient.ViewModel
                     });
                 }
             }
-            this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));
+            //this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));
+            foreach(var e in groupsAndMessages)
+            {
+                this.MessageGroups.Add(new MessageGroupModel(e.Key as string, e.Value as List<MessageModel>));
+            }
         }
 
         public async void GetRoomId()
@@ -176,6 +202,7 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async Task GoBack()
         {
+            this.EntryEnabled = false;
             await Shell.Current.Navigation.PopAsync(true);
         }
 
@@ -215,7 +242,15 @@ namespace WillowClient.ViewModel
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
             this.chatService.SendMessageAsync(jsonMessage);
             //Add the message into the collection view for the current user
-            this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
+            foreach(var e in this.MessageGroups)
+            {
+                if (e.Name == "Today")
+                {
+                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                    //e.Name = "Today";
+                }
+            }
+            //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
             this.MessageText = "";
             //Scroll to the end

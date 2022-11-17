@@ -71,15 +71,15 @@
         <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="model:MessageGroupModel">
-                    <Label Text="{Binding Name}" BackgroundColor="LightGray" FontSize="18" FontAttributes="Bold" />
+                    <Label Text="{Binding Name}" BackgroundColor="LightGray" FontSize="15" FontAttributes="Bold" />
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
         </CollectionView>
         <FlexLayout Grid.Row="2" HeightRequest="40">
             <Button Text="+" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>
-            <Entry Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%"/>
+            <Entry x:Name="messageText" Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat"/>
             <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
-            <Button Text=">" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}"/>
+            <Button Text=">" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
         </FlexLayout>
     </Grid>
 </ContentPage>

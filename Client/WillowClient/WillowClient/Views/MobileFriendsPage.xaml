@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.MobileFriendsPage"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             Title="Friends"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             IconImageSource="friends.png">
+    <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:FriendModel">
+                <HorizontalStackLayout Padding="10" Spacing="6">
+                    <FlyoutBase.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Message"/>
+                            <MenuFlyoutItem Text="Call"/>
+                            <MenuFlyoutItem Text="Video call"/>
+                        </MenuFlyout>
+                    </FlyoutBase.ContextFlyout>
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
+                                    CommandParameter="{Binding .}"/>
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <HorizontalStackLayout>
+                        <toolkit:AvatarView
+                                    HeightRequest="50"
+                                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                    WidthRequest="50"
+                                    BorderWidth="1.4"
+                                    BorderColor="WhiteSmoke"
+                                    CornerRadius="32"
+                                    >
+                        </toolkit:AvatarView>
+                        <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0" VerticalOptions="End">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10"/>
+                            </Border.StrokeShape>
+                        </Border>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
+                        <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

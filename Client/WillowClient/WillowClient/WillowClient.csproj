@@ -32,6 +32,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
+		<!--<MauiImage Include="Resources\AppIcon\appiconfg.svg" />-->
 		<MauiIcon Include="Resources\AppIcon\willow.png" Color="WhiteSmoke" Aspect="AspectFill" />
 
 		<!-- Splash Screen -->
@@ -50,9 +51,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <!--<None Remove="Resources\AppIcon\appiconfg.svg" />-->
+	  <MauiIco Remove="Resources\AppIcon\willow.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 	  <PackageReference Include="Syncfusion.Maui.Core" Version="20.3.57" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\MobileGroupsPage.xaml.cs">
+	    <DependentUpon>MobileGroupsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\MobileFriendsPage.xaml.cs">
+	    <DependentUpon>MobileFriendsPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -65,7 +80,19 @@
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\MobileMainPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MobileSettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MobileGroupsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\MobileFriendsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

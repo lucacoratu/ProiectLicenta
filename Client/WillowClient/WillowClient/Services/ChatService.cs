@@ -27,7 +27,7 @@ namespace WillowClient.Services
             if (client.State == WebSocketState.Open)
                 return;
 
-            await client.ConnectAsync(new Uri("ws://localhost:8087/ws"), CancellationToken.None);
+            await client.ConnectAsync(new Uri(Constants.wsServerUrl + "ws"), CancellationToken.None);
 
             await Task.Factory.StartNew(async () =>
             {
@@ -74,20 +74,20 @@ namespace WillowClient.Services
 
         public async Task<string> GetRoomId(GetRoomIdModel getRoomModel)
         {
-            var response = await this.httpClient.PostAsync("http://localhost:8087/privateroom", JsonContent.Create(getRoomModel));
+            var response = await this.httpClient.PostAsync(Constants.chatServerUrl + "privateroom", JsonContent.Create(getRoomModel));
             //Parse the result from the chat service to get the room id
             return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<List<HistoryMessageModel>> GetMessageHistory(int roomId)
         {
-            var response = await this.httpClient.GetAsync("http://localhost:8087/history/" + roomId.ToString());
+            var response = await this.httpClient.GetAsync(Constants.chatServerUrl + "history/" + roomId.ToString());
             return await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
         }
 
         public async Task<List<GroupModel>> GetGroups(int accountId, string session)
         {
-            var response = await this.httpClient.GetAsync("http://localhost:8087/groups/" + accountId.ToString());
+            var response = await this.httpClient.GetAsync(Constants.chatServerUrl + "groups/" + accountId.ToString());
             return await response.Content.ReadFromJsonAsync<List<GroupModel>>();
         }
 

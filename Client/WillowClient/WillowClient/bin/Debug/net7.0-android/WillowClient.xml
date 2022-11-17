@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WillowClient</name>
+    </assembly>
+    <members>
+        <member name="P:WillowClient.ViewModel.BaseViewModel.IsBusy">
+            <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.isBusy"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.BaseViewModel.Error">
+            <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.error"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.Friend">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.friend"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.MessageText">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.messageText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.EntryEnabled">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.entryEnabled"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.takePhotoCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.TakePhoto"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.pickFileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.PickFileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.PickFileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.PickFile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.sendMessageCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.SendMessageCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.SendMessageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.SendMessage"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.Group">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.group"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.MessageText">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.messageText"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.takePhotoCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.TakePhotoCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.TakePhotoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.TakePhoto"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.pickFileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.PickFileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.PickFileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.PickFile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.sendMessageCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.SendMessageCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.SendMessageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.SendMessage"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.Username">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.username"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.Password">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.password"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.WindowsVisibility">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.windowsVisibility"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.PhoneVisibility">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.phoneVisibility"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.Session">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.session"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.HexID">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.hexID"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.AddFriendSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.addFriendSelected"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.PendingSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.pendingSelected"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.CreateGroupSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.createGroupSelected"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GroupName">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.groupName"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.TapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.Tap(WillowClient.Model.FriendModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.tapGroupCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapGroupCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.TapGroupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.TapGroup(WillowClient.Model.GroupModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.getFriendsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GetFriendsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GetFriendsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GetFriendsAsync"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectAddFriendCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectAddFriendCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectAddFriendCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectAddFriend"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectPendingCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectPendingCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectPendingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectPending"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectCreateGroupCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectCreateGroupCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectCreateGroupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectCreateGroup"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.createGroupCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.CreateGroupCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.CreateGroupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.CreateGroup"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Username">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.username"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Password">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.password"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.ConfirmPassword">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.confirmPassword"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Email">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.email"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.DisplayName">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.displayName"/>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_DatePicker.TextColorTo(Microsoft.Maui.Controls.DatePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Editor.TextColorTo(Microsoft.Maui.Controls.Editor,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Entry.TextColorTo(Microsoft.Maui.Controls.Entry,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Label.TextColorTo(Microsoft.Maui.Controls.Label,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Picker.TextColorTo(Microsoft.Maui.Controls.Picker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_RadioButton.TextColorTo(Microsoft.Maui.Controls.RadioButton,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_SearchBar.TextColorTo(Microsoft.Maui.Controls.SearchBar,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_TimePicker.TextColorTo(Microsoft.Maui.Controls.TimePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+    </members>
+</doc>
