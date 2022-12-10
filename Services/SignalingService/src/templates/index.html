@@ -18,15 +18,33 @@
         <!-- Import style sheet -->
         <link rel="stylesheet" href="css/style.css">
     </head>
-    <body class="">
-        <div id ="video_container" style="margin-top: 10%;">
+    <body>
+        <!-- <div id ="video_container" style="margin-top: 6%;">
             <div class="local_div" id="div1">
                 <video id="localVideo" class="" autoplay muted playsinline></video>
+                <image id="localImage" class="" hidden></image>
             </div>
             <div class="remote_div" id="div2">
                 <video id="remoteVideo" class="" autoplay playsinline></video>
+                <image id="remoteImage" class="" hidden></image>
             </div>
         </div>
+        <div> -->
+        <video id="remoteVideo" class="remote-video" autoplay playsinline></video>
+        <img id="remoteImage" class="remote-image" src="images/user.png" hidden></image>
+        <video id="localVideo" class="local-video" autoplay muted playsinline></video>
+        <img id="localImage" class="local-image" src="images/user.png" hidden></image>
+
+        <!-- Buttons ui -->
+        <div class="buttonsDiv">
+            <img class="muteButton" src="images/microphone.png"></img>
+            <div class="leaveContainer">
+                <img class="leaveImage" src="images/hangup.png"></img> 
+                <label class="leaveLabel">Leave</button>
+            </div>
+            <button class="cameraButton">Camera</button>
+        </div>
+
         <h2 id="roomID" hidden>{{.RoomID}}</h2>
         <h2 id="audioEnabled" hidden>{{.AudioEnabled}}</h2>
         <h2 id="videoEnabled" hidden>{{.VideoEnabled}}</h2>

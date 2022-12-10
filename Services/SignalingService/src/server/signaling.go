@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"text/template"
 
 	"github.com/gorilla/websocket"
@@ -25,28 +26,85 @@ func CreateRoomRequestHandler(rw http.ResponseWriter, r *http.Request) {
 }
 
 var upgrader = websocket.Upgrader{
+	ReadBufferSize:  4096,
+	WriteBufferSize: 4096,
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
 }
 
 type broadcastMsg struct {
-	Message map[string]interface{}
+	Message string
 	RoomID  string
 	Client  *websocket.Conn
 }
 
 var broadcast = make(chan broadcastMsg)
 
+type response struct {
+	Content string `json:"content"`
+}
+
+func RemoveIndex(s []Participant, index int) []Participant {
+	return append(s[:index], s[index+1:]...)
+}
+
 func broadcaster() {
 	for {
 		msg := <-broadcast
+		log.Println(msg.Message)
+		if strings.Contains(msg.Message, "create or join") {
+			//The user wanted to create the room
+			//Check if the room is already created
+			if _, ok := AllRooms.Map[msg.RoomID]; ok {
+				//The key exists
+				for _, client := range AllRooms.Map[msg.RoomID] {
+					if client.Conn != msg.Client {
+						resp := response{Content: "join"}
+						err := client.Conn.WriteJSON(resp)
+
+						if err != nil {
+							log.Println(err.Error())
+							client.Conn.Close()
+						}
+					}
+				}
+				//This is the client that joined the room
+				log.Println("Here!")
+				resp := response{Content: "joined"}
+				AllRooms.InsertIntoRoom(msg.RoomID, false, msg.Client)
+				msg.Client.WriteJSON(resp)
+			} else {
+				//The key doesn't exists
+				//Create the key
+				resp := response{Content: "created"}
+				AllRooms.InsertIntoRoom(msg.RoomID, false, msg.Client)
+				msg.Client.WriteJSON(resp)
+			}
+
+			continue
+		}
+
+		//If the message contains bye remove the connection from the room
+		if strings.Contains(msg.Message, "bye") {
+			i := -1
+			for index, client := range AllRooms.Map[msg.RoomID] {
+				if client.Conn == msg.Client {
+					i = index
+					break
+				}
+			}
+			//Remove i client
+			RemoveIndex(AllRooms.Map[msg.RoomID], i)
+			log.Println(AllRooms.Map[msg.RoomID])
+		}
+
 		for _, client := range AllRooms.Map[msg.RoomID] {
 			if client.Conn != msg.Client {
-				err := client.Conn.WriteJSON(msg.Message)
+				err := client.Conn.WriteMessage(1, []byte(msg.Message))
 
 				if err != nil {
-					log.Fatal(err.Error())
+					log.Println(err.Error())
 					client.Conn.Close()
 				}
 			}
@@ -70,16 +128,40 @@ func JoinRoomRequestHandler(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	AllRooms.InsertIntoRoom(roomID[0], false, ws)
-
 	go broadcaster()
 
 	for {
 		var msg broadcastMsg
-		err := ws.ReadJSON(&msg.Message)
-		if err != nil {
-			log.Fatal("Read error", err.Error())
+		msgType, data, err := ws.ReadMessage()
+		log.Println(msgType)
+		if msgType == -1 {
+			//remove the connection from the list of participants
+			i := -1
+			for id, participants := range AllRooms.Map {
+				for index, participant := range participants {
+					if participant.Conn == ws {
+						i = index
+						break
+					}
+				}
+				//Remove the participant at i
+				AllRooms.Map[id] = RemoveIndex(participants, i)
+				log.Println(AllRooms.Map[id])
+				//Check if the room is empty
+				if len(participants) == 0 {
+					AllRooms.DeleteRoom(id)
+				}
+				if i != -1 {
+					break
+				}
+			}
+			return
 		}
+		if err != nil {
+			log.Println("Read error", err.Error())
+			return
+		}
+		msg.Message = string(data)
 		msg.Client = ws
 		msg.RoomID = roomID[0]
 
