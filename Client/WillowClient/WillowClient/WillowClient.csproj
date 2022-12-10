@@ -62,6 +62,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\WindowsCallPage.xaml.cs">
+	    <DependentUpon>WindowsCallPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\MobileGroupsPage.xaml.cs">
 	    <DependentUpon>MobileGroupsPage.xaml</DependentUpon>
 	  </Compile>
@@ -71,6 +74,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\WindowsCallPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ChatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

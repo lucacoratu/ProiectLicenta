@@ -9,7 +9,7 @@
     <VerticalStackLayout>
         <Image x:Name="loginImage" HorizontalOptions="Center" HeightRequest="200" Source="login_image.png" Aspect="AspectFit"/>
         <Label Text="Welcome back" TextColor="WhiteSmoke" FontSize="20" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-        <Label Text="Login to your account" TextColor="WhiteSmoke" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center"></Label>
+        <Label Text="Login to your account" TextColor="WhiteSmoke" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
         <VerticalStackLayout x:Name="PhoneLayout" Padding="40" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="600">
             <VerticalStackLayout Spacing="3">
                 <HorizontalStackLayout>

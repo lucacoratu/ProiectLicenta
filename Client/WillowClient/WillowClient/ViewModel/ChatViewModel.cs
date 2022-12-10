@@ -203,6 +203,7 @@ namespace WillowClient.ViewModel
         public async Task GoBack()
         {
             this.EntryEnabled = false;
+            System.Threading.Thread.Sleep(1000);
             await Shell.Current.Navigation.PopAsync(true);
         }
 
@@ -242,18 +243,53 @@ namespace WillowClient.ViewModel
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
             this.chatService.SendMessageAsync(jsonMessage);
             //Add the message into the collection view for the current user
+            bool found = false;
             foreach(var e in this.MessageGroups)
             {
                 if (e.Name == "Today")
                 {
                     e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
                     //e.Name = "Today";
+                    found = true;
                 }
+            }
+            //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
+            if (!found)
+            {
+                List<MessageModel> messages = new();
+                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                this.MessageGroups.Add(new MessageGroupModel("Today", messages));
             }
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
             this.MessageText = "";
             //Scroll to the end
+        }
+
+        [RelayCommand]
+        public async Task CallPeer()
+        {
+            await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
+                {
+                    {"roomID", roomId },
+                    {"account", account },
+                    {"friend", friend},
+                    {"audio", true},
+                    {"video", false },
+                });
+        }
+
+        [RelayCommand]
+        public async Task VideoCallPeer()
+        {
+            await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
+                {
+                    {"roomID", roomId },
+                    {"account", account },
+                    {"friend", friend},
+                    {"audio", true},
+                    {"video", true },
+                });
         }
     }
 }

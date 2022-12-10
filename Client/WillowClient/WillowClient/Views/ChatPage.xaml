@@ -64,8 +64,8 @@
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <HorizontalStackLayout FlexLayout.AlignSelf="Center">
-                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="call.png"/>
-                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png"/>
+                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="call.png" Command="{Binding CallPeerCommand}"/>
+                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png" Command="{Binding VideoCallPeerCommand}"/>
             </HorizontalStackLayout>
         </FlexLayout>
         <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
