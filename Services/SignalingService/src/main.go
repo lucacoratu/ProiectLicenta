@@ -15,7 +15,7 @@ func main() {
 	http.Handle("/room", http.HandlerFunc(server.RoomRequestHandler))
 
 	log.Println("Starting server on port 8090")
-	err := http.ListenAndServe(":8090", nil)
+	err := http.ListenAndServeTLS(":8090", "server.crt", "server.key", nil)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

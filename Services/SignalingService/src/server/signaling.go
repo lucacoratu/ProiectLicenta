@@ -199,6 +199,15 @@ func RoomRequestHandler(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//Get the platform
+	platform, ok := r.URL.Query()["platform"]
+	if !ok {
+		log.Println("Platform missing in URL query")
+		rw.WriteHeader(http.StatusBadRequest)
+		rw.Write([]byte("platform needs to be specified in the GET parameters"))
+		return
+	}
+
 	audioEnabled, err := strconv.ParseBool(audio[0])
 	if err != nil {
 		log.Println("Cannot parse audio value")
@@ -219,6 +228,7 @@ func RoomRequestHandler(rw http.ResponseWriter, r *http.Request) {
 		RoomID       string
 		AudioEnabled bool
 		VideoEnabled bool
+		Platform     string
 	}
 
 	t, err := template.ParseFiles("./templates/index.html")
@@ -229,5 +239,5 @@ func RoomRequestHandler(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	rw.WriteHeader(http.StatusOK)
-	t.Execute(rw, room{RoomID: roomID[0], AudioEnabled: audioEnabled, VideoEnabled: videoEnabled})
+	t.Execute(rw, room{RoomID: roomID[0], AudioEnabled: audioEnabled, VideoEnabled: videoEnabled, Platform: platform[0]})
 }

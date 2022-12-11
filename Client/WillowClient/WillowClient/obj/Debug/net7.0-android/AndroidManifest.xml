@@ -12,6 +12,18 @@
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+  <uses-permission android:name="android.permission.MICROPHONE" />
+  <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+  <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
+  <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+  <uses-feature android:name="android.hardware.camera" />
+  <uses-feature android:name="android.hardware.camera.autofocus" />
   <application android:allowBackup="true" android:icon="@android:mipmap/sym_def_app_icon" android:roundIcon="@android:mipmap/sym_def_app_icon" android:supportsRtl="true" android:usesCleartextTraffic="true" android:name="crc643d22fa04dc1777af.MainApplication" android:label="WillowClient" android:debuggable="true" android:extractNativeLibs="true">
     <activity android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:theme="@style/Maui.SplashTheme" android:name="crc643d22fa04dc1777af.MainActivity" android:exported="true">
       <intent-filter>
@@ -30,4 +42,7 @@
     <service android:name="crc64396a3fe5f8138e3f.KeepAliveService" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="1999999999" android:authorities="com.companyname.willowclient.mono.MonoRuntimeProvider.__mono_init__" />
   </application>
+  <!-- Required only if your app targets Android 13. -->
+  <!-- Declare one or more the following permissions only if your app needs
+    to access data that's protected by them. -->
 </manifest>

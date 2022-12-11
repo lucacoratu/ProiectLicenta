@@ -269,6 +269,16 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async Task CallPeer()
         {
+#if ANDROID
+            await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
+                {
+                    {"roomID", roomId },
+                    {"account", account },
+                    {"friend", friend},
+                    {"audio", true},
+                    {"video", false },
+                });
+#else
             await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
                 {
                     {"roomID", roomId },
@@ -277,11 +287,22 @@ namespace WillowClient.ViewModel
                     {"audio", true},
                     {"video", false },
                 });
+#endif
         }
 
         [RelayCommand]
         public async Task VideoCallPeer()
         {
+#if ANDROID
+            await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
+                {
+                    {"roomID", roomId },
+                    {"account", account },
+                    {"friend", friend},
+                    {"audio", true},
+                    {"video", true },
+                });
+#else
             await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
                 {
                     {"roomID", roomId },
@@ -290,6 +311,7 @@ namespace WillowClient.ViewModel
                     {"audio", true},
                     {"video", true },
                 });
+#endif
         }
     }
 }

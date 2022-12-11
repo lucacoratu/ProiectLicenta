@@ -10,6 +10,21 @@
         <member name="P:WillowClient.ViewModel.BaseViewModel.Error">
             <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.error"/>
         </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Friend">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.friend"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.RoomId">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.roomId"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Audio">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.audio"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Video">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.video"/>
+        </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.Friend">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.friend"/>
         </member>
@@ -45,6 +60,18 @@
         </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.SendMessageCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.SendMessage"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.callPeerCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.CallPeerCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.CallPeerCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.CallPeer"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.videoCallPeerCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.VideoCallPeerCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.VideoCallPeerCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.VideoCallPeer"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.Group">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.group"/>

@@ -1013,3 +1013,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resi
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\groups.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\settings.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\register_image.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc643da3fe6d814352f9\CustomWebViewChromeClient.java
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc643da3fe6d814352f9\CustomWebViewClient.java
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc643da3fe6d814352f9\CustomWebViewRenderer.java

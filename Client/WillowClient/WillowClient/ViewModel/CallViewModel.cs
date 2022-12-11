@@ -42,7 +42,11 @@ namespace WillowClient.ViewModel
         public void InitializeCall(WebView webView)
         {
             //TO DO... Send details about the call to the signaling service
-            webView.Source = "http://localhost:8090/room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString();
+#if ANDROID
+            webView.Source = "https://10.0.2.2:8090/room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=android";
+#else
+            webView.Source = "https://localhost:8090/room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=windows";  
+#endif
         }
     }
 }

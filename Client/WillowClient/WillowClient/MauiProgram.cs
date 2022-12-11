@@ -4,6 +4,10 @@ using WillowClient.Views;
 using Syncfusion.Maui.Core;
 using Syncfusion.Maui.Core.Hosting;
 using CommunityToolkit.Maui;
+using Microsoft.Maui.Controls.Compatibility.Hosting;
+#if ANDROID
+	using WillowClient.Platforms.Android;
+#endif
 
 namespace WillowClient;
 
@@ -15,13 +19,20 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
+			.UseMauiCompatibility()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		builder.Services.AddSingleton<LoginService>();
+        builder.ConfigureMauiHandlers((handlers) => {
+#if ANDROID
+            handlers.AddCompatibilityRenderer(typeof(CustomWebView), typeof(CustomWebViewRenderer));
+#endif
+        });
+
+        builder.Services.AddSingleton<LoginService>();
 		builder.Services.AddSingleton<LoginViewModel>();
 		builder.Services.AddSingleton<LoginPage>();
 
@@ -43,7 +54,10 @@ public static class MauiProgram
 
 		builder.Services.AddTransient<CallViewModel>();
 		builder.Services.AddTransient<WindowsCallPage>();
+#if ANDROID
+		builder.Services.AddTransient<AndroidCallPage>();
+#endif
 
-        return builder.Build();
+		return builder.Build();
 	}
 }
