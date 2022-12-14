@@ -44,7 +44,7 @@ func InitServer(address string) error {
 	//serverLogger.Info("Logger initialized")
 
 	//Initialize the logger
-	serverLogger = logging.NewLogger(log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags), "[INFO]", "[WARNINGS]", "[ERROR]")
+	serverLogger = logging.NewDebugLogger(log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags), "[INFO]", "[WARNINGS]", "[ERROR]", "[DEBUG]")
 	serverLogger.Info("Logger has been initialized")
 
 	//Create the connection object from the database package

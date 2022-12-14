@@ -42,6 +42,7 @@ namespace WillowClient.ViewModel
         private FriendService friendService;
         private ChatService chatService;
         public ObservableCollection<FriendModel> Friends { get; } = new();
+
         public ObservableCollection<FriendModel> CreateGroupSelectedFriends { get; set; } = new();
 
         public ObservableCollection<GroupModel> Groups { get; } = new();
@@ -114,14 +115,18 @@ namespace WillowClient.ViewModel
                         {
                             if (privMessageModel.RoomId == this.Friends[i].RoomID)
                             {
+                                //Create the hour format from the date the message was sent
+                                var timestamp = DateTime.Now.ToString("HH:mm");
                                 if (privMessageModel.SenderId == this.Account.Id)
                                 {
                                     //Update the last message sent in the conversation
                                     this.Friends[i].LastMessage = "You: " + privMessageModel.Data;
+                                    this.Friends[i].LastMessageTimestamp = timestamp;
                                 }
                                 else
                                 {
                                     this.Friends[i].LastMessage = privMessageModel.Data;
+                                    this.Friends[i].LastMessageTimestamp = timestamp;
                                 }
                                 //Move the conversation to the top
                                 List<FriendModel> CopyFriends = new();
@@ -218,7 +223,15 @@ namespace WillowClient.ViewModel
                 }
 
                 foreach (var friend in friends)
+                {
+                    //Update the date format to show only the hour
+                    if (friend.LastMessageTimestamp != "")
+                    {
+                        string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
+                        friend.LastMessageTimestamp = messageTimestamp;
+                    }
                     Friends.Add(friend);
+                }
             }
             catch(Exception e)
             {

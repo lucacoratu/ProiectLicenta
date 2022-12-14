@@ -1,5 +1,5 @@
 #Start all the vscode instances for the services for easier developing
-$services = @("AccountService", "ChatService", "FriendRequestService", "FriendService", "Gateway")
+$services = @("AccountService", "ChatService", "FriendRequestService", "FriendService", "Gateway", "SignalingService")
 foreach($service in $services){
     Write-Host "Starting vscode for $service"
     Start-Process -FilePath "code" -ArgumentList "." -WorkingDirectory "./$service/src/" -WindowStyle "hidden"

@@ -15,7 +15,16 @@ namespace WillowClient.Model
         public string LastOnline { get; set; }
         public string JoinDate { get; set; }
         public int RoomID { get; set; }
+
+        private string lastMessageTimestamp;
+        public string LastMessageTimestamp
+        {
+            get => lastMessageTimestamp;
+            set => SetProperty(ref lastMessageTimestamp, value);
+        }
+
         private string lastMessage;
+
         public string LastMessage
         {
             get => lastMessage;

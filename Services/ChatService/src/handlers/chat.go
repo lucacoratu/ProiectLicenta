@@ -172,16 +172,19 @@ func (ch *Chat) GetRoomLastMessage(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Get the last message for the room
-	lastMessage, _ := ch.dbConn.GetLastMessageFromRoom(int64(id))
+	lastMessageText, lastMessageTimestamp, _ := ch.dbConn.GetLastMessageFromRoom(int64(id))
 	/* 	if err != nil {
 		//Send an error message back
 		jsonError := jsonerrors.JsonError{Message: "Error occured"}
 		rw.WriteHeader(http.StatusBadRequest)
 		jsonError.ToJSON(rw)
 	} */
-	ch.logger.Debug(string(lastMessage))
-	rw.Write([]byte(lastMessage))
+	lastMessage := data.LastMessage{MessageText: lastMessageText, MessageTimestamp: lastMessageTimestamp}
+	ch.logger.Debug(lastMessage)
 	rw.WriteHeader(http.StatusOK)
+	lastMessage.ToJSON(rw)
+	//rw.Write([]byte(lastMessage))
+
 }
 
 /*
@@ -291,7 +294,7 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	for i, _ := range groups {
-		lastMessage, _ := ch.dbConn.GetLastMessageFromRoom(groups[i].RoomId)
+		lastMessage, _, _ := ch.dbConn.GetLastMessageFromRoom(groups[i].RoomId)
 		ch.logger.Debug(lastMessage)
 		if lastMessage != "" {
 			groups[i].LastMessage = lastMessage

@@ -6,13 +6,14 @@ import (
 )
 
 type FriendAccount struct {
-	FriendID     int64  `json:"friendID"`
-	DisplayName  string `json:"displayName"`
-	BefriendDate string `json:"befriendDate"`
-	LastOnline   string `json:"lastOnline"`
-	JoinDate     string `json:"joinDate"`
-	RoomID       int64  `json:"roomID"`
-	LastMessage  string `json:"lastMessage"`
+	FriendID             int64  `json:"friendID"`
+	DisplayName          string `json:"displayName"`
+	BefriendDate         string `json:"befriendDate"`
+	LastOnline           string `json:"lastOnline"`
+	JoinDate             string `json:"joinDate"`
+	RoomID               int64  `json:"roomID"`
+	LastMessage          string `json:"lastMessage"`
+	LastMessageTimestamp string `json:"lastMessageTimestamp"`
 }
 
 func (fracc *FriendAccount) ToJSON(w io.Writer) error {

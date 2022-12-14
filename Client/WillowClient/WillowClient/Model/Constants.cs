@@ -15,10 +15,12 @@ namespace WillowClient.Model
         public static string serverURL = "http://10.0.2.2:8080";
         public static string wsServerUrl = "ws://10.0.2.2:8087/";
         public static string chatServerUrl = "http://10.0.2.2:8087/";
+        public static string signalingServerURL = "https://10.0.2.2:8090/";
 #else
         public static string serverURL = "http://localhost:8080";
         public static string wsServerUrl = "ws://localhost:8087/";
         public static string chatServerUrl = "http://localhost:8087/";
+        public static string signalingServerURL = "https://localhost:8090/";
 #endif
     }
 }

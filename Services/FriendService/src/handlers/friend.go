@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -191,11 +190,13 @@ func (fr *Friend) GetFriends(rw http.ResponseWriter, r *http.Request) {
 		_ = roomIdResp.FromJSON(resp.Body)
 		//Get the last message of the private conversation from the ChatService
 		resp, _ = http.Get("http://localhost:8087/history/" + strconv.FormatInt(roomIdResp.RoomID, 10) + "/lastmessage")
-		lastMessage, _ := io.ReadAll(resp.Body)
-		if string(lastMessage) != "" {
-			friendsMessages = append(friendsMessages, data.FriendAndLastMessage{AccountID: friend.AccountID, FriendID: friend.FriendID, RoomID: roomIdResp.RoomID, BefriendDate: friend.BefriendDate, LastMessage: string(lastMessage)})
+		lastMessage := data.LastMessage{}
+		_ = lastMessage.FromJSON(resp.Body)
+		fr.logger.Debug("Last message = ", lastMessage)
+		if string(lastMessage.MessageText) != "" {
+			friendsMessages = append(friendsMessages, data.FriendAndLastMessage{AccountID: friend.AccountID, FriendID: friend.FriendID, RoomID: roomIdResp.RoomID, BefriendDate: friend.BefriendDate, LastMessage: string(lastMessage.MessageText), LastMessageTimestamp: lastMessage.MessageTimestamp})
 		} else {
-			friendsMessages = append(friendsMessages, data.FriendAndLastMessage{AccountID: friend.AccountID, FriendID: friend.FriendID, RoomID: roomIdResp.RoomID, BefriendDate: friend.BefriendDate, LastMessage: "No available message"})
+			friendsMessages = append(friendsMessages, data.FriendAndLastMessage{AccountID: friend.AccountID, FriendID: friend.FriendID, RoomID: roomIdResp.RoomID, BefriendDate: friend.BefriendDate, LastMessage: "Start conversation", LastMessageTimestamp: ""})
 		}
 	}
 	fr.logger.Info(friendsMessages)

@@ -47,7 +47,7 @@
                             <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
                             <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
                         </VerticalStackLayout>
-                        <Label Grid.Column="1" Text="12:30 PM" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                        <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
                     </Grid>
                 </HorizontalStackLayout>
             </DataTemplate>

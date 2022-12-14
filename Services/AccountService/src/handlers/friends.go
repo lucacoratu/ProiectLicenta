@@ -81,6 +81,7 @@ func (f *Friends) GetFriends(rw http.ResponseWriter, r *http.Request) {
 	//Read the data from the response
 	respData := &data.FriendResponses{}
 	respData.FromJSON(response.Body)
+	f.logger.Debug(respData)
 
 	accs := make(data.FriendAccounts, 0)
 	for _, rd := range *respData {
@@ -99,7 +100,7 @@ func (f *Friends) GetFriends(rw http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		//f.logger.Info(*accDetails)
-		frAccount := data.FriendAccount{FriendID: frID, DisplayName: accDetails.DisplayName, RoomID: rd.RoomID, BefriendDate: rd.BefriendDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate, LastMessage: rd.LastMessage}
+		frAccount := data.FriendAccount{FriendID: frID, DisplayName: accDetails.DisplayName, RoomID: rd.RoomID, BefriendDate: rd.BefriendDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate, LastMessage: rd.LastMessage, LastMessageTimestamp: rd.LastMessageTimestamp}
 		f.logger.Debug(frAccount)
 		accs = append(accs, frAccount)
 	}
