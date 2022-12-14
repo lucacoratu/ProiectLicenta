@@ -48,9 +48,11 @@ ws.onmessage = function(event) {
     }
     if(message.content === 'join') {
         isChannelReady = true;
+        isInitiator = true;
     }
     if(message.content === 'joined') {
         isChannelReady = true;
+        isInitiator = false;
     }
     if(message.content === 'bye') {
         console.log(message.content);

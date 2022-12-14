@@ -135,6 +135,13 @@
                                 <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
                                 <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True"/>
                             </VerticalStackLayout>
+                            <!--<Grid ColumnDefinitions="85,*">
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                    <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                                </VerticalStackLayout>
+                                <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                            </Grid>-->
                         </HorizontalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

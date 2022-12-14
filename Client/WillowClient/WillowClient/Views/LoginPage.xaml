@@ -16,14 +16,14 @@
                     <Image WidthRequest="32" HeightRequest="32" Aspect="Fill" Source="login_username.png"></Image>
                     <Label Text="Username" Style="{StaticResource WillowMediumLabelStyle}"/>
                 </HorizontalStackLayout>
-                <Entry x:Name="entryUsername" Placeholder="Enter username" TextColor="WhiteSmoke" Text="{Binding Username}" Keyboard="Default" ClearButtonVisibility="WhileEditing" MaxLength="20"></Entry>
+                <Entry x:Name="entryUsername" Placeholder="Enter username" TextColor="WhiteSmoke" Text="{Binding Username}" Keyboard="Default" ClearButtonVisibility="WhileEditing" MaxLength="20" Unfocused="entryUsername_Unfocused"></Entry>
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="5">
                 <HorizontalStackLayout Padding="7,0,0,0" Spacing="6">
                     <Image WidthRequest="20" HeightRequest="20" Aspect="Fill" Source="login_password.png"></Image>
                     <Label Text="Password" Style="{StaticResource WillowMediumLabelStyle}"/>
                 </HorizontalStackLayout>
-                <Entry x:Name="entryPassword" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" Keyboard="Default" ClearButtonVisibility="WhileEditing" MaxLength="20"></Entry>
+                <Entry x:Name="entryPassword" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" Keyboard="Default" ClearButtonVisibility="WhileEditing" MaxLength="20" Unfocused="entryPassword_Unfocused"></Entry>
             </VerticalStackLayout>
             <HorizontalStackLayout>
                 <CheckBox Color="#7B68EE" HorizontalOptions="Start" Margin="0,0,0,0"/>

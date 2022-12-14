@@ -23,7 +23,25 @@ public partial class LoginPage : ContentPage
     {
 #if ANDROID
       this.entryUsername.IsEnabled = false;
+      this.entryUsername.IsEnabled = true;
       this.entryPassword.IsEnabled = false;
+      this.entryPassword.IsEnabled = true;
+#endif
+    }
+
+    private void entryUsername_Unfocused(object sender, FocusEventArgs e)
+    {
+#if ANDROID
+        this.entryUsername.IsEnabled = false;
+        this.entryUsername.IsEnabled = true;
+#endif
+    }
+
+    private void entryPassword_Unfocused(object sender, FocusEventArgs e)
+    {
+#if ANDROID
+        this.entryPassword.IsEnabled = false;
+        this.entryPassword.IsEnabled = true;
 #endif
     }
 }

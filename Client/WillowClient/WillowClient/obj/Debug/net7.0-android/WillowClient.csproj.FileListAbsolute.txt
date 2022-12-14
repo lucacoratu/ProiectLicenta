@@ -461,7 +461,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\andr
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\Xamarin.Kotlin.StdLib.Jdk8.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\Xamarin.KotlinX.Coroutines.Android.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\Xamarin.KotlinX.Coroutines.Core.Jvm.dll
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\typemaps.x86_64.ll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\AndroidManifest.xml
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\AndroidManifest.xml
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\__environment__.txt
@@ -470,7 +469,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\andr
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\bin\mono.android.jar
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\static.flag
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\buildid.txt
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\environment.x86_64.ll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\androidx\activity\ktx\R.java
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\androidx\activity\R.java
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\androidx\annotation\experimental\R.java
@@ -975,12 +973,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resi
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\mipmap-xxxhdpi\willow_foreground.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\bin\packaged_resources
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\com\companyname\willowclient\R.java
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\compressed_assemblies.x86_64.ll
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\typemaps.x86_64.o
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\environment.x86_64.o
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\compressed_assemblies.x86_64.o
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\jni_remap.x86_64.o
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\app_shared_libraries\x86_64\libxamarin-app.so
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\bin\classes.dex
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\bin\classes2.dex
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\stamp\_CleanIntermediateIfNeeded.stamp
@@ -1016,3 +1008,11 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resi
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc643da3fe6d814352f9\CustomWebViewChromeClient.java
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc643da3fe6d814352f9\CustomWebViewClient.java
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc643da3fe6d814352f9\CustomWebViewRenderer.java
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\typemaps.x86_64.ll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\environment.x86_64.ll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\compressed_assemblies.x86_64.ll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\typemaps.x86_64.o
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\environment.x86_64.o
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\compressed_assemblies.x86_64.o
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\jni_remap.x86_64.o
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\app_shared_libraries\x86_64\libxamarin-app.so
