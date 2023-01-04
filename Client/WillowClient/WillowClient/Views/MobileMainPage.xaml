@@ -6,5 +6,9 @@
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
              Loaded="TabbedPage_Loaded"
+             Shell.TabBarBackgroundColor="{StaticResource AccentLightColor}"
+             Shell.TabBarTitleColor="WhiteSmoke"
+             Shell.TabBarUnselectedColor="Gray"
+             Shell.TabBarForegroundColor="Aqua"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 </TabbedPage>

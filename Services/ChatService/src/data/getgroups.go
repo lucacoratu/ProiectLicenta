@@ -6,12 +6,13 @@ import (
 )
 
 type GetGroup struct {
-	RoomId       int64   `json:"roomId"`
-	GroupName    string  `json:"groupName"`
-	CreatorId    int64   `json:"creatorId"`
-	CreationDate string  `json:"creationDate"`
-	LastMessage  string  `json:"lastMessage"`
-	Participants []int64 `json:"participants"`
+	RoomId               int64   `json:"roomId"`
+	GroupName            string  `json:"groupName"`
+	CreatorId            int64   `json:"creatorId"`
+	CreationDate         string  `json:"creationDate"`
+	LastMessage          string  `json:"lastMessage"`
+	LastMessageTimestamp string  `json:"lastMessageTimestamp"`
+	Participants         []int64 `json:"participants"`
 }
 
 func (gg *GetGroup) ToJSON(w io.Writer) error {

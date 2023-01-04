@@ -8,7 +8,8 @@
              Title="Groups"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              IconImageSource="groups.png">
-    <VerticalStackLayout>
+    <Grid RowDefinitions="40, *">
+        <SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>
         <CollectionView Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:GroupModel">
@@ -27,13 +28,19 @@
                                     CornerRadius="32"
                                     >
                         </toolkit:AvatarView>
-                        <VerticalStackLayout Spacing="8">
-                            <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
-                            <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True"></Label>
-                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="230,*">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="30,0,0,0" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                        </Grid>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+        <Frame Grid.Row="1" VerticalOptions="End" WidthRequest="50" HeightRequest="50" Margin="0,0,0,10" Padding="0" HorizontalOptions="Center" BackgroundColor="Transparent" IsClippedToBounds="True" CornerRadius="30">
+            <Button HorizontalOptions="Center" VerticalOptions="Center" Text="+" FontAttributes="Bold" FontSize="30" Margin="-20" TextColor="WhiteSmoke" Command="{Binding CreateGroupMobileCommand}"/>
+        </Frame>
+    </Grid>
 </ContentPage>

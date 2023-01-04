@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:Class="WillowClient.Views.CreateGroupPage"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="ModalAnimated"
+             Title="CreateGroupPage"
+             Loaded="ContentPage_Loaded"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+
+    <Grid RowDefinitions="*">
+        <!--<ScrollView Grid.Row="0" IsEnabled="{Binding CreateGroupSelected}" IsVisible="{Binding CreateGroupSelected}">-->
+            <VerticalStackLayout>
+             <Label Text="Choose a name for the group"/>
+            <Entry Placeholder="Insert the group name" Text="{Binding GroupName}"/>
+            <Label Text="Add participants" HorizontalOptions="CenterAndExpand"/>
+            <CollectionView x:Name="createGroupCollectionView" ItemsSource="{Binding Friends}" SelectionMode="Multiple" SelectionChanged="createGroupCollectionView_SelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:FriendModel">
+                        <HorizontalStackLayout Padding="10" Spacing="6">
+                            <!--<HorizontalStackLayout.GestureRecognizers>
+                                        <SwipeGestureRecognizer Direction="Left" Command="">
+                                            
+                                        </SwipeGestureRecognizer>
+                                    </HorizontalStackLayout.GestureRecognizers>-->
+                            <toolkit:AvatarView
+                                        HeightRequest="50"
+                                        ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                        WidthRequest="50"
+                                        BorderWidth="1.3"
+                                        BorderColor="WhiteSmoke"
+                                        CornerRadius="32"
+                                        />
+                            <VerticalStackLayout Spacing="13">
+                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                                <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,10,10"/>
+                                    </Border.StrokeShape>
+                                </Border>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Margin="0,10,0,0" Text="Create group" TextColor="WhiteSmoke" HorizontalOptions="Center" WidthRequest="150" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
+        </VerticalStackLayout>
+    <!--</ScrollView>-->
+    </Grid>
+</ContentPage>

@@ -19,6 +19,13 @@ namespace WillowClient.Model
             get => lastMessage;
             set => SetProperty(ref lastMessage, value);
         }
+
+        private string lastMessageTimestamp;
+        public string LastMessageTimestamp
+        {
+            get => lastMessageTimestamp;
+            set => SetProperty(ref lastMessageTimestamp, value);
+        }
         public List<int> Participants { get; set; }
     }
 }

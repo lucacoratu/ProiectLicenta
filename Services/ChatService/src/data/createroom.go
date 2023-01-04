@@ -9,8 +9,8 @@ import (
  * This structure will hold variables that will be used when creating a new private room
  */
 type CreatePrivateRoom struct {
-	SenderID int64 `json:"senderID"` //This is the id of the user that made the request to create a room
-	ReceiverID int64 `json:"receiverID"` //This is the id of the user that will be added in the room
+	SenderID   int64 `json:"accountID"` //This is the id of the user that made the request to create a room
+	ReceiverID int64 `json:"friendID"`  //This is the id of the user that will be added in the room
 }
 
 /*

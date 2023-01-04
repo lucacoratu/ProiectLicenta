@@ -10,24 +10,26 @@
              Title="Friends"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              IconImageSource="friends.png">
-    <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None" VerticalScrollBarVisibility="Default">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="model:FriendModel">
-                <HorizontalStackLayout Padding="10" Spacing="6" Margin="5,0,5,0">
-                    <FlyoutBase.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Text="Message"/>
-                            <MenuFlyoutItem Text="Call"/>
-                            <MenuFlyoutItem Text="Video call"/>
-                        </MenuFlyout>
-                    </FlyoutBase.ContextFlyout>
-                    <HorizontalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer 
+    <Grid RowDefinitions="40,*">
+        <SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:FriendModel">
+                    <HorizontalStackLayout Padding="10" Spacing="6" Margin="5,0,5,0">
+                        <FlyoutBase.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Message"/>
+                                <MenuFlyoutItem Text="Call"/>
+                                <MenuFlyoutItem Text="Video call"/>
+                            </MenuFlyout>
+                        </FlyoutBase.ContextFlyout>
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
                                     CommandParameter="{Binding .}"/>
-                    </HorizontalStackLayout.GestureRecognizers>
-                    <HorizontalStackLayout>
-                        <toolkit:AvatarView
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <HorizontalStackLayout>
+                            <toolkit:AvatarView
                                     HeightRequest="50"
                                     ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                                     WidthRequest="50"
@@ -35,22 +37,27 @@
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
                                     >
-                        </toolkit:AvatarView>
-                        <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0" VerticalOptions="End">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="10,10,10,10"/>
-                            </Border.StrokeShape>
-                        </Border>
+                            </toolkit:AvatarView>
+                            <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0" VerticalOptions="End">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10"/>
+                                </Border.StrokeShape>
+                            </Border>
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="230,*">
+                            <VerticalStackLayout Grid.Column="0">
+                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="30,0,0,0" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                        </Grid>
                     </HorizontalStackLayout>
-                    <Grid ColumnDefinitions="230,*">
-                        <VerticalStackLayout Grid.Column="0">
-                            <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
-                            <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
-                        </VerticalStackLayout>
-                        <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
-                    </Grid>
-                </HorizontalStackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" HeightRequest="35" VerticalOptions="End" Margin="10">
+            <Button Grid.Column="0" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Add Friend" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding AddFriendMobileCommand}"/>
+            <Button Grid.Column="1" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Friend Requests" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding FriendRequestMobileCommand}"/>
+        </Grid>
+        </Grid>
 </ContentPage>

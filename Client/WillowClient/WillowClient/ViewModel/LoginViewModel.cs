@@ -122,7 +122,7 @@ public partial class LoginViewModel : BaseViewModel
                 //Redirect to the main page because the user logged in succesfully
 
                 string session = this.m_LoginService.GetSessionCookie();
-                Error = session;
+                //Error = session;
                 string idHex = accountModel.Id.ToString("X");
                 int lenPadding = 6 - idHex.Length;
                 string hexID = "#";

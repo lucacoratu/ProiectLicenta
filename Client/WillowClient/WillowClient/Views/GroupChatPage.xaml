@@ -27,7 +27,7 @@
             </DataTemplate>
             <DataTemplate x:Key="ReceivedMessageTemplate" x:DataType="model:MessageModel">
                 <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5">
-                    <Border Padding="8" MaximumWidthRequest="700" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                    <Border Padding="8" MaximumWidthRequest="700" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#505050" HorizontalOptions="Start" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
@@ -67,13 +67,18 @@
                 <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding Messages}" >
+        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="model:MessageGroupModel">
+                    <Label Text="{Binding Name}" BackgroundColor="Transparent" Padding="0,10,0,10" HorizontalOptions="Center" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
         </CollectionView>
         <FlexLayout Grid.Row="2" HeightRequest="40">
-            <Button Text="+" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>
-            <Entry Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%"/>
+            <Button Text="+" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding PickFileCommand}"/>
+            <Entry Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}"/>
             <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
-            <Button Text=">" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}"/>
+            <Button Text=">" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding SendMessageCommand}"/>
         </FlexLayout>
     </Grid>
 </ContentPage>

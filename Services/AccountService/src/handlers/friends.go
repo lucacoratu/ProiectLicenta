@@ -28,7 +28,7 @@ func NewFriends(l logging.ILogger, db *database.Connection) *Friends {
 func (f *Friends) AddFriend(rw http.ResponseWriter, r *http.Request) {
 	f.logger.Info("Endpoint /friend/add reached (POST Method) - sending data to FriendService")
 	//Send data to FriendService with the request unmodified
-	response, err := http.Post("http://localhost:8084/add", "application/json", r.Body)
+	response, err := http.Post("http://localhost:8084/friend/add", "application/json", r.Body)
 	if err != nil {
 		f.logger.Error("Cannot send data to FriendService", err.Error())
 		jsonError := jsonerrors.JsonError{Message: "Cannot send request to FriendService"}

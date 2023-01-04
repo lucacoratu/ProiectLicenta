@@ -3,10 +3,10 @@ package handlers
 import (
 	"io"
 	"net/http"
+	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
 	"willow/accountservice/logging"
-	"willow/accountservice/data"
 
 	"github.com/gorilla/mux"
 )
@@ -44,7 +44,7 @@ func (frReq *FriendRequest) AddFriendRequest(rw http.ResponseWriter, r *http.Req
 		return
 	}
 	//Debug log the response from the service
-	frReq.logger.Debug("Response from FriendRequestService", respbody)
+	frReq.logger.Debug("Response from FriendRequestService", string(respbody))
 
 	//Send the response back
 	rw.WriteHeader(response.StatusCode)
@@ -98,14 +98,14 @@ func (frReq *FriendRequest) ViewFriendRequests(rw http.ResponseWriter, r *http.R
 		return
 	}
 	//Read the data from the response
-/* 	respBody, err := io.ReadAll(response.Body)
-	if err != nil {
-		frReq.logger.Error("Cannot read response data from FriendRequestService response", err.Error())
-		jsonError := jsonerrors.JsonError{Message: "Cannot read data from FriendRequestService response body"}
-		rw.WriteHeader(http.StatusInternalServerError)
-		jsonError.ToJSON(rw)
-		return
-	} */
+	/* 	respBody, err := io.ReadAll(response.Body)
+	   	if err != nil {
+	   		frReq.logger.Error("Cannot read response data from FriendRequestService response", err.Error())
+	   		jsonError := jsonerrors.JsonError{Message: "Cannot read data from FriendRequestService response body"}
+	   		rw.WriteHeader(http.StatusInternalServerError)
+	   		jsonError.ToJSON(rw)
+	   		return
+	   	} */
 	respData := &data.FriendRequestResponses{}
 	respData.FromJSON(response.Body)
 	frReq.logger.Info(*respData)
@@ -149,14 +149,14 @@ func (frReq *FriendRequest) ViewSentFriendRequests(rw http.ResponseWriter, r *ht
 		return
 	}
 	//Read the data from the response
-/* 	respBody, err := io.ReadAll(response.Body)
-	if err != nil {
-		frReq.logger.Error("Cannot read response data from FriendRequestService response", err.Error())
-		jsonError := jsonerrors.JsonError{Message: "Cannot read data from FriendRequestService response body"}
-		rw.WriteHeader(http.StatusInternalServerError)
-		jsonError.ToJSON(rw)
-		return
-	} */
+	/* 	respBody, err := io.ReadAll(response.Body)
+	   	if err != nil {
+	   		frReq.logger.Error("Cannot read response data from FriendRequestService response", err.Error())
+	   		jsonError := jsonerrors.JsonError{Message: "Cannot read data from FriendRequestService response body"}
+	   		rw.WriteHeader(http.StatusInternalServerError)
+	   		jsonError.ToJSON(rw)
+	   		return
+	   	} */
 	respData := &data.FriendRequestResponses{}
 	respData.FromJSON(response.Body)
 	frReq.logger.Info(*respData)

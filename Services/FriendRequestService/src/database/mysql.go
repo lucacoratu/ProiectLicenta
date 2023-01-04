@@ -322,6 +322,7 @@ func (conn *Connection) AreFriends(accID1 int, accID2 int) (bool, error) {
 		return false, err
 	}
 	//Execute the statement
+	conn.logger.Debug(accID1, accID2)
 	rows, err := stmtSelect.Query(accID1, accID2, accID1, accID2)
 	//Check if an error occured when executing the query
 	if err != nil {

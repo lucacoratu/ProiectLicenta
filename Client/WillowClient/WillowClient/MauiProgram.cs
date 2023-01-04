@@ -57,7 +57,10 @@ public static class MauiProgram
 #if ANDROID
 		builder.Services.AddTransient<AndroidCallPage>();
 #endif
+		builder.Services.AddSingleton<CreateGroupPage>();
+		builder.Services.AddSingleton<AddFriendPage>();
+		builder.Services.AddSingleton<FriendRequestPage>();
 
-		return builder.Build();
+        return builder.Build();
 	}
 }

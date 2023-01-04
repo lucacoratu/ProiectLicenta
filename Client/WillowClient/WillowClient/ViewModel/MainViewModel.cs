@@ -39,6 +39,9 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private string groupName;
 
+        [ObservableProperty]
+        private string addFriendEntryText;
+
         private FriendService friendService;
         private ChatService chatService;
         public ObservableCollection<FriendModel> Friends { get; } = new();
@@ -46,6 +49,10 @@ namespace WillowClient.ViewModel
         public ObservableCollection<FriendModel> CreateGroupSelectedFriends { get; set; } = new();
 
         public ObservableCollection<GroupModel> Groups { get; } = new();
+
+        public ObservableCollection<FriendRequestModel> FriendRequests { get; } = new();
+
+        public ObservableCollection<FriendRequestModel> SentFriendRequests { get; } = new();
 
         public MainViewModel(FriendService friendService, ChatService chatService)
         {
@@ -144,7 +151,7 @@ namespace WillowClient.ViewModel
                                 return;
                             }
                         }
-                        //Check if the message if from a group
+                        //Check if the message is from a group
                         for(int i =0; i < this.Groups.Count; i++)
                         {
                             if(privMessageModel.RoomId == this.Groups[i].RoomId)
@@ -224,7 +231,7 @@ namespace WillowClient.ViewModel
 
                 foreach (var friend in friends)
                 {
-                    //Update the date format to show only the hour
+                    //Update the date format to show only the hour if the message is from Today
                     if (friend.LastMessageTimestamp != "")
                     {
                         string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
@@ -258,7 +265,14 @@ namespace WillowClient.ViewModel
                 }
 
                 foreach (var group in groups)
+                {
+                    if(group.LastMessageTimestamp != "")
+                    {
+                        string messageTimestamp = DateTime.Parse(group.LastMessageTimestamp).ToString("HH:mm");
+                        group.LastMessageTimestamp = messageTimestamp;
+                    }
                     Groups.Add(group);
+                }
             }
             catch (Exception e)
             {
@@ -285,6 +299,12 @@ namespace WillowClient.ViewModel
                 AddFriendSelected = false;
                 return;
             }
+            //Get all the sent friend requests of the account
+            this.SentFriendRequests.Clear();
+            var sentRequests = await this.friendService.GetSentFriendRequests(this.Account.Id, this.Session);
+            foreach (var sentRequest in sentRequests)
+                this.SentFriendRequests.Add(sentRequest);
+
             AddFriendSelected = true;
         }
 
@@ -303,7 +323,69 @@ namespace WillowClient.ViewModel
                 return;
             }
 
+            var requests = await this.friendService.GetFriendRequest(this.Account.Id, Session);
+            this.FriendRequests.Clear();
+            foreach(var request in requests)
+                this.FriendRequests.Add(request);
+
             PendingSelected = true;
+        }
+
+        private int ConvertHexToFriendId(string input)
+        {
+            try
+            {
+                string hexString = "";
+                for (int i = 1; i < input.Length; i++)
+                    hexString += input[i];
+                int friendID = int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
+                return friendID;
+            } catch (Exception ex)
+            {
+                //Return an invalid id if the conversion failed
+                return -1;            
+            }   
+        }
+
+        private bool ValidateAddFriendInput(string input) 
+        {
+            //Split the input
+            string[] fields = input.Split(" ");
+            //Check if there are 2 fields in the input (display name and id in hex)
+            if(fields.Length != 2)
+            {
+                return false;
+            }
+            //Check if the id is in the correct format # 6 hex characters
+            int friendID = ConvertHexToFriendId(fields[1]);
+            return (friendID == -1) ? false : true;
+        }
+
+        [RelayCommand]
+        async Task AddFriend()
+        {
+            //Send a friend request to another user
+            //Get the data from the entry
+            string input = this.AddFriendEntryText;
+            //Validate the input before sending it
+            bool res = ValidateAddFriendInput(input);
+            if (res)
+            {
+                //Send the friend request to the specified account
+                string[] fields = input.Split(' ');
+                int friendId = ConvertHexToFriendId(fields[1]);
+                res = await this.friendService.SendFriendRequest(this.Account.Id, friendId, this.Session);
+                //Check if the request was successful
+                if (res)
+                {
+                    //The friend request has been sent
+                    await Shell.Current.DisplayAlert("FriendRequest", "FriendRequest has been sent", "Ok");
+                } else
+                {
+                    //The friend request couldn't be sent
+                    await Shell.Current.DisplayAlert("FriendRequest", "FriendRequest couldn't be sent!", "Ok");
+                }
+            }
         }
 
         [RelayCommand]
@@ -354,6 +436,83 @@ namespace WillowClient.ViewModel
 
             string jsonMessage = JsonSerializer.Serialize(createGroupMessageModel);
             this.chatService.SendMessageAsync(jsonMessage);
+        }
+
+        [RelayCommand]
+        async Task CreateGroupMobile()
+        {
+            await Shell.Current.GoToAsync(nameof(CreateGroupPage), true);
+        }
+
+        [RelayCommand]
+        async Task AddFriendMobile()
+        {
+            await Shell.Current.GoToAsync(nameof(AddFriendPage), true);
+        }
+
+        [RelayCommand]
+        async Task FriendRequestMobile()
+        {
+            var requests = await this.friendService.GetFriendRequest(this.Account.Id, Session);
+            this.FriendRequests.Clear();
+            foreach (var request in requests)
+                this.FriendRequests.Add(request);
+            await Shell.Current.GoToAsync(nameof(FriendRequestPage), true);
+        }
+
+        [RelayCommand]
+        async Task AcceptFriendRequest(FriendRequestModel f)
+        {
+            //Accept the friend request from the user
+            int myId = this.Account.Id;
+            int friendId = f.AccountID;
+            bool res = await this.friendService.AcceptFriendRequest(myId, friendId, Session);
+            //Check if the request was successful
+            if (res)
+            {
+                //Remove the friend request from the list of pending friend requests
+                this.FriendRequests.Remove(f);
+                //Update the list of friends
+                //var friends = await friendService.GetFriends(myId, Session);
+                //if (this.Friends.Count != 0)
+                //{
+                //    this.Friends.Clear();
+                //}
+
+                //foreach (var friend in friends)
+                //{
+                //    //Update the date format to show only the hour if the message is from Today
+                //    if (friend.LastMessageTimestamp != "")
+                //    {
+                //        string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
+                //        friend.LastMessageTimestamp = messageTimestamp;
+                //    }
+                //    this.Friends.Add(friend);
+                //}
+                await GetFriendsAsync();
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "Cannot accept the friend request", "Ok");
+            }
+        }
+
+        [RelayCommand]
+        async Task DeclineFriendRequest(FriendRequestModel f)
+        {
+            //Decline the friend request
+            int myId = this.Account.Id;
+            int friendId = f.AccountID;
+            bool res = await this.friendService.DeclineFriendRequest(myId, friendId, Session);
+            //Remove the friend request from the list of pending friend requests
+            if (res)
+            {
+                this.FriendRequests.Remove(f);
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Error", "Cannot decline the friend request", "Ok");
+            }
         }
     }
 }

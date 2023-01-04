@@ -27,7 +27,7 @@
             </DataTemplate>
             <DataTemplate x:Key="ReceivedMessageTemplate" x:DataType="model:MessageModel">
                 <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5">
-                    <Border Padding="8" MaximumWidthRequest="700" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                    <Border Padding="8" MaximumWidthRequest="700" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#505050" HorizontalOptions="Start" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
@@ -42,7 +42,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="*">
+    <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
         <FlexLayout Direction="Row" Grid.Row="0" HeightRequest="50" BackgroundColor="#7B68EE" JustifyContent="SpaceBetween">
             <ImageButton BorderColor="Transparent" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="5,0,10,0"/>
             <HorizontalStackLayout FlexLayout.AlignSelf="Center">
@@ -64,22 +64,22 @@
                 </VerticalStackLayout>
             </HorizontalStackLayout>
             <HorizontalStackLayout FlexLayout.AlignSelf="Center">
-                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="call.png" Command="{Binding CallPeerCommand}"/>
-                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png" Command="{Binding VideoCallPeerCommand}"/>
+                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" Padding="2" HeightRequest="40" WidthRequest="40" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png" Command="{Binding VideoCallPeerCommand}"/>
+                <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" Padding="2" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="call.png" Command="{Binding CallPeerCommand}"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="#505050" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
+        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="model:MessageGroupModel">
-                    <Label Text="{Binding Name}" BackgroundColor="LightGray" FontSize="15" FontAttributes="Bold" />
+                    <Label Text="{Binding Name}" BackgroundColor="Transparent" Padding="0,10,0,10" HorizontalOptions="Center" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" />
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
         </CollectionView>
         <FlexLayout Grid.Row="2" HeightRequest="40">
-            <Button Text="+" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>
+            <Button Text="+" FontSize="20" Padding="0" Margin="0,0,0,0" TextColor="WhiteSmoke" BackgroundColor="Transparent" FlexLayout.Basis="6%" Command="{Binding PickFileCommand}"/>
             <Entry x:Name="messageText" Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat"/>
-            <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
-            <Button Text=">" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
+            <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"/>
+            <Button Text=">" Margin="0" Padding="0" BackgroundColor="Transparent" TextColor="WhiteSmoke" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
         </FlexLayout>
     </Grid>
 </ContentPage>

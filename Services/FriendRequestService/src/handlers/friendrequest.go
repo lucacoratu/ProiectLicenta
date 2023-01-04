@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"io"
 	"net/http"
 	"strconv"
 	"willow/friendrequestservice/data"
@@ -191,9 +192,11 @@ func (frReq *FriendRequest) ExistsFriendRequest(rw http.ResponseWriter, r *http.
 	//Parse the data received from the client in the request body
 	frData := &data.FriendRequest{}
 	err := frData.FromJSON(r.Body)
+	dataBody, err := io.ReadAll(r.Body)
 	//Check if an error occured when parsing the data from the client
 	if err != nil {
 		//An error occured during the parsing of the JSON data
+		frReq.logger.Error("Invalid JSON format", dataBody)
 		jsonError := jsonerrors.JsonError{Message: "Invalid JSON format"}
 		rw.WriteHeader(http.StatusInternalServerError)
 		jsonError.ToJSON(rw)
@@ -201,6 +204,7 @@ func (frReq *FriendRequest) ExistsFriendRequest(rw http.ResponseWriter, r *http.
 	}
 	//The JSON data has been parsed succesfully
 	//Check if the 2 accounts share a friend request (in the database)
+	frReq.logger.Debug(*frData)
 	flag, err := frReq.dbConn.AreFriends(frData.AccID, frData.SenderID)
 	//Check if an error occured while querying the database
 	if err != nil {
@@ -211,6 +215,7 @@ func (frReq *FriendRequest) ExistsFriendRequest(rw http.ResponseWriter, r *http.
 		return
 	}
 	//Return the friend request status between the 2 accounts (true if there is a friend request, false if there isn't)
+	frReq.logger.Debug(flag)
 	af := data.AreFriends{Message: flag}
 	rw.WriteHeader(http.StatusOK)
 	af.ToJSON(rw)

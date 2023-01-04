@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"bytes"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -30,8 +32,18 @@ func NewFriend(logger logging.ILogger, dbConn *database.Connection) *Friend {
  */
 func (fr *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
 	//Get the accountID and the friendID from the request body
+	fr.logger.Info("Endpoint /friend/add hit (POST request)")
+	bodyData, err := io.ReadAll(r.Body)
+	if err != nil {
+		//http.Error(rw, err.Error(), http.StatusInternalServerError)
+		fr.logger.Error("Could not read the body of the request", err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Error occured, cannot read the body"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
 	addFriendData := &data.AddFriend{}
-	err := addFriendData.FromJSON(r.Body)
+	err = addFriendData.FromJSON(bytes.NewReader(bodyData))
 	//Check if an error occured when reading the json data from the body
 	if err != nil {
 		//An error occured when parsing the json in the request body
@@ -40,9 +52,11 @@ func (fr *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
 		rw.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	fr.logger.Debug(*addFriendData)
 	//Check if the account has a friend request from the other account
 	//Send a POST request to the friendrequest service
-	resp, err := http.Post("http://localhost:8083/arefriends", "application/json", r.Body)
+	resp, err := http.Post("http://localhost:8083/arefriends", "application/json", bytes.NewReader(bodyData))
 	//Check if an error occured while sending the request to the friendrequest service
 	if err != nil {
 		//An error occured so send an error message back to the client
@@ -72,7 +86,7 @@ func (fr *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Check if there is a friend request between these 2 accounts (answer from friendrequest service)
-	data := data.AreFriends{}
+	data := &data.AreFriends{}
 	err = data.FromJSON(resp.Body)
 	//Check if there was an error when parsing the response from the friendrequest service
 	if err != nil {
@@ -104,7 +118,7 @@ func (fr *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
 	}
 	//Erase the friend request from the friend requests service database
 	//Send a request to the friendrequest service to delete the friendrequest between these 2 accounts
-	resp, err = http.Post("http://localhost:8083/delete", "application/json", r.Body)
+	resp, err = http.Post("http://localhost:8083/delete", "application/json", bytes.NewReader(bodyData))
 	//Check if an error occured when sending the data to the friendrequest service
 	if err != nil {
 		//An error occured
@@ -133,6 +147,38 @@ func (fr *Friend) AddFriend(rw http.ResponseWriter, r *http.Request) {
 		rw.WriteHeader(http.StatusInternalServerError)
 		jsonError.ToJSON(rw)
 	}
+	//Create the chat room so the users can chat
+	fr.logger.Debug("Here!")
+	resp, err = http.Post("http://localhost:8087/privateroom/create", "application/json", bytes.NewReader(bodyData))
+	//Check if an error occured when sending the data to the friendrequest service
+	if err != nil {
+		//An error occured
+		//Log the error
+		fr.logger.Error("Could not send the request to chat service", err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Error occured, cannot handle the request"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Check if the request was succesful
+	if resp.StatusCode == http.StatusInternalServerError {
+		//Extract the data from the response body
+		jsonError := jsonerrors.JsonError{}
+		err = jsonError.FromJSON(resp.Body)
+		if err != nil {
+			//An error occured while reading the data from the response body from the friendrequest service
+			fr.logger.Error("Could not read data from the response body from chat service", err.Error())
+			jsonError := jsonerrors.JsonError{Message: "Error occured, cannot handle the request"}
+			rw.WriteHeader(http.StatusInternalServerError)
+			jsonError.ToJSON(rw)
+			return
+		}
+		fr.logger.Warning("Error occured in the chat service", jsonError.Message)
+		jsonError = jsonerrors.JsonError{Message: "Error occured, cannot handle the request"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+	}
+
 	//Everything was allright
 	rw.WriteHeader(http.StatusOK)
 	rw.Write([]byte("Friend added"))

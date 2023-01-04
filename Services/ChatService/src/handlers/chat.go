@@ -40,6 +40,7 @@ func (ch *Chat) CreatePrivateRoom(rw http.ResponseWriter, r *http.Request) {
 	//Try to decode the request body data
 	err := roomData.FromJSON(r.Body)
 	//Check if an error occured during the decoding of the request body data
+	ch.logger.Debug(*roomData)
 	if err != nil {
 		//An error occured during the parsing of the json string
 		ch.logger.Error("Error occured when parsing json string", err.Error())
@@ -52,6 +53,7 @@ func (ch *Chat) CreatePrivateRoom(rw http.ResponseWriter, r *http.Request) {
 	//The data from the request body is in the right format
 	//Create the private room
 	roomID, err := ch.dbConn.CreatePrivateRoom()
+	ch.logger.Debug(roomID)
 	//Check if an error occuring while creating the new private room
 	if err != nil {
 		//Send an error message back
@@ -294,12 +296,14 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	for i, _ := range groups {
-		lastMessage, _, _ := ch.dbConn.GetLastMessageFromRoom(groups[i].RoomId)
-		ch.logger.Debug(lastMessage)
+		lastMessage, lastMessageTimestamp, _ := ch.dbConn.GetLastMessageFromRoom(groups[i].RoomId)
+		ch.logger.Debug(lastMessageTimestamp)
 		if lastMessage != "" {
 			groups[i].LastMessage = lastMessage
+			groups[i].LastMessageTimestamp = lastMessageTimestamp
 		} else {
-			groups[i].LastMessage = "No available message"
+			groups[i].LastMessage = "Start conversation"
+			groups[i].LastMessageTimestamp = ""
 		}
 	}
 	ch.logger.Debug(groups)

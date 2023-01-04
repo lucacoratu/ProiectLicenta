@@ -61,6 +61,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/accounts/login", handlerLogin.LoginIntoAccount)
 	postRouter.HandleFunc("/friendrequest/add", handlerFriendRequests.AddFriendRequest)
 	postRouter.HandleFunc("/friendrequest/delete", handlerFriendRequests.DeleteFriendRequest)
+	postRouter.HandleFunc("/friend/add", handlerFriend.AddFriend)
 
 	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.GetFriendRequests)

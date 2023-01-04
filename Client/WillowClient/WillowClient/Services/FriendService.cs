@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,7 +16,7 @@ namespace WillowClient.Services
         private HttpClient m_httpClient;
         private CookieContainer m_CookieContainer;
 
-        List<FriendModel> friendsList = new(); 
+        List<FriendModel> friendsList = new();
         public FriendService()
         {
             this.m_CookieContainer = new CookieContainer();
@@ -31,8 +32,8 @@ namespace WillowClient.Services
 
             var url = Constants.serverURL + "/friend/view/" + accountId.ToString();
             var baseAddress = new Uri(url);
-            this.m_CookieContainer = new CookieContainer();
-            this.m_handler.CookieContainer = this.m_CookieContainer;
+            //this.m_CookieContainer = new CookieContainer();
+            //this.m_handler.CookieContainer = this.m_CookieContainer;
             this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
             
             var response = await this.m_httpClient.GetAsync(url);
@@ -42,6 +43,78 @@ namespace WillowClient.Services
             }
 
             return friendsList;
+        }
+
+        public async Task<bool> SendFriendRequest(int accountID, int friendID, string session)
+        {
+            var url = Constants.serverURL + "/friendrequest/add";
+            var baseAddress = new Uri(url);
+            //this.m_CookieContainer = new CookieContainer();
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+            //this.m_handler.CookieContainer = this.m_CookieContainer;
+
+            SendFriendRequestModel frm = new SendFriendRequestModel { accountId = friendID, senderId = accountID};
+            var response = await this.m_httpClient.PostAsync(url, JsonContent.Create(frm));
+            //Check if the response was an error
+            if (response.StatusCode != HttpStatusCode.OK)
+                return false;
+            return true;
+        }
+
+        public async Task<List<FriendRequestModel>> GetFriendRequest(int accountID, string session)
+        {
+            var url = Constants.serverURL + "/friendrequest/view/" + accountID.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+            var response = await this.m_httpClient.GetAsync(url);
+            //Parse the response from server
+            List<FriendRequestModel> friendRequests = new();
+            if (response.IsSuccessStatusCode)
+            {
+                friendRequests = await response.Content.ReadFromJsonAsync<List<FriendRequestModel>>();
+            }
+
+            return friendRequests;
+        }
+
+        public async Task<List<FriendRequestModel>> GetSentFriendRequests(int accountID, string session)
+        {
+            var url = Constants.serverURL + "/friendrequest/viewsent/" + accountID.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+            var response = await this.m_httpClient.GetAsync(url);
+            //Parse the response from server
+            List<FriendRequestModel> friendRequests = new();
+            if (response.IsSuccessStatusCode)
+            {
+                friendRequests = await response.Content.ReadFromJsonAsync<List<FriendRequestModel>>();
+            }
+
+            return friendRequests;
+        }
+
+        public async Task<bool> AcceptFriendRequest(int accountID, int friendID, string session)
+        {
+            var url = Constants.serverURL + "/friend/add";
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+            AcceptFriendRequestModel acfrm = new AcceptFriendRequestModel { accountID = accountID, friendID = friendID };
+            var response = await this.m_httpClient.PostAsync(url, JsonContent.Create(acfrm));
+            if (response.IsSuccessStatusCode)
+                return true;
+            return false;
+        }
+
+        public async Task<bool> DeclineFriendRequest(int accountID, int friendID, string session)
+        {
+            var url = Constants.serverURL + "/friendrequest/delete";
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+            AcceptFriendRequestModel acfrm = new AcceptFriendRequestModel { accountID = accountID, friendID = friendID };
+            var response = await this.m_httpClient.PostAsync(url, JsonContent.Create(acfrm));
+            if (response.IsSuccessStatusCode)
+                return true;
+            return false;
         }
     }
 }
