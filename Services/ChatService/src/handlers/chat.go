@@ -108,6 +108,9 @@ func (ch *Chat) GetPrivateRooms(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 }
 
+/*
+ * This function will handle when a client connects to the websocket endpoint
+ */
 func (ch *Chat) ServeWs(pool *websocket.Pool, rw http.ResponseWriter, r *http.Request) {
 	ch.logger.Info("Endpoint /ws hit")
 	ws, err := websocket.Upgrade(rw, r)
@@ -117,8 +120,10 @@ func (ch *Chat) ServeWs(pool *websocket.Pool, rw http.ResponseWriter, r *http.Re
 	}
 
 	client := &websocket.Client{
-		Conn: ws,
-		Pool: pool,
+		Conn:   ws,
+		Pool:   pool,
+		Status: "Offline",
+		Id:     0,
 	}
 
 	pool.Register <- client
@@ -174,7 +179,7 @@ func (ch *Chat) GetRoomLastMessage(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Get the last message for the room
-	lastMessageText, lastMessageTimestamp, _ := ch.dbConn.GetLastMessageFromRoom(int64(id))
+	lastMessageText, lastMessageTimestamp, _, _ := ch.dbConn.GetLastMessageFromRoom(int64(id))
 	/* 	if err != nil {
 		//Send an error message back
 		jsonError := jsonerrors.JsonError{Message: "Error occured"}
@@ -296,10 +301,14 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	for i, _ := range groups {
-		lastMessage, lastMessageTimestamp, _ := ch.dbConn.GetLastMessageFromRoom(groups[i].RoomId)
+		lastMessage, lastMessageTimestamp, senderId, _ := ch.dbConn.GetLastMessageFromRoom(groups[i].RoomId)
 		ch.logger.Debug(lastMessageTimestamp)
 		if lastMessage != "" {
-			groups[i].LastMessage = lastMessage
+			if senderId == id {
+				groups[i].LastMessage = "You: " + lastMessage
+			} else {
+				groups[i].LastMessage = lastMessage
+			}
 			groups[i].LastMessageTimestamp = lastMessageTimestamp
 		} else {
 			groups[i].LastMessage = "Start conversation"

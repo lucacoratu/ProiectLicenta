@@ -1,8 +1,12 @@
 package websocket
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"net/http"
+	"willow/chatservice/data"
 	"willow/chatservice/database"
 	jsonerrors "willow/chatservice/errors"
 	"willow/chatservice/logging"
@@ -44,12 +48,55 @@ func NewPool(l logging.ILogger, dbConn database.IConnection) *Pool {
  * It should be registered in the pool and the status of the user in the account service should be changed to online
  * TO DO...The connected clients should get the message that the user changed it's status to online
  */
-func (pool *Pool) ClientRegistered() {
-
+func (pool *Pool) ClientRegistered(c *Client) {
+	pool.logger.Debug("Client connected to websocket")
 }
 
-func (pool *Pool) ClientUnregistered() {
+func (pool *Pool) ClientUnregistered(c *Client) {
+	pool.logger.Debug("Client disconnected from websocket")
+	//Update the status of the account to offline if it is connected to an account (ID field is set)
+	if c.Id != 0 {
+		err := pool.sendUpdateStatusAccountService(int(c.Id), "Offline")
+		if err != nil {
+			pool.logger.Error("Could not send request to update status", err.Error())
+		}
+		//Send to all the other users the message that this client disconnected
+		for client, _ := range pool.Clients {
+			if client != c {
+				pool.logger.Debug("Account disconnected, id = ", c.Id)
+				err := client.Conn.WriteJSON(ChangeStatusMessage{Text: "Change status", AccountId: int(c.Id), NewStatus: "Offline"})
+				if err != nil {
+					//Log the error message
+					pool.logger.Error(err.Error())
+				}
+			}
+		}
+	}
+}
 
+func (pool *Pool) sendUpdateStatusAccountService(accountId int, newStatus string) error {
+	httpClient := &http.Client{}
+	json, err := json.Marshal(data.UpdateStatus{AccountID: accountId, NewStatus: newStatus})
+	if err != nil {
+		pool.logger.Error(err.Error())
+		return err
+	}
+	req, err := http.NewRequest(http.MethodPut, "http://localhost:8081/status", bytes.NewBuffer(json))
+	if err != nil {
+		pool.logger.Error(err.Error())
+		return err
+	}
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		pool.logger.Error(err.Error())
+		return err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		pool.logger.Error("Request to update status failed")
+		return errors.New("request failed")
+	}
+	return nil
 }
 
 /*
@@ -87,7 +134,20 @@ func (pool *Pool) MessageReceived(message Message) {
 					//Log the error message
 					pool.logger.Error(err.Error())
 				}
-				break
+				//Sent request to account service to update the status in the database
+				err = pool.sendUpdateStatusAccountService(int(client.Id), "Online")
+				if err != nil {
+					pool.logger.Error("Could not send request to update status", err.Error())
+				}
+				client.Status = "Online"
+			} else {
+				//Send a message to all the other users that the account is online
+				pool.logger.Debug(setIdData.SetID)
+				err = client.Conn.WriteJSON(ChangeStatusMessage{Text: "Change status", AccountId: int(setIdData.SetID), NewStatus: "Online"})
+				if err != nil {
+					//Log the error message
+					pool.logger.Error(err.Error())
+				}
 			}
 		}
 
@@ -244,116 +304,6 @@ func (pool *Pool) MessageReceived(message Message) {
 		}
 		return
 	}
-
-	//Check if the message is a private message to a user
-	/* privMessageData := &PrivateMessage{}
-	err = json.Unmarshal([]byte(message.Body), &privMessageData)
-	var isPrivateMessage bool = true
-	if err != nil {
-		pool.logger.Error(err.Error())
-		isPrivateMessage = false
-	}
-
-	if isPrivateMessage {
-		pool.logger.Info("Private message has been received")
-		//Insert the message in the database
-		err = pool.dbConn.InsertMessageIntoRoom(privMessageData.RoomID, privMessageData.MessageType, message.C.Id, privMessageData.Data)
-		//Check if the insert was succesfull
-		if err != nil {
-			//Return an error message to the client
-			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
-			if err != nil {
-				//Log the error message
-				pool.logger.Error(err.Error())
-			}
-		}
-		pool.logger.Info("The new message has been inserted into the database")
-		//Get the second user id knowing the senderId and the roomId
-		accId, err := pool.dbConn.GetPrivateRoomUser(message.C.Id, privMessageData.RoomID)
-		if err != nil {
-			//Return an error message to the client
-			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
-			if err != nil {
-				//Log the error message
-				pool.logger.Error(err.Error())
-			}
-		}
-		pool.logger.Info("Found the receiver id of the message, ID = ", accId)
-		//Check if the other user is connected, if it is then sent the message to the other user as well
-		var found bool = false
-		for client, _ := range pool.Clients {
-			if client.Id == accId {
-				//Send the message to him
-				found = true
-				response := PrivateMessageResponse{SenderID: message.C.Id, RoomID: privMessageData.RoomID, Data: privMessageData.Data, MessageType: privMessageData.MessageType}
-				err = client.Conn.WriteJSON(response)
-				if err != nil {
-					pool.logger.Error(err.Error())
-					break
-				}
-				pool.logger.Info("Sent the message to the receiver")
-			}
-		}
-		if !found {
-			pool.logger.Info("The message could not be sent to the receiver, he might be offline")
-		}
-	}
-
-	//Check if the message is a group message
-	groupMessageData := &GroupMessage{}
-	err = json.Unmarshal([]byte(message.Body), &groupMessageData)
-	var isGroupMessage bool = true
-	if err != nil {
-		pool.logger.Error(err.Error())
-		isPrivateMessage = false
-	}
-
-	if isGroupMessage {
-		pool.logger.Info("Group message has been received")
-		//Insert the message in the database
-		err = pool.dbConn.InsertMessageIntoRoom(privMessageData.RoomID, privMessageData.MessageType, message.C.Id, privMessageData.Data)
-		//Check if the insert was succesfull
-		if err != nil {
-			//Return an error message to the client
-			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
-			if err != nil {
-				//Log the error message
-				pool.logger.Error(err.Error())
-			}
-		}
-		pool.logger.Info("The new message has been inserted into the database")
-		//Get the participants ids from the database
-		accIds, err := pool.dbConn.GetRoomParticipants(message.C.Id, privMessageData.RoomID)
-		if err != nil {
-			//Return an error message to the client
-			err = message.C.Conn.WriteJSON(ResponseMessage{Type: 1, Body: "Message insertion failed"})
-			if err != nil {
-				//Log the error message
-				pool.logger.Error(err.Error())
-			}
-		}
-		pool.logger.Info("Found the particapants ids,", accIds)
-		//Check if the other user is connected, if it is then sent the message to the other user as well
-		var found bool = false
-		for _, id := range accIds {
-			for client, _ := range pool.Clients {
-				if client.Id == id {
-					//Send the message to him
-					found = true
-					response := PrivateMessageResponse{SenderID: message.C.Id, RoomID: privMessageData.RoomID, Data: privMessageData.Data, MessageType: privMessageData.MessageType}
-					err = client.Conn.WriteJSON(response)
-					if err != nil {
-						pool.logger.Error(err.Error())
-						break
-					}
-					pool.logger.Info("Sent the message to the receiver")
-				}
-			}
-			if !found {
-				pool.logger.Info("The message could not be sent to the receiver, he might be offline")
-			}
-		}
-	} */
 }
 
 /*
@@ -374,16 +324,18 @@ func (pool *Pool) Start() {
 				fmt.Println(client)
 				client.Conn.WriteJSON(Message{Type: 1, Body: "New User Joined..."})
 			}
+			pool.ClientRegistered(client)
 			break
 		case client := <-pool.Unregister:
 			//A client disconnected from the chat service
 			//Delete the client connection from the current connections
-			delete(pool.Clients, client)
-			fmt.Println("Size of Connection Pool: ", len(pool.Clients))
 			//Announce the client that is has disconnected from the chat service
 			for client, _ := range pool.Clients {
 				client.Conn.WriteJSON(Message{Type: 1, Body: "User Disconnected..."})
 			}
+			pool.ClientUnregistered(client)
+			delete(pool.Clients, client)
+			fmt.Println("Size of Connection Pool: ", len(pool.Clients))
 			break
 		case message := <-pool.Broadcast:
 			//Broadcast a message to all the current websocket connections

@@ -10,6 +10,7 @@ type FriendAccount struct {
 	DisplayName          string `json:"displayName"`
 	BefriendDate         string `json:"befriendDate"`
 	LastOnline           string `json:"lastOnline"`
+	Status               string `json:"status"`
 	JoinDate             string `json:"joinDate"`
 	RoomID               int64  `json:"roomID"`
 	LastMessage          string `json:"lastMessage"`

@@ -35,3 +35,18 @@ func (status *Status) Validate() error {
 	validate.RegisterValidation("status", validateStatus)
 	return validate.Struct(status)
 }
+
+type StatusUnauthenticated struct {
+	AccountID int    `json:"accountId"`
+	NewStatus string `json:"newStatus"`
+}
+
+func (statusunauth *StatusUnauthenticated) FromJSON(r io.Reader) error {
+	d := json.NewDecoder(r)
+	return d.Decode(statusunauth)
+}
+
+func (statusunauth *StatusUnauthenticated) ToJSON(w io.Writer) error {
+	e := json.NewEncoder(w)
+	return e.Encode(statusunauth)
+}

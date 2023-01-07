@@ -14,7 +14,7 @@
         <SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>
         <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None" VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:FriendModel">
+                <DataTemplate x:DataType="model:FriendStatusModel">
                     <HorizontalStackLayout Padding="10" Spacing="6" Margin="5,0,5,0">
                         <FlyoutBase.ContextFlyout>
                             <MenuFlyout>
@@ -38,7 +38,7 @@
                                     CornerRadius="32"
                                     >
                             </toolkit:AvatarView>
-                            <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0" VerticalOptions="End">
+                            <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="{Binding StatusStrokeColor}" Margin="-15,0,0,0" VerticalOptions="End">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10"/>
                                 </Border.StrokeShape>

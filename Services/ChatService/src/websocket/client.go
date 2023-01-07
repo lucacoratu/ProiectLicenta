@@ -13,9 +13,10 @@ import (
  * The client structure will also have a pointer to the pool structure which will be used for conccurency
  */
 type Client struct {
-	Id   int64
-	Conn *websocket.Conn
-	Pool *Pool
+	Id     int64
+	Status string
+	Conn   *websocket.Conn
+	Pool   *Pool
 }
 
 /*
@@ -37,6 +38,12 @@ type ResponseMessage struct {
 
 type SetAccountIDMessage struct {
 	SetID int64 `json:"setAccountId"`
+}
+
+type ChangeStatusMessage struct {
+	Text      string `json:"text"`
+	AccountId int    `json:"accountId"`
+	NewStatus string `json:"newStatus"`
 }
 
 type PrivateMessage struct {

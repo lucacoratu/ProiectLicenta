@@ -5,7 +5,6 @@ import (
 	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
-	"willow/accountservice/jwt"
 	"willow/accountservice/logging"
 )
 
@@ -32,34 +31,59 @@ func (prof *Profile) ViewProfile(rw http.ResponseWriter, r *http.Request) {
  * The new status that the client wants will be specified in the body of the request
  * as a JSON string with field status
  */
-func (prof *Profile) UpdateStatus(rw http.ResponseWriter, r *http.Request) {
+// func (prof *Profile) UpdateStatus(rw http.ResponseWriter, r *http.Request) {
+// 	prof.l.Info("Endpoint /status PUT reached")
+
+// 	//Get the JWTClaims where ID, DisplayName and Email can be found
+// 	cookie, err := r.Cookie("session")
+// 	if err != nil {
+// 		jsonErr := jsonerrors.JsonError{Message: "Invalid session"}
+// 		rw.WriteHeader(http.StatusBadRequest)
+// 		jsonErr.ToJSON(rw)
+// 	}
+// 	value := cookie.Value
+// 	claims, err := jwt.ExtractClaims(value)
+// 	if err != nil {
+// 		jsonErr := jsonerrors.JsonError{Message: "Invalid session"}
+// 		rw.WriteHeader(http.StatusBadRequest)
+// 		jsonErr.ToJSON(rw)
+// 	}
+
+// 	status := &data.Status{}
+// 	err = status.FromJSON(r.Body)
+// 	if err != nil {
+// 		jsonErr := jsonerrors.JsonError{Message: "Invalid json data"}
+// 		rw.WriteHeader(http.StatusBadRequest)
+// 		jsonErr.ToJSON(rw)
+// 	}
+
+// 	//Update the status
+// 	err = prof.dbConn.UpdateStatus(int(claims.ID), claims.DisplayName, status.NewStatus)
+// 	if err != nil {
+// 		jsonErr := jsonerrors.JsonError{Message: "Status update failed"}
+// 		rw.WriteHeader(http.StatusBadRequest)
+// 		jsonErr.ToJSON(rw)
+// 	}
+// }
+
+/*
+ * This function will update the status of the account specified in the body of the request
+ * It will not be used after adding authentication on the websocket in the chat service
+ */
+func (prof *Profile) UpdateStatusUnauthenticated(rw http.ResponseWriter, r *http.Request) {
 	prof.l.Info("Endpoint /status PUT reached")
 
-	//Get the JWTClaims where ID, DisplayName and Email can be found
-	cookie, err := r.Cookie("session")
+	newStatus := &data.StatusUnauthenticated{}
+	err := newStatus.FromJSON(r.Body)
 	if err != nil {
-		jsonErr := jsonerrors.JsonError{Message: "Invalid session"}
-		rw.WriteHeader(http.StatusBadRequest)
-		jsonErr.ToJSON(rw)
-	}
-	value := cookie.Value
-	claims, err := jwt.ExtractClaims(value)
-	if err != nil {
-		jsonErr := jsonerrors.JsonError{Message: "Invalid session"}
-		rw.WriteHeader(http.StatusBadRequest)
-		jsonErr.ToJSON(rw)
-	}
-
-	status := &data.Status{}
-	err = status.FromJSON(r.Body)
-	if err != nil {
+		prof.l.Error("Invalid json data in /status", err.Error())
 		jsonErr := jsonerrors.JsonError{Message: "Invalid json data"}
 		rw.WriteHeader(http.StatusBadRequest)
 		jsonErr.ToJSON(rw)
 	}
 
 	//Update the status
-	err = prof.dbConn.UpdateStatus(int(claims.ID), claims.DisplayName, status.NewStatus)
+	err = prof.dbConn.UpdateStatus(int(newStatus.AccountID), newStatus.NewStatus)
 	if err != nil {
 		jsonErr := jsonerrors.JsonError{Message: "Status update failed"}
 		rw.WriteHeader(http.StatusBadRequest)

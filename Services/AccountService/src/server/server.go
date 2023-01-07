@@ -95,8 +95,8 @@ func InitServer(address string) error {
 
 	//Create the subrouter for the PUT method which will use the Authentication middleware and will handle updates on the account data
 	putRouter := serveMuxServer.Methods(http.MethodPut).Subrouter()
-	putRouter.HandleFunc("/status", handlerProfile.UpdateStatus)
-	putRouter.Use(handlerAuth.ValidateSessionCookie)
+	putRouter.HandleFunc("/status", handlerProfile.UpdateStatusUnauthenticated)
+	//putRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Create the subrouter for the POST method which will have the handler functions for the POST requests to specific routes
 	postRouter := serveMuxServer.Methods(http.MethodPost).Subrouter()

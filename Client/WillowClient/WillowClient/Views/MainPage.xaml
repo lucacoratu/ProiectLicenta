@@ -156,7 +156,7 @@
             <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0" BackgroundColor="#7B68EE" FontSize="Medium" FontAttributes="Bold"></Label>
             <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:FriendModel">
+                    <DataTemplate x:DataType="model:FriendStatusModel">
                         <HorizontalStackLayout Padding="10" Spacing="6">
                             <FlyoutBase.ContextFlyout>
                                 <MenuFlyout>
@@ -180,7 +180,7 @@
                                     CornerRadius="32"
                                     >
                                 </toolkit:AvatarView>
-                                <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0" VerticalOptions="End">
+                                <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="{Binding StatusStrokeColor}" Margin="-15,0,0,0" VerticalOptions="End">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10"/>
                                     </Border.StrokeShape>

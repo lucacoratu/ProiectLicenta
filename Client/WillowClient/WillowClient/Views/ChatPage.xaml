@@ -58,7 +58,7 @@
                 <VerticalStackLayout Spacing="5" FlexLayout.AlignSelf="Center" Margin="0,0,10,0">
                     <Label Text="{Binding Friend.DisplayName}" TextColor="WhiteSmoke"></Label>
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="Last Online:" TextColor="WhiteSmoke"/>
+                        <Label Text="{Binding LastOnlineText}" TextColor="WhiteSmoke"/>
                         <Label Text="{Binding Friend.LastOnline}" TextColor="WhiteSmoke"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>

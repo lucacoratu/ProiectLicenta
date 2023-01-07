@@ -42,9 +42,15 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private string addFriendEntryText;
 
+        [ObservableProperty]
+        private string statusBackgroundColor;
+
+        [ObservableProperty]
+        private string statusStrokeColor;
+
         private FriendService friendService;
         private ChatService chatService;
-        public ObservableCollection<FriendModel> Friends { get; } = new();
+        public ObservableCollection<FriendStatusModel> Friends { get; } = new();
 
         public ObservableCollection<FriendModel> CreateGroupSelectedFriends { get; set; } = new();
 
@@ -64,6 +70,8 @@ namespace WillowClient.ViewModel
         //This function will be a callback for when a message will be received on the websocket
         public async Task MessageReceivedOnWebsocket(string message)
         {
+            //TO DO...Change the format of the messages for better validation of data received!!!
+
             //Check if the message received is the first message that the server sends
             if (message.IndexOf("New User") != -1)
             {
@@ -74,6 +82,39 @@ namespace WillowClient.ViewModel
                 var accountId = int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
                 string setAccountIdMessage = "{\"setAccountId\":" + accountId.ToString() + "}";
                 this.chatService.SendMessageAsync(setAccountIdMessage);
+                return;
+            }
+
+            //It is a message specifing the new status of a user
+           if (message.IndexOf("Change status") != -1)
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                //Parse the response
+                ChangeStatusWebsocketResponseModel resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options);
+                //Search through the friend accounts and see if the message that the account involved is in the list of friends
+                for(int i =0; i < this.Friends.Count; i++)
+                {
+                    if (this.Friends[i].FriendId == resp.AccountId)
+                    {
+                        //Change the color depending on which status it is set
+                        if(resp.NewStatus == "Online")
+                        {
+                            this.Friends[i].Status = "Online";
+                            this.Friends[i].StatusBackgroundColor = Colors.Green;
+                            this.Friends[i].StatusStrokeColor = Colors.DarkGreen;
+                        }
+                        else
+                        {
+                            this.Friends[i].Status = "Offline";
+                            this.Friends[i].StatusBackgroundColor = Colors.Gray;
+                            this.Friends[i].StatusStrokeColor = Colors.DarkGray;
+                        }
+                    }
+                }
                 return;
             }
 
@@ -136,7 +177,7 @@ namespace WillowClient.ViewModel
                                     this.Friends[i].LastMessageTimestamp = timestamp;
                                 }
                                 //Move the conversation to the top
-                                List<FriendModel> CopyFriends = new();
+                                List<FriendStatusModel> CopyFriends = new();
                                 CopyFriends.Add(this.Friends[i]);
                                 for(int index = 0; index < this.Friends.Count; index++)
                                 {
@@ -196,7 +237,7 @@ namespace WillowClient.ViewModel
         }
 
         [RelayCommand]
-        async Task Tap(FriendModel f)
+        async Task Tap(FriendStatusModel f)
         {
             await Shell.Current.GoToAsync(nameof(ChatPage), true, new Dictionary<string, object>
                 {
@@ -237,7 +278,18 @@ namespace WillowClient.ViewModel
                         string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
                         friend.LastMessageTimestamp = messageTimestamp;
                     }
-                    Friends.Add(friend);
+
+                    
+                    if (friend.Status == "Online")
+                    {
+                        FriendStatusModel friendStatusModel = new FriendStatusModel(friend, Colors.Green, Colors.DarkGreen);
+                        Friends.Add(friendStatusModel);
+                    } else
+                    {
+                        FriendStatusModel friendStatusModel = new FriendStatusModel(friend, Colors.Gray, Colors.DarkGray);
+                        Friends.Add(friendStatusModel);
+                    }
+
                 }
             }
             catch(Exception e)

@@ -336,15 +336,15 @@ func (conn *Connection) ValidateJWTPayload(ID int, DisplayName string) error {
  * If there are no errors and the status has been update then nil will be returned
  * Else an error will be returned
  */
-func (conn *Connection) UpdateStatus(ID int, DisplayName string, status string) error {
+func (conn *Connection) UpdateStatus(ID int, status string) error {
 	//Prepare the update query
-	updStmt, err := conn.db.Prepare("UPDATE accounts SET Status = (SELECT ID FROM accountstatus WHERE Status = ?) WHERE ID = ? AND DisplayName = ?")
+	updStmt, err := conn.db.Prepare("UPDATE accounts SET Status = (SELECT ID FROM accountstatus WHERE Status = ?) WHERE ID = ?")
 	if err != nil {
 		conn.l.Error("Error occured during the preparation of the update status query", err.Error())
 		return err
 	}
 
-	res, err := updStmt.Exec(status, ID, DisplayName)
+	res, err := updStmt.Exec(status, ID)
 	if err != nil {
 		conn.l.Error("Error occured during execution of update status query", err.Error())
 		return err
@@ -356,7 +356,7 @@ func (conn *Connection) UpdateStatus(ID int, DisplayName string, status string) 
 		return err
 	}
 
-	if rowsAffected != 1 {
+	if rowsAffected > 1 {
 		conn.l.Error("Number of rows affected during status update is not 1")
 		return errors.New("number of rows affected during status update is not 1")
 	}
@@ -364,13 +364,12 @@ func (conn *Connection) UpdateStatus(ID int, DisplayName string, status string) 
 	return nil
 }
 
-
 /*
  * This function will get the details of an account (DisplayName, Status, Last-Online)
  */
 func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error) {
 	//Prepare the statement that will select the account details from the database
-	stmtSelect, err := conn.db.Prepare("SELECT ID, DisplayName, JoinDate, LastOnline FROM accounts WHERE ID = ?")
+	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accounts.LastOnline, accountstatus.Status FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID = ?")
 	//Check if an error occured during the preparation of the select statement
 	if err != nil {
 		//An error occured during the preparation of the select statment
@@ -389,7 +388,7 @@ func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error
 
 	//Check if any rows are returned from the statement using scan
 	account := &data.Account{}
-	err = res.Scan(&account.ID, &account.DisplayName, &account.JoinDate, &account.LastOnline)
+	err = res.Scan(&account.ID, &account.DisplayName, &account.JoinDate, &account.LastOnline, &account.Status)
 	if err != nil && err != sql.ErrNoRows {
 		//Another error than the one we are looking for occured
 		conn.l.Error("Error occured when fetching the rows in the jwt validation select ", err.Error())

@@ -23,13 +23,16 @@ namespace WillowClient.ViewModel
     public partial class ChatViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private FriendModel friend;
+        private FriendStatusModel friend;
 
         [ObservableProperty]
         private AccountModel account;
 
         [ObservableProperty]
         private string messageText;
+
+        [ObservableProperty]
+        private string lastOnlineText = "Last Online:";
 
         //public ObservableCollection<MessageModel> Messages { get; } = new();
         public List<MessageModel> Messages { get; } = new();
@@ -51,6 +54,33 @@ namespace WillowClient.ViewModel
         public async Task MessageReceivedOnWebsocket(string message)
         {
             //Check if the message is from the user in the current conversation
+            //It is a message specifing the new status of a user
+            if (message.IndexOf("Change status") != -1)
+            {
+                var options1 = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                //Parse the response
+                ChangeStatusWebsocketResponseModel resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options1);
+                //Search through the friend accounts and see if the message that the account involved is in the list of friends
+                //Change the color depending on which status it is set
+                if (this.Friend.FriendId == resp.AccountId)
+                {
+                    if (resp.NewStatus == "Online")
+                    {
+                        this.LastOnlineText = "Online";
+                        this.Friend.LastOnline = "";
+                    }
+                    else
+                    {
+                        this.LastOnlineText = "Last Online: ";
+                        this.Friend.LastOnline = DateTime.Now.ToString("f");
+                    }
+                }
+                return;
+            }
             //Parse the JSON
             var options = new JsonSerializerOptions
             {
@@ -181,6 +211,7 @@ namespace WillowClient.ViewModel
 
         public async void GetRoomId()
         {
+
             //Get the id of the room knowing the id of the account and the friend id
             var getRoomModel = new GetRoomIdModel { AccountId = account.Id, FriendId = friend.FriendId};
             var res = await this.chatService.GetRoomId(getRoomModel);
@@ -196,6 +227,12 @@ namespace WillowClient.ViewModel
                 this.roomId = roomIdModel.RoomId;
             }
 
+            //Initialize the last online text
+            if(this.friend.Status == "Online")
+            {
+                this.LastOnlineText = "Online";
+                this.Friend.LastOnline = "";
+            }
             this.GetHistory();
         }
 

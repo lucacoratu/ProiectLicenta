@@ -34,6 +34,9 @@
         <member name="P:WillowClient.ViewModel.ChatViewModel.MessageText">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.messageText"/>
         </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.LastOnlineText">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.lastOnlineText"/>
+        </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.EntryEnabled">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.entryEnabled"/>
         </member>
@@ -145,11 +148,17 @@
         <member name="P:WillowClient.ViewModel.MainViewModel.AddFriendEntryText">
             <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.addFriendEntryText"/>
         </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.StatusBackgroundColor">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.statusBackgroundColor"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.StatusStrokeColor">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.statusStrokeColor"/>
+        </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.MainViewModel.TapCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.Tap(WillowClient.Model.FriendModel)"/>.</summary>
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.Tap(WillowClient.Model.FriendStatusModel)"/>.</summary>
         </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.tapGroupCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapGroupCommand"/>.</summary>
