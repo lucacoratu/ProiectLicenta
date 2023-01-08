@@ -45,6 +45,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<MainViewModel>();
 		builder.Services.AddSingleton<FriendService>();
 
+		builder.Services.AddSingleton<SignalingService>();
+
 		builder.Services.AddSingleton<ChatService>();
 		builder.Services.AddTransient<ChatViewModel>();
 		builder.Services.AddTransient<ChatPage>();
@@ -53,13 +55,16 @@ public static class MauiProgram
 		builder.Services.AddTransient<GroupChatPage>();
 
 		builder.Services.AddTransient<CallViewModel>();
-		builder.Services.AddTransient<WindowsCallPage>();
+        builder.Services.AddTransient<CalleePage>();
+        builder.Services.AddTransient<CallerPage>();
+        builder.Services.AddTransient<WindowsCallPage>();
 #if ANDROID
 		builder.Services.AddTransient<AndroidCallPage>();
 #endif
 		builder.Services.AddSingleton<CreateGroupPage>();
 		builder.Services.AddSingleton<AddFriendPage>();
 		builder.Services.AddSingleton<FriendRequestPage>();
+
 
         return builder.Build();
 	}

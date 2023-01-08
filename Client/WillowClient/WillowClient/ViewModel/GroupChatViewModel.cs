@@ -52,45 +52,40 @@ namespace WillowClient.ViewModel
                 PropertyNameCaseInsensitive = true,
             };
 
-            WebSocketMessageModel? websocketMessage = JsonSerializer.Deserialize<WebSocketMessageModel>(message, options);
-            if (websocketMessage != null)
+            try
             {
-                try
+                //Parse the JSON body of the message
+                PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
+                if (privMessageModel != null)
                 {
-                    //Parse the JSON body of the message
-                    PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
-                    if (privMessageModel != null)
+                    //This is a private message received from another user
+                    //Check if the sender is the current user from the private conversation
+                    if (privMessageModel.SenderId != this.Account.Id)
                     {
-                        //This is a private message received from another user
-                        //Check if the sender is the current user from the private conversation
-                        if (privMessageModel.SenderId != this.Account.Id)
+                        //This is the friend that sent the message
+                        //this.Messages.Add(new MessageModel
+                        //{
+                        //    Owner = MessageOwner.OtherUser,
+                        //    Text = privMessageModel.Data,
+                        //    TimeStamp = DateTime.Now.ToString("HH:mm")
+                        //});
+                        foreach (var e in this.MessageGroups)
                         {
-                            //This is the friend that sent the message
-                            //this.Messages.Add(new MessageModel
-                            //{
-                            //    Owner = MessageOwner.OtherUser,
-                            //    Text = privMessageModel.Data,
-                            //    TimeStamp = DateTime.Now.ToString("HH:mm")
-                            //});
-                            foreach (var e in this.MessageGroups)
+                            if (e.Name == "Today")
                             {
-                                if (e.Name == "Today")
-                                {
-                                    e.Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm") });
-                                    //e.Name = "Today";
-                                }
+                                e.Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                                //e.Name = "Today";
                             }
-                            return;
                         }
+                        return;
                     }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-
             }
-            return;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
         }
 
         public async void GetHistory()

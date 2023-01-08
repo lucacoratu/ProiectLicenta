@@ -361,6 +361,32 @@ func (conn *Connection) UpdateStatus(ID int, status string) error {
 		return errors.New("number of rows affected during status update is not 1")
 	}
 
+	//If the new status is offline then update last online with current date
+	if status == "Offline" {
+		updLastOnline, err := conn.db.Prepare("UPDATE accounts SET LastOnline = current_timestamp() WHERE ID = ?")
+		if err != nil {
+			conn.l.Error("Error occured during the preparation of the update status query", err.Error())
+			return err
+		}
+
+		res, err := updLastOnline.Exec(ID)
+		if err != nil {
+			conn.l.Error("Error occured during execution of update status query", err.Error())
+			return err
+		}
+
+		rowsAffected, err := res.RowsAffected()
+		if err != nil {
+			conn.l.Error("Error occured during fetching the number of rows affected of update status query", err.Error())
+			return err
+		}
+
+		if rowsAffected > 1 {
+			conn.l.Error("Number of rows affected during status update is not 1")
+			return errors.New("number of rows affected during status update is not 1")
+		}
+	}
+
 	return nil
 }
 

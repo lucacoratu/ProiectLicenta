@@ -33,11 +33,16 @@
                                 <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
                                 <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
                             </VerticalStackLayout>
-                            <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="30,0,0,0" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                            <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="0,0,0,0" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
                         </Grid>
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <!--<CollectionView.EmptyView>
+                <ContentView>
+                    <ActivityIndicator Color="WhiteSmoke" IsRunning="True"/>
+                </ContentView>
+            </CollectionView.EmptyView>-->
         </CollectionView>
         <Frame Grid.Row="1" VerticalOptions="End" WidthRequest="50" HeightRequest="50" Margin="0,0,0,10" Padding="0" HorizontalOptions="Center" BackgroundColor="Transparent" IsClippedToBounds="True" CornerRadius="30">
             <Button HorizontalOptions="Center" VerticalOptions="Center" Text="+" FontAttributes="Bold" FontSize="30" Margin="-20" TextColor="WhiteSmoke" Command="{Binding CreateGroupMobileCommand}"/>

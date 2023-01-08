@@ -12,6 +12,6 @@ namespace WillowClient.Model
         public int accountId { get; set; }
 
         //This is the sender of the friend request
-        public int senderId { get; set; }
+        public int friendId { get; set; }
     }
 }

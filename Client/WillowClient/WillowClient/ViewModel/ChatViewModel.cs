@@ -81,6 +81,41 @@ namespace WillowClient.ViewModel
                 }
                 return;
             }
+
+            //Some friend is calling
+            if (message.IndexOf("callee") != -1)
+            {
+                //var options1 = new JsonSerializerOptions
+                //{
+                //    PropertyNameCaseInsensitive = true,
+                //};
+
+                ////Parse the response
+                //CallFriendModel cfm = JsonSerializer.Deserialize<CallFriendModel>(message, options1);
+                ////Search through all the friends and find the one that is calling
+                //if (cfm != null)
+                //{
+                //    if (cfm.option == "Call")
+                //    {
+                //        if (this.Friend.FriendId == cfm.caller)
+                //        {
+                //            //Go to the CalleePage
+                //            await MainThread.InvokeOnMainThreadAsync(async () =>
+                //                await Shell.Current.GoToAsync(nameof(CalleePage), true, new Dictionary<string, object>
+                //                {
+                //                {"roomID", this.Friend.RoomID},
+                //                {"account", this.Account},
+                //                {"friend", this.Friend},
+                //                {"audio", false },
+                //                {"video", false },
+                //                })
+                //            );
+                //        }
+                //    }
+                //}
+                return;
+            }
+
             //Parse the JSON
             var options = new JsonSerializerOptions
             {
@@ -306,49 +341,67 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async Task CallPeer()
         {
-#if ANDROID
-            await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
-                {
-                    {"roomID", roomId },
-                    {"account", account },
-                    {"friend", friend},
-                    {"audio", true},
-                    {"video", false },
-                });
-#else
-            await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
-                {
-                    {"roomID", roomId },
-                    {"account", account },
-                    {"friend", friend},
-                    {"audio", true},
-                    {"video", false },
-                });
-#endif
+            await Shell.Current.GoToAsync(nameof(CallerPage), true, new Dictionary<string, object>
+            {
+                {"roomID", roomId },
+                {"account", account },
+                {"friend", friend},
+                {"audio", true},
+                {"video", false },
+            });
+
+//#if ANDROID
+//            await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
+//                {
+//                    {"roomID", roomId },
+//                    {"account", account },
+//                    {"friend", friend},
+//                    {"audio", true},
+//                    {"video", false },
+//                });
+//#else
+//            await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
+//                {
+//                    {"roomID", roomId },
+//                    {"account", account },
+//                    {"friend", friend},
+//                    {"audio", true},
+//                    {"video", false },
+//                });
+//#endif
         }
 
         [RelayCommand]
         public async Task VideoCallPeer()
         {
-#if ANDROID
-            await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
-                {
-                    {"roomID", roomId },
-                    {"account", account },
-                    {"friend", friend},
-                    {"audio", true},
-                    {"video", true },
-                });
-#else
-            await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
-                {
-                    {"roomID", roomId },
-                    {"account", account },
-                    {"friend", friend},
-                    {"audio", true},
-                    {"video", true },
-                });
-#endif
+            await Shell.Current.GoToAsync(nameof(CallerPage), true, new Dictionary<string, object>
+            {
+                {"roomID", roomId },
+                {"account", account },
+                {"friend", friend},
+                {"audio", true},
+                {"video", false },
+            });
+
+            //#if ANDROID
+            //            await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
+            //                {
+            //                    {"roomID", roomId },
+            //                    {"account", account },
+            //                    {"friend", friend},
+            //                    {"audio", true},
+            //                    {"video", true },
+            //                });
+            //#else
+            //            await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
+            //                {
+            //                    {"roomID", roomId },
+            //                    {"account", account },
+            //                    {"friend", friend},
+            //                    {"audio", true},
+            //                    {"video", true },
+            //                });
+            //#endif
         }
     }
 }

@@ -40,6 +40,18 @@ type SetAccountIDMessage struct {
 	SetID int64 `json:"setAccountId"`
 }
 
+type CallAccount struct {
+	Caller int    `json:"caller"`
+	Callee int    `json:"callee"`
+	Option string `json:"option"`
+	RoomId int    `json:"roomId"`
+}
+
+type CalledAccountNotification struct {
+	Caller int `json:"caller"`
+	Callee int `json:"callee"`
+}
+
 type ChangeStatusMessage struct {
 	Text      string `json:"text"`
 	AccountId int    `json:"accountId"`

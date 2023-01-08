@@ -8,8 +8,8 @@ import (
 )
 
 type FriendRequest struct {
-	AccID    int `json:"accountID" validate:"required,ID"` //this is the account that received the request
-	SenderID int `json:"friendID" validate:"required,ID"`  //this is the account that sent the request
+	AccID    int `json:"accountId" validate:"required,ID"` //this is the account that received the request
+	SenderID int `json:"friendId" validate:"required,ID"`  //this is the account that sent the request
 }
 
 func (frReq *FriendRequest) ToJSON(w io.Writer) error {

@@ -1,5 +1,7 @@
 OpenSans-Regular.ttf
 OpenSans-Semibold.ttf
+answer.scale-100.png
+audio.scale-100.png
 back.scale-100.png
 call.scale-100.png
 camera.scale-100.png
@@ -10,6 +12,7 @@ dotnet_bot.scale-125.png
 dotnet_bot.scale-150.png
 dotnet_bot.scale-200.png
 dotnet_bot.scale-400.png
+end_call.scale-100.png
 friends.scale-100.png
 groups.scale-100.png
 home_icon.scale-100.png
@@ -17,6 +20,7 @@ login_image.scale-100.png
 login_password.scale-100.png
 login_user.scale-100.png
 login_username.scale-100.png
+microphone.scale-100.png
 open_menu.scale-100.png
 register.scale-100.png
 register_display_name.scale-100.png
@@ -25,6 +29,7 @@ register_image.scale-100.png
 settings.scale-100.png
 settings_icon.scale-100.png
 video.scale-100.png
+video_camera.scale-100.png
 willow.ico
 willowLargeTile.scale-100.png
 willowLargeTile.scale-125.png

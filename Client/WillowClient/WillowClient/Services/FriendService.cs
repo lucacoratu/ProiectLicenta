@@ -53,7 +53,7 @@ namespace WillowClient.Services
             this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
             //this.m_handler.CookieContainer = this.m_CookieContainer;
 
-            SendFriendRequestModel frm = new SendFriendRequestModel { accountId = friendID, senderId = accountID};
+            SendFriendRequestModel frm = new SendFriendRequestModel { accountId = friendID, friendId = accountID};
             var response = await this.m_httpClient.PostAsync(url, JsonContent.Create(frm));
             //Check if the response was an error
             if (response.StatusCode != HttpStatusCode.OK)

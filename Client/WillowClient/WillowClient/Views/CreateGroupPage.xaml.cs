@@ -13,10 +13,10 @@ public partial class CreateGroupPage : ContentPage
 
     private void createGroupCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        List<FriendModel> current = new();
+        List<FriendStatusModel> current = new();
         foreach (var element in e.CurrentSelection)
         {
-            current.Add(element as FriendModel);
+            current.Add(element as FriendStatusModel);
         }
         var vm = BindingContext as MainViewModel;
         if (vm != null)

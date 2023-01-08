@@ -15,4 +15,11 @@ public partial class WindowsCallPage : ContentPage
 		CallViewModel vm = BindingContext as CallViewModel;
 		vm.InitializeCall(this.webView);
 	}
+
+    private void ImageButton_Clicked(object sender, EventArgs e)
+    {
+        //Call the leave function in the javascript
+        CallViewModel vm = BindingContext as CallViewModel;
+        vm.TerminateCall(this.webView);
+    }
 }

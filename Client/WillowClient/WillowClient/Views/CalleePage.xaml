@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:Class="WillowClient.Views.CalleePage"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:CallViewModel"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="*,250">
+        <VerticalStackLayout Grid.Row="0">
+            <Label Padding="0,30,0,0" Text="{Binding Friend.DisplayName}" FontSize="25" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
+            <Label Text="Calling..." HorizontalOptions="Center" TextColor="WhiteSmoke"/>
+            <Frame Margin="0,40,0,0" BackgroundColor="#404040" CornerRadius="100" WidthRequest="140" HeightRequest="140">
+                <toolkit:AvatarView 
+                                     HeightRequest="100"
+                                     Margin="0"
+                                     ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                     WidthRequest="100"
+                                     BorderWidth="1.3"
+                                     BorderColor="WhiteSmoke"
+                                     CornerRadius="50"
+                                     HorizontalOptions="Center"
+                       />
+            </Frame>
+        </VerticalStackLayout>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" RowDefinitions="*">
+            <Frame Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Background="Green" CornerRadius="60">
+                <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="answer.png" Command="{Binding AnswerCallCommand}"/>
+            </Frame>
+            <Frame Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Background="Red" CornerRadius="60">
+                <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="end_call.png" Command="{Binding DenyCallCommand}"/>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>

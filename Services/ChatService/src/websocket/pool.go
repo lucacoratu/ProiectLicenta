@@ -244,7 +244,7 @@ func (pool *Pool) MessageReceived(message Message) {
 		isChatMessage = false
 	}
 
-	if isChatMessage {
+	if isChatMessage && chatMessageData.RoomID != 0 && chatMessageData.Data != "" {
 		pool.logger.Info("Chat message received on the socket")
 		err = pool.dbConn.InsertMessageIntoRoom(chatMessageData.RoomID, chatMessageData.MessageType, message.C.Id, chatMessageData.Data)
 		//Check if the insert was succesfull
@@ -301,6 +301,38 @@ func (pool *Pool) MessageReceived(message Message) {
 				}
 				pool.logger.Info("Sent the message to the sender")
 			}
+		}
+		return
+	}
+
+	//Check if the message is call user message
+	callMessageData := CallAccount{}
+	err = json.Unmarshal([]byte(message.Body), &callMessageData)
+	var isCallMessage bool = true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isCallMessage = false
+	}
+
+	if isCallMessage && callMessageData.Callee != 0 && callMessageData.Caller != 0 {
+		//Send the other client notification that a friend is calling him
+		pool.logger.Info("Received message to call", callMessageData.Caller, "from", callMessageData.Callee)
+		var foundCallee bool = false
+		for client, _ := range pool.Clients {
+			pool.logger.Debug(client.Id)
+			if client.Id == int64(callMessageData.Callee) {
+				//Send a message back which will confirm the id was set
+				err = client.Conn.WriteJSON(callMessageData)
+				if err != nil {
+					//Log the error message
+					pool.logger.Error(err.Error())
+				}
+				foundCallee = true
+			}
+		}
+		if !foundCallee {
+			//Send a message to the caller that the account is offline
+			pool.logger.Info("Callee is not online at the moment!")
 		}
 		return
 	}

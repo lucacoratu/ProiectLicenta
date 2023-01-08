@@ -50,9 +50,10 @@ namespace WillowClient.ViewModel
 
         private FriendService friendService;
         private ChatService chatService;
+        private SignalingService signalingService;
         public ObservableCollection<FriendStatusModel> Friends { get; } = new();
 
-        public ObservableCollection<FriendModel> CreateGroupSelectedFriends { get; set; } = new();
+        public ObservableCollection<FriendStatusModel> CreateGroupSelectedFriends { get; set; } = new();
 
         public ObservableCollection<GroupModel> Groups { get; } = new();
 
@@ -60,11 +61,18 @@ namespace WillowClient.ViewModel
 
         public ObservableCollection<FriendRequestModel> SentFriendRequests { get; } = new();
 
-        public MainViewModel(FriendService friendService, ChatService chatService)
+        public MainViewModel(FriendService friendService, ChatService chatService, SignalingService signalingService)
         {
             this.friendService = friendService;
             this.chatService = chatService;
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
+            this.signalingService = signalingService;
+            this.signalingService.RegisterReadCallback(MessageReceivedOnSignalingWebsocket);
+        }
+
+        public async Task MessageReceivedOnSignalingWebsocket(string message)
+        {
+            int i = 0;
         }
 
         //This function will be a callback for when a message will be received on the websocket
@@ -86,7 +94,7 @@ namespace WillowClient.ViewModel
             }
 
             //It is a message specifing the new status of a user
-           if (message.IndexOf("Change status") != -1)
+            if (message.IndexOf("Change status") != -1)
             {
                 var options = new JsonSerializerOptions
                 {
@@ -118,6 +126,89 @@ namespace WillowClient.ViewModel
                 return;
             }
 
+            //Some friend is calling
+            if(message.IndexOf("callee") != -1) {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                //Parse the response
+                CallFriendModel cfm = JsonSerializer.Deserialize<CallFriendModel>(message, options);
+                //Search through all the friends and find the one that is calling
+                if(cfm != null) {
+                    if (cfm.option == "Call")
+                    {
+                        for (int i = 0; i < this.Friends.Count; i++)
+                        {
+                            if (this.Friends[i].FriendId == cfm.caller)
+                            {
+                                //Go to the CalleePage
+                                await MainThread.InvokeOnMainThreadAsync(async () =>
+                                    await Shell.Current.GoToAsync(nameof(CalleePage), true, new Dictionary<string, object>
+                                    {
+                                    {"roomID", cfm.roomId},
+                                    {"account", this.Account},
+                                    {"friend", this.Friends[i]},
+                                    {"audio", false },
+                                    {"video", false },
+                                    })
+                                );
+                                break;
+                            }
+                        }
+                    }
+                    if (cfm.option == "Cancel")
+                    {
+                        //Go back to where the application was before the call
+                        await MainThread.InvokeOnMainThreadAsync(async () =>
+                            await Shell.Current.Navigation.PopAsync()
+                        );
+                    }
+                    if(cfm.option == "Answer")
+                    {
+                        //The friend answered the call
+                        for (int i = 0; i < this.Friends.Count; i++)
+                        {
+                            if (this.Friends[i].FriendId == cfm.caller)
+                            {
+#if ANDROID
+                                await MainThread.InvokeOnMainThreadAsync(async () =>
+                                    await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
+                                    {
+                                        { "roomID", cfm.roomId },
+                                        { "account", account },
+                                        { "friend", this.Friends[i] },
+                                        { "audio", true },
+                                        { "video", true },
+                                    }));
+#else
+                                await MainThread.InvokeOnMainThreadAsync(async () => 
+                                    await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
+                                    {
+                                        {"roomID", cfm.roomId },
+                                        {"account", account },
+                                        {"friend", this.Friends[i] },
+                                        {"audio", true},
+                                        {"video", true },
+                                    }));
+#endif
+                                break;
+                            }
+                        }
+                    }
+                    if(cfm.option == "Deny")
+                    {
+                        //The friend denied the call
+                        //Go back to where the application was before the call
+                        await MainThread.InvokeOnMainThreadAsync(async () =>
+                            await Shell.Current.Navigation.PopAsync()
+                        );
+                    }
+                }
+                return;
+            }
+
             //It is a message from another user
             if(message.IndexOf("groupName") != -1)
             {
@@ -143,6 +234,7 @@ namespace WillowClient.ViewModel
                 //Clear the friends selected for the group
                 this.CreateGroupSelectedFriends.Clear();
                 this.CreateGroupSelected = false;
+                return;
             }
 
             if (message.IndexOf("data") != -1)
@@ -458,7 +550,7 @@ namespace WillowClient.ViewModel
             CreateGroupSelected = true;
         }
 
-        public void CreateGroupSelectionChanged(List<FriendModel> newList)
+        public void CreateGroupSelectionChanged(List<FriendStatusModel> newList)
         {
             if (newList == null)
                 return;
@@ -466,7 +558,7 @@ namespace WillowClient.ViewModel
             if (this.CreateGroupSelectedFriends.Count != 0)
                 this.CreateGroupSelectedFriends.Clear();
 
-            foreach(FriendModel f in newList) {
+            foreach(FriendStatusModel f in newList) {
                 this.CreateGroupSelectedFriends.Add(f);
             }
         }
@@ -481,7 +573,7 @@ namespace WillowClient.ViewModel
             createGroupMessageModel.groupName = this.GroupName;
             createGroupMessageModel.creatorID = this.account.Id;
             createGroupMessageModel.participants = new();
-            foreach(FriendModel f in this.CreateGroupSelectedFriends)
+            foreach(FriendStatusModel f in this.CreateGroupSelectedFriends)
             {
                 createGroupMessageModel.participants.Add(f.FriendId);
             }

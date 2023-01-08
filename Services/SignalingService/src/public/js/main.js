@@ -20,10 +20,12 @@ roomID = roomID.innerHTML;
 var platform = document.querySelector("#platform");
 platform = platform.innerHTML;
 
+
+
 //Join the room
 var ws = 0;
 if(platform === "android")
-    ws = new WebSocket("wss://10.0.2.2:8090/join?roomID=" + roomID);
+    ws = new WebSocket("wss://192.168.0.107:8090/join?roomID=" + roomID);
 else if(platform === "windows"){
     ws = new WebSocket("wss://localhost:8090/join?roomID=" + roomID);
 }
@@ -32,6 +34,27 @@ ws.onopen = function(event) {
     let msg = {content: "create or join"};
     console.log(JSON.stringify(msg));
     ws.send(JSON.stringify(msg));
+}
+
+function leaveCall() {
+    hangup();
+    //Clear the local stream
+    const stream = localVideo.srcObject;
+    const tracks = stream.getTracks();
+  
+    tracks.forEach((track) => {
+      track.stop();
+    });
+
+    const remote_stream = localVideo.srcObject;
+    const remote_tracks = remote_stream.getTracks();
+  
+    tracks.forEach((track) => {
+      track.stop();
+    });
+
+    localVideo.srcObject = null;
+    remoteVideo.srcObject = null;
 }
 
 //The message should be defined as following
@@ -147,9 +170,9 @@ function handleIceCandidate(event) {
     if (event.candidate) {
         sendMessage({
         type: 'candidate',
-        label: event.candidate.sdpMLineIndex,
-        id: event.candidate.sdpMid,
-        candidate: event.candidate.candidate
+            label: event.candidate.sdpMLineIndex,
+            id: event.candidate.sdpMid,
+            candidate: event.candidate.candidate
         });
     } else {
         console.log('End of candidates.');

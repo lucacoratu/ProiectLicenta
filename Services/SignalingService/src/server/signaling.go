@@ -95,8 +95,14 @@ func broadcaster() {
 				}
 			}
 			//Remove i client
-			RemoveIndex(AllRooms.Map[msg.RoomID], i)
+			log.Println(i)
+			AllRooms.Mutex.Lock()
+			AllRooms.Map[msg.RoomID] = RemoveIndex(AllRooms.Map[msg.RoomID], i)
 			log.Println(AllRooms.Map[msg.RoomID])
+			if len(AllRooms.Map[msg.RoomID]) == 0 {
+				AllRooms.DeleteRoom(msg.RoomID)
+			}
+			AllRooms.Mutex.Unlock()
 		}
 
 		for _, client := range AllRooms.Map[msg.RoomID] {
@@ -144,15 +150,19 @@ func JoinRoomRequestHandler(rw http.ResponseWriter, r *http.Request) {
 						break
 					}
 				}
-				//Remove the participant at i
-				AllRooms.Map[id] = RemoveIndex(participants, i)
-				log.Println(AllRooms.Map[id])
-				//Check if the room is empty
-				if len(participants) == 0 {
-					AllRooms.DeleteRoom(id)
-				}
 				if i != -1 {
-					break
+					//Remove the participant at i
+					//AllRooms.Map[id] = RemoveIndex(participants, i)
+					//log.Println(AllRooms.Map[id])
+					//Check if the room is empty
+					AllRooms.Mutex.Lock()
+					if len(participants) == 0 {
+						AllRooms.DeleteRoom(id)
+					}
+					AllRooms.Mutex.Unlock()
+					if i != -1 {
+						break
+					}
 				}
 			}
 			return

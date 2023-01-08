@@ -25,6 +25,24 @@
         <member name="P:WillowClient.ViewModel.CallViewModel.Video">
             <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.video"/>
         </member>
+        <member name="F:WillowClient.ViewModel.CallViewModel.answerCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.CallViewModel.AnswerCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.AnswerCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.CallViewModel.AnswerCall"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.CallViewModel.denyCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.CallViewModel.DenyCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.DenyCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.CallViewModel.DenyCall"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.CallViewModel.endCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.CallViewModel.EndCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.EndCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.CallViewModel.EndCall"/>.</summary>
+        </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.Friend">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.friend"/>
         </member>

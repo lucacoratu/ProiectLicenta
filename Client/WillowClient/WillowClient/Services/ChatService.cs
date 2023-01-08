@@ -95,5 +95,15 @@ namespace WillowClient.Services
         {
             this.recvCallbacks.Add(callbackFunction);
         }
+
+        public void UnregisterReadCallback(Func<string, Task> callbackFunction)
+        {
+            this.recvCallbacks.Remove(callbackFunction);
+        }
+
+        public void PopReadCallback()
+        {
+            this.recvCallbacks.RemoveAt(this.recvCallbacks.Count - 1);
+        }
     }
 }

@@ -2,7 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WillowClient.Views.WindowsCallPage"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:CallViewModel"
              Title="WindowsCallPage"
              Loaded="ContentPage_Loaded">
-    <WebView x:Name="webView"/>
+    <Grid RowDefinitions="*">
+        <WebView x:Name="webView" Grid.Row="0"/>
+        <Frame Grid.Row="0" HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,20" Background="Red" CornerRadius="60">
+            <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="end_call.png" Clicked="ImageButton_Clicked"/>
+        </Frame>
+    </Grid>
 </ContentPage>

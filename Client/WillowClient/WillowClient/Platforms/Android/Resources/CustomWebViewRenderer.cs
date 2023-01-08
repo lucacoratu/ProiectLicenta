@@ -30,6 +30,7 @@ namespace WillowClient.Platforms.Android
             Control.Settings.JavaScriptEnabled = true;
             Control.Settings.DomStorageEnabled = true;
             Control.Settings.MediaPlaybackRequiresUserGesture = false;
+            Control.Settings.AllowContentAccess = true;
             Control.SetWebViewClient(new CustomWebViewClient());
             Control.SetWebChromeClient(new CustomWebViewChromeClient());
             //base.OnElementChanged(e);
@@ -44,7 +45,7 @@ namespace WillowClient.Platforms.Android
     {
         public CustomWebViewChromeClient()
         {
-
+            
         }
 
         public override void OnPermissionRequest(PermissionRequest request)

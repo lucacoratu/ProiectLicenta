@@ -50,6 +50,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.Android
 build_metadata.AdditionalFiles.TargetPath = Views\AndroidCallPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AndroidCallPage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/CalleePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.CalleePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CalleePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CalleePage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/CallerPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.CallerPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CallerPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CallerPage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/ChatPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ChatPage.xaml
