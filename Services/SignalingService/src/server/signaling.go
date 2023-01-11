@@ -61,7 +61,9 @@ func broadcaster() {
 				for _, client := range AllRooms.Map[msg.RoomID] {
 					if client.Conn != msg.Client {
 						resp := response{Content: "join"}
+						AllRooms.Mutex.Lock()
 						err := client.Conn.WriteJSON(resp)
+						AllRooms.Mutex.Unlock()
 
 						if err != nil {
 							log.Println(err.Error())
@@ -73,45 +75,53 @@ func broadcaster() {
 				log.Println("Here!")
 				resp := response{Content: "joined"}
 				AllRooms.InsertIntoRoom(msg.RoomID, false, msg.Client)
+				//AllRooms.Mutex.Lock()
 				msg.Client.WriteJSON(resp)
+				//AllRooms.Mutex.Lock()
 			} else {
 				//The key doesn't exists
 				//Create the key
 				resp := response{Content: "created"}
 				AllRooms.InsertIntoRoom(msg.RoomID, false, msg.Client)
+				//AllRooms.Mutex.Lock()
 				msg.Client.WriteJSON(resp)
+				//AllRooms.Mutex.Unlock()
 			}
 
 			continue
-		}
-
-		//If the message contains bye remove the connection from the room
-		if strings.Contains(msg.Message, "bye") {
-			i := -1
-			for index, client := range AllRooms.Map[msg.RoomID] {
-				if client.Conn == msg.Client {
-					i = index
-					break
+		} else {
+			//If the message contains bye remove the connection from the room
+			if strings.Contains(msg.Message, "bye") {
+				i := -1
+				for index, client := range AllRooms.Map[msg.RoomID] {
+					if client.Conn == msg.Client {
+						i = index
+						break
+					}
 				}
-			}
-			//Remove i client
-			log.Println(i)
-			AllRooms.Mutex.Lock()
-			AllRooms.Map[msg.RoomID] = RemoveIndex(AllRooms.Map[msg.RoomID], i)
-			log.Println(AllRooms.Map[msg.RoomID])
-			if len(AllRooms.Map[msg.RoomID]) == 0 {
-				AllRooms.DeleteRoom(msg.RoomID)
-			}
-			AllRooms.Mutex.Unlock()
-		}
+				//Remove i client
+				log.Println(i)
+				AllRooms.Mutex.Lock()
+				if i != -1 {
+					AllRooms.Map[msg.RoomID] = RemoveIndex(AllRooms.Map[msg.RoomID], i)
+				}
+				log.Println(AllRooms.Map[msg.RoomID])
+				if len(AllRooms.Map[msg.RoomID]) == 0 {
+					AllRooms.DeleteRoom(msg.RoomID)
+				}
+				AllRooms.Mutex.Unlock()
+			} else {
+				for _, client := range AllRooms.Map[msg.RoomID] {
+					if client.Conn != msg.Client {
+						AllRooms.Mutex.Lock()
+						err := client.Conn.WriteMessage(1, []byte(msg.Message))
+						AllRooms.Mutex.Unlock()
 
-		for _, client := range AllRooms.Map[msg.RoomID] {
-			if client.Conn != msg.Client {
-				err := client.Conn.WriteMessage(1, []byte(msg.Message))
-
-				if err != nil {
-					log.Println(err.Error())
-					client.Conn.Close()
+						if err != nil {
+							log.Println(err.Error())
+							client.Conn.Close()
+						}
+					}
 				}
 			}
 		}

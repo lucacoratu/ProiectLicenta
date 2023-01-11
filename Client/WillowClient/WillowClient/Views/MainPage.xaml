@@ -33,9 +33,9 @@
                                     CornerRadius="32"
                                     >
                             </toolkit:AvatarView>
-                            <VerticalStackLayout Spacing="8">
+                            <VerticalStackLayout>
                                 <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
-                                <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True"></Label>
+                                <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </DataTemplate>
@@ -186,9 +186,9 @@
                                     </Border.StrokeShape>
                                 </Border>
                             </HorizontalStackLayout>
-                            <VerticalStackLayout Spacing="8">
+                            <VerticalStackLayout>
                                 <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
-                                <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True"/>
+                                <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
                             </VerticalStackLayout>
                             <!--<Grid ColumnDefinitions="85,*">
                                 <VerticalStackLayout Grid.Column="0">
