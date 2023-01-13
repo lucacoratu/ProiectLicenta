@@ -25,7 +25,7 @@ platform = platform.innerHTML;
 //Join the room
 var ws = 0;
 if(platform === "android")
-    ws = new WebSocket("wss://10.0.2.2:8090/join?roomID=" + roomID);
+    ws = new WebSocket("wss://192.168.0.107:8090/join?roomID=" + roomID);
 else if(platform === "windows"){
     ws = new WebSocket("wss://localhost:8090/join?roomID=" + roomID);
 }

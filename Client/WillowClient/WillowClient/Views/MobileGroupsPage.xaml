@@ -20,20 +20,21 @@
                                     CommandParameter="{Binding .}"/>
                         </HorizontalStackLayout.GestureRecognizers>
                         <toolkit:AvatarView
-                                    HeightRequest="50"
+                                    HeightRequest="45"
                                     ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                                    WidthRequest="50"
+                                    WidthRequest="45"
                                     BorderWidth="1.3"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
                                     >
                         </toolkit:AvatarView>
-                        <Grid ColumnDefinitions="230,*">
+                        <Grid ColumnDefinitions="235,*" RowDefinitions="*,Auto">
                             <VerticalStackLayout Grid.Column="0">
-                                <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                <Label Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
                                 <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
                             </VerticalStackLayout>
-                            <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="0,0,0,0" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                            <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="0,0,0,0" HorizontalTextAlignment="End" HorizontalOptions="End" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                            <Line Margin="0,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"></Line>
                         </Grid>
                     </HorizontalStackLayout>
                 </DataTemplate>

@@ -1,5 +1,5 @@
 ﻿//#define LOCAL_ANDROID
-//#define LOCAL_ANDROID_HOME
+#define LOCAL_ANDROID_HOME
 using System;
 using System.Collections.Generic;
 using System.Linq;

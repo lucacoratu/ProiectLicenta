@@ -248,9 +248,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\WillowClient.pdb
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\WillowClient.genruntimeconfig.cache
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\ref\WillowClient.dll
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\appiconfg.png
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\appiconfg@2x.png
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\appiconfg@3x.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\dotnet_bot.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\dotnet_bot@2x.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\dotnet_bot@3x.png
@@ -270,7 +267,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\register_email.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\settings_icon.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\video.png
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\willow.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\x_sign.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Assets.xcassets\willow.appiconset\Contents.json
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Assets.xcassets\willow.appiconset\willow20x20@2x.png
@@ -287,3 +283,12 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\MauiInfo.plist
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\OpenSans-Regular.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\OpenSans-Semibold.ttf
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\answer.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\audio.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\end_call.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\friends.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\groups.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\microphone.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\register_image.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\settings.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\video_camera.png

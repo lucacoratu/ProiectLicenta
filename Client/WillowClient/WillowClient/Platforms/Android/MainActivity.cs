@@ -10,6 +10,7 @@ public class MainActivity : MauiAppCompatActivity
     protected async override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        Window.SetSoftInputMode(Android.Views.SoftInput.AdjustNothing);
 
         await Permissions.RequestAsync<Permissions.Camera>();
         await Permissions.RequestAsync<Permissions.Microphone>();

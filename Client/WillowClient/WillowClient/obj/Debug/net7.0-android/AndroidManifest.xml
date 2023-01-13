@@ -42,6 +42,9 @@
     <service android:name="crc64396a3fe5f8138e3f.KeepAliveService" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="1999999999" android:authorities="com.companyname.willowclient.mono.MonoRuntimeProvider.__mono_init__" />
   </application>
+  <!--<activity android:name=".MainActivity" android:windowSoftInputMethod="adjustPan">
+		
+	</activity>-->
   <!-- Required only if your app targets Android 13. -->
   <!-- Declare one or more the following permissions only if your app needs
     to access data that's protected by them. -->

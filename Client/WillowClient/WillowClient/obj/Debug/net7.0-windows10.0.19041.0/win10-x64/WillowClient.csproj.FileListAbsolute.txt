@@ -356,3 +356,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\microphone.scale-100.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\video_camera.scale-100.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\answer.scale-100.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Microsoft.Windows.AppNotifications.Builder.Projection.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Microsoft.Windows.Security.AccessControl.Projection.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Microsoft.Windows.Widgets.Projection.dll
