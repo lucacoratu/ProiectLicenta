@@ -61,11 +61,11 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.1.0, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -92,9 +92,21 @@
               "version": "[7.0.52, )",
               "autoReferenced": true
             },
-            "Syncfusion.Maui.Core": {
+            "UraniumUI": {
               "target": "Package",
-              "version": "[20.3.57, )"
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.FontAwesome": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.MaterialIcons": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Material": {
+              "target": "Package",
+              "version": "[2.3.0-pre.1, )"
             },
             "Xamarin.Android.Glide": {
               "target": "Package",
@@ -187,11 +199,11 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.1.0, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -218,9 +230,21 @@
               "version": "[7.0.52, )",
               "autoReferenced": true
             },
-            "Syncfusion.Maui.Core": {
+            "UraniumUI": {
               "target": "Package",
-              "version": "[20.3.57, )"
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.FontAwesome": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.MaterialIcons": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Material": {
+              "target": "Package",
+              "version": "[2.3.0-pre.1, )"
             }
           },
           "imports": [
@@ -258,11 +282,11 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.1.0, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -289,9 +313,21 @@
               "version": "[7.0.52, )",
               "autoReferenced": true
             },
-            "Syncfusion.Maui.Core": {
+            "UraniumUI": {
               "target": "Package",
-              "version": "[20.3.57, )"
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.FontAwesome": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.MaterialIcons": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Material": {
+              "target": "Package",
+              "version": "[2.3.0-pre.1, )"
             }
           },
           "imports": [
@@ -330,11 +366,11 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.0.0, )"
+              "version": "[3.1.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.1.0, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
@@ -377,9 +413,21 @@
               "version": "[1.2.221109.1, )",
               "autoReferenced": true
             },
-            "Syncfusion.Maui.Core": {
+            "UraniumUI": {
               "target": "Package",
-              "version": "[20.3.57, )"
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.FontAwesome": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Icons.MaterialIcons": {
+              "target": "Package",
+              "version": "[2.3.0-pre.2, )"
+            },
+            "UraniumUI.Material": {
+              "target": "Package",
+              "version": "[2.3.0-pre.1, )"
             }
           },
           "imports": [

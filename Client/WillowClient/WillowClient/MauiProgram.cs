@@ -1,12 +1,11 @@
 ﻿using WillowClient.Services;
 using WillowClient.ViewModel;
 using WillowClient.Views;
-using Syncfusion.Maui.Core;
-using Syncfusion.Maui.Core.Hosting;
 using CommunityToolkit.Maui;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using UraniumUI;
 #if ANDROID
-	using WillowClient.Platforms.Android;
+using WillowClient.Platforms.Android;
 #endif
 
 namespace WillowClient;
@@ -24,12 +23,14 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+				fonts.AddFontAwesomeIconFonts();
+            });
 
         builder.ConfigureMauiHandlers((handlers) => {
 #if ANDROID
             handlers.AddCompatibilityRenderer(typeof(CustomWebView), typeof(CustomWebViewRenderer));
 #endif
+            handlers.AddUraniumUIHandlers();
         });
 
         builder.Services.AddSingleton<LoginService>();
@@ -42,6 +43,7 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<MobileMainPage>();
+		builder.Services.AddSingleton<MobileTabviewMainPage>();
 		builder.Services.AddSingleton<MainViewModel>();
 		builder.Services.AddSingleton<FriendService>();
 
@@ -64,6 +66,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<CreateGroupPage>();
 		builder.Services.AddSingleton<AddFriendPage>();
 		builder.Services.AddSingleton<FriendRequestPage>();
+
+		builder.Services.AddSingleton<FeedbackViewModel>();
+		builder.Services.AddSingleton<FeedbackService>();
+		builder.Services.AddSingleton<ReportABugPage>();
 
 
         return builder.Build();

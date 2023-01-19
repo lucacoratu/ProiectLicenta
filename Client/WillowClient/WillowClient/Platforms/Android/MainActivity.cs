@@ -11,6 +11,8 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnCreate(savedInstanceState);
         Window.SetSoftInputMode(Android.Views.SoftInput.AdjustNothing);
+        //Window.SetSoftInputMode(Android.Views.SoftInput.AdjustUnspecified);
+        //Window.SetSoftInputMode(Android.Views.SoftInput.AdjustResize);
 
         await Permissions.RequestAsync<Permissions.Camera>();
         await Permissions.RequestAsync<Permissions.Microphone>();

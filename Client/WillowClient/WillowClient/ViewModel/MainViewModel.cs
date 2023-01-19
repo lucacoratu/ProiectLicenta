@@ -367,8 +367,23 @@ namespace WillowClient.ViewModel
                     //Update the date format to show only the hour if the message is from Today
                     if (friend.LastMessageTimestamp != "")
                     {
-                        string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
-                        friend.LastMessageTimestamp = messageTimestamp;
+                        //string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
+                        //friend.LastMessageTimestamp = messageTimestamp;
+                        DateTime messageDate = DateTime.Parse(friend.LastMessageTimestamp);
+                        double diffDays = (DateTime.Now - messageDate).TotalDays;
+                        if (diffDays <= 1.0 && diffDays >= 0.0)
+                        {
+                            string messageTimestamp = messageDate.ToString("HH:mm");
+                            friend.LastMessageTimestamp = messageTimestamp;
+                        }
+                        else if (diffDays > 1.0 && diffDays <= 2.0)
+                        {
+                            friend.LastMessageTimestamp = "Yesterday";
+                        }
+                        else
+                        {
+                            friend.LastMessageTimestamp = messageDate.ToString("dddd");
+                        }
                     }
 
                     
@@ -412,8 +427,21 @@ namespace WillowClient.ViewModel
                 {
                     if(group.LastMessageTimestamp != "")
                     {
-                        string messageTimestamp = DateTime.Parse(group.LastMessageTimestamp).ToString("HH:mm");
-                        group.LastMessageTimestamp = messageTimestamp;
+                        DateTime messageDate = DateTime.Parse(group.LastMessageTimestamp);
+                        double diffDays = (DateTime.Now - messageDate).TotalDays;
+                        if (diffDays <= 1.0 && diffDays >= 0.0)
+                        {
+                            string messageTimestamp = messageDate.ToString("HH:mm");
+                            group.LastMessageTimestamp = messageTimestamp;
+                        }
+                        else if(diffDays > 1.0 && diffDays <= 2.0)
+                        {
+                            group.LastMessageTimestamp = "Yesterday";
+                        }
+                        else 
+                        {
+                            group.LastMessageTimestamp = messageDate.ToString("dddd");
+                        }
                     }
                     Groups.Add(group);
                 }
@@ -568,7 +596,7 @@ namespace WillowClient.ViewModel
         {
             //Create the message to create a group
             CreateGroupMessageModel createGroupMessageModel = new CreateGroupMessageModel();
-            if (this.GroupName == "")
+            if (this.GroupName == "" || this.GroupName == null)
                 return;
             createGroupMessageModel.groupName = this.GroupName;
             createGroupMessageModel.creatorID = this.account.Id;
@@ -589,19 +617,38 @@ namespace WillowClient.ViewModel
         }
 
         [RelayCommand]
+        async Task ExitCreateGroup()
+        {
+            await Shell.Current.Navigation.PopAsync();
+        }
+
+        [RelayCommand]
         async Task AddFriendMobile()
         {
             await Shell.Current.GoToAsync(nameof(AddFriendPage), true);
         }
 
         [RelayCommand]
+        async Task ExitAddFriend()
+        {
+            await Shell.Current.Navigation.PopAsync();
+        }
+
+
+        [RelayCommand]
         async Task FriendRequestMobile()
         {
+            await Shell.Current.GoToAsync(nameof(FriendRequestPage), true);
             var requests = await this.friendService.GetFriendRequest(this.Account.Id, Session);
             this.FriendRequests.Clear();
             foreach (var request in requests)
                 this.FriendRequests.Add(request);
-            await Shell.Current.GoToAsync(nameof(FriendRequestPage), true);
+        }
+
+        [RelayCommand]
+        async Task ExitFriendRequests()
+        {
+            _ = await Shell.Current.Navigation.PopAsync();
         }
 
         [RelayCommand]
@@ -657,6 +704,12 @@ namespace WillowClient.ViewModel
             {
                 await Shell.Current.DisplayAlert("Error", "Cannot decline the friend request", "Ok");
             }
+        }
+
+        [RelayCommand]
+        async Task GoToReportABug()
+        {
+            await Shell.Current.GoToAsync(nameof(ReportABugPage), true);
         }
     }
 }

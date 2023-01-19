@@ -1,5 +1,6 @@
 OpenSans-Regular.ttf
 OpenSans-Semibold.ttf
+add_picture.scale-100.png
 answer.scale-100.png
 audio.scale-100.png
 back.scale-100.png
@@ -13,6 +14,10 @@ dotnet_bot.scale-150.png
 dotnet_bot.scale-200.png
 dotnet_bot.scale-400.png
 end_call.scale-100.png
+feedback_account.scale-100.png
+feedback_chat.scale-100.png
+feedback_video.scale-100.png
+feedback_voice.scale-100.png
 friends.scale-100.png
 groups.scale-100.png
 home_icon.scale-100.png
@@ -22,6 +27,7 @@ login_user.scale-100.png
 login_username.scale-100.png
 microphone.scale-100.png
 open_menu.scale-100.png
+plus_group.scale-100.png
 register.scale-100.png
 register_display_name.scale-100.png
 register_email.scale-100.png

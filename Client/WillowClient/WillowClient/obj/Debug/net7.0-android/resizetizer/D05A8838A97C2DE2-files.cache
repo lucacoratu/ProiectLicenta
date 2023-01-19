@@ -1,4 +1,5 @@
-﻿obj\Debug\net7.0-android\resizetizer\r\drawable\answer.png
+﻿obj\Debug\net7.0-android\resizetizer\r\drawable\add_picture.png
+obj\Debug\net7.0-android\resizetizer\r\drawable\answer.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\audio.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\back.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\call.png
@@ -6,6 +7,10 @@ obj\Debug\net7.0-android\resizetizer\r\drawable\camera.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\clipboard.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\default_profile_icon.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\end_call.png
+obj\Debug\net7.0-android\resizetizer\r\drawable\feedback_account.png
+obj\Debug\net7.0-android\resizetizer\r\drawable\feedback_chat.png
+obj\Debug\net7.0-android\resizetizer\r\drawable\feedback_video.png
+obj\Debug\net7.0-android\resizetizer\r\drawable\feedback_voice.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\friends.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\groups.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\home_icon.png
@@ -15,6 +20,7 @@ obj\Debug\net7.0-android\resizetizer\r\drawable\login_user.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\login_username.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\microphone.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\open_menu.png
+obj\Debug\net7.0-android\resizetizer\r\drawable\plus_group.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\register.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\register_display_name.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\register_email.png

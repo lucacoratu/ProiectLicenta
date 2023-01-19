@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WillowClient.Views.MobileSettingsPage"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
              Title="Settings"
-             IconImageSource="settings.png">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             IconImageSource="settings.png"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource PageDarkBackgroundColor}, Light={StaticResource PageLightBackgroundColor}}">
+    <VerticalStackLayout Padding="20">
+        <Button BackgroundColor="Red" TextColor="WhiteSmoke" Text="Report a bug" WidthRequest="200" Command="{Binding GoToReportABugCommand}"></Button>
     </VerticalStackLayout>
 </ContentPage>

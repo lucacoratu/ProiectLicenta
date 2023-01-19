@@ -10,9 +10,17 @@
              Title="FriendRequestPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
-    <VerticalStackLayout IsEnabled="True" IsVisible="True">
-        <Label Text="Friend requests" FontSize="Medium" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="WhiteSmoke"/>
-        <CollectionView x:Name="friendRequestsCollectionView" ItemsSource="{Binding FriendRequests}" SelectionMode="None">
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+        <Border Grid.Row="0" HeightRequest="70" BackgroundColor="#7B68EE">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="#7B68EE" >
+                <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitFriendRequestsCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Friend requests" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <CollectionView Grid.Row="1" x:Name="friendRequestsCollectionView" ItemsSource="{Binding FriendRequests}" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:FriendRequestModel">
                     <SwipeView>
@@ -20,14 +28,14 @@
                             <SwipeItems Mode="Execute">
                                 <SwipeItem Text="Accept" BackgroundColor="Green" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AcceptFriendRequestCommand}" CommandParameter="{Binding .}"/>
                             </SwipeItems>
-                            </SwipeView.LeftItems>
+                        </SwipeView.LeftItems>
                         <SwipeView.RightItems>
                             <SwipeItems Mode="Execute">
                                 <SwipeItem Text="Reject" BackgroundColor="Red" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeclineFriendRequestCommand}" CommandParameter="{Binding .}"/>
                             </SwipeItems>
                         </SwipeView.RightItems>
-                    <HorizontalStackLayout Padding="10" Spacing="6">
-                        <toolkit:AvatarView
+                        <HorizontalStackLayout Padding="10" Spacing="6">
+                            <toolkit:AvatarView
                                         HeightRequest="50"
                                         ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                                         WidthRequest="50"
@@ -35,18 +43,18 @@
                                         BorderColor="WhiteSmoke"
                                         CornerRadius="32"
                                         />
-                        <VerticalStackLayout Spacing="13">
-                            <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
-                            <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10,10,10,10"/>
-                                </Border.StrokeShape>
-                            </Border>
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
+                            <VerticalStackLayout Spacing="13">
+                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                                <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,10,10"/>
+                                    </Border.StrokeShape>
+                                </Border>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

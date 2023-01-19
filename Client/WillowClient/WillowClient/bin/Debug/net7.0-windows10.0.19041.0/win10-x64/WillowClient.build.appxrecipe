@@ -7,7 +7,7 @@
     <TargetOsVersion>10.0</TargetOsVersion>
     <TargetOsDescription>Windows 10.0</TargetOsDescription>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
-    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageArchitecture>x64</PackageArchitecture>
     <PackageIdentityName>A3EB14C2-3E7A-4FAC-B554-0B65F496554E</PackageIdentityName>
     <PackageIdentityPublisher>CN=User Name</PackageIdentityPublisher>
     <IntermediateOutputPath>D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\</IntermediateOutputPath>
@@ -604,14 +604,17 @@
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.27\lib\net6.0\WinRT.Runtime.dll">
       <PackagePath>WinRT.Runtime.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui\3.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.dll">
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui\3.1.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.dll">
       <PackagePath>CommunityToolkit.Maui.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui.core\3.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.Core.dll">
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui.core\3.1.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.Core.dll">
       <PackagePath>CommunityToolkit.Maui.Core.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.mvvm\8.0.0\lib\net6.0\CommunityToolkit.Mvvm.dll">
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.mvvm\8.1.0\lib\net6.0\CommunityToolkit.Mvvm.dll">
       <PackagePath>CommunityToolkit.Mvvm.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\inputkit.maui\4.2.5\lib\net7.0-windows10.0.19041\InputKit.Maui.dll">
+      <PackagePath>InputKit.Maui.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.extensions.configuration\7.0.0\lib\net7.0\Microsoft.Extensions.Configuration.dll">
       <PackagePath>Microsoft.Extensions.Configuration.dll</PackagePath>
@@ -688,29 +691,20 @@
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.windowsappsdk\1.2.221109.1\lib\net6.0-windows10.0.18362.0\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll">
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.Net.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.windowsappsdk.foundation\1.0.0-experimental1\lib\net5.0-windows10.0.17763.0\Microsoft.ApplicationModel.Resources.Projection.dll">
-      <PackagePath>Microsoft.ApplicationModel.Resources.Projection.dll</PackagePath>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\plainer.maui\1.6.2\lib\net7.0\Plainer.Maui.dll">
+      <PackagePath>Plainer.Maui.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\newtonsoft.json\12.0.2\lib\netstandard2.0\Newtonsoft.Json.dll">
-      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\uraniumui\2.3.0-pre.2\lib\net7.0-windows10.0.19041\UraniumUI.dll">
+      <PackagePath>UraniumUI.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\reloadify3000\1.0.7\lib\netstandard2.0\Esp.Resources.dll">
-      <PackagePath>Esp.Resources.dll</PackagePath>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\uraniumui.icons.fontawesome\2.3.0-pre.2\lib\net7.0-windows10.0.19041\UraniumUI.Icons.FontAwesome.dll">
+      <PackagePath>UraniumUI.Icons.FontAwesome.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\reloadify3000\1.0.7\lib\netstandard2.0\Esp.dll">
-      <PackagePath>Esp.dll</PackagePath>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\uraniumui.icons.materialicons\2.3.0-pre.2\lib\net7.0-windows10.0.19041\UraniumUI.Icons.MaterialIcons.dll">
+      <PackagePath>UraniumUI.Icons.MaterialIcons.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\reloadify3000\1.0.7\lib\netstandard2.0\Reloadify3000.Core.dll">
-      <PackagePath>Reloadify3000.Core.dll</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\reloadify3000\1.0.7\lib\netstandard2.0\Reloadify3000.dll">
-      <PackagePath>Reloadify3000.dll</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\syncfusion.licensing\20.3.0.57\lib\net6.0\Syncfusion.Licensing.dll">
-      <PackagePath>Syncfusion.Licensing.dll</PackagePath>
-    </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\syncfusion.maui.core\20.3.57\lib\net6.0-windows10.0.19041.0\Syncfusion.Maui.Core.dll">
-      <PackagePath>Syncfusion.Maui.Core.dll</PackagePath>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\uraniumui.material\2.3.0-pre.1\lib\net7.0-windows10.0.19041\UraniumUI.Material.dll">
+      <PackagePath>UraniumUI.Material.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.graphics.win2d\1.0.4\runtimes\win10-x64\native\Microsoft.Graphics.Canvas.dll">
       <PackagePath>Microsoft.Graphics.Canvas.dll</PackagePath>
@@ -754,6 +748,9 @@
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Semibold.ttf">
       <PackagePath>OpenSans-Semibold.ttf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\add_picture.scale-100.png">
+      <PackagePath>add_picture.scale-100.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\answer.scale-100.png">
       <PackagePath>answer.scale-100.png</PackagePath>
     </AppxPackagedFile>
@@ -793,6 +790,18 @@
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\end_call.scale-100.png">
       <PackagePath>end_call.scale-100.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\feedback_account.scale-100.png">
+      <PackagePath>feedback_account.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\feedback_chat.scale-100.png">
+      <PackagePath>feedback_chat.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\feedback_video.scale-100.png">
+      <PackagePath>feedback_video.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\feedback_voice.scale-100.png">
+      <PackagePath>feedback_voice.scale-100.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\friends.scale-100.png">
       <PackagePath>friends.scale-100.png</PackagePath>
     </AppxPackagedFile>
@@ -819,6 +828,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\open_menu.scale-100.png">
       <PackagePath>open_menu.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\plus_group.scale-100.png">
+      <PackagePath>plus_group.scale-100.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\register.scale-100.png">
       <PackagePath>register.scale-100.png</PackagePath>

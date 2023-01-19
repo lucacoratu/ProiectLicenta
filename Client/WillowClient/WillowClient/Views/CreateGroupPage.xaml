@@ -6,48 +6,77 @@
              xmlns:model="clr-namespace:WillowClient.Model"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
-             Title="CreateGroupPage"
              Loaded="ContentPage_Loaded"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
-
-    <Grid RowDefinitions="*">
-        <!--<ScrollView Grid.Row="0" IsEnabled="{Binding CreateGroupSelected}" IsVisible="{Binding CreateGroupSelected}">-->
-            <VerticalStackLayout>
-             <Label Text="Choose a name for the group"/>
-            <Entry Placeholder="Insert the group name" Text="{Binding GroupName}"/>
-            <Label Text="Add participants" HorizontalOptions="CenterAndExpand"/>
+    <ContentPage.Resources>
+        <Style TargetType="HorizontalStackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="#7B68EE" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0" HeightRequest="70" BackgroundColor="#7B68EE">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="#7B68EE" >
+                <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitCreateGroupCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Create new group" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <VerticalStackLayout Grid.Row="1" Padding="12">
+            <!--<Label Text="Choose a name for the group"/>-->
+            <Grid RowDefinitions="*" ColumnDefinitions="50,*" HorizontalOptions="Start" ColumnSpacing="20">
+                <VerticalStackLayout Grid.Column="0">
+                    <ImageButton WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Aspect="AspectFill" Source="add_picture.png"/>
+                    <ImageButton CornerRadius="14" Source="plus_group.png" Aspect="AspectFill" WidthRequest="20" HeightRequest="20" BackgroundColor="#505050" HorizontalOptions="End" Margin="0,-15,0,0"></ImageButton>
+                </VerticalStackLayout>
+                <Entry Grid.Column="1" Placeholder="Insert the group name" Text="{Binding GroupName}" WidthRequest="240"/>
+            </Grid>
+            <SearchBar Placeholder="Search for people to add" PlaceholderColor="Gray" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>
             <CollectionView x:Name="createGroupCollectionView" ItemsSource="{Binding Friends}" SelectionMode="Multiple" SelectionChanged="createGroupCollectionView_SelectionChanged">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:FriendModel">
-                        <HorizontalStackLayout Padding="10" Spacing="6">
-                            <!--<HorizontalStackLayout.GestureRecognizers>
-                                        <SwipeGestureRecognizer Direction="Left" Command="">
-                                            
-                                        </SwipeGestureRecognizer>
-                                    </HorizontalStackLayout.GestureRecognizers>-->
-                            <toolkit:AvatarView
-                                        HeightRequest="50"
-                                        ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                                        WidthRequest="50"
-                                        BorderWidth="1.3"
-                                        BorderColor="WhiteSmoke"
-                                        CornerRadius="32"
-                                        />
-                            <VerticalStackLayout Spacing="13">
-                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
-                                <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                    <DataTemplate x:DataType="model:FriendStatusModel">
+                        <HorizontalStackLayout>
+                            <HorizontalStackLayout Padding="10" Spacing="6">
+                                <toolkit:AvatarView
+                                            HeightRequest="45"
+                                            ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                            WidthRequest="45"
+                                            BorderWidth="1.3"
+                                            BorderColor="WhiteSmoke"
+                                            CornerRadius="32"
+                                            />
+                                <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" Stroke="{Binding StatusStrokeColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Margin="-20,0,0,0" VerticalOptions="End">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10"/>
                                     </Border.StrokeShape>
                                 </Border>
-                            </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            <Grid RowDefinitions="*,Auto" ColumnDefinitions="195,Auto">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding DisplayName}" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
+                                <Button Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" HeightRequest="30" WidthRequest="60" FontSize="12" Text="Add" TextColor="WhiteSmoke"/>
+                                <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>
+                            </Grid>
                         </HorizontalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Button Margin="0,10,0,0" Text="Create group" TextColor="WhiteSmoke" HorizontalOptions="Center" WidthRequest="150" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
+            <Button Margin="0,10,0,0" Text="Create" TextColor="WhiteSmoke" HorizontalOptions="End" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
         </VerticalStackLayout>
     <!--</ScrollView>-->
     </Grid>

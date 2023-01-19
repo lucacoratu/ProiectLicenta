@@ -19,6 +19,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(FriendRequestPage), typeof(FriendRequestPage));
         Routing.RegisterRoute(nameof(CallerPage), typeof(CallerPage));
         Routing.RegisterRoute(nameof(CalleePage), typeof(CalleePage));
+        Routing.RegisterRoute(nameof(ReportABugPage), typeof(ReportABugPage));
+        Routing.RegisterRoute(nameof(MobileTabviewMainPage), typeof(MobileTabviewMainPage));
 #if ANDROID
         Routing.RegisterRoute(nameof(AndroidCallPage), typeof(AndroidCallPage));
 #endif

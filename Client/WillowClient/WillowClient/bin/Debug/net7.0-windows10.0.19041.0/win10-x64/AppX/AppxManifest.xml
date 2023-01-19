@@ -7,7 +7,7 @@
 
     For more information on package manifest files, see http://go.microsoft.com/fwlink/?LinkID=241727
   -->
-  <Identity Name="A3EB14C2-3E7A-4FAC-B554-0B65F496554E" Publisher="CN=User Name" Version="1.0.0.1" ProcessorArchitecture="neutral" />
+  <Identity Name="A3EB14C2-3E7A-4FAC-B554-0B65F496554E" Publisher="CN=User Name" Version="1.0.0.1" ProcessorArchitecture="x64" />
   <Properties>
     <DisplayName>WillowClient</DisplayName>
     <PublisherDisplayName>User Name</PublisherDisplayName>
@@ -40,7 +40,7 @@
     <DeviceCapability Name="webcam" />
   </Capabilities>
   <build:Metadata>
-    <build:Item Name="Microsoft.UI.Xaml.Markup.Compiler.dll" Version="0.0.0.0" />
-    <build:Item Name="MakePri.exe" Version="10.0.19041.685 (WinBuild.160101.0800)" />
+    <build:Item Name="Microsoft.UI.Xaml.Markup.Compiler.dll" Version="1.0.0.0" />
+    <build:Item Name="makepri.exe" Version="10.0.22621.755 (WinBuild.160101.0800)" />
   </build:Metadata>
 </Package>

@@ -138,6 +138,7 @@ public partial class LoginViewModel : BaseViewModel
                     {"hexID", hexID},
                     {"session", session }
                 });
+                //await Shell.Current.GoToAsync(nameof(MobileTabviewMainPage), true);
 #else
                 await Shell.Current.GoToAsync(nameof(MainPage), true, new Dictionary<string, object>
                 {

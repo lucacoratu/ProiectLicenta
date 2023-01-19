@@ -299,3 +299,10 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimul
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\register_image.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\settings.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\video_camera.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\build-signature\signature
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\add_picture.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\feedback_account.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\feedback_chat.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\feedback_video.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\feedback_voice.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\plus_group.png

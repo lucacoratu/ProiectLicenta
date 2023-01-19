@@ -4,13 +4,18 @@
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
              x:Class="WillowClient.Views.LoginPage"
              x:DataType="viewmodel:LoginViewModel"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              >
     <VerticalStackLayout>
         <Image x:Name="loginImage" HorizontalOptions="Center" HeightRequest="200" Source="login_image.png" Aspect="AspectFit"/>
         <Label Text="Welcome back" TextColor="WhiteSmoke" FontSize="20" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
         <Label Text="Login to your account" TextColor="WhiteSmoke" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-        <VerticalStackLayout x:Name="PhoneLayout" Padding="40" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="600">
+        <!--<VerticalStackLayout x:Name="PhoneLayout" Padding="40" Spacing="8" IsVisible="True" IsEnabled="True" MaximumWidthRequest="600">
             <VerticalStackLayout Spacing="3">
                 <HorizontalStackLayout>
                     <Image WidthRequest="32" HeightRequest="32" Aspect="Fill" Source="login_username.png"></Image>
@@ -39,6 +44,26 @@
                 </Label>
             </HorizontalStackLayout>
             <Label Text="{Binding Error}" Style="{StaticResource WillowErrorLabelStyle}"></Label>
-        </VerticalStackLayout>
+        </VerticalStackLayout>-->
+        <!--<VerticalStackLayout Spacing="20" Padding="20">-->
+        <input:FormView Spacing="20" Padding="20" SubmitCommand="{Binding LoginCommand}">
+            <material:TextField x:Name="entryUsername" Title="Username" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.User}}" Text="{Binding Username}" AccentColor="{StaticResource AccentDarkColor}" AllowClear="True" Unfocused="entryUsername_Unfocused">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryPassword" Title="Password" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Lock}}" Text="{Binding Password}" MaxLength="20" AccentColor="{StaticResource AccentDarkColor}" IsPassword="True" material:AllowClear="True" ClearButtonVisibility="WhileEditing" Unfocused="entryPassword_Unfocused">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:CheckBox Text="Remember me?" Color="{StaticResource AccentDarkColor}" TextColor="WhiteSmoke" IconColor="WhiteSmoke" />
+            <Button Text="Login" StyleClass="FilledButton" BackgroundColor="{StaticResource AccentDarkColor}" TextColor="WhiteSmoke" input:FormView.IsSubmitButton="True" Clicked="Button_Clicked"></Button>
+            <HorizontalStackLayout Spacing="20">
+                <Label Text="Don't have an account?" Style="{StaticResource WillowMediumLabelStyle}"></Label>
+                <Label Text="Signup" Style="{StaticResource WillowLinkLabelStyle}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToRegisterCommand}"/>
+                    </Label.GestureRecognizers> 
+                </Label>
+            </HorizontalStackLayout>
+            </input:FormView>
+        <!--</VerticalStackLayout>-->
     </VerticalStackLayout>
 </ContentPage>

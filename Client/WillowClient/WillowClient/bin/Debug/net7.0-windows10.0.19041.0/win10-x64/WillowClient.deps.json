@@ -9,8 +9,8 @@
     ".NETCoreApp,Version=v7.0/win10-x64": {
       "WillowClient/1.0": {
         "dependencies": {
-          "CommunityToolkit.Maui": "3.0.0",
-          "CommunityToolkit.Mvvm": "8.0.0",
+          "CommunityToolkit.Maui": "3.1.0",
+          "CommunityToolkit.Mvvm": "8.1.0",
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Microsoft.Extensions.DependencyInjection": "7.0.0",
           "Microsoft.Extensions.Logging": "7.0.0",
@@ -19,7 +19,10 @@
           "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop": "7.0.52",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.755",
           "Microsoft.WindowsAppSDK": "1.2.221109.1",
-          "Syncfusion.Maui.Core": "20.3.57",
+          "UraniumUI": "2.3.0-pre.2",
+          "UraniumUI.Icons.FontAwesome": "2.3.0-pre.2",
+          "UraniumUI.Icons.MaterialIcons": "2.3.0-pre.2",
+          "UraniumUI.Material": "2.3.0-pre.1",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "7.0.0",
           "runtimepack.Microsoft.Maui.Core.Runtime.win": "7.0.52",
           "runtimepack.Microsoft.Maui.Controls.Runtime.win": "7.0.52",
@@ -794,9 +797,9 @@
           }
         }
       },
-      "CommunityToolkit.Maui/3.0.0": {
+      "CommunityToolkit.Maui/3.1.0": {
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.0.0"
+          "CommunityToolkit.Maui.Core": "3.1.0"
         },
         "runtime": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -805,7 +808,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.0.0": {
+      "CommunityToolkit.Maui.Core/3.1.0": {
         "runtime": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
             "assemblyVersion": "1.0.0.0",
@@ -813,11 +816,19 @@
           }
         }
       },
-      "CommunityToolkit.Mvvm/8.0.0": {
+      "CommunityToolkit.Mvvm/8.1.0": {
         "runtime": {
           "lib/net6.0/CommunityToolkit.Mvvm.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.0.1"
+            "assemblyVersion": "8.1.0.0",
+            "fileVersion": "8.1.0.1"
+          }
+        }
+      },
+      "InputKit.Maui/4.2.5": {
+        "runtime": {
+          "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
+            "assemblyVersion": "4.2.5.0",
+            "fileVersion": "4.2.5.0"
           }
         }
       },
@@ -921,18 +932,6 @@
           }
         }
       },
-      "Microsoft.Maui.Dependencies/6.0.100-rc.1.1608": {
-        "dependencies": {
-          "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1",
-          "Microsoft.WindowsAppSDK.Foundation": "1.0.0-experimental1",
-          "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.0.0-experimental1",
-          "Microsoft.WindowsAppSDK.WinUI": "1.0.0-experimental1",
-          "Reloadify3000": "1.0.7"
-        }
-      },
       "Microsoft.Maui.Graphics/7.0.52": {
         "runtime": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -1023,64 +1022,50 @@
           }
         }
       },
-      "Microsoft.WindowsAppSDK.Foundation/1.0.0-experimental1": {
+      "Plainer.Maui/1.6.2": {
         "runtime": {
-          "lib/net5.0-windows10.0.17763.0/Microsoft.ApplicationModel.Resources.Projection.dll": {
+          "lib/net7.0/Plainer.Maui.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
       },
-      "Microsoft.WindowsAppSDK.InteractiveExperiences/1.0.0-experimental1": {},
-      "Microsoft.WindowsAppSDK.WinUI/1.0.0-experimental1": {},
-      "Newtonsoft.Json/12.0.2": {
-        "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "assemblyVersion": "12.0.0.0",
-            "fileVersion": "12.0.2.23222"
-          }
-        }
-      },
-      "Reloadify3000/1.0.7": {
+      "UraniumUI/2.3.0-pre.2": {
         "dependencies": {
-          "Newtonsoft.Json": "12.0.2"
+          "InputKit.Maui": "4.2.5",
+          "Plainer.Maui": "1.6.2"
         },
         "runtime": {
-          "lib/netstandard2.0/Esp.Resources.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/netstandard2.0/Esp.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/netstandard2.0/Reloadify3000.Core.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/netstandard2.0/Reloadify3000.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+          "lib/net7.0-windows10.0.19041/UraniumUI.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
           }
         }
       },
-      "Syncfusion.Licensing/20.3.0.57": {
+      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
         "runtime": {
-          "lib/net6.0/Syncfusion.Licensing.dll": {
-            "assemblyVersion": "20.3.0.57",
-            "fileVersion": "20.3.0.57"
+          "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
           }
         }
       },
-      "Syncfusion.Maui.Core/20.3.57": {
+      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+        "runtime": {
+          "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
+          }
+        }
+      },
+      "UraniumUI.Material/2.3.0-pre.1": {
         "dependencies": {
-          "Microsoft.Maui.Dependencies": "6.0.100-rc.1.1608",
-          "Syncfusion.Licensing": "20.3.0.57"
+          "UraniumUI": "2.3.0-pre.2"
         },
         "runtime": {
-          "lib/net6.0-windows10.0.19041.0/Syncfusion.Maui.Core.dll": {
-            "assemblyVersion": "20.3600.0.57",
-            "fileVersion": "20.3600.0.57"
+          "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.0"
           }
         }
       }
@@ -1117,26 +1102,33 @@
       "serviceable": false,
       "sha512": ""
     },
-    "CommunityToolkit.Maui/3.0.0": {
+    "CommunityToolkit.Maui/3.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-anCcjAowr7cLs1AEigvOoFFt92KEMcXv7qsQy6hJh2sJNbl94zBiqAP8Aejo7EgxQ1bsLMGVMi+oLfzKJ1rpVg==",
-      "path": "communitytoolkit.maui/3.0.0",
-      "hashPath": "communitytoolkit.maui.3.0.0.nupkg.sha512"
+      "sha512": "sha512-C5jJU9k+aqo05Bwv3yFLTv5FdWqOOL97qY/EmlRjPDzgWx9LOhZCLhJu+5eiNITuhGkSGEFrK1lt/yxAimkInA==",
+      "path": "communitytoolkit.maui/3.1.0",
+      "hashPath": "communitytoolkit.maui.3.1.0.nupkg.sha512"
     },
-    "CommunityToolkit.Maui.Core/3.0.0": {
+    "CommunityToolkit.Maui.Core/3.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-WPe80yqmNlOGfDvYuGue2QFXMvoKb56VM0yD+Encrrm8+94a1Wwke+aQMluj6NF1llEx0WNDitDVq/2LcXz9Lg==",
-      "path": "communitytoolkit.maui.core/3.0.0",
-      "hashPath": "communitytoolkit.maui.core.3.0.0.nupkg.sha512"
+      "sha512": "sha512-tSPn+ix6wemEx/jwleS4sVlrLrck3C9zILeiquPxAXNlCFGIZ0Pn74vGXaSdXblbrAA7WuJeHIbQX0rp22k6Bg==",
+      "path": "communitytoolkit.maui.core/3.1.0",
+      "hashPath": "communitytoolkit.maui.core.3.1.0.nupkg.sha512"
     },
-    "CommunityToolkit.Mvvm/8.0.0": {
+    "CommunityToolkit.Mvvm/8.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Jiu2g5WUdXRwzhJkHB+B4JBKP5A5+fp8xKiW/ZQo5PI+DruI7MbPEcK9K/Aw0YzTiWRuG6CBluzYIWN5Eo7BkQ==",
-      "path": "communitytoolkit.mvvm/8.0.0",
-      "hashPath": "communitytoolkit.mvvm.8.0.0.nupkg.sha512"
+      "sha512": "sha512-xxOt7lu9a5kB5Fs9RfcxzVlKnhuuPe+w7AXHtmCFtS3oldrsUhEMxHfNulluXSscUUoGxZ0jh55Om12ZP6abHA==",
+      "path": "communitytoolkit.mvvm/8.1.0",
+      "hashPath": "communitytoolkit.mvvm.8.1.0.nupkg.sha512"
+    },
+    "InputKit.Maui/4.2.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-s5WOm1hDG0oSXRm/nvaRBhrgV+2ifXbXLBIbHKDC2qPa/7AR+XQNNdDjnrnxh/ZOYyiQSr4XcYEeRvsPBFi5mA==",
+      "path": "inputkit.maui/4.2.5",
+      "hashPath": "inputkit.maui.4.2.5.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/7.0.0": {
       "type": "package",
@@ -1201,13 +1193,6 @@
       "path": "microsoft.graphics.win2d/1.0.4",
       "hashPath": "microsoft.graphics.win2d.1.0.4.nupkg.sha512"
     },
-    "Microsoft.Maui.Dependencies/6.0.100-rc.1.1608": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-7yNLSSb24vIjOCxu7Vx1uI4GoCLE/obVsXHow8RrWrqJm5LkBhLwo0vgBXl1Q/f440a/V9pjgQtVqVGFJOAslg==",
-      "path": "microsoft.maui.dependencies/6.0.100-rc.1.1608",
-      "hashPath": "microsoft.maui.dependencies.6.0.100-rc.1.1608.nupkg.sha512"
-    },
     "Microsoft.Maui.Graphics/7.0.52": {
       "type": "package",
       "serviceable": true,
@@ -1236,54 +1221,40 @@
       "path": "microsoft.windowsappsdk/1.2.221109.1",
       "hashPath": "microsoft.windowsappsdk.1.2.221109.1.nupkg.sha512"
     },
-    "Microsoft.WindowsAppSDK.Foundation/1.0.0-experimental1": {
+    "Plainer.Maui/1.6.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-HRk953VsjM9JpLIu1Kq1rmu8TbEpcGdxb4ZOjNJV7kBqIGHY7z4MP4BFjzrrrePReBNtaUnRNNv0WSONOq63/w==",
-      "path": "microsoft.windowsappsdk.foundation/1.0.0-experimental1",
-      "hashPath": "microsoft.windowsappsdk.foundation.1.0.0-experimental1.nupkg.sha512"
+      "sha512": "sha512-yIq981cxxQN4AT1kVRxyJTLeuHpViebUbbx6H5C6QwfUdy0oXELhhJ9VUTVfxqP+Ssyw/VEUGPmd+4un6Ma0sQ==",
+      "path": "plainer.maui/1.6.2",
+      "hashPath": "plainer.maui.1.6.2.nupkg.sha512"
     },
-    "Microsoft.WindowsAppSDK.InteractiveExperiences/1.0.0-experimental1": {
+    "UraniumUI/2.3.0-pre.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-69Phhhrv0WQA1esNet/vasUw71vx8iXh6L6MfjvrK/nk5PJ2Pa676saeHPShotp5CGGrIPRxXok1BZ/8a3mVLQ==",
-      "path": "microsoft.windowsappsdk.interactiveexperiences/1.0.0-experimental1",
-      "hashPath": "microsoft.windowsappsdk.interactiveexperiences.1.0.0-experimental1.nupkg.sha512"
+      "sha512": "sha512-dmUXwd1pXRxWH9JiWc1Dt4rwtAax8RRf5ih3N7llNcXHljqQ8No0J7ZXIRSLybCgR1zE0SePZenqErigPZ8/RA==",
+      "path": "uraniumui/2.3.0-pre.2",
+      "hashPath": "uraniumui.2.3.0-pre.2.nupkg.sha512"
     },
-    "Microsoft.WindowsAppSDK.WinUI/1.0.0-experimental1": {
+    "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0IKpmhXQJ3nSyAhu5Td8CWqmbqgLr53KxRJTbIGvXcX10rlw0gFr2bL9kjkVD5KsOioOWLMESEtnHKlQcHXkVA==",
-      "path": "microsoft.windowsappsdk.winui/1.0.0-experimental1",
-      "hashPath": "microsoft.windowsappsdk.winui.1.0.0-experimental1.nupkg.sha512"
+      "sha512": "sha512-esE5+xlZHCTy/UtKVurAai7bqwuEy6NGGI5jqzrDGe64/5vlIhGvCVSQ0g+nfrcAUQtfwR6OFj6ODUvRnILKgA==",
+      "path": "uraniumui.icons.fontawesome/2.3.0-pre.2",
+      "hashPath": "uraniumui.icons.fontawesome.2.3.0-pre.2.nupkg.sha512"
     },
-    "Newtonsoft.Json/12.0.2": {
+    "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
-      "path": "newtonsoft.json/12.0.2",
-      "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
+      "sha512": "sha512-R9RRZTOGZf78vstlZEpw45ZihXA1c1n8vXTpqytTQiCPmakp3Ieqb4AQYEY9UZkBBXiu4NL2E0Vjb+lsvvp6rQ==",
+      "path": "uraniumui.icons.materialicons/2.3.0-pre.2",
+      "hashPath": "uraniumui.icons.materialicons.2.3.0-pre.2.nupkg.sha512"
     },
-    "Reloadify3000/1.0.7": {
+    "UraniumUI.Material/2.3.0-pre.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+847doRse4hAkHfe3l4yPwUoXUbgZdA6SFQetZBE5OuysmafBsergDKn3u5UnTYWK6TD645rm22+nT3vBsgfQw==",
-      "path": "reloadify3000/1.0.7",
-      "hashPath": "reloadify3000.1.0.7.nupkg.sha512"
-    },
-    "Syncfusion.Licensing/20.3.0.57": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-l/V7HuB/ZgYaSP0+hfvULMKfn5tJxITv6qCj1bwhAcIjKpHcf2wzQ3FHb/IdD5iCnzvAFdubRddJyHbzG+6ieA==",
-      "path": "syncfusion.licensing/20.3.0.57",
-      "hashPath": "syncfusion.licensing.20.3.0.57.nupkg.sha512"
-    },
-    "Syncfusion.Maui.Core/20.3.57": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zIvJX/PAVZny0VroZxPOvQ8xpXaNlsckfd1rZ4usMnbiLsSY6KS85phamWTk6cE6iCCfwBia+2YwSvjzspasww==",
-      "path": "syncfusion.maui.core/20.3.57",
-      "hashPath": "syncfusion.maui.core.20.3.57.nupkg.sha512"
+      "sha512": "sha512-mD1yHjRzHlAtfd2kgEU95z1py5GfP8oVIby/GiOmlM9J5SxX0M9G6INMrL9uetJ/ROk/4WZ222+6I9JG9BkYYA==",
+      "path": "uraniumui.material/2.3.0-pre.1",
+      "hashPath": "uraniumui.material.2.3.0-pre.1.nupkg.sha512"
     }
   },
   "runtimes": {

@@ -1,14 +1,17 @@
 ﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:local="clr-namespace:WillowClient"
              x:Class="WillowClient.App">
     <Application.Resources>
         <ResourceDictionary>
-            <!--<ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <material:ColorResource x:Name="colorMaterial"/>
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>-->
+                <material:StyleResource x:Name="styleMaterial"/>
+            </ResourceDictionary.MergedDictionaries>
             <!--Dark mode colors-->
             <Color x:Key="PageDarkBackgroundColor">#303030</Color>
             <Color x:Key="TextDarkColor">WhiteSmoke</Color>
@@ -86,10 +89,33 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
             </Style>
+
+            <Style x:Key="WillowGroupSelectionStyle" TargetType="HorizontalStackLayout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
             
             <!--Entry style-->
             <!--<Style x:Key="WillowEntryStyle" TargetType="Entry">
             </Style>-->
+
+            <Style x:Key="WillowTabbedPageStyle" TargetType="TabbedPage">
+                <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" />
+                <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+                <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+                <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource AccentDarkColor}}" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

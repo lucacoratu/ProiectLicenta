@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
              xmlns:model="clr-namespace:WillowClient.Model"
              x:Class="WillowClient.Views.MobileGroupsPage"
@@ -9,8 +12,9 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              IconImageSource="groups.png">
     <Grid RowDefinitions="40, *">
-        <SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <CollectionView Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+        <!--<SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>-->
+        <material:TextField Title="Search messages" AccentColor="{StaticResource AccentDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
+        <CollectionView Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:GroupModel">
                     <HorizontalStackLayout Padding="10" Spacing="6">

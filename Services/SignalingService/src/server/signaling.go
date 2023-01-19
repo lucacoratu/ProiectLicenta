@@ -106,9 +106,7 @@ func broadcaster() {
 					AllRooms.Map[msg.RoomID] = RemoveIndex(AllRooms.Map[msg.RoomID], i)
 				}
 				log.Println(AllRooms.Map[msg.RoomID])
-				if len(AllRooms.Map[msg.RoomID]) == 0 {
-					AllRooms.DeleteRoom(msg.RoomID)
-				}
+				AllRooms.DeleteRoom(msg.RoomID)
 				AllRooms.Mutex.Unlock()
 			} else {
 				for _, client := range AllRooms.Map[msg.RoomID] {

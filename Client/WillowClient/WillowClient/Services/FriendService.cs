@@ -27,8 +27,8 @@ namespace WillowClient.Services
 
         public async Task<List<FriendModel>> GetFriends(int accountId, string session)
         {
-            if (friendsList?.Count > 0)
-                return friendsList;
+            //if (friendsList?.Count > 0)
+            //    return friendsList;
 
             var url = Constants.serverURL + "/friend/view/" + accountId.ToString();
             var baseAddress = new Uri(url);

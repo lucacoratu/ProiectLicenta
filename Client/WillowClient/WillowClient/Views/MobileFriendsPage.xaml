@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WillowClient.Views.MobileFriendsPage"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
              x:DataType="viewmodel:MainViewModel"
@@ -10,19 +13,13 @@
              Title="Friends"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              IconImageSource="friends.png">
-    <Grid RowDefinitions="40,*">
-        <SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>
-        <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+    <Grid RowDefinitions="40,*" ColumnDefinitions="*">
+        <!--<SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>-->
+        <material:TextField Title="Search messages" AccentColor="{StaticResource AccentDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
+        <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding Friends}" SelectionMode="None" VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:FriendStatusModel">
                     <HorizontalStackLayout Padding="10" Spacing="6" Margin="5,0,5,0">
-                        <FlyoutBase.ContextFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="Message"/>
-                                <MenuFlyoutItem Text="Call"/>
-                                <MenuFlyoutItem Text="Video call"/>
-                            </MenuFlyout>
-                        </FlyoutBase.ContextFlyout>
                         <HorizontalStackLayout.GestureRecognizers>
                             <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"

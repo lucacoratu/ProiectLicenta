@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:Class="WillowClient.Views.AddFriendPage"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -9,9 +10,44 @@
              Title="AddFriendPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
-    <VerticalStackLayout HeightRequest="100" WidthRequest="200" HorizontalOptions="Center" VerticalOptions="Start">
-        <Label Text="Add friend" HorizontalOptions="Center"></Label>
-        <Entry Placeholder="Insert friend name and id" Text="{Binding AddFriendEntryText}"></Entry>
-        <Button Text="Add friend" WidthRequest="200" Command="{Binding AddFriendCommand}"></Button>
-    </VerticalStackLayout>
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+        <Border Grid.Row="0" HeightRequest="70" BackgroundColor="#7B68EE">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="#7B68EE" >
+                <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitAddFriendCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Find new friends" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <VerticalStackLayout Grid.Row="1" Grid.Column="0" HeightRequest="100" HorizontalOptions="Center" VerticalOptions="Start">
+            <Entry Placeholder="Insert friend name and id" Text="{Binding AddFriendEntryText}"/>
+            <Button Text="Add friend" WidthRequest="100" TextColor="WhiteSmoke" Command="{Binding AddFriendCommand}"/>
+            <SearchBar Placeholder="Search for friends"/>
+            <CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:FriendRequestModel">
+                        <HorizontalStackLayout Padding="10" Spacing="6">
+                            <toolkit:AvatarView
+                                        HeightRequest="50"
+                                        ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                        WidthRequest="50"
+                                        BorderWidth="1.3"
+                                        BorderColor="WhiteSmoke"
+                                        CornerRadius="32"
+                                        />
+                            <VerticalStackLayout Spacing="13">
+                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                                <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,10,10"/>
+                                    </Border.StrokeShape>
+                                </Border>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

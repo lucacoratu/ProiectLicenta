@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using WillowClient.ViewModel;
 using Microsoft.Maui.ApplicationModel;
+using InputKit.Shared.Validations;
 
 namespace WillowClient.Views;
 
@@ -10,6 +11,8 @@ public partial class LoginPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+        this.entryUsername.Validations.Add(new RequiredValidation());
+        this.entryPassword.Validations.Add(new RequiredValidation());
 	}
 
     protected override void OnSizeAllocated(double width, double height)
