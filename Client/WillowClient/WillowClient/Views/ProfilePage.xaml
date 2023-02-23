@@ -36,7 +36,7 @@
             <toolkit:AvatarView 
                     HeightRequest="110"
                     Margin="0,0,0,0"
-                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                    ImageSource="{Binding Account.ProfilePictureUrl}"
                     WidthRequest="110"
                     BorderWidth="0"
                     BorderColor="WhiteSmoke"

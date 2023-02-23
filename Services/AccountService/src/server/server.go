@@ -86,6 +86,7 @@ func InitServer(address string) error {
 	serveMuxServer.HandleFunc("/register", handlerRegister.RegisterAccount).Methods("POST")
 	//Add the function to get all the report bug categories
 	serveMuxServer.HandleFunc("/accounts/reportcategories", handlerFeedback.GetBugReportCategories).Methods("GET")
+	serveMuxServer.PathPrefix("/accounts/static/").Handler(http.StripPrefix("/accounts/static/", http.FileServer(http.Dir("./static/"))))
 
 	//Create the subrouter for the GET method which will use the Authentication middleware
 	getRouter := serveMuxServer.Methods(http.MethodGet).Subrouter()
@@ -110,6 +111,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/friend/add", handlerFriends.AddFriend)
 	postRouter.HandleFunc("/friend/delete", handlerFriends.DeleteFriends)
 	postRouter.HandleFunc("/accounts/reportbug", handlerFeedback.AddBugReport)
+	postRouter.HandleFunc("/accounts/picture", handlerProfile.UpdateProfilePicture)
 	postRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Log that the handlers have been added

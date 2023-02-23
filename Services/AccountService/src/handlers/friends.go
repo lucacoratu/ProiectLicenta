@@ -100,7 +100,7 @@ func (f *Friends) GetFriends(rw http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		//f.logger.Info(*accDetails)
-		frAccount := data.FriendAccount{FriendID: frID, DisplayName: accDetails.DisplayName, RoomID: rd.RoomID, BefriendDate: rd.BefriendDate, LastOnline: accDetails.LastOnline, Status: accDetails.Status, JoinDate: accDetails.JoinDate, LastMessage: rd.LastMessage, LastMessageTimestamp: rd.LastMessageTimestamp}
+		frAccount := data.FriendAccount{FriendID: frID, DisplayName: accDetails.DisplayName, RoomID: rd.RoomID, BefriendDate: rd.BefriendDate, LastOnline: accDetails.LastOnline, Status: accDetails.Status, JoinDate: accDetails.JoinDate, LastMessage: rd.LastMessage, LastMessageTimestamp: rd.LastMessageTimestamp, ProfilePictureUrl: accDetails.ProfilePictureUrl}
 		f.logger.Debug(frAccount)
 		accs = append(accs, frAccount)
 	}

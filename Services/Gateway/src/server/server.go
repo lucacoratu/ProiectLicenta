@@ -64,12 +64,14 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/friendrequest/delete", handlerFriendRequests.DeleteFriendRequest)
 	postRouter.HandleFunc("/friend/add", handlerFriend.AddFriend)
 	postRouter.HandleFunc("/accounts/reportbug", handlerFeedback.AddBugReport)
+	postRouter.HandleFunc("/accounts/picture", handlerFeedback.UpdateProfilePicture)
 
 	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.GetFriendRequests)
 	getRouter.HandleFunc("/friendrequest/viewsent/{id:[0-9]+}", handlerFriendRequests.GetSentFriendRequests)
 	getRouter.HandleFunc("/friend/view/{id:[0-9]+}", handlerFriend.GetFriends)
 	getRouter.HandleFunc("/accounts/reportcategories", handlerFeedback.GetAllReportCategories)
+	getRouter.PathPrefix("/accounts/static/").HandlerFunc(handlerFeedback.GetProfilePicture)
 
 	/*
 	 * Intialize the http.Server object which will have some timeout times for diferent events

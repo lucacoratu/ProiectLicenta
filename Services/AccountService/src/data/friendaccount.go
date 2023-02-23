@@ -15,6 +15,7 @@ type FriendAccount struct {
 	RoomID               int64  `json:"roomID"`
 	LastMessage          string `json:"lastMessage"`
 	LastMessageTimestamp string `json:"lastMessageTimestamp"`
+	ProfilePictureUrl    string `json:"profilePictureUrl"`
 }
 
 func (fracc *FriendAccount) ToJSON(w io.Writer) error {

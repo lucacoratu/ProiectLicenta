@@ -257,7 +257,7 @@ func (conn *Connection) GetSalt(username string) (string, error) {
  */
 func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (*data.Account, error) {
 	//Prepare the statement that will check if the credentials are correct
-	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.Username, accounts.DisplayName, accounts.Email, accounts.JoinDate, accounts.LastOnline, accountstatus.Status FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.Username = ? and accounts.PasswordHash = ?")
+	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.Username, accounts.DisplayName, accounts.Email, accounts.JoinDate, accounts.LastOnline, accountstatus.Status, accounts.ProfilePictureUrl FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.Username = ? and accounts.PasswordHash = ?")
 	if err != nil {
 		//An error occured during the preparation of the select query
 		conn.l.Error("Error occured when preparing select for login ", err.Error())
@@ -277,7 +277,7 @@ func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (
 
 	//The select statement was successful, now retieve the data
 	acc := &data.Account{}
-	err = res.Scan(&acc.ID, &acc.Username, &acc.DisplayName, &acc.Email, &acc.JoinDate, &acc.LastOnline, &acc.Status)
+	err = res.Scan(&acc.ID, &acc.Username, &acc.DisplayName, &acc.Email, &acc.JoinDate, &acc.LastOnline, &acc.Status, &acc.ProfilePictureUrl)
 	//Check if an error occured during data retrieve
 	if err != nil && err == sql.ErrNoRows {
 		//An error occured but it is sql.ErrNoRows which means that the login failed (invalid credentials)
@@ -395,7 +395,7 @@ func (conn *Connection) UpdateStatus(ID int, status string) error {
  */
 func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error) {
 	//Prepare the statement that will select the account details from the database
-	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accounts.LastOnline, accountstatus.Status FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID = ?")
+	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accounts.LastOnline, accountstatus.Status, accounts.ProfilePictureUrl FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID = ?")
 	//Check if an error occured during the preparation of the select statement
 	if err != nil {
 		//An error occured during the preparation of the select statment
@@ -414,7 +414,7 @@ func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error
 
 	//Check if any rows are returned from the statement using scan
 	account := &data.Account{}
-	err = res.Scan(&account.ID, &account.DisplayName, &account.JoinDate, &account.LastOnline, &account.Status)
+	err = res.Scan(&account.ID, &account.DisplayName, &account.JoinDate, &account.LastOnline, &account.Status, &account.ProfilePictureUrl)
 	if err != nil && err != sql.ErrNoRows {
 		//Another error than the one we are looking for occured
 		conn.l.Error("Error occured when fetching the rows in the jwt validation select ", err.Error())
@@ -479,4 +479,25 @@ func (conn *Connection) GetAllCategories() (data.ReportCategories, error) {
 	}
 
 	return returnArr, nil
+}
+
+/*
+ * This function will update the profile picture URL to the new value after the file has been uploaded on the server
+ */
+func (conn *Connection) UpdateProfilePictureURL(accountId int64, url string) error {
+	//Prepare the statement for updating the profile picture url
+	conn.l.Debug("New url: ", url)
+	stmtUpdate, err := conn.db.Prepare("UPDATE accounts SET ProfilePictureUrl = ? WHERE ID = ?")
+	if err != nil {
+		conn.l.Error("Error occured when updating the profile picture URL", err.Error())
+		return err
+	}
+	//Execute the update query
+	_, err = stmtUpdate.Exec(url, accountId)
+	if err != nil {
+		conn.l.Error("Error occured when executing the update profile picture URL query", err.Error())
+		return err
+	}
+
+	return nil
 }

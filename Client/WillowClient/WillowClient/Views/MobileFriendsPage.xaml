@@ -27,7 +27,7 @@
                         <HorizontalStackLayout>
                             <toolkit:AvatarView
                                     HeightRequest="45"
-                                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                    ImageSource="{Binding ProfilePictureUrl}"
                                     WidthRequest="45"
                                     BorderWidth="1.4"
                                     BorderColor="WhiteSmoke"

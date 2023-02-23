@@ -126,6 +126,26 @@ namespace WillowClient.ViewModel
                 return;
             }
 
+            if (message.IndexOf("newPhoto") != -1) {
+                var options = new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                try {
+                    UpdateProfilePictureModel upm = JsonSerializer.Deserialize<UpdateProfilePictureModel>(message, options);
+                    if (upm != null) {
+                        for (int i = 0; i < this.Friends.Count; i++) {
+                            if (this.Friends[i].FriendId == upm.id) {
+                                this.Friends[i].ProfilePictureUrl = "";
+                                this.Friends[i].ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + upm.id.ToString() + ".png";
+                            }
+                        }
+                    }
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
             //Some friend is calling
             if(message.IndexOf("callee") != -1) {
                 var options = new JsonSerializerOptions
@@ -386,7 +406,12 @@ namespace WillowClient.ViewModel
                         }
                     }
 
-                    
+                    if (friend.ProfilePictureUrl == "NULL") {
+                        friend.ProfilePictureUrl = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+                    } else {
+                        friend.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + friend.ProfilePictureUrl;
+                    }
+
                     if (friend.Status == "Online")
                     {
                         FriendStatusModel friendStatusModel = new FriendStatusModel(friend, Colors.Green, Colors.DarkGreen);
@@ -707,6 +732,18 @@ namespace WillowClient.ViewModel
         }
 
         [RelayCommand]
+        async Task GoToSettingsWindows() 
+        {
+            await Shell.Current.GoToAsync(nameof(DesktopSettingsPage), true, new Dictionary<string, object> {
+                {"account", this.Account },
+                {"hexID", HexID},
+                {"session", Session },
+                {"numberFriends", this.Friends.Count },
+                {"numberGroups", this.Groups.Count}
+            });
+        }
+
+        [RelayCommand]
         async Task GoToReportABug()
         {
             await Shell.Current.GoToAsync(nameof(ReportABugPage), true, new Dictionary<string, object>
@@ -725,6 +762,7 @@ namespace WillowClient.ViewModel
                     {"account", this.Account},
                     {"numberFriends",  this.Friends.Count},
                     {"numberGroups",  this.Groups.Count},
+                    {"session",  this.Session},
                 });
         }
     }

@@ -16,18 +16,20 @@
         <VerticalStackLayout Grid.Row="0">
             <Label FontFamily="{StaticResource ApplicationFont}" Padding="0,30,0,0" Text="{Binding Friend.DisplayName}" FontSize="25" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
             <Label FontFamily="{StaticResource ApplicationFont}" Text="Calling..." HorizontalOptions="Center" TextColor="WhiteSmoke"/>
-            <Frame Margin="0,40,0,0" BackgroundColor="#404040" CornerRadius="100" WidthRequest="140" HeightRequest="140">
-                <toolkit:AvatarView 
-                                     HeightRequest="100"
-                                     Margin="0"
-                                     ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                                     WidthRequest="100"
-                                     BorderWidth="0"
-                                     BorderColor="WhiteSmoke"
-                                     CornerRadius="50"
-                                     HorizontalOptions="Center"
-                       />
-            </Frame>
+            <Grid RowDefinitions="140" ColumnDefinitions="140" HorizontalOptions="Center">
+                <Frame Padding="0" Margin="0,40,0,0" BackgroundColor="#404040" CornerRadius="100" WidthRequest="140" HeightRequest="140">
+                    <toolkit:AvatarView 
+                                         HeightRequest="100"
+                                         Margin="0"
+                                         ImageSource="{Binding Friend.ProfilePictureUrl}"
+                                         WidthRequest="100"
+                                         BorderWidth="0"
+                                         BorderColor="WhiteSmoke"
+                                         CornerRadius="50"
+                                         HorizontalOptions="Center"
+                           />
+                </Frame>
+            </Grid>
         </VerticalStackLayout>
         <Grid Grid.Row="1" ColumnDefinitions="*,*,*" RowDefinitions="*,*">
             <VerticalStackLayout  Spacing="5" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
@@ -54,9 +56,11 @@
                 </ImageButton>
                 <Label FontFamily="{StaticResource ApplicationFont}" Text="Video" FontSize="12"/>
             </VerticalStackLayout>
-            <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" Background="Red" CornerRadius="60">
-                <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="end_call.png" Command="{Binding EndCallCommand}"/>
+            <Grid Padding="0,20,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" RowDefinitions="{OnPlatform Android=20, WinUI=50, iOS=20}" ColumnDefinitions="{OnPlatform Android=20, WinUI=50, iOS=20}" HorizontalOptions="Center">
+            <Frame Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Background="Red" CornerRadius="60">
+                    <ImageButton Padding="0" WidthRequest="{OnPlatform Android=20, WinUI=40, iOS=20}" HeightRequest="{OnPlatform Android=20, WinUI=40, iOS=20}" Margin="2" Source="end_call.png" Command="{Binding EndCallCommand}"/>
             </Frame>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>

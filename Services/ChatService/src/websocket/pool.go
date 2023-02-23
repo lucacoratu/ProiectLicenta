@@ -336,6 +336,29 @@ func (pool *Pool) MessageReceived(message Message) {
 		}
 		return
 	}
+
+	//Check if the message is update profile picture
+	updateProfilePicture := UpdateProfilePicture{}
+	err = json.Unmarshal([]byte(message.Body), &updateProfilePicture)
+	isUpdateProfilePictureMessage := true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isUpdateProfilePictureMessage = false
+	}
+
+	if isUpdateProfilePictureMessage && updateProfilePicture.Id != 0 && updateProfilePicture.NewPhoto != "" {
+		pool.logger.Info("Received message to update profile picture", updateProfilePicture.Id)
+		for client, _ := range pool.Clients {
+			pool.logger.Debug(client.Id)
+			if client.Id != int64(updateProfilePicture.Id) {
+				err = client.Conn.WriteJSON(updateProfilePicture)
+				if err != nil {
+					//Log the error message
+					pool.logger.Error(err.Error())
+				}
+			}
+		}
+	}
 }
 
 /*

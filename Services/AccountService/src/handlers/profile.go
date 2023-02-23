@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"io"
 	"net/http"
+	"os"
+	"strconv"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
@@ -89,4 +92,65 @@ func (prof *Profile) UpdateStatusUnauthenticated(rw http.ResponseWriter, r *http
 		rw.WriteHeader(http.StatusBadRequest)
 		jsonErr.ToJSON(rw)
 	}
+}
+
+/*
+ * This function will update the profile picture of an account
+ */
+func (prof *Profile) UpdateProfilePicture(rw http.ResponseWriter, r *http.Request) {
+	prof.l.Info("Endpoint /picture reached (POST method)")
+
+	//Parse the multipart request (maximum 20MB upload)
+	r.ParseMultipartForm(10 << 20)
+
+	accountId := r.FormValue("accountId")
+	if accountId == "" {
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Account id has to be specified in the form"))
+		return
+	}
+
+	file, _, err := r.FormFile("profile")
+	//Check if an error occured
+	if err != nil {
+		prof.l.Info("Cannot get the file or the handler")
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Failed!"))
+		return
+	}
+	//Close the file when the function ends
+	defer file.Close()
+
+	//Create an empty file on the disk
+	dst, err := os.Create("./static/" + accountId + ".png")
+	//Check for errors
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer dst.Close()
+
+	// Copy the uploaded file to the created file on the filesystem
+	if _, err := io.Copy(dst, file); err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	accId, err := strconv.ParseInt(accountId, 10, 64)
+	if err != nil {
+		//Remove the file created
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	//Save the url of the image in the database
+	err = prof.dbConn.UpdateProfilePictureURL(accId, accountId+".png")
+	if err != nil {
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Cannot update the profile picture"))
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write([]byte("File upload succesful"))
 }

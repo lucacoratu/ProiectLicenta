@@ -120,7 +120,7 @@ func (frReq *FriendRequest) ViewFriendRequests(rw http.ResponseWriter, r *http.R
 			continue
 		}
 		//f.logger.Info(*accDetails)
-		frAccount := data.FriendRequestAccount{AccountID: rd.SenderID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate}
+		frAccount := data.FriendRequestAccount{AccountID: rd.SenderID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate, ProfilePictureUrl: accDetails.ProfilePictureUrl}
 		frReq.logger.Debug(frAccount)
 		accs = append(accs, frAccount)
 	}

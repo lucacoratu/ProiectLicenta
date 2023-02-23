@@ -19,6 +19,7 @@ public class MainActivity : MauiAppCompatActivity
 
         await Permissions.RequestAsync<Permissions.Camera>();
         await Permissions.RequestAsync<Permissions.Microphone>();
+        await Permissions.RequestAsync<Permissions.StorageWrite>(); 
         //await Permissions.RequestAsync<Permissions.Media>();
     }
 }

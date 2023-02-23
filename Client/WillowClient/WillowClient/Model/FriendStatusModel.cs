@@ -53,6 +53,12 @@ namespace WillowClient.Model
             set => SetProperty(ref lastMessage, value);
         }
 
+        private string profilePictureUrl;
+        public string ProfilePictureUrl {
+            get => profilePictureUrl;
+            set => SetProperty(ref profilePictureUrl, value);
+        }
+
         public FriendStatusModel(FriendModel f, Color statusBackgroundColor, Color statusStrokeColor)
         {
             FriendId = f.FriendId;
@@ -64,6 +70,7 @@ namespace WillowClient.Model
             RoomID = f.RoomID;
             LastMessageTimestamp = f.LastMessageTimestamp;
             LastMessage = f.LastMessage;
+            ProfilePictureUrl = f.ProfilePictureUrl;
             this.statusBackgroundColor = statusBackgroundColor;
             this.statusStrokeColor = statusStrokeColor;
         }

@@ -31,5 +31,11 @@ namespace WillowClient.Model
             get => lastMessage;
             set => SetProperty(ref lastMessage, value);
         }
+
+        private string profilePictureUrl;
+        public string ProfilePictureUrl {
+            get => profilePictureUrl;
+            set => SetProperty(ref profilePictureUrl, value);
+        }
     }
 }

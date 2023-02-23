@@ -172,8 +172,9 @@
                             </HorizontalStackLayout.GestureRecognizers>
                             <HorizontalStackLayout>
                                 <toolkit:AvatarView
+                                    Padding="0"
                                     HeightRequest="50"
-                                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                    ImageSource="{Binding ProfilePictureUrl}"
                                     WidthRequest="50"
                                     BorderWidth="1.4"
                                     BorderColor="WhiteSmoke"
@@ -203,7 +204,7 @@
             </CollectionView>
             <VerticalStackLayout Grid.Row="2" HeightRequest="80" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Padding="0,0,0,0">
                 <HorizontalStackLayout>
-                    <toolkit:AvatarView ImageSource="default_profile_icon.png">
+                    <toolkit:AvatarView ImageSource="{Binding Account.ProfilePictureUrl}">
                         <FlyoutBase.ContextFlyout FontFamily="{StaticResource ApplicationFont}">
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="Settings"/>
@@ -214,7 +215,7 @@
                         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.DisplayName}" TextColor="WhiteSmoke"></Label>
                         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding HexID}" TextColor="WhiteSmoke"></Label>
                     </VerticalStackLayout>
-                    <ImageButton Source="settings_icon.png" WidthRequest="30" HeightRequest="30" Aspect="AspectFill"></ImageButton>
+                    <ImageButton Source="settings_icon.png" WidthRequest="30" HeightRequest="30" Aspect="AspectFill" Command="{Binding GoToSettingsWindowsCommand}"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Grid>

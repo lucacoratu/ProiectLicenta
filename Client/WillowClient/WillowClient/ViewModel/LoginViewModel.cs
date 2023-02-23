@@ -134,6 +134,13 @@ public partial class LoginViewModel : BaseViewModel
 
                 String joinDate = DateTime.Parse(accountModel.JoinDate).ToString("dd MMMM yyyy");
                 accountModel.JoinDate = joinDate;
+
+                if (accountModel.ProfilePictureUrl == "NULL") {
+                    accountModel.ProfilePictureUrl = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+                }
+                else {
+                    accountModel.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + accountModel.ProfilePictureUrl;
+                }
 #if ANDROID
                 await Shell.Current.GoToAsync(nameof(MobileMainPage), true, new Dictionary<string, object>
                 {

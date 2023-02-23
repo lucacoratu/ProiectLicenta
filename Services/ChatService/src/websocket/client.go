@@ -40,6 +40,11 @@ type SetAccountIDMessage struct {
 	SetID int64 `json:"setAccountId"`
 }
 
+type UpdateProfilePicture struct {
+	Id       int    `json:"id"`
+	NewPhoto string `json:"newPhoto"`
+}
+
 type CallAccount struct {
 	Caller int    `json:"caller"`
 	Callee int    `json:"callee"`

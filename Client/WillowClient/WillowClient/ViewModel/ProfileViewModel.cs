@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WillowClient.Model;
+using WillowClient.Services;
 using WillowClient.Views;
 
 namespace WillowClient.ViewModel
@@ -13,6 +15,7 @@ namespace WillowClient.ViewModel
     [QueryProperty(nameof(Account), "account")]
     [QueryProperty(nameof(NumberFriends), "numberFriends")]
     [QueryProperty(nameof(NumberGroups), "numberGroups")]
+    [QueryProperty(nameof(Session), "session")]
     public partial class ProfileViewModel : BaseViewModel
     {
         [ObservableProperty]
@@ -24,7 +27,16 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private int numberGroups;
 
-        public ProfileViewModel() { }
+        [ObservableProperty]
+        private string session;
+
+        ProfileService profileService;
+
+        ChatService chatService;
+        public ProfileViewModel(ProfileService ps, ChatService chatService) {
+            this.profileService = ps;
+            this.chatService = chatService;
+        }
 
         [RelayCommand]
         async Task GoBack()
@@ -39,6 +51,14 @@ namespace WillowClient.ViewModel
                 {
                     {"account", Account}
                 });
+        }
+
+        void UpdateUserProfilePictureForAllUsers() {
+            UpdateProfilePictureModel upm = new UpdateProfilePictureModel {
+                id = this.Account.Id,
+                newPhoto = "newPhoto",
+            };
+            this.chatService.SendMessageAsync(JsonSerializer.Serialize(upm));
         }
 
         [RelayCommand]
@@ -58,6 +78,20 @@ namespace WillowClient.ViewModel
                     if(photo != null)
                     {
                         int i = 0;
+                    }
+                }
+            } else {
+                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+                if(photo != null) {
+                    Stream photoStream = await photo.OpenReadAsync();
+                    bool uploadedResult = await this.profileService.ChangeProfilePicture(photoStream, this.Account.Id, this.Session);
+                    if(uploadedResult) {
+                        //Send a messsage to all the other clients that the profile picture has been changed
+                        UpdateUserProfilePictureForAllUsers();
+                        await Shell.Current.DisplayAlert("Profile picture", "Your profile picture has been updated", "Ok");
+                        //Update the picture in the box
+                        this.Account.ProfilePictureUrl = "";
+                        this.Account.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + this.Account.Id + ".png";
                     }
                 }
             }

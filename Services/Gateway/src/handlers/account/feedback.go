@@ -90,3 +90,35 @@ func (f *Feedback) GetAllReportCategories(rw http.ResponseWriter, r *http.Reques
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }
+
+/*
+ * This function will forward the request to the account service which will update the profile picture of the user
+ */
+func (f *Feedback) UpdateProfilePicture(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("/accounts/picture hit (POST method)")
+	f.logger.Debug("Forwarding message to Account service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}
+
+/*
+ * This function will forward the request to the account service which will send the profile picture back to the client
+ */
+func (f *Feedback) GetProfilePicture(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("/accounts/static hit (GET method)")
+	f.logger.Debug("Forwarding message to Account service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}
