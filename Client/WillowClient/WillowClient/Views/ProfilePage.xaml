@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.ProfilePage"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:DataType="viewmodel:ProfileViewModel"
+             Title="ProfilePage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             >
+    <VerticalStackLayout>
+        <!--<Grid  ColumnDefinitions="*">
+            <ImageButton Grid.Column="0" Margin="10" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                </ImageButton.Source>
+            </ImageButton>
+            <Label Text="Profile" FontSize="18" TextColor="WhiteSmoke" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+        </Grid>-->
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Profile" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
+            <toolkit:AvatarView 
+                    HeightRequest="110"
+                    Margin="0,0,0,0"
+                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                    WidthRequest="110"
+                    BorderWidth="0"
+                    BorderColor="WhiteSmoke"
+                    CornerRadius="60" />
+            <Frame CornerRadius="15" WidthRequest="30" HeightRequest="30" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeProfilePictureCommand}"/>
+                </Frame.GestureRecognizers>
+                <Image WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Pencil}" Color="WhiteSmoke"/>
+                    </Image.Source>
+                </Image>
+            </Frame>
+        </HorizontalStackLayout>
+        <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.DisplayName}" FontSize="16" FontAttributes="Bold" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+        <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.Email}" FontSize="14" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+        <Button FontFamily="{StaticResource ApplicationFont}" Margin="80,10,80,0" Text="Edit Profile" TextColor="WhiteSmoke" FontAttributes="Bold" BackgroundColor="{StaticResource AccentDarkColor}" Command="{Binding GoToEditProfileCommand}"/>
+        <Line Margin="40,10,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
+        <Grid Margin="0,15,0,0" ColumnDefinitions="*,*">
+            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Friends" FontAttributes="Bold" TextTransform="Uppercase" HorizontalOptions="Center" FontSize="16"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding NumberFriends}" HorizontalOptions="Center"  FontSize="14"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Groups" FontAttributes="Bold" TextTransform="Uppercase" HorizontalOptions="Center" FontSize="16"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding NumberGroups}" HorizontalOptions="Center" FontSize="14"/>
+            </VerticalStackLayout>
+        </Grid>
+        <Line Margin="40,10,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
+        
+        <!--<Line Margin="40,10,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
+        <Grid Margin="60,10,60,0" ColumnDefinitions="*,*">
+            <HorizontalStackLayout>
+                <Frame Grid.Column="0" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
+                    <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Info}" Color="WhiteSmoke"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Frame>
+                <Label HorizontalOptions="Start" Grid.Column="1" Margin="10,0,0,0" Text="Information" TextColor="WhiteSmoke" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="14" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+            <Frame HorizontalOptions="End" Grid.Column="2" WidthRequest="32" HeightRequest="32" CornerRadius="20">
+                <ImageButton WidthRequest="20" HeightRequest="20">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowRight}" Color="Gray"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Frame>
+        </Grid>
+        <HorizontalStackLayout Margin="60,10,60,0">
+            <Frame WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
+                <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowRightFromBracket}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Frame>
+            <Label Margin="10,0,0,0"  Text="Logout" TextColor="Red" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="14" FontAttributes="Bold"/>
+        </HorizontalStackLayout>-->
+    </VerticalStackLayout>
+</ContentPage>

@@ -131,6 +131,9 @@ public partial class LoginViewModel : BaseViewModel
                     hexID += "0";
                 }
                 hexID += idHex;
+
+                String joinDate = DateTime.Parse(accountModel.JoinDate).ToString("dd MMMM yyyy");
+                accountModel.JoinDate = joinDate;
 #if ANDROID
                 await Shell.Current.GoToAsync(nameof(MobileMainPage), true, new Dictionary<string, object>
                 {

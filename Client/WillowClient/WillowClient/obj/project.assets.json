@@ -2,10 +2,10 @@
   "version": 3,
   "targets": {
     "net7.0-android33.0": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -18,7 +18,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -60,7 +60,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -228,7 +228,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -254,10 +254,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -271,7 +271,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -284,7 +284,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -297,10 +297,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -2043,10 +2043,10 @@
       }
     },
     "net7.0-android33.0/android-arm": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -2059,7 +2059,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -2101,7 +2101,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -2269,7 +2269,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -2295,10 +2295,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -2312,7 +2312,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -2325,7 +2325,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -2338,10 +2338,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -4084,10 +4084,10 @@
       }
     },
     "net7.0-android33.0/android-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -4100,7 +4100,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -4142,7 +4142,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -4310,7 +4310,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -4336,10 +4336,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -4353,7 +4353,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -4366,7 +4366,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -4379,10 +4379,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -6125,10 +6125,10 @@
       }
     },
     "net7.0-android33.0/android-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -6141,7 +6141,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -6183,7 +6183,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -6351,7 +6351,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -6377,10 +6377,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -6394,7 +6394,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -6407,7 +6407,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -6420,10 +6420,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -8166,10 +8166,10 @@
       }
     },
     "net7.0-android33.0/android-x86": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -8182,7 +8182,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -8224,7 +8224,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -8392,7 +8392,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -8418,10 +8418,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -8435,7 +8435,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -8448,7 +8448,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -8461,10 +8461,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -10207,10 +10207,10 @@
       }
     },
     "net7.0-android33.0/ios-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -10223,7 +10223,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -10265,7 +10265,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -10433,7 +10433,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -10459,10 +10459,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -10476,7 +10476,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -10489,7 +10489,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -10502,10 +10502,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -12248,10 +12248,10 @@
       }
     },
     "net7.0-android33.0/maccatalyst-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -12264,7 +12264,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -12306,7 +12306,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -12474,7 +12474,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -12500,10 +12500,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -12517,7 +12517,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -12530,7 +12530,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -12543,10 +12543,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -14289,10 +14289,10 @@
       }
     },
     "net7.0-android33.0/win10-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.dll": {
@@ -14305,7 +14305,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll": {
@@ -14347,7 +14347,7 @@
           }
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/InputKit.Maui.dll": {
@@ -14515,7 +14515,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
@@ -14541,10 +14541,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -14558,7 +14558,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.FontAwesome.dll": {
@@ -14571,7 +14571,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Icons.MaterialIcons.dll": {
@@ -14584,10 +14584,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-android33.0/UraniumUI.Material.dll": {
@@ -16330,31 +16330,31 @@
       }
     },
     "net7.0-ios16.1": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -16375,7 +16375,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -16543,7 +16543,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -16569,10 +16569,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -16586,7 +16586,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -16599,7 +16599,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -16612,10 +16612,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -16630,31 +16630,31 @@
       }
     },
     "net7.0-ios16.1/android-arm": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -16675,7 +16675,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -16843,7 +16843,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -16869,10 +16869,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -16886,7 +16886,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -16899,7 +16899,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -16912,10 +16912,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -16930,31 +16930,31 @@
       }
     },
     "net7.0-ios16.1/android-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -16975,7 +16975,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -17143,7 +17143,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -17169,10 +17169,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -17186,7 +17186,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -17199,7 +17199,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -17212,10 +17212,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -17230,31 +17230,31 @@
       }
     },
     "net7.0-ios16.1/android-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -17275,7 +17275,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -17443,7 +17443,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -17469,10 +17469,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -17486,7 +17486,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -17499,7 +17499,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -17512,10 +17512,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -17530,31 +17530,31 @@
       }
     },
     "net7.0-ios16.1/android-x86": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -17575,7 +17575,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -17743,7 +17743,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -17769,10 +17769,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -17786,7 +17786,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -17799,7 +17799,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -17812,10 +17812,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -17830,31 +17830,31 @@
       }
     },
     "net7.0-ios16.1/ios-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -17875,7 +17875,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -18043,7 +18043,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -18069,10 +18069,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -18086,7 +18086,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -18099,7 +18099,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -18112,10 +18112,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -18130,31 +18130,31 @@
       }
     },
     "net7.0-ios16.1/maccatalyst-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -18175,7 +18175,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -18343,7 +18343,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -18369,10 +18369,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -18386,7 +18386,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -18399,7 +18399,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -18412,10 +18412,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -18430,31 +18430,31 @@
       }
     },
     "net7.0-ios16.1/win10-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -18475,7 +18475,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/InputKit.Maui.dll": {
@@ -18643,7 +18643,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
@@ -18669,10 +18669,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -18686,7 +18686,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -18699,7 +18699,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -18712,10 +18712,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-ios16.1/UraniumUI.Material.dll": {
@@ -18730,31 +18730,31 @@
       }
     },
     "net7.0-maccatalyst16.1": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -18775,7 +18775,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -18943,7 +18943,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -18969,10 +18969,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -18986,7 +18986,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -18999,7 +18999,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -19012,10 +19012,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -19030,31 +19030,31 @@
       }
     },
     "net7.0-maccatalyst16.1/android-arm": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -19075,7 +19075,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -19243,7 +19243,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -19269,10 +19269,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -19286,7 +19286,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -19299,7 +19299,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -19312,10 +19312,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -19330,31 +19330,31 @@
       }
     },
     "net7.0-maccatalyst16.1/android-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -19375,7 +19375,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -19543,7 +19543,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -19569,10 +19569,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -19586,7 +19586,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -19599,7 +19599,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -19612,10 +19612,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -19630,31 +19630,31 @@
       }
     },
     "net7.0-maccatalyst16.1/android-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -19675,7 +19675,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -19843,7 +19843,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -19869,10 +19869,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -19886,7 +19886,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -19899,7 +19899,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -19912,10 +19912,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -19930,31 +19930,31 @@
       }
     },
     "net7.0-maccatalyst16.1/android-x86": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -19975,7 +19975,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -20143,7 +20143,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -20169,10 +20169,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -20186,7 +20186,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -20199,7 +20199,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -20212,10 +20212,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -20230,31 +20230,31 @@
       }
     },
     "net7.0-maccatalyst16.1/ios-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -20275,7 +20275,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -20443,7 +20443,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -20469,10 +20469,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -20486,7 +20486,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -20499,7 +20499,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -20512,10 +20512,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -20530,31 +20530,31 @@
       }
     },
     "net7.0-maccatalyst16.1/maccatalyst-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -20575,7 +20575,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -20743,7 +20743,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -20769,10 +20769,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -20786,7 +20786,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -20799,7 +20799,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -20812,10 +20812,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -20830,31 +20830,31 @@
       }
     },
     "net7.0-maccatalyst16.1/win10-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll": {
             "related": ".xml"
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll": {
+          "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll": {
             "related": ".xml"
           }
         }
@@ -20875,7 +20875,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/InputKit.Maui.dll": {
@@ -21043,7 +21043,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
@@ -21069,10 +21069,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -21086,7 +21086,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.FontAwesome.dll": {
@@ -21099,7 +21099,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Icons.MaterialIcons.dll": {
@@ -21112,10 +21112,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-maccatalyst16.1/UraniumUI.Material.dll": {
@@ -21130,10 +21130,10 @@
       }
     },
     "net7.0-windows10.0.19041": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -21146,7 +21146,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -21175,7 +21175,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -21372,7 +21372,7 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -21385,12 +21385,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -21410,7 +21410,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -21507,10 +21507,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -21524,7 +21524,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -21537,7 +21537,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -21550,10 +21550,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -21568,10 +21568,10 @@
       }
     },
     "net7.0-windows10.0.19041/android-arm": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -21584,7 +21584,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -21613,7 +21613,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -21796,7 +21796,7 @@
           "build/net5.0-windows10.0.17763.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -21809,12 +21809,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -21834,7 +21834,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -21917,10 +21917,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -21934,7 +21934,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -21947,7 +21947,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -21960,10 +21960,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -21978,10 +21978,10 @@
       }
     },
     "net7.0-windows10.0.19041/android-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -21994,7 +21994,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -22023,7 +22023,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -22206,7 +22206,7 @@
           "build/net5.0-windows10.0.17763.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -22219,12 +22219,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -22244,7 +22244,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -22327,10 +22327,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -22344,7 +22344,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -22357,7 +22357,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -22370,10 +22370,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -22388,10 +22388,10 @@
       }
     },
     "net7.0-windows10.0.19041/android-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -22404,7 +22404,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -22433,7 +22433,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -22616,7 +22616,7 @@
           "build/net5.0-windows10.0.17763.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -22629,12 +22629,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -22654,7 +22654,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -22737,10 +22737,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -22754,7 +22754,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -22767,7 +22767,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -22780,10 +22780,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -22798,10 +22798,10 @@
       }
     },
     "net7.0-windows10.0.19041/android-x86": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -22814,7 +22814,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -22843,7 +22843,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -23026,7 +23026,7 @@
           "build/net5.0-windows10.0.17763.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -23039,12 +23039,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -23064,7 +23064,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -23147,10 +23147,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -23164,7 +23164,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -23177,7 +23177,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -23190,10 +23190,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -23208,10 +23208,10 @@
       }
     },
     "net7.0-windows10.0.19041/ios-arm64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -23224,7 +23224,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -23253,7 +23253,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -23436,7 +23436,7 @@
           "build/net5.0-windows10.0.17763.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -23449,12 +23449,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -23474,7 +23474,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -23557,10 +23557,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -23574,7 +23574,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -23587,7 +23587,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -23600,10 +23600,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -23618,10 +23618,10 @@
       }
     },
     "net7.0-windows10.0.19041/maccatalyst-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -23634,7 +23634,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -23663,7 +23663,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -23846,7 +23846,7 @@
           "build/net5.0-windows10.0.17763.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -23859,12 +23859,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -23884,7 +23884,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -23967,10 +23967,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -23984,7 +23984,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -23997,7 +23997,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -24010,10 +24010,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -24028,10 +24028,10 @@
       }
     },
     "net7.0-windows10.0.19041/win10-x64": {
-      "CommunityToolkit.Maui/3.1.0": {
+      "CommunityToolkit.Maui/4.0.0": {
         "type": "package",
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "3.1.0"
+          "CommunityToolkit.Maui.Core": "4.0.0"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -24044,7 +24044,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/3.1.0": {
+      "CommunityToolkit.Maui.Core/4.0.0": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
@@ -24073,7 +24073,7 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "InputKit.Maui/4.2.5": {
+      "InputKit.Maui/4.2.7": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/InputKit.Maui.dll": {
@@ -24259,7 +24259,7 @@
           "build/net5.0-windows10.0.17763.0/_._": {}
         }
       },
-      "Microsoft.Maui.Graphics/7.0.52": {
+      "Microsoft.Maui.Graphics/7.0.59": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.dll": {
@@ -24272,12 +24272,12 @@
           }
         }
       },
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
         "type": "package",
         "dependencies": {
           "Microsoft.Graphics.Win2D": "1.0.4",
-          "Microsoft.Maui.Graphics": "7.0.52",
-          "Microsoft.WindowsAppSDK": "1.2.221109.1"
+          "Microsoft.Maui.Graphics": "7.0.59",
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll": {
@@ -24297,7 +24297,7 @@
           "build/Microsoft.Windows.SDK.BuildTools.targets": {}
         }
       },
-      "Microsoft.WindowsAppSDK/1.2.221109.1": {
+      "Microsoft.WindowsAppSDK/1.2.221209.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
@@ -24383,10 +24383,10 @@
           }
         }
       },
-      "UraniumUI/2.3.0-pre.2": {
+      "UraniumUI/2.3.1": {
         "type": "package",
         "dependencies": {
-          "InputKit.Maui": "4.2.5",
+          "InputKit.Maui": "4.2.7",
           "Plainer.Maui": "1.6.2"
         },
         "compile": {
@@ -24400,7 +24400,7 @@
           }
         }
       },
-      "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
+      "UraniumUI.Icons.FontAwesome/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.FontAwesome.dll": {
@@ -24413,7 +24413,7 @@
           }
         }
       },
-      "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
+      "UraniumUI.Icons.MaterialIcons/2.3.1": {
         "type": "package",
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Icons.MaterialIcons.dll": {
@@ -24426,10 +24426,10 @@
           }
         }
       },
-      "UraniumUI.Material/2.3.0-pre.1": {
+      "UraniumUI.Material/2.3.1": {
         "type": "package",
         "dependencies": {
-          "UraniumUI": "2.3.0-pre.1"
+          "UraniumUI": "2.3.1"
         },
         "compile": {
           "lib/net7.0-windows10.0.19041/UraniumUI.Material.dll": {
@@ -24445,10 +24445,10 @@
     }
   },
   "libraries": {
-    "CommunityToolkit.Maui/3.1.0": {
-      "sha512": "C5jJU9k+aqo05Bwv3yFLTv5FdWqOOL97qY/EmlRjPDzgWx9LOhZCLhJu+5eiNITuhGkSGEFrK1lt/yxAimkInA==",
+    "CommunityToolkit.Maui/4.0.0": {
+      "sha512": "76XJVmDRXoKooARQK7tuwvjAnOwF39nmNoRhHGU1cpElJuKZ4v5Y1QlkSJjxaNaubY4JyplZiDPXK60dsEoPRg==",
       "type": "package",
-      "path": "communitytoolkit.maui/3.1.0",
+      "path": "communitytoolkit.maui/4.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -24456,16 +24456,16 @@
         "analyzers/dotnet/cs/CommunityToolkit.Maui.Analyzers.CodeFixes.dll",
         "analyzers/dotnet/cs/CommunityToolkit.Maui.Analyzers.dll",
         "analyzers/dotnet/cs/CommunityToolkit.Maui.SourceGenerators.dll",
-        "communitytoolkit.maui.3.1.0.nupkg.sha512",
+        "communitytoolkit.maui.4.0.0.nupkg.sha512",
         "communitytoolkit.maui.nuspec",
         "icon.png",
         "lib/net7.0-android33.0/CommunityToolkit.Maui.aar",
         "lib/net7.0-android33.0/CommunityToolkit.Maui.dll",
         "lib/net7.0-android33.0/CommunityToolkit.Maui.xml",
-        "lib/net7.0-ios16.0/CommunityToolkit.Maui.dll",
-        "lib/net7.0-ios16.0/CommunityToolkit.Maui.xml",
-        "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.dll",
-        "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.xml",
+        "lib/net7.0-ios16.1/CommunityToolkit.Maui.dll",
+        "lib/net7.0-ios16.1/CommunityToolkit.Maui.xml",
+        "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.dll",
+        "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.xml",
         "lib/net7.0-tizen7.0/CommunityToolkit.Maui.dll",
         "lib/net7.0-tizen7.0/CommunityToolkit.Maui.xml",
         "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll",
@@ -24474,24 +24474,24 @@
         "lib/net7.0/CommunityToolkit.Maui.xml"
       ]
     },
-    "CommunityToolkit.Maui.Core/3.1.0": {
-      "sha512": "tSPn+ix6wemEx/jwleS4sVlrLrck3C9zILeiquPxAXNlCFGIZ0Pn74vGXaSdXblbrAA7WuJeHIbQX0rp22k6Bg==",
+    "CommunityToolkit.Maui.Core/4.0.0": {
+      "sha512": "UBlKxyJisLvbZJvi9o125erFl1bMDSBDvkfgdUFiCt6nTVLA+c3y22LMz1poY7s+zmE2A5iphmqT1SWnkTNWAg==",
       "type": "package",
-      "path": "communitytoolkit.maui.core/3.1.0",
+      "path": "communitytoolkit.maui.core/4.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "ReadMe.txt",
-        "communitytoolkit.maui.core.3.1.0.nupkg.sha512",
+        "communitytoolkit.maui.core.4.0.0.nupkg.sha512",
         "communitytoolkit.maui.core.nuspec",
         "icon.png",
         "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.aar",
         "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.dll",
         "lib/net7.0-android33.0/CommunityToolkit.Maui.Core.xml",
-        "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.dll",
-        "lib/net7.0-ios16.0/CommunityToolkit.Maui.Core.xml",
-        "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.dll",
-        "lib/net7.0-maccatalyst15.4/CommunityToolkit.Maui.Core.xml",
+        "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.dll",
+        "lib/net7.0-ios16.1/CommunityToolkit.Maui.Core.xml",
+        "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.dll",
+        "lib/net7.0-maccatalyst16.1/CommunityToolkit.Maui.Core.xml",
         "lib/net7.0-tizen7.0/CommunityToolkit.Maui.Core.dll",
         "lib/net7.0-tizen7.0/CommunityToolkit.Maui.Core.xml",
         "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll",
@@ -24547,10 +24547,10 @@
         "lib/net6.0-android31.0/GoogleGson.xml"
       ]
     },
-    "InputKit.Maui/4.2.5": {
-      "sha512": "s5WOm1hDG0oSXRm/nvaRBhrgV+2ifXbXLBIbHKDC2qPa/7AR+XQNNdDjnrnxh/ZOYyiQSr4XcYEeRvsPBFi5mA==",
+    "InputKit.Maui/4.2.7": {
+      "sha512": "GfFdjEe/+Nm2xM9tNx88JjTg4xOWfNQciZ+WPUgO4hbJU2OQirV+tskeORrsmUrv0EOv6UbZ8SFc++mvKwqwfg==",
       "type": "package",
-      "path": "inputkit.maui/4.2.5",
+      "path": "inputkit.maui/4.2.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -24561,7 +24561,7 @@
         "contentFiles/any/net7.0-windows10.0.19041/icon512.png",
         "contentFiles/any/net7.0/icon512.png",
         "icon512.png",
-        "inputkit.maui.4.2.5.nupkg.sha512",
+        "inputkit.maui.4.2.7.nupkg.sha512",
         "inputkit.maui.nuspec",
         "lib/net7.0-android33.0/InputKit.Maui.aar",
         "lib/net7.0-android33.0/InputKit.Maui.dll",
@@ -24878,13 +24878,15 @@
         "runtimes/win10-x86/native/Microsoft.Graphics.Canvas.dll"
       ]
     },
-    "Microsoft.Maui.Graphics/7.0.52": {
-      "sha512": "MSV8tGhjgPuzxvU97enZgZeUejHqkhQaAy7yBY0sqmJpsWvbw5qcWgwLsXEob0AmTLCY08yK/PnMdV34hCuTAQ==",
+    "Microsoft.Maui.Graphics/7.0.59": {
+      "sha512": "a5eOfzqeHeERBmQ6g3uU+p4GEwHtBXxQ1s58XIiHCMf/WGCn5HX9z17VLUz6qr2ELVf/BbZ9bFUzVef+kbxkvQ==",
       "type": "package",
-      "path": "microsoft.maui.graphics/7.0.52",
+      "path": "microsoft.maui.graphics/7.0.59",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
         "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll",
         "lib/net7.0-android33.0/Microsoft.Maui.Graphics.pdb",
         "lib/net7.0-android33.0/Microsoft.Maui.Graphics.xml",
@@ -24915,22 +24917,24 @@
         "lib/netstandard2.1/Microsoft.Maui.Graphics.dll",
         "lib/netstandard2.1/Microsoft.Maui.Graphics.pdb",
         "lib/netstandard2.1/Microsoft.Maui.Graphics.xml",
-        "microsoft.maui.graphics.7.0.52.nupkg.sha512",
+        "microsoft.maui.graphics.7.0.59.nupkg.sha512",
         "microsoft.maui.graphics.nuspec"
       ]
     },
-    "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.52": {
-      "sha512": "vMSto97Vdvr5ln5gStZJv127G0iEFb2GX8aAzElHzLbS3E+Ey7SwI10fYoo1Z4ZH5tXKdOYI4xW32GmDCcN1sQ==",
+    "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop/7.0.59": {
+      "sha512": "ExNm2DreudUpAESDCpmFqruINxrjgpNOl+80GjCp/yoFv6QX3exYBmrFZ2zWSb7RrvWJnBPN9SaOHbkpT2+x2A==",
       "type": "package",
-      "path": "microsoft.maui.graphics.win2d.winui.desktop/7.0.52",
+      "path": "microsoft.maui.graphics.win2d.winui.desktop/7.0.59",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
         "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll",
         "lib/net7.0-windows10.0.19041/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.pdb",
         "lib/net7.0-windows10.0.20348/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.dll",
         "lib/net7.0-windows10.0.20348/Microsoft.Maui.Graphics.Win2D.WinUI.Desktop.pdb",
-        "microsoft.maui.graphics.win2d.winui.desktop.7.0.52.nupkg.sha512",
+        "microsoft.maui.graphics.win2d.winui.desktop.7.0.59.nupkg.sha512",
         "microsoft.maui.graphics.win2d.winui.desktop.nuspec"
       ]
     },
@@ -25125,10 +25129,10 @@
         "schemas/10.0.22621.0/winrt/UapManifestSchema_v8.xsd"
       ]
     },
-    "Microsoft.WindowsAppSDK/1.2.221109.1": {
-      "sha512": "5My+tXeFoC2+jPdLD91KDuEvssEEvrQOONrKmdFE7Upws22ASwyCbF5JglJPnCvrLGhIRqwPsV/zlyX/q5LNgQ==",
+    "Microsoft.WindowsAppSDK/1.2.221209.1": {
+      "sha512": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
       "type": "package",
-      "path": "microsoft.windowsappsdk/1.2.221109.1",
+      "path": "microsoft.windowsappsdk/1.2.221209.1",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -25590,7 +25594,7 @@
         "manifests/Microsoft.InteractiveExperiences.manifest",
         "manifests/Microsoft.WindowsAppSdk.Foundation.manifest",
         "manifests/manifests/Microsoft.WindowsAppSdk.WinUI.manifest",
-        "microsoft.windowsappsdk.1.2.221109.1.nupkg.sha512",
+        "microsoft.windowsappsdk.1.2.221209.1.nupkg.sha512",
         "microsoft.windowsappsdk.nuspec",
         "runtimes/win10-arm64/native/Microsoft.WindowsAppRuntime.Bootstrap.dll",
         "runtimes/win10-x64/native/Microsoft.WindowsAppRuntime.Bootstrap.dll",
@@ -25787,10 +25791,10 @@
         "plainer.maui.nuspec"
       ]
     },
-    "UraniumUI/2.3.0-pre.2": {
-      "sha512": "dmUXwd1pXRxWH9JiWc1Dt4rwtAax8RRf5ih3N7llNcXHljqQ8No0J7ZXIRSLybCgR1zE0SePZenqErigPZ8/RA==",
+    "UraniumUI/2.3.1": {
+      "sha512": "e6s1U85gwigzAM9cHRU2c6fcJStS9nh/5sDilJxjsZ5+VSZCBjCHxfBKYCkfrf/PCDp+RYgKv2Jn3BneCdRn3A==",
       "type": "package",
-      "path": "uraniumui/2.3.0-pre.2",
+      "path": "uraniumui/2.3.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -25818,14 +25822,14 @@
         "lib/net7.0/UraniumUI.dll",
         "lib/net7.0/UraniumUI.pdb",
         "logo_128.png",
-        "uraniumui.2.3.0-pre.2.nupkg.sha512",
+        "uraniumui.2.3.1.nupkg.sha512",
         "uraniumui.nuspec"
       ]
     },
-    "UraniumUI.Icons.FontAwesome/2.3.0-pre.2": {
-      "sha512": "esE5+xlZHCTy/UtKVurAai7bqwuEy6NGGI5jqzrDGe64/5vlIhGvCVSQ0g+nfrcAUQtfwR6OFj6ODUvRnILKgA==",
+    "UraniumUI.Icons.FontAwesome/2.3.1": {
+      "sha512": "R06FWTrsT8Sn4aqV13tpf0hK1UC6Zl6TlnvSaZH71nN0JoIpt1nmD+97n0v0Uupc8hfEesYzIUUclTbkE4xVgw==",
       "type": "package",
-      "path": "uraniumui.icons.fontawesome/2.3.0-pre.2",
+      "path": "uraniumui.icons.fontawesome/2.3.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -25853,14 +25857,14 @@
         "lib/net7.0/UraniumUI.Icons.FontAwesome.dll",
         "lib/net7.0/UraniumUI.Icons.FontAwesome.pdb",
         "logo_128.png",
-        "uraniumui.icons.fontawesome.2.3.0-pre.2.nupkg.sha512",
+        "uraniumui.icons.fontawesome.2.3.1.nupkg.sha512",
         "uraniumui.icons.fontawesome.nuspec"
       ]
     },
-    "UraniumUI.Icons.MaterialIcons/2.3.0-pre.2": {
-      "sha512": "R9RRZTOGZf78vstlZEpw45ZihXA1c1n8vXTpqytTQiCPmakp3Ieqb4AQYEY9UZkBBXiu4NL2E0Vjb+lsvvp6rQ==",
+    "UraniumUI.Icons.MaterialIcons/2.3.1": {
+      "sha512": "JMYTJb0VitGMOCsH8s5KuALSNRlfp6iBgcjJRvCZtb4uqRJMtzUSalPAwkHeYMWos4k4O1BX1CZtvnv+O7XLyQ==",
       "type": "package",
-      "path": "uraniumui.icons.materialicons/2.3.0-pre.2",
+      "path": "uraniumui.icons.materialicons/2.3.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -25888,14 +25892,14 @@
         "lib/net7.0/UraniumUI.Icons.MaterialIcons.dll",
         "lib/net7.0/UraniumUI.Icons.MaterialIcons.pdb",
         "logo_128.png",
-        "uraniumui.icons.materialicons.2.3.0-pre.2.nupkg.sha512",
+        "uraniumui.icons.materialicons.2.3.1.nupkg.sha512",
         "uraniumui.icons.materialicons.nuspec"
       ]
     },
-    "UraniumUI.Material/2.3.0-pre.1": {
-      "sha512": "mD1yHjRzHlAtfd2kgEU95z1py5GfP8oVIby/GiOmlM9J5SxX0M9G6INMrL9uetJ/ROk/4WZ222+6I9JG9BkYYA==",
+    "UraniumUI.Material/2.3.1": {
+      "sha512": "nZ/gjmW5aWgQqz2myjFho+k4kgo62GrcLDcU/qDygAHbOD4PCmhTeQ2XjLGMi6joTqbclJbGdrhMrhoiprFsyQ==",
       "type": "package",
-      "path": "uraniumui.material/2.3.0-pre.1",
+      "path": "uraniumui.material/2.3.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -25923,7 +25927,7 @@
         "lib/net7.0/UraniumUI.Material.dll",
         "lib/net7.0/UraniumUI.Material.pdb",
         "logo_128.png",
-        "uraniumui.material.2.3.0-pre.1.nupkg.sha512",
+        "uraniumui.material.2.3.1.nupkg.sha512",
         "uraniumui.material.nuspec"
       ]
     },
@@ -27927,17 +27931,17 @@
   },
   "projectFileDependencyGroups": {
     "net7.0-android33.0": [
-      "CommunityToolkit.Maui >= 3.1.0",
+      "CommunityToolkit.Maui >= 4.0.0",
       "CommunityToolkit.Mvvm >= 8.1.0",
       "Microsoft.Extensions.Configuration >= 7.0.0",
       "Microsoft.Extensions.DependencyInjection >= 7.0.0",
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
-      "Microsoft.Maui.Graphics >= 7.0.52",
-      "UraniumUI >= 2.3.0-pre.2",
-      "UraniumUI.Icons.FontAwesome >= 2.3.0-pre.2",
-      "UraniumUI.Icons.MaterialIcons >= 2.3.0-pre.2",
-      "UraniumUI.Material >= 2.3.0-pre.1",
+      "Microsoft.Maui.Graphics >= 7.0.59",
+      "UraniumUI >= 2.3.1",
+      "UraniumUI.Icons.FontAwesome >= 2.3.1",
+      "UraniumUI.Icons.MaterialIcons >= 2.3.1",
+      "UraniumUI.Material >= 2.3.1",
       "Xamarin.Android.Glide >= 4.13.2.2",
       "Xamarin.AndroidX.Browser >= 1.4.0.3",
       "Xamarin.AndroidX.Legacy.Support.V4 >= 1.0.0.15",
@@ -27951,46 +27955,46 @@
       "Xamarin.Google.Crypto.Tink.Android >= 1.7.0.1"
     ],
     "net7.0-ios16.1": [
-      "CommunityToolkit.Maui >= 3.1.0",
+      "CommunityToolkit.Maui >= 4.0.0",
       "CommunityToolkit.Mvvm >= 8.1.0",
       "Microsoft.Extensions.Configuration >= 7.0.0",
       "Microsoft.Extensions.DependencyInjection >= 7.0.0",
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
-      "Microsoft.Maui.Graphics >= 7.0.52",
-      "UraniumUI >= 2.3.0-pre.2",
-      "UraniumUI.Icons.FontAwesome >= 2.3.0-pre.2",
-      "UraniumUI.Icons.MaterialIcons >= 2.3.0-pre.2",
-      "UraniumUI.Material >= 2.3.0-pre.1"
+      "Microsoft.Maui.Graphics >= 7.0.59",
+      "UraniumUI >= 2.3.1",
+      "UraniumUI.Icons.FontAwesome >= 2.3.1",
+      "UraniumUI.Icons.MaterialIcons >= 2.3.1",
+      "UraniumUI.Material >= 2.3.1"
     ],
     "net7.0-maccatalyst16.1": [
-      "CommunityToolkit.Maui >= 3.1.0",
+      "CommunityToolkit.Maui >= 4.0.0",
       "CommunityToolkit.Mvvm >= 8.1.0",
       "Microsoft.Extensions.Configuration >= 7.0.0",
       "Microsoft.Extensions.DependencyInjection >= 7.0.0",
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
-      "Microsoft.Maui.Graphics >= 7.0.52",
-      "UraniumUI >= 2.3.0-pre.2",
-      "UraniumUI.Icons.FontAwesome >= 2.3.0-pre.2",
-      "UraniumUI.Icons.MaterialIcons >= 2.3.0-pre.2",
-      "UraniumUI.Material >= 2.3.0-pre.1"
+      "Microsoft.Maui.Graphics >= 7.0.59",
+      "UraniumUI >= 2.3.1",
+      "UraniumUI.Icons.FontAwesome >= 2.3.1",
+      "UraniumUI.Icons.MaterialIcons >= 2.3.1",
+      "UraniumUI.Material >= 2.3.1"
     ],
     "net7.0-windows10.0.19041": [
-      "CommunityToolkit.Maui >= 3.1.0",
+      "CommunityToolkit.Maui >= 4.0.0",
       "CommunityToolkit.Mvvm >= 8.1.0",
       "Microsoft.Extensions.Configuration >= 7.0.0",
       "Microsoft.Extensions.DependencyInjection >= 7.0.0",
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
-      "Microsoft.Maui.Graphics >= 7.0.52",
-      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop >= 7.0.52",
+      "Microsoft.Maui.Graphics >= 7.0.59",
+      "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop >= 7.0.59",
       "Microsoft.Windows.SDK.BuildTools >= 10.0.22621.755",
-      "Microsoft.WindowsAppSDK >= 1.2.221109.1",
-      "UraniumUI >= 2.3.0-pre.2",
-      "UraniumUI.Icons.FontAwesome >= 2.3.0-pre.2",
-      "UraniumUI.Icons.MaterialIcons >= 2.3.0-pre.2",
-      "UraniumUI.Material >= 2.3.0-pre.1"
+      "Microsoft.WindowsAppSDK >= 1.2.221209.1",
+      "UraniumUI >= 2.3.1",
+      "UraniumUI.Icons.FontAwesome >= 2.3.1",
+      "UraniumUI.Icons.MaterialIcons >= 2.3.1",
+      "UraniumUI.Material >= 2.3.1"
     ]
   },
   "packageFolders": {
@@ -28054,7 +28058,7 @@
         "dependencies": {
           "CommunityToolkit.Maui": {
             "target": "Package",
-            "version": "[3.1.0, )"
+            "version": "[4.0.0, )"
           },
           "CommunityToolkit.Mvvm": {
             "target": "Package",
@@ -28082,24 +28086,24 @@
           },
           "Microsoft.Maui.Graphics": {
             "target": "Package",
-            "version": "[7.0.52, )",
+            "version": "[7.0.59, )",
             "autoReferenced": true
           },
           "UraniumUI": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.FontAwesome": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.MaterialIcons": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Material": {
             "target": "Package",
-            "version": "[2.3.0-pre.1, )"
+            "version": "[2.3.1, )"
           },
           "Xamarin.Android.Glide": {
             "target": "Package",
@@ -28185,14 +28189,14 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
       },
       "net7.0-ios16.1": {
         "targetAlias": "net7.0-ios",
         "dependencies": {
           "CommunityToolkit.Maui": {
             "target": "Package",
-            "version": "[3.1.0, )"
+            "version": "[4.0.0, )"
           },
           "CommunityToolkit.Mvvm": {
             "target": "Package",
@@ -28220,24 +28224,24 @@
           },
           "Microsoft.Maui.Graphics": {
             "target": "Package",
-            "version": "[7.0.52, )",
+            "version": "[7.0.59, )",
             "autoReferenced": true
           },
           "UraniumUI": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.FontAwesome": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.MaterialIcons": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Material": {
             "target": "Package",
-            "version": "[2.3.0-pre.1, )"
+            "version": "[2.3.1, )"
           }
         },
         "imports": [
@@ -28268,14 +28272,14 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
       },
       "net7.0-maccatalyst16.1": {
         "targetAlias": "net7.0-maccatalyst",
         "dependencies": {
           "CommunityToolkit.Maui": {
             "target": "Package",
-            "version": "[3.1.0, )"
+            "version": "[4.0.0, )"
           },
           "CommunityToolkit.Mvvm": {
             "target": "Package",
@@ -28303,24 +28307,24 @@
           },
           "Microsoft.Maui.Graphics": {
             "target": "Package",
-            "version": "[7.0.52, )",
+            "version": "[7.0.59, )",
             "autoReferenced": true
           },
           "UraniumUI": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.FontAwesome": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.MaterialIcons": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Material": {
             "target": "Package",
-            "version": "[2.3.0-pre.1, )"
+            "version": "[2.3.1, )"
           }
         },
         "imports": [
@@ -28352,14 +28356,14 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
       },
       "net7.0-windows10.0.19041": {
         "targetAlias": "net7.0-windows10.0.19041.0",
         "dependencies": {
           "CommunityToolkit.Maui": {
             "target": "Package",
-            "version": "[3.1.0, )"
+            "version": "[4.0.0, )"
           },
           "CommunityToolkit.Mvvm": {
             "target": "Package",
@@ -28387,12 +28391,12 @@
           },
           "Microsoft.Maui.Graphics": {
             "target": "Package",
-            "version": "[7.0.52, )",
+            "version": "[7.0.59, )",
             "autoReferenced": true
           },
           "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop": {
             "target": "Package",
-            "version": "[7.0.52, )",
+            "version": "[7.0.59, )",
             "autoReferenced": true
           },
           "Microsoft.Windows.SDK.BuildTools": {
@@ -28403,24 +28407,24 @@
           },
           "Microsoft.WindowsAppSDK": {
             "target": "Package",
-            "version": "[1.2.221109.1, )",
+            "version": "[1.2.221209.1, )",
             "autoReferenced": true
           },
           "UraniumUI": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.FontAwesome": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Icons.MaterialIcons": {
             "target": "Package",
-            "version": "[2.3.0-pre.2, )"
+            "version": "[2.3.1, )"
           },
           "UraniumUI.Material": {
             "target": "Package",
-            "version": "[2.3.0-pre.1, )"
+            "version": "[2.3.1, )"
           }
         },
         "imports": [
@@ -28437,15 +28441,15 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-            "version": "[7.0.0, 7.0.0]"
+            "version": "[7.0.3, 7.0.3]"
           },
           {
             "name": "Microsoft.Windows.SDK.NET.Ref",
-            "version": "[10.0.19041.27, 10.0.19041.27]"
+            "version": "[10.0.19041.28, 10.0.19041.28]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-            "version": "[7.0.0, 7.0.0]"
+            "version": "[7.0.3, 7.0.3]"
           }
         ],
         "frameworkReferences": {
@@ -28465,7 +28469,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

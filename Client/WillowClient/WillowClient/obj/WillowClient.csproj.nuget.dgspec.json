@@ -61,7 +61,7 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[4.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -89,24 +89,24 @@
             },
             "Microsoft.Maui.Graphics": {
               "target": "Package",
-              "version": "[7.0.52, )",
+              "version": "[7.0.59, )",
               "autoReferenced": true
             },
             "UraniumUI": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.MaterialIcons": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Material": {
               "target": "Package",
-              "version": "[2.3.0-pre.1, )"
+              "version": "[2.3.1, )"
             },
             "Xamarin.Android.Glide": {
               "target": "Package",
@@ -192,14 +192,14 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
         },
         "net7.0-ios16.1": {
           "targetAlias": "net7.0-ios",
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[4.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -227,24 +227,24 @@
             },
             "Microsoft.Maui.Graphics": {
               "target": "Package",
-              "version": "[7.0.52, )",
+              "version": "[7.0.59, )",
               "autoReferenced": true
             },
             "UraniumUI": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.MaterialIcons": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Material": {
               "target": "Package",
-              "version": "[2.3.0-pre.1, )"
+              "version": "[2.3.1, )"
             }
           },
           "imports": [
@@ -275,14 +275,14 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
         },
         "net7.0-maccatalyst16.1": {
           "targetAlias": "net7.0-maccatalyst",
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[4.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -310,24 +310,24 @@
             },
             "Microsoft.Maui.Graphics": {
               "target": "Package",
-              "version": "[7.0.52, )",
+              "version": "[7.0.59, )",
               "autoReferenced": true
             },
             "UraniumUI": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.MaterialIcons": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Material": {
               "target": "Package",
-              "version": "[2.3.0-pre.1, )"
+              "version": "[2.3.1, )"
             }
           },
           "imports": [
@@ -359,14 +359,14 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
         },
         "net7.0-windows10.0.19041": {
           "targetAlias": "net7.0-windows10.0.19041.0",
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[4.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -394,12 +394,12 @@
             },
             "Microsoft.Maui.Graphics": {
               "target": "Package",
-              "version": "[7.0.52, )",
+              "version": "[7.0.59, )",
               "autoReferenced": true
             },
             "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop": {
               "target": "Package",
-              "version": "[7.0.52, )",
+              "version": "[7.0.59, )",
               "autoReferenced": true
             },
             "Microsoft.Windows.SDK.BuildTools": {
@@ -410,24 +410,24 @@
             },
             "Microsoft.WindowsAppSDK": {
               "target": "Package",
-              "version": "[1.2.221109.1, )",
+              "version": "[1.2.221209.1, )",
               "autoReferenced": true
             },
             "UraniumUI": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.FontAwesome": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Icons.MaterialIcons": {
               "target": "Package",
-              "version": "[2.3.0-pre.2, )"
+              "version": "[2.3.1, )"
             },
             "UraniumUI.Material": {
               "target": "Package",
-              "version": "[2.3.0-pre.1, )"
+              "version": "[2.3.1, )"
             }
           },
           "imports": [
@@ -444,15 +444,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[7.0.0, 7.0.0]"
+              "version": "[7.0.3, 7.0.3]"
             },
             {
               "name": "Microsoft.Windows.SDK.NET.Ref",
-              "version": "[10.0.19041.27, 10.0.19041.27]"
+              "version": "[10.0.19041.28, 10.0.19041.28]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[7.0.0, 7.0.0]"
+              "version": "[7.0.3, 7.0.3]"
             }
           ],
           "frameworkReferences": {
@@ -472,7 +472,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "D:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

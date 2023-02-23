@@ -428,3 +428,55 @@ func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error
 	//conn.l.Info(*account)
 	return account, nil
 }
+
+/*
+ * This function will insert a new bug report into the database
+ */
+func (conn *Connection) InsertBugReport(bugReport data.AddBugReport) error {
+	//Prepare the statement for inserting the bug report into the database
+	sqlStmt, err := conn.db.Prepare("INSERT INTO bugreports(CategoryId, Description, ReportedBy) VALUES ( (SELECT Id FROM bugreportcategories where Name = ?), ?, ?)")
+	//Check if there was any error when preparing the statement
+	if err != nil {
+		conn.l.Error("Error occured when preparing the statement for bug report insert", err.Error())
+		return err
+	}
+
+	//Execute the statement which the values received from the user
+	_, err = sqlStmt.Exec(bugReport.Category, bugReport.Description, bugReport.AccountId)
+	//Check if an error occured when executing the insert query
+	if err != nil {
+		conn.l.Error("Error occured when executing the query for bug report insert")
+		return err
+	}
+
+	return nil
+}
+
+/*
+ * This function will return all the categories available for a bug report
+ */
+func (conn *Connection) GetAllCategories() (data.ReportCategories, error) {
+	//Prepare the select statement for the categories of bug reports
+	sqlStmt, err := conn.db.Prepare("SELECT Name FROM bugreportcategories")
+	//Check if an error occured
+	if err != nil {
+		conn.l.Error("Error occured when preparing the statement for bug report categories", err.Error())
+		return nil, err
+	}
+	rows, err := sqlStmt.Query()
+	//Check if an error occured
+	if err != nil {
+		conn.l.Error("Error occured when executing the statement for bug report categories", err.Error())
+		return nil, err
+	}
+
+	//Get all the categories into an array
+	returnArr := make(data.ReportCategories, 0)
+	for rows.Next() {
+		var name string
+		_ = rows.Scan(&name)
+		returnArr = append(returnArr, data.ReportCategory{Name: name})
+	}
+
+	return returnArr, nil
+}

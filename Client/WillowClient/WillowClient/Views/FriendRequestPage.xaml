@@ -2,6 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:Class="WillowClient.Views.FriendRequestPage"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -11,17 +16,30 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
-        <Border Grid.Row="0" HeightRequest="70" BackgroundColor="#7B68EE">
+        <!--<Border Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="#7B68EE" >
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
                 <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitFriendRequestsCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                 <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Friend requests" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
+        </Border>-->
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitFriendRequestsCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Friend Requests" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
         </Border>
         <CollectionView Grid.Row="1" x:Name="friendRequestsCollectionView" ItemsSource="{Binding FriendRequests}" SelectionMode="None">
-            <CollectionView.ItemTemplate>
+            <CollectionView.ItemTemplate FontFamily="{StaticResource ApplicationFont}">
                 <DataTemplate x:DataType="model:FriendRequestModel">
                     <SwipeView>
                         <SwipeView.LeftItems>
@@ -44,7 +62,7 @@
                                         CornerRadius="32"
                                         />
                             <VerticalStackLayout Spacing="13">
-                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
                                 <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10"/>

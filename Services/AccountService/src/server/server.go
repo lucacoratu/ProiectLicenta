@@ -71,6 +71,9 @@ func InitServer(address string) error {
 	//Create the handler for friends
 	handlerFriends := handlers.NewFriends(serverLogger, serverDbConn)
 
+	//Create the feedback handler
+	handlerFeedback := handlers.NewReportBug(serverLogger, serverDbConn)
+
 	//Create the authentication middleware
 	handlerAuth := handlers.NewAuthentication(serverLogger, serverDbConn)
 
@@ -81,6 +84,8 @@ func InitServer(address string) error {
 	//Create the methods that will handle login and register (this methods do not use authentication middleware)
 	serveMuxServer.HandleFunc("/login", handlerLogin.LoginAccount).Methods("POST")
 	serveMuxServer.HandleFunc("/register", handlerRegister.RegisterAccount).Methods("POST")
+	//Add the function to get all the report bug categories
+	serveMuxServer.HandleFunc("/accounts/reportcategories", handlerFeedback.GetBugReportCategories).Methods("GET")
 
 	//Create the subrouter for the GET method which will use the Authentication middleware
 	getRouter := serveMuxServer.Methods(http.MethodGet).Subrouter()
@@ -104,6 +109,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/friendrequest/delete", handlerFriendRequests.DeleteFriendRequest)
 	postRouter.HandleFunc("/friend/add", handlerFriends.AddFriend)
 	postRouter.HandleFunc("/friend/delete", handlerFriends.DeleteFriends)
+	postRouter.HandleFunc("/accounts/reportbug", handlerFeedback.AddBugReport)
 	postRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Log that the handlers have been added

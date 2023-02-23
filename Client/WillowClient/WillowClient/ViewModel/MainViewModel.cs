@@ -709,7 +709,23 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         async Task GoToReportABug()
         {
-            await Shell.Current.GoToAsync(nameof(ReportABugPage), true);
+            await Shell.Current.GoToAsync(nameof(ReportABugPage), true, new Dictionary<string, object>
+            {
+                {"account", this.Account },
+                {"hexID", HexID},
+                {"session", Session }
+            });
+        }
+
+        [RelayCommand]
+        async Task GoToProfile()
+        {
+            await Shell.Current.GoToAsync(nameof(ProfilePage), true, new Dictionary<string, object>
+                {
+                    {"account", this.Account},
+                    {"numberFriends",  this.Friends.Count},
+                    {"numberGroups",  this.Groups.Count},
+                });
         }
     }
 }

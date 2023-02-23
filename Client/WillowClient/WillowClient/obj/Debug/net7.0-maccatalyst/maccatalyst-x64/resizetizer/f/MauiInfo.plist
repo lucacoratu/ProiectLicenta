@@ -4,6 +4,10 @@
 <dict>
   <key>UIAppFonts</key>
   <array>
+	<string>Labrada-Medium.ttf</string>
+	<string>Labrada-Regular.ttf</string>
+	<string>Labrada.ttf</string>
+	<string>NeusharpBold.otf</string>
 	<string>OpenSans-Regular.ttf</string>
 	<string>OpenSans-Semibold.ttf</string>
   </array>

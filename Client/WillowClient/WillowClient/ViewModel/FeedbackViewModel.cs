@@ -26,23 +26,37 @@ namespace WillowClient.ViewModel
         private string hexID;
 
         [ObservableProperty]
-        private ObservableCollection<FeedbackServiceModel> feedbackServiceModels = new();
+        private string selectedCategory;
+
+        [ObservableProperty]
+        private string bugReportDescription;
+
+        public ObservableCollection<string> Categories { get; } = new ();
 
         FeedbackService feedbackService;
 
         public FeedbackViewModel(FeedbackService feedbackService)
         {
             this.feedbackService = feedbackService;
-            this.PopulateCollectionView();
+            this.PopulateCategories();
         }
 
-        public void PopulateCollectionView()
+        async void PopulateCategories()
         {
-            this.feedbackServiceModels.Add(new FeedbackServiceModel { ImageSource = "feedback_account.png", Description = "Account" });
-            this.feedbackServiceModels.Add(new FeedbackServiceModel { ImageSource = "feedback_chat.png", Description = "Chat" });
-            this.feedbackServiceModels.Add(new FeedbackServiceModel { ImageSource = "feedback_voice.png", Description = "Voice" });
-            this.feedbackServiceModels.Add(new FeedbackServiceModel { ImageSource = "feedback_video.png", Description = "Video" });
+            this.Categories.Clear();
+            var cats = await this.feedbackService.GetReportCategories();
+            foreach(BugReportCategoryModel cat in cats)
+            {
+                this.Categories.Add(cat.name);
+            }
         }
+
+        [RelayCommand]
+        async Task SubmitBugReport()
+        {
+            await this.feedbackService.AddBugReport(this.SelectedCategory, this.BugReportDescription, this.Account.Id, Session);
+        }
+
 
         [RelayCommand]
         async Task ExitReportABug()

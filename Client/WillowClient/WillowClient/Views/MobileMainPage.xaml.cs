@@ -12,6 +12,7 @@ public partial class MobileMainPage : TabbedPage
 		//Create the pages
 		this.Children.Add(new MobileGroupsPage(vm));
 		this.Children.Add(new MobileFriendsPage(vm));
+		//this.Children.Add(new MobileMapPage());
 		this.Children.Add(new MobileSettingsPage(vm));
 	}
 

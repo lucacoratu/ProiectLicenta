@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.EditProfilePage"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:DataType="viewmodel:ProfileViewModel"
+             Title="EditProfile"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+    <VerticalStackLayout>
+        <!--<Grid ColumnDefinitions="*">
+            <ImageButton Grid.Column="0" Margin="10" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                <ImageButton.Source>
+                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                </ImageButton.Source>
+            </ImageButton>
+            <Label Text="Edit Profile" FontSize="18" TextColor="WhiteSmoke" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+        </Grid>-->
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Edit Profile" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
+            <HorizontalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ChangeProfilePictureCommand}"/>
+            </HorizontalStackLayout.GestureRecognizers>
+            <toolkit:AvatarView 
+                    HeightRequest="110"
+                    Margin="0,0,0,0"
+                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                    WidthRequest="110"
+                    BorderWidth="0"
+                    BorderColor="WhiteSmoke"
+                    CornerRadius="60" />
+            <Frame CornerRadius="15" WidthRequest="30" HeightRequest="30" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
+                <Image WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Color="WhiteSmoke"/>
+                    </Image.Source>
+                </Image>
+            </Frame>
+        </HorizontalStackLayout>
+        <input:FormView Spacing="20" Padding="45">
+            <material:TextField x:Name="entryDisplayName" FontFamily="{StaticResource ApplicationFont}" Title="Display Name" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.User}}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" >
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryEmail" FontFamily="{StaticResource ApplicationFont}" Title="Email" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Envelope}}"  AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" >
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryOldPassword" FontFamily="{StaticResource ApplicationFont}" Title="Old password" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Lock}}" MaxLength="20" AccentColor="{StaticResource AccentSecondDarkColor}" IsPassword="True" material:AllowClear="True" ClearButtonVisibility="WhileEditing">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryPassword" FontFamily="{StaticResource ApplicationFont}" Title="Password" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Lock}}" MaxLength="20" AccentColor="{StaticResource AccentSecondDarkColor}" IsPassword="True" material:AllowClear="True" ClearButtonVisibility="WhileEditing">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <Button Text="Edit Profile" StyleClass="FilledButton" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" TextColor="WhiteSmoke" FontAttributes="Bold" input:FormView.IsSubmitButton="True" />
+        </input:FormView>
+        <Grid ColumnDefinitions="*,*">
+            <HorizontalStackLayout Grid.Column="0" Padding="45">
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Joined" FontSize="12" VerticalOptions="Center" TextColor="WhiteSmoke" Margin="0,0,5,0"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.JoinDate}" FontAttributes="Bold" TextColor="WhiteSmoke"/>
+            </HorizontalStackLayout>
+            <Button FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" WidthRequest="100" Text="Delete" BackgroundColor="Red" Opacity="0.8" TextColor="WhiteSmoke"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

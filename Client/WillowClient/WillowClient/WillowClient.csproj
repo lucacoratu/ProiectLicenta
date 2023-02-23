@@ -52,16 +52,16 @@
 
 	<ItemGroup>
 	  <!--<None Remove="Resources\AppIcon\appiconfg.svg" />-->
-	  <MauiIco Remove="Resources\AppIcon\willow.png" />
+	  <MauiIcon Remove="Resources\AppIcon\willow.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-	  <PackageReference Include="UraniumUI" Version="2.3.0-pre.2" />
-	  <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.3.0-pre.2" />
-	  <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.3.0-pre.2" />
-	  <PackageReference Include="UraniumUI.Material" Version="2.3.0-pre.1" />
+	  <PackageReference Include="UraniumUI" Version="2.3.1" />
+	  <PackageReference Include="UraniumUI.Icons.FontAwesome" Version="2.3.1" />
+	  <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="2.3.1" />
+	  <PackageReference Include="UraniumUI.Material" Version="2.3.1" />
 	</ItemGroup>
 
 	<!-- Android -->
@@ -95,6 +95,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\EditProfilePage.xaml.cs">
+	    <DependentUpon>EditProfilePage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\WindowsCallPage.xaml.cs">
 	    <DependentUpon>WindowsCallPage.xaml</DependentUpon>
 	  </Compile>
@@ -122,10 +125,16 @@
 	  <MauiXaml Update="Views\CreateGroupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\EditProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FriendRequestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MobileTabviewMainPage.xaml">
+	  <MauiXaml Update="Views\MobileMapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ReportABugPage.xaml">

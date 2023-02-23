@@ -14,26 +14,26 @@
         <ResourceDictionary>
             <DataTemplate x:Key="SentMessageTemplate" x:DataType="model:MessageModel">
                 <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5">
-                    <Border Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="#483D8B" Opacity="0.9">
+                    <Border Margin="3" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="#483D8B" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,10,0"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout>
-                            <Label Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,5,5" FontSize="13" />
-                            <Label Text="{Binding TimeStamp}" HorizontalTextAlignment="End" FontSize="11"/>
+                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,5,5" FontSize="13" />
+                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" HorizontalTextAlignment="End" FontSize="11"/>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="ReceivedMessageTemplate" x:DataType="model:MessageModel">
                 <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5">
-                    <Border Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#505050" HorizontalOptions="Start" Opacity="0.9">
+                    <Border Margin="3" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#505050" HorizontalOptions="Start" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout VerticalOptions="Start">
-                            <Label Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,5" FontSize="13"/>
-                            <Label Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" FontSize="11"/>
+                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,5" FontSize="13"/>
+                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" FontSize="11"/>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
@@ -43,11 +43,11 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
-        <Border Grid.Row="0" HeightRequest="70" BackgroundColor="#7B68EE">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <FlexLayout Direction="Row" HeightRequest="50" BackgroundColor="#7B68EE" JustifyContent="SpaceBetween">
+            <FlexLayout Direction="Row" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" JustifyContent="SpaceBetween">
                 <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                 <HorizontalStackLayout FlexLayout.AlignSelf="Center">
                     <toolkit:AvatarView 
@@ -60,10 +60,10 @@
                                  CornerRadius="32"
                                  FlexLayout.AlignSelf="Center" />
                     <VerticalStackLayout Spacing="0" FlexLayout.AlignSelf="Center" Margin="0,0,10,0">
-                        <Label Text="{Binding Friend.DisplayName}" TextColor="WhiteSmoke" FontSize="14" FontAttributes="Bold"></Label>
+                        <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Friend.DisplayName}" TextColor="WhiteSmoke" FontSize="14" FontAttributes="Bold"></Label>
                         <HorizontalStackLayout Spacing="10">
-                            <Label Text="{Binding LastOnlineText}" TextColor="WhiteSmoke"/>
-                            <Label Text="{Binding Friend.LastOnline}" TextColor="WhiteSmoke"/>
+                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastOnlineText}" TextColor="WhiteSmoke"/>
+                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Friend.LastOnline}" TextColor="WhiteSmoke"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
@@ -76,19 +76,19 @@
         <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" Margin="0,0,0,0"  BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="model:MessageGroupModel">
-                    <Label Text="{Binding Name}" BackgroundColor="Transparent" Padding="0,10,0,10" HorizontalOptions="Center" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Name}" BackgroundColor="Transparent" Padding="0,10,0,10" HorizontalOptions="Center" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" />
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
         </CollectionView>
-        <Border Grid.Row="2" HeightRequest="50" BackgroundColor="Black" Padding="4">
+        <Border StrokeThickness="0" Grid.Row="2" HeightRequest="50" BackgroundColor="Black" Padding="4">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="15,15,0,0" />
             </Border.StrokeShape>
-            <FlexLayout >
-                <Button Text="+" FontSize="20" Padding="0" Margin="0,0,0,0" TextColor="WhiteSmoke" BackgroundColor="Transparent" FlexLayout.Basis="10%" Command="{Binding PickFileCommand}"/>
-                <Entry x:Name="messageText" Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="70%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send"/>
-                <ImageButton Source="camera.png" FlexLayout.Basis="10%" Command="{Binding TakePhotoCommand}"/>
-                <Button Text=">" Margin="0" Padding="0" BackgroundColor="Transparent" TextColor="WhiteSmoke" FlexLayout.Basis="10%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
+            <FlexLayout Grid.Row="2" HeightRequest="40">
+                <Button FontFamily="{StaticResource ApplicationFont}" Text="+" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent"  Command="{Binding PickFileCommand}"/>
+                <Entry FontFamily="{StaticResource ApplicationFont}" x:Name="messageText" Placeholder="Insert Message" PlaceholderColor="WhiteSmoke" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send"/>
+                <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"/>
+                <Button FontFamily="{StaticResource ApplicationFont}" Text=">" Margin="0" Padding="0" BackgroundColor="Transparent" TextColor="WhiteSmoke" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
             </FlexLayout>
         </Border>
     </Grid>

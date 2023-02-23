@@ -74,6 +74,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.CreateG
 build_metadata.AdditionalFiles.TargetPath = Views\CreateGroupPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\CreateGroupPage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/EditProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.EditProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\EditProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\EditProfilePage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/FriendRequestPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.FriendRequestPage.xaml
@@ -116,11 +122,23 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileM
 build_metadata.AdditionalFiles.TargetPath = Views\MobileMainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\MobileMainPage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MobileMapPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileMapPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MobileMapPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MobileMapPage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MobileSettingsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileSettingsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\MobileSettingsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\MobileSettingsPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ProfilePage.xaml
 
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/RegisterPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

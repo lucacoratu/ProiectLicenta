@@ -10,15 +10,15 @@
              Shell.NavBarIsVisible="False">
     <Grid RowDefinitions="*,250">
         <VerticalStackLayout Grid.Row="0">
-            <Label Padding="0,30,0,0" Text="{Binding Friend.DisplayName}" FontSize="25" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
-            <Label Text="Calling..." HorizontalOptions="Center" TextColor="WhiteSmoke"/>
+            <Label FontFamily="{StaticResource ApplicationFont}" Padding="0,30,0,0" Text="{Binding Friend.DisplayName}" FontSize="25" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
+            <Label FontFamily="{StaticResource ApplicationFont}" Text="Calling..." HorizontalOptions="Center" TextColor="WhiteSmoke"/>
             <Frame Margin="0,40,0,0" BackgroundColor="#404040" CornerRadius="100" WidthRequest="140" HeightRequest="140">
                 <toolkit:AvatarView 
                                      HeightRequest="100"
                                      Margin="0"
                                      ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                                      WidthRequest="100"
-                                     BorderWidth="1.3"
+                                     BorderWidth="0"
                                      BorderColor="WhiteSmoke"
                                      CornerRadius="50"
                                      HorizontalOptions="Center"
@@ -26,10 +26,10 @@
             </Frame>
         </VerticalStackLayout>
         <Grid Grid.Row="1" ColumnDefinitions="*,*" RowDefinitions="*">
-            <Frame Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Background="Green" CornerRadius="60">
+            <Frame BackgroundColor="Transparent" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Background="Green" CornerRadius="60">
                 <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="answer.png" Command="{Binding AnswerCallCommand}"/>
             </Frame>
-            <Frame Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Background="Red" CornerRadius="60">
+            <Frame BackgroundColor="Transparent" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Background="Red" CornerRadius="60">
                 <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="end_call.png" Command="{Binding DenyCallCommand}"/>
             </Frame>
         </Grid>

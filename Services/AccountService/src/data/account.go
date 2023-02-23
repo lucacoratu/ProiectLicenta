@@ -12,7 +12,7 @@ type Account struct {
 	ID           int    `json:"id"`
 	Username     string `json:"-"`
 	DisplayName  string `json:"displayName"`
-	Email        string `json:"-"`
+	Email        string `json:"email"`
 	PasswordHash string `json:"-"`
 	Salt         string `json:"-"`
 	LastOnline   string `json:"lastOnline"`
@@ -39,7 +39,7 @@ func (acc *Account) FromJSON(r io.Reader) error {
 
 type Accounts []Account
 
-func (accs *Accounts) ToJSON(w io.Writer) error{
+func (accs *Accounts) ToJSON(w io.Writer) error {
 	e := json.NewEncoder(w)
 	return e.Encode(accs)
 }

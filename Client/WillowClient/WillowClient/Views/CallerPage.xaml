@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              x:Class="WillowClient.Views.CallerPage"
              xmlns:model="clr-namespace:WillowClient.Model"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -11,34 +14,45 @@
              Shell.NavBarIsVisible="False">
     <Grid RowDefinitions="*,250">
         <VerticalStackLayout Grid.Row="0">
-            <Label Padding="0,30,0,0" Text="{Binding Friend.DisplayName}" FontSize="25" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
-            <Label Text="Calling..." HorizontalOptions="Center" TextColor="WhiteSmoke"/>
+            <Label FontFamily="{StaticResource ApplicationFont}" Padding="0,30,0,0" Text="{Binding Friend.DisplayName}" FontSize="25" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
+            <Label FontFamily="{StaticResource ApplicationFont}" Text="Calling..." HorizontalOptions="Center" TextColor="WhiteSmoke"/>
             <Frame Margin="0,40,0,0" BackgroundColor="#404040" CornerRadius="100" WidthRequest="140" HeightRequest="140">
                 <toolkit:AvatarView 
                                      HeightRequest="100"
                                      Margin="0"
                                      ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                                      WidthRequest="100"
-                                     BorderWidth="1.3"
+                                     BorderWidth="0"
                                      BorderColor="WhiteSmoke"
                                      CornerRadius="50"
-                                
                                      HorizontalOptions="Center"
                        />
             </Frame>
         </VerticalStackLayout>
         <Grid Grid.Row="1" ColumnDefinitions="*,*,*" RowDefinitions="*,*">
-            <VerticalStackLayout Spacing="5" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton WidthRequest="32" HeightRequest="32" Source="microphone.png"/>
-                <Label Text="Microphone" FontSize="12"/>
+            <VerticalStackLayout  Spacing="5" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <ImageButton BackgroundColor="Transparent" WidthRequest="28" HeightRequest="28">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Microphone}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Microphone" FontSize="12"/>
             </VerticalStackLayout>
             <VerticalStackLayout Spacing="5" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton WidthRequest="32" HeightRequest="32" Source="audio.png"/>
-                <Label Text="Audio" FontSize="12"/>
+                <ImageButton BackgroundColor="Transparent" WidthRequest="28" HeightRequest="28">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Music}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Audio" FontSize="12"/>
             </VerticalStackLayout>
             <VerticalStackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
-                <ImageButton WidthRequest="36" HeightRequest="36" Source="video_camera.png"/>
-                <Label Text="Video" FontSize="12"/>
+                <ImageButton BackgroundColor="Transparent" WidthRequest="28" HeightRequest="28">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Video" FontSize="12"/>
             </VerticalStackLayout>
             <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" Background="Red" CornerRadius="60">
                 <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="end_call.png" Command="{Binding EndCallCommand}"/>

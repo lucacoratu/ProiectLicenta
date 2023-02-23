@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              x:Class="WillowClient.Views.AddFriendPage"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -11,19 +14,32 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
-        <Border Grid.Row="0" HeightRequest="70" BackgroundColor="#7B68EE">
+        <!--<Border Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="#7B68EE" >
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
                 <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitAddFriendCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                 <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Find new friends" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
+        </Border>-->
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitAddFriendCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Find new friends" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
         </Border>
         <VerticalStackLayout Grid.Row="1" Grid.Column="0" HeightRequest="100" HorizontalOptions="Center" VerticalOptions="Start">
-            <Entry Placeholder="Insert friend name and id" Text="{Binding AddFriendEntryText}"/>
-            <Button Text="Add friend" WidthRequest="100" TextColor="WhiteSmoke" Command="{Binding AddFriendCommand}"/>
-            <SearchBar Placeholder="Search for friends"/>
+            <Entry FontFamily="{StaticResource ApplicationFont}" Placeholder="Insert friend name and id" Text="{Binding AddFriendEntryText}"/>
+            <Button FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" Text="Add friend" WidthRequest="100" TextColor="WhiteSmoke" Command="{Binding AddFriendCommand}"/>
+            <SearchBar FontFamily="{StaticResource ApplicationFont}" Placeholder="Search for friends"/>
             <CollectionView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:FriendRequestModel">
@@ -37,7 +53,7 @@
                                         CornerRadius="32"
                                         />
                             <VerticalStackLayout Spacing="13">
-                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
+                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
                                 <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10"/>

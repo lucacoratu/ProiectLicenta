@@ -15,7 +15,9 @@
             <!--Dark mode colors-->
             <Color x:Key="PageDarkBackgroundColor">#303030</Color>
             <Color x:Key="TextDarkColor">WhiteSmoke</Color>
-            <Color x:Key="AccentDarkColor">#7B68EE</Color>
+            <Color x:Key="AccentDarkColor">#483D8B</Color>
+            <!--<Color x:Key="AccentDarkColor">#2B1347</Color>-->
+            <Color x:Key="AccentSecondDarkColor">#7B68EE</Color>
             <Color x:Key="ErrorDarkColor">OrangeRed</Color>
             <Color x:Key="ButtonDarkBorderColor">#3e2f94</Color>
             <Color x:Key="ButtonDarkHoverColor">#362791</Color>
@@ -29,6 +31,9 @@
             <Color x:Key="ButtonLightBorderColor">#3e2f94</Color>
             <Color x:Key="ButtonLightHoverColor">#362791</Color>
             <Color x:Key="ButtonLightPressedColor">#3e2f94</Color>
+            
+            <!--Font to be used in the application-->
+            <x:String x:Key="ApplicationFont">OpenSansRegular</x:String>
 
             <!--Button border width-->
             <x:Double x:Key="ButtonBorderWidth">1.5</x:Double>
@@ -77,7 +82,7 @@
             <!--Link label style-->
             <Style x:Key="WillowLinkLabelStyle" TargetType="Label">
                 <Setter Property="TextDecorations" Value="Underline"/>
-                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentLightColor}, Dark={StaticResource AccentDarkColor}}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource AccentLightColor}, Dark={StaticResource AccentSecondDarkColor}}"/>
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
                 <Setter Property="FontSize" Value="16"/>
             </Style>
@@ -114,7 +119,7 @@
                 <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" />
                 <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
                 <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
-                <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource AccentDarkColor}}" />
+                <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource AccentSecondDarkColor}}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

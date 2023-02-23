@@ -14,8 +14,7 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              IconImageSource="friends.png">
     <Grid RowDefinitions="40,*" ColumnDefinitions="*">
-        <!--<SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>-->
-        <material:TextField Title="Search messages" AccentColor="{StaticResource AccentDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
+        <material:TextField Title="Search messages" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
         <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding Friends}" SelectionMode="None" VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:FriendStatusModel">
@@ -43,10 +42,10 @@
                         </HorizontalStackLayout>
                         <Grid ColumnDefinitions="230,*" RowDefinitions="*,Auto">
                             <VerticalStackLayout Grid.Column="0">
-                                <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
-                                <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
                             </VerticalStackLayout>
-                            <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="0,0,0,0" HorizontalTextAlignment="End" HorizontalOptions="End" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                            <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="0,0,0,0" HorizontalTextAlignment="End" HorizontalOptions="End" VerticalOptions="Start" VerticalTextAlignment="Center"/>
                             <Line Margin="0,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"></Line>
                         </Grid>
                     </HorizontalStackLayout>
@@ -54,8 +53,8 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Grid Grid.Row="1" ColumnDefinitions="*,*" HeightRequest="35" VerticalOptions="End" Margin="10">
-            <Button Grid.Column="0" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Add Friend" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding AddFriendMobileCommand}"/>
-            <Button Grid.Column="1" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Friend Requests" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding FriendRequestMobileCommand}"/>
+            <Button Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Add Friend" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding AddFriendMobileCommand}"/>
+            <Button Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Friend Requests" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding FriendRequestMobileCommand}"/>
         </Grid>
         </Grid>
 </ContentPage>

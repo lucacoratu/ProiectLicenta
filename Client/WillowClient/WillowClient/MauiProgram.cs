@@ -23,7 +23,11 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				fonts.AddFontAwesomeIconFonts();
+				fonts.AddFont("NeusharpBold.otf", "NeusharpBold");
+				fonts.AddFont("Labrada.ttf", "Labrada");
+				fonts.AddFont("Labrada-Medium.ttf", "Labrada-Medium");
+				fonts.AddFont("Labrada-Regular.ttf", "Labrada-Regular");
+                fonts.AddFontAwesomeIconFonts();
             });
 
         builder.ConfigureMauiHandlers((handlers) => {
@@ -43,7 +47,6 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<MobileMainPage>();
-		builder.Services.AddSingleton<MobileTabviewMainPage>();
 		builder.Services.AddSingleton<MainViewModel>();
 		builder.Services.AddSingleton<FriendService>();
 
@@ -70,6 +73,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<FeedbackViewModel>();
 		builder.Services.AddSingleton<FeedbackService>();
 		builder.Services.AddSingleton<ReportABugPage>();
+
+		builder.Services.AddTransient<ProfileViewModel>();
+		builder.Services.AddTransient<ProfilePage>();
+        builder.Services.AddTransient<EditProfilePage>();
 
 
         return builder.Build();
