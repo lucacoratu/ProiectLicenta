@@ -23,6 +23,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
         Routing.RegisterRoute(nameof(EditProfilePage), typeof(EditProfilePage));
         Routing.RegisterRoute(nameof(DesktopSettingsPage), typeof(DesktopSettingsPage));
+        Routing.RegisterRoute(nameof(GroupDetailsPage), typeof(GroupDetailsPage));
 #if ANDROID
         Routing.RegisterRoute(nameof(AndroidCallPage), typeof(AndroidCallPage));
 #endif

@@ -9,6 +9,8 @@ import (
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
 	"willow/accountservice/logging"
+
+	"github.com/gorilla/mux"
 )
 
 type Profile struct {
@@ -22,10 +24,23 @@ func NewProfile(l logging.ILogger, db *database.Connection) *Profile {
 
 func (prof *Profile) ViewProfile(rw http.ResponseWriter, r *http.Request) {
 	//This function should send the profile of the account that it is connected to back to the client
-	prof.l.Info("Endpoint /profile reached")
-	jsonErr := jsonerrors.JsonError{Message: "ProfileViewed"}
+	prof.l.Info("Endpoint /profile/{id:[0-9]+} reached")
+	vars := mux.Vars(r)
+	prof.l.Debug("Id received is", vars["id"])
+	idReceiver, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	idRecv := int64(idReceiver)
+	accDetails, err := prof.dbConn.GetAccountDetails(idRecv)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	rw.WriteHeader(http.StatusOK)
-	jsonErr.ToJSON(rw)
+	accDetails.ToJSON(rw)
 }
 
 /*

@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using WillowClient.Model;
 using WillowClient.Services;
+using WillowClient.Views;
 
 namespace WillowClient.ViewModel
 {
@@ -28,7 +29,14 @@ namespace WillowClient.ViewModel
 
         private ChatService chatService;
 
+        private ProfileService profileService;
+
         public List<MessageModel> Messages { get; } = new();
+
+        public ObservableCollection<GroupParticipantModel> Participants { get; set; } = new();
+
+        [ObservableProperty]
+        private string participantNames;
 
         [ObservableProperty]
         private bool entryEnabled = true;
@@ -37,10 +45,11 @@ namespace WillowClient.ViewModel
 
         private int roomId;
 
-        public GroupChatViewModel(ChatService chatService)
+        public GroupChatViewModel(ChatService chatService, ProfileService ps)
         {
             this.chatService = chatService;
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
+            this.profileService = ps;
         }
 
         public async Task MessageReceivedOnWebsocket(string message)
@@ -123,15 +132,31 @@ namespace WillowClient.ViewModel
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
                     if (!groupsAndMessages.ContainsKey(group))
                         groupsAndMessages.Add(group, new List<MessageModel>());
-                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = historyMessage.Data, TimeStamp = msgDate });
 
-                    this.Messages.Add(new MessageModel
-                    {
-                        Owner = MessageOwner.OtherUser,
-                        Text = historyMessage.Data,
-                        TimeStamp = msgDate,
-                    });
+                    //Find the sender name of the message
+                    int indexSender = this.Group.Participants.IndexOf(historyMessage.UserId);
+                    if (indexSender != -1) {
+                        groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = historyMessage.Data, TimeStamp = msgDate, SenderName = this.Group.ParticipantNames[indexSender] });
+                    } else {
+                        groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "Unknown" });
+                    }
 
+
+                    if (indexSender != -1) {
+                        this.Messages.Add(new MessageModel {
+                            Owner = MessageOwner.OtherUser,
+                            Text = historyMessage.Data,
+                            TimeStamp = msgDate,
+                            SenderName = this.Group.ParticipantNames[indexSender],
+                        });
+                    } else {
+                        this.Messages.Add(new MessageModel {
+                            Owner = MessageOwner.OtherUser,
+                            Text = historyMessage.Data,
+                            TimeStamp = msgDate,
+                            SenderName = "Unknown",
+                        });
+                    }
                 }
                 else
                 {
@@ -153,13 +178,14 @@ namespace WillowClient.ViewModel
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
                     if (!groupsAndMessages.ContainsKey(group))
                         groupsAndMessages.Add(group, new List<MessageModel>());
-                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = historyMessage.Data, TimeStamp = msgDate });
+                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "You" });
 
                     this.Messages.Add(new MessageModel
                     {
                         Owner = MessageOwner.CurrentUser,
                         Text = historyMessage.Data,
                         TimeStamp = msgDate,
+                        SenderName = "You",
                     });
                 }
             }
@@ -169,6 +195,21 @@ namespace WillowClient.ViewModel
                 this.MessageGroups.Add(new MessageGroupModel(e.Key as string, e.Value as List<MessageModel>));
             }
         }
+
+        [RelayCommand]
+        public async void CreateGroupParticipantsList() {
+            if(this.ParticipantNames != "")
+                this.ParticipantNames = "";
+            this.ParticipantNames += "You, ";
+            for(int i =0; i < this.Group.ParticipantNames.Count; i++) {
+                if (i != this.Group.ParticipantNames.Count - 1)
+                    this.ParticipantNames += this.Group.ParticipantNames[i] + ", ";
+                else
+                    this.ParticipantNames += this.Group.ParticipantNames[i];
+            }
+        }
+
+
 
 
         [RelayCommand]
@@ -210,6 +251,9 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async Task SendMessage()
         {
+            if (this.MessageText == null || this.MessageText == "")
+                return;
+
             //Create the structure that will hold the data which will be json encoded and sent to the server
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.Group.RoomId, data = this.MessageText, messageType = "Text" };
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
@@ -220,7 +264,7 @@ namespace WillowClient.ViewModel
             {
                 if (e.Name == "Today")
                 {
-                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You" });
                     //e.Name = "Today";
                     found = true;
                 }
@@ -229,13 +273,23 @@ namespace WillowClient.ViewModel
             if (!found)
             {
                 List<MessageModel> messages = new();
-                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You" });
                 this.MessageGroups.Add(new MessageGroupModel("Today", messages));
             }
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
             this.MessageText = "";
             //Scroll to the end
+        }
+
+        [RelayCommand]
+        public async Task GoToGroupDetails() {
+
+
+            await Shell.Current.GoToAsync(nameof(GroupDetailsPage), true, new Dictionary<string, object> {
+                {"group", this.Group },
+                {"account", this.Account },
+            });
         }
     }
 }

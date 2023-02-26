@@ -122,3 +122,33 @@ func (f *Feedback) GetProfilePicture(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }
+
+/*
+ * This function will forward the request to the chat service to get all the groups of an user
+ */
+func (f *Feedback) GetGroups(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("/chat/groups/{id:[0-9]+} hit (GET method)")
+	f.logger.Debug("Forwarding message to Account service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}
+
+func (f *Feedback) GetProfile(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("/profile/{id:[0-9]+} hit (GET method)")
+	f.logger.Debug("Forwarding message to Account service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}

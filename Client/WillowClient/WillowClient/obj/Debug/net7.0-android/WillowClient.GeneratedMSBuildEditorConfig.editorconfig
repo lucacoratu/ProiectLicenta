@@ -98,6 +98,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.GroupCh
 build_metadata.AdditionalFiles.TargetPath = Views\GroupChatPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\GroupChatPage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/GroupDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.GroupDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\GroupDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\GroupDetailsPage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.LoginPage.xaml

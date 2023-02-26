@@ -260,6 +260,7 @@ func (conn *MysqlConnection) GetPrivateRoomUser(senderID int64, roomId int64) (i
  */
 func (conn *MysqlConnection) GetRoomParticipants(senderId int64, roomId int64) ([]int64, error) {
 	//Prepare the select statement to extract the second account id from the private room
+	conn.logger.Debug("GetRoomParticipants SenderId", senderId, "RoomID", roomId)
 	stmtSelect, err := conn.db.Prepare("SELECT user_room.UserID from user_room INNER JOIN rooms ON rooms.ID = user_room.RoomID WHERE user_room.UserID != ? AND rooms.ID = ?")
 	//Check if an error occured when preparing the select statement
 	if err != nil {
@@ -376,14 +377,18 @@ func (conn *MysqlConnection) GetUserGroups(accountID int64) (data.GetGroups, err
 	}
 
 	//Get all the participants in the room
-	for _, retData := range returnData {
+	for index, retData := range returnData {
 		participants, err := conn.GetRoomParticipants(accountID, retData.RoomId)
+		conn.logger.Debug("Participants", participants)
 		if err != nil {
 			conn.logger.Error("Error occured when getting the room participants")
 			break
 		}
 		retData.Participants = make([]int64, 0)
 		retData.Participants = append(retData.Participants, participants...)
+		conn.logger.Debug(retData.Participants)
+		returnData[index] = retData
+		conn.logger.Debug(returnData[index])
 	}
 
 	return returnData, nil

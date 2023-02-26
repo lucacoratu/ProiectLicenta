@@ -315,7 +315,13 @@ namespace WillowClient.ViewModel
                                 }
                                 else
                                 {
-                                    this.Groups[i].LastMessage = privMessageModel.Data;
+                                    //Search through the participants and get the name of the sender
+                                    int senderIndex = -1;
+                                    for(int j =0; j < this.Groups[i].Participants.Count; j++)
+                                        if (this.Groups[i].Participants[j] == privMessageModel.SenderId) {
+                                            senderIndex = j;
+                                        }
+                                    this.Groups[i].LastMessage = this.Groups[i].ParticipantNames[senderIndex] + ": " + privMessageModel.Data;
                                 }
                                 //Move the conversation to the top
                                 List<GroupModel> CopyGroups = new();

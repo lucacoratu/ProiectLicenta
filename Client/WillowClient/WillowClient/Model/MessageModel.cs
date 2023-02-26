@@ -15,5 +15,6 @@ namespace WillowClient.Model
         public MessageOwner Owner { get; set; }
         public string TimeStamp { get; set; }
         public string Text { get; set; }
+        public string SenderName { get; set; }
     }
 }

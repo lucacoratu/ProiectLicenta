@@ -141,6 +141,8 @@ public partial class LoginViewModel : BaseViewModel
                 else {
                     accountModel.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + accountModel.ProfilePictureUrl;
                 }
+
+                Globals.Session = session;
 #if ANDROID
                 await Shell.Current.GoToAsync(nameof(MobileMainPage), true, new Dictionary<string, object>
                 {

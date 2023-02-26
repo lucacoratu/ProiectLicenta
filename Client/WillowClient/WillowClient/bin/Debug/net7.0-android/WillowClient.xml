@@ -130,8 +130,17 @@
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.MessageText">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.messageText"/>
         </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.ParticipantNames">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.participantNames"/>
+        </member>
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.EntryEnabled">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.entryEnabled"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.createGroupParticipantsListCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.CreateGroupParticipantsListCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.CreateGroupParticipantsListCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.CreateGroupParticipantsList"/>.</summary>
         </member>
         <member name="F:WillowClient.ViewModel.GroupChatViewModel.goBackCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.GoBackCommand"/>.</summary>
@@ -156,6 +165,36 @@
         </member>
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.SendMessageCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.SendMessage"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.goToGroupDetailsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetails"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.Group">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.group"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.NumberParticipants">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.numberParticipants"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.IsGroupOwner">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.isGroupOwner"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.prepareUICommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUICommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUICommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUI"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.GoBack"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.LoginViewModel.Username">
             <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.username"/>

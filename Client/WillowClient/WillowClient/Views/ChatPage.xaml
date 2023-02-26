@@ -13,26 +13,28 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="SentMessageTemplate" x:DataType="model:MessageModel">
-                <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5">
-                    <Border Margin="3" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="#483D8B" Opacity="0.9">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5" RowDefinitions="*">
+                    <Border Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="{StaticResource AccentSecondDarkColor}" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,10,0"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout>
-                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,5,5" FontSize="13" />
-                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" HorizontalTextAlignment="End" FontSize="11"/>
+                            <Label BackgroundColor="{StaticResource AccentDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,0,0" FontSize="13" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" FontSize="11"/>
+                            </Grid>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="ReceivedMessageTemplate" x:DataType="model:MessageModel">
                 <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5">
-                    <Border Margin="3" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#505050" HorizontalOptions="Start" Opacity="0.9">
+                    <Border Margin="3,0,0,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
-                        <VerticalStackLayout VerticalOptions="Start">
-                            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,5" FontSize="13"/>
+                        <VerticalStackLayout Padding="0" VerticalOptions="Start">
+                            <Label BackgroundColor="#505050" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,0" FontSize="13"/>
                             <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" FontSize="11"/>
                         </VerticalStackLayout>
                     </Border>

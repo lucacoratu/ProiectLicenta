@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 using System.Net.WebSockets;
 using WillowClient.Model;
 using System.Net.Http.Json;
+using System.Net;
 
 namespace WillowClient.Services
 {
     public class ChatService
     {
         private ClientWebSocket client;
-        private HttpClient httpClient;
+        private HttpClient m_httpClient;
+        private HttpClientHandler m_handler;
+        private CookieContainer m_CookieContainer;
         private List<Func<string, Task>> recvCallbacks;
         public ChatService()
         {
             client = new ClientWebSocket();
-            this.httpClient = new HttpClient();
+            this.m_CookieContainer = new CookieContainer();
+            this.m_handler = new HttpClientHandler();
+            this.m_handler.CookieContainer = this.m_CookieContainer;
+            this.m_httpClient = new HttpClient(this.m_handler);
             this.recvCallbacks = new();
             this.ConnectToServerAsync();
         }
@@ -74,20 +80,24 @@ namespace WillowClient.Services
 
         public async Task<string> GetRoomId(GetRoomIdModel getRoomModel)
         {
-            var response = await this.httpClient.PostAsync(Constants.chatServerUrl + "privateroom", JsonContent.Create(getRoomModel));
+            var response = await this.m_httpClient.PostAsync(Constants.chatServerUrl + "privateroom", JsonContent.Create(getRoomModel));
             //Parse the result from the chat service to get the room id
             return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<List<HistoryMessageModel>> GetMessageHistory(int roomId)
         {
-            var response = await this.httpClient.GetAsync(Constants.chatServerUrl + "history/" + roomId.ToString());
+            var response = await this.m_httpClient.GetAsync(Constants.chatServerUrl + "history/" + roomId.ToString());
             return await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
         }
 
         public async Task<List<GroupModel>> GetGroups(int accountId, string session)
         {
-            var response = await this.httpClient.GetAsync(Constants.chatServerUrl + "groups/" + accountId.ToString());
+            var url = Constants.serverURL + "/chat/groups/" + accountId.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.GetAsync(baseAddress);
             return await response.Content.ReadFromJsonAsync<List<GroupModel>>();
         }
 

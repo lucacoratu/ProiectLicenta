@@ -275,7 +275,7 @@ func (ch *Chat) CreateGroup(rw http.ResponseWriter, r *http.Request) {
  * This function will send all the groups back to the user
  */
 func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
-	ch.logger.Info("Endpoint /groups/{id:[0-9]+} hit (GET request)")
+	ch.logger.Info("Endpoint /chat/groups/{id:[0-9]+} hit (GET request)")
 	vars := mux.Vars(r)
 	//Check if the id could be parsed (it should always be, but just to be safe, test it)
 	id, err := strconv.Atoi(vars["id"])
@@ -306,8 +306,10 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 		if lastMessage != "" {
 			if senderId == id {
 				groups[i].LastMessage = "You: " + lastMessage
+				groups[i].LastMessageSender = int64(id)
 			} else {
 				groups[i].LastMessage = lastMessage
+				groups[i].LastMessageSender = int64(senderId)
 			}
 			groups[i].LastMessageTimestamp = lastMessageTimestamp
 		} else {

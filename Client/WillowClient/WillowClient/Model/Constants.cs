@@ -40,5 +40,7 @@ namespace WillowClient.Model
         public static string signalingServerURL = "https://localhost:8090/";
         public static string signalingWsUrl = "wss://localhost:8090/notifications";
 #endif
+
+        public static string defaultProfilePicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
     }
 }

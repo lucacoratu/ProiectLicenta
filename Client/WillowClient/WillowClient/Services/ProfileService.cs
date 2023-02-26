@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using WillowClient.Model;
@@ -39,6 +40,24 @@ namespace WillowClient.Services {
                     return true;
             }
             return false;
+        }
+
+        public async Task<List<GroupParticipantModel>> GetGroupParticipantProfiles(List<int> participantIds, string session) {
+            List<GroupParticipantModel> groupParticipants = new List<GroupParticipantModel>();
+
+            foreach (int id in participantIds) {
+                var url = Constants.serverURL + "/profile/" + id.ToString();
+                var baseAddress = new Uri(url);
+                this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+                var response = await this.m_httpClient.GetAsync(url);
+                if (response.IsSuccessStatusCode) {
+                    var accountDetails = await response.Content.ReadFromJsonAsync<AccountModel>();
+                    groupParticipants.Add(new GroupParticipantModel() { Id = id, DisplayName = accountDetails.DisplayName, ProfilePictureUrl = accountDetails.ProfilePictureUrl });
+                }
+            }
+
+            return groupParticipants;
         }
     }
 }

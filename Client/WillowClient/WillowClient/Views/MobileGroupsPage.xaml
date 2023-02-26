@@ -11,13 +11,13 @@
              Title="Groups"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              IconImageSource="groups.png">
-    <Grid RowDefinitions="40, *">
+    <Grid RowDefinitions="40, *" ColumnDefinitions="*">
         <!--<SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>-->
-        <material:TextField Title="Search messages" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
-        <CollectionView Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+        <material:TextField Grid.Row="0" Title="Search messages" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
+        <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:GroupModel">
-                    <HorizontalStackLayout Padding="10" Spacing="6">
+                    <HorizontalStackLayout Padding="10" Spacing="6" Margin="5,0,5,0">
                         <HorizontalStackLayout.GestureRecognizers>
                             <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapGroupCommand}"
@@ -27,18 +27,18 @@
                                     HeightRequest="45"
                                     ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
                                     WidthRequest="45"
-                                    BorderWidth="1.3"
+                                    BorderWidth="1.4"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
                                     >
                         </toolkit:AvatarView>
-                        <Grid ColumnDefinitions="235,*" RowDefinitions="*,Auto">
+                        <Grid ColumnDefinitions="260,*" RowDefinitions="*,Auto">
                             <VerticalStackLayout Grid.Column="0">
                                 <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
                                 <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
                             </VerticalStackLayout>
                             <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Text="{Binding LastMessageTimestamp}" Margin="0,0,0,0" HorizontalTextAlignment="End" HorizontalOptions="End" VerticalOptions="Start" VerticalTextAlignment="Center"/>
-                            <Line Margin="0,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"></Line>
+                            <Line Margin="0,10,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>
                         </Grid>
                     </HorizontalStackLayout>
                 </DataTemplate>
