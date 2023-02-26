@@ -59,5 +59,18 @@ namespace WillowClient.Services {
 
             return groupParticipants;
         }
+
+        public async Task<AccountModel> GetUserProfile(int userId, string session) {
+            var url = Constants.serverURL + "/profile/" + userId.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            AccountModel accModel = new();
+            var response = await this.m_httpClient.GetAsync(url);
+            if(response.IsSuccessStatusCode) {
+                accModel = await response.Content.ReadFromJsonAsync<AccountModel>();
+            }
+            return accModel;
+        }
     }
 }

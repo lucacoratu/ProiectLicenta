@@ -164,6 +164,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ReportA
 build_metadata.AdditionalFiles.TargetPath = Views\ReportABugPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ReportABugPage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/UserProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.UserProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UserProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UserProfilePage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/WindowsCallPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.WindowsCallPage.xaml

@@ -152,3 +152,16 @@ func (f *Feedback) GetProfile(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }
+
+func (f *Feedback) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("/chat/commongroups/{idFirst:[0-9]+}/{idSecond:[0-9]+} hit (GET method)")
+	f.logger.Debug("Forwarding the message to Account Service")
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}

@@ -52,6 +52,9 @@
             <FlexLayout Direction="Row" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" JustifyContent="SpaceBetween">
                 <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                 <HorizontalStackLayout FlexLayout.AlignSelf="Center">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToUserProfileCommand}"/>
+                    </HorizontalStackLayout.GestureRecognizers>
                     <toolkit:AvatarView 
                                  HeightRequest="40"
                                  Margin="0,0,10,0"

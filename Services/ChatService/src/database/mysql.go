@@ -431,3 +431,33 @@ func (conn *MysqlConnection) GetLastMessageFromRoom(roomID int64) (string, strin
 	//The other account id has been found so return it
 	return lastMessage, lastMessageTimestamp, userId, nil
 }
+
+/*
+ * This function will get all the groups that contain 2 users (common groups of the 2 accounts)
+ */
+func (conn *MysqlConnection) GetCommonGroups(idFirst int64, idSecond int64) (data.CommonGroups, error) {
+	//Get the groups of the first user
+	getGroupsFirst, err := conn.GetUserGroups(idFirst)
+	//Check if an error occured
+	if err != nil {
+		return nil, err
+	}
+	//Get the groups of the second user
+	getGroupsSecond, err := conn.GetUserGroups(idSecond)
+	if err != nil {
+		return nil, err
+	}
+
+	//Find all the common groups of the 2 users
+	commonGroups := make(data.CommonGroups, 0)
+	for _, groupFirst := range getGroupsFirst {
+		for _, groupSecond := range getGroupsSecond {
+			if groupFirst.RoomId == groupSecond.RoomId {
+				commonGroups = append(commonGroups, data.CommonGroup{GroupName: groupFirst.GroupName, RoomId: groupFirst.RoomId, CreatorId: groupFirst.CreatorId, CreationDate: groupFirst.CreationDate, Participants: groupFirst.Participants, ParticipantNames: groupFirst.ParticipantNames})
+				break
+			}
+		}
+	}
+
+	return commonGroups, nil
+}

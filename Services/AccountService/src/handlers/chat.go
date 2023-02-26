@@ -105,3 +105,45 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	groups.ToJSON(rw)
 }
+
+/*
+ * This function will forward the request to the chat service to get the common groups of the user
+ */
+func (ch *Chat) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /chat/commongroups/{idFirst:[0-9]+}/{idSecond:[0-9]+} hit (GET Method)")
+
+	returnData, err := ch.ForwardRequest("http", "localhost:8087", r)
+	if err != nil {
+		ch.logger.Error("Error occured in chat service", err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	commonGroups := data.CommonGroups{}
+	err = json.Unmarshal(returnData, &commonGroups)
+	if err != nil {
+		ch.logger.Error("Error occured when parsing the data from chat service", err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	//Complete the participant names
+	for index, group := range commonGroups {
+		group.ParticipantNames = make([]string, 0)
+		ch.logger.Debug(group.Participants)
+		for _, participant := range group.Participants {
+			accDetails, err := ch.dbConn.GetAccountDetails(participant)
+			ch.logger.Debug(accDetails)
+			if err != nil {
+				ch.logger.Error("Error occured when getting the account details of participant", participant, err.Error())
+				http.Error(rw, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			group.ParticipantNames = append(group.ParticipantNames, accDetails.DisplayName)
+		}
+		commonGroups[index] = group
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	commonGroups.ToJSON(rw)
+}

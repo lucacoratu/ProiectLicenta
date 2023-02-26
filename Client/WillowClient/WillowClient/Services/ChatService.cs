@@ -101,6 +101,20 @@ namespace WillowClient.Services
             return await response.Content.ReadFromJsonAsync<List<GroupModel>>();
         }
 
+        public async Task<List<CommonGroupModel>> GetCommonGroups(int idFirst, int idSecond, string session) {
+            var url = Constants.serverURL + "/chat/commongroups/" + idFirst.ToString() + "/" + idSecond.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.GetAsync(baseAddress);
+            List<CommonGroupModel> commonGroups = new();
+            if (response.IsSuccessStatusCode) {
+                commonGroups = await response.Content.ReadFromJsonAsync<List<CommonGroupModel>>();
+            }
+
+            return commonGroups;
+        }
+
         public void RegisterReadCallback(Func<string, Task> callbackFunction)
         {
             this.recvCallbacks.Add(callbackFunction);

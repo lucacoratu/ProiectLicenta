@@ -403,5 +403,13 @@ namespace WillowClient.ViewModel
             //                });
             //#endif
         }
+
+        [RelayCommand]
+        public async Task GoToUserProfile() {
+            await Shell.Current.GoToAsync(nameof(UserProfilePage), true, new Dictionary<string, object> {
+                { "userId", this.Friend.FriendId },
+                { "account", account }
+            });
+        }
     }
 }

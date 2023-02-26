@@ -100,7 +100,10 @@ func InitServer(address string) error {
 	getRouter.HandleFunc("/friendrequest/viewsent/{id:[0-9]+}", handlerFriendRequests.ViewSentFriendRequests)
 	//Add the function to get the friendships
 	getRouter.HandleFunc("/friend/view/{id:[0-9]+}", handlerFriends.GetFriends)
+	//Add the function to get all the groups of the user
 	getRouter.HandleFunc("/chat/groups/{id:[0-9]+}", handlerChat.GetGroups)
+	//Add the function to get all the common groups of 2 users
+	getRouter.HandleFunc("/chat/commongroups/{idFirst:[0-9]+}/{idSecond:[0-9]+}", handlerChat.GetCommonGroups)
 	getRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Create the subrouter for the PUT method which will use the Authentication middleware and will handle updates on the account data

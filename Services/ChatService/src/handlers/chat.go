@@ -322,3 +322,34 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	groups.ToJSON(rw)
 }
+
+func (ch *Chat) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /chat/commongroups/{idfirst:[0-9]+}/{idsecond:[0-9]+} hit (GET method)")
+	vars := mux.Vars(r)
+	idFirst, err := strconv.Atoi(vars["idfirst"])
+	//Check if an error occured during the parsing of the id
+	if err != nil {
+		ch.logger.Error("Error occured when parsing the first id", err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	idSecond, err := strconv.Atoi(vars["idsecond"])
+	//Check if an error occured
+	if err != nil {
+		ch.logger.Error("Error occured when parsing second id", err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	//Get the common groups of the accounts
+	commonGroups, err := ch.dbConn.GetCommonGroups(int64(idFirst), int64(idSecond))
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	ch.logger.Debug(commonGroups)
+
+	rw.WriteHeader(http.StatusOK)
+	commonGroups.ToJSON(rw)
+}

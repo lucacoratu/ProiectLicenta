@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WillowClient.Model;
 using WillowClient.Services;
+using WillowClient.Views;
 
 namespace WillowClient.ViewModel {
 
@@ -75,6 +76,17 @@ namespace WillowClient.ViewModel {
                 this.IsGroupOwner = true;
             else
                 this.IsGroupOwner = false;
+        }
+
+        [RelayCommand] 
+        public async Task ParticipantTap (GroupParticipantModel participant) {
+            if (participant.Id == this.Account.Id)
+                return;
+
+            await Shell.Current.GoToAsync(nameof(UserProfilePage), true, new Dictionary<string, object> {
+                {"userId", participant.Id },
+                { "account", this.Account },
+            });
         }
 
         [RelayCommand]

@@ -94,6 +94,12 @@
         <member name="P:WillowClient.ViewModel.ChatViewModel.VideoCallPeerCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.VideoCallPeer"/>.</summary>
         </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.goToUserProfileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.GoToUserProfileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.GoToUserProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.GoToUserProfile"/>.</summary>
+        </member>
         <member name="P:WillowClient.ViewModel.FeedbackViewModel.Account">
             <inheritdoc cref="F:WillowClient.ViewModel.FeedbackViewModel.account"/>
         </member>
@@ -189,6 +195,12 @@
         </member>
         <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUICommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUI"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.participantTapCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.ParticipantTapCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.ParticipantTapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.ParticipantTap(WillowClient.Model.GroupParticipantModel)"/>.</summary>
         </member>
         <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.goBackCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.GoBackCommand"/>.</summary>
@@ -429,6 +441,27 @@
         </member>
         <member name="P:WillowClient.ViewModel.SettingsViewModel.GoBackCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.SettingsViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.UserProfile">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.userProfile"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.UserId">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.userId"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.NumberCommonGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.numberCommonGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.CommonGroupsText">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.commonGroupsText"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.UserProfileViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.UserProfileViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.UserProfileViewModel.GoBack"/>.</summary>
         </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
             <summary>

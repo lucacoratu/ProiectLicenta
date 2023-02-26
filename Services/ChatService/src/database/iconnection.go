@@ -24,4 +24,5 @@ type IConnection interface {
 	CreateGroup(groupName string, creatorID int64) (int64, error)
 	GetUserGroups(accountID int64) (data.GetGroups, error)
 	GetLastMessageFromRoom(roomID int64) (string, string, int, error)
+	GetCommonGroups(idFirst int64, idSecond int64) (data.CommonGroups, error)
 }

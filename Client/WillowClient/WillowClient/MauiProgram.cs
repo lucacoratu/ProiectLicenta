@@ -84,6 +84,9 @@ public static class MauiProgram
 		builder.Services.AddTransient<DesktopSettingsPage>();
 		builder.Services.AddTransient<SettingsViewModel>();
 
+		builder.Services.AddTransient<UserProfilePage>();
+		builder.Services.AddTransient<UserProfileViewModel>();
+
 
         return builder.Build();
 	}
