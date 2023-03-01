@@ -65,6 +65,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/friend/add", handlerFriend.AddFriend)
 	postRouter.HandleFunc("/accounts/reportbug", handlerFeedback.AddBugReport)
 	postRouter.HandleFunc("/accounts/picture", handlerFeedback.UpdateProfilePicture)
+	postRouter.HandleFunc("/chat/group/updatepicture", handlerFeedback.UpdateGroupPicture)
 
 	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.GetFriendRequests)
@@ -72,6 +73,7 @@ func InitServer(address string) error {
 	getRouter.HandleFunc("/friend/view/{id:[0-9]+}", handlerFriend.GetFriends)
 	getRouter.HandleFunc("/accounts/reportcategories", handlerFeedback.GetAllReportCategories)
 	getRouter.PathPrefix("/accounts/static/").HandlerFunc(handlerFeedback.GetProfilePicture)
+	getRouter.PathPrefix("/chat/groups/static/").HandlerFunc(handlerFeedback.GetGroupPicture)
 	getRouter.HandleFunc("/profile/{id:[0-9]+}", handlerFeedback.GetProfile)
 	getRouter.HandleFunc("/chat/groups/{id:[0-9]+}", handlerFeedback.GetGroups)
 	getRouter.HandleFunc("/chat/commongroups/{idFirst:[0-9]+}/{idSecond:[0-9]+}", handlerFeedback.GetCommonGroups)

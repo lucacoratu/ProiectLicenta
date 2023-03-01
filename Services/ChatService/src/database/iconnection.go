@@ -25,4 +25,5 @@ type IConnection interface {
 	GetUserGroups(accountID int64) (data.GetGroups, error)
 	GetLastMessageFromRoom(roomID int64) (string, string, int, error)
 	GetCommonGroups(idFirst int64, idSecond int64) (data.CommonGroups, error)
+	UpdateGroupPicture(roomId int64, newPicture string) (bool, error)
 }

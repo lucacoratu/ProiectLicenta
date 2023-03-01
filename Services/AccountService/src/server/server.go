@@ -90,6 +90,7 @@ func InitServer(address string) error {
 	//Add the function to get all the report bug categories
 	serveMuxServer.HandleFunc("/accounts/reportcategories", handlerFeedback.GetBugReportCategories).Methods("GET")
 	serveMuxServer.PathPrefix("/accounts/static/").Handler(http.StripPrefix("/accounts/static/", http.FileServer(http.Dir("./static/"))))
+	serveMuxServer.PathPrefix("/chat/groups/static").HandlerFunc(handlerChat.GetGroupPicture)
 
 	//Create the subrouter for the GET method which will use the Authentication middleware
 	getRouter := serveMuxServer.Methods(http.MethodGet).Subrouter()
@@ -104,6 +105,7 @@ func InitServer(address string) error {
 	getRouter.HandleFunc("/chat/groups/{id:[0-9]+}", handlerChat.GetGroups)
 	//Add the function to get all the common groups of 2 users
 	getRouter.HandleFunc("/chat/commongroups/{idFirst:[0-9]+}/{idSecond:[0-9]+}", handlerChat.GetCommonGroups)
+
 	getRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Create the subrouter for the PUT method which will use the Authentication middleware and will handle updates on the account data
@@ -119,6 +121,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/friend/delete", handlerFriends.DeleteFriends)
 	postRouter.HandleFunc("/accounts/reportbug", handlerFeedback.AddBugReport)
 	postRouter.HandleFunc("/accounts/picture", handlerProfile.UpdateProfilePicture)
+	postRouter.HandleFunc("/chat/group/updatepicture", handlerChat.UpdateGroupPicture)
 	postRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Log that the handlers have been added

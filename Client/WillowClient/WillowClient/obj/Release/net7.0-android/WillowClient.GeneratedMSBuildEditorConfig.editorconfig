@@ -1,0 +1,177 @@
+is_global = true
+build_property.TargetFramework = net7.0-android
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = true
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.RootNamespace = WillowClient
+build_property.ProjectDir = D:\ProiectLicenta\Client\WillowClient\WillowClient\
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/AddFriendPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.AddFriendPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AddFriendPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AddFriendPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/AndroidCallPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.AndroidCallPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AndroidCallPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AndroidCallPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/CalleePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.CalleePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CalleePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CalleePage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/CallerPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.CallerPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CallerPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CallerPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/ChatPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ChatPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ChatPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ChatPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/CreateGroupPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.CreateGroupPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\CreateGroupPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\CreateGroupPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/DesktopSettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.DesktopSettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\DesktopSettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\DesktopSettingsPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/EditProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.EditProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\EditProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\EditProfilePage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/FriendRequestPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.FriendRequestPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\FriendRequestPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\FriendRequestPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/GroupChatPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.GroupChatPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\GroupChatPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\GroupChatPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/GroupDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.GroupDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\GroupDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\GroupDetailsPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\LoginPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MainPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MobileFriendsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileFriendsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MobileFriendsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MobileFriendsPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MobileGroupsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileGroupsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MobileGroupsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MobileGroupsPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MobileMainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileMainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MobileMainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MobileMainPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MobileMapPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileMapPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MobileMapPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MobileMapPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/MobileSettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileSettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MobileSettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MobileSettingsPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ProfilePage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/RegisterPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.RegisterPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\RegisterPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\RegisterPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/ReportABugPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ReportABugPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ReportABugPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ReportABugPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/UserProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.UserProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UserProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UserProfilePage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/WindowsCallPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.WindowsCallPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\WindowsCallPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\WindowsCallPage.xaml

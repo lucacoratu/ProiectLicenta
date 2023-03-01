@@ -52,10 +52,12 @@ namespace WillowClient.ViewModel
         private ChatService chatService;
         private SignalingService signalingService;
         public ObservableCollection<FriendStatusModel> Friends { get; } = new();
-
+        public ObservableCollection<FriendStatusModel> CreateGroupSearchResults { get;  } = new();
+        public ObservableCollection<FriendStatusModel> FriendsSearchResults { get; } = new();
+        private Stream CreateGroupPhoto { get; set; }
         public ObservableCollection<FriendStatusModel> CreateGroupSelectedFriends { get; set; } = new();
-
         public ObservableCollection<GroupModel> Groups { get; } = new();
+        public ObservableCollection<GroupModel> GroupsSearchResults { get; } = new();   
 
         public ObservableCollection<FriendRequestModel> FriendRequests { get; } = new();
 
@@ -101,29 +103,31 @@ namespace WillowClient.ViewModel
                     PropertyNameCaseInsensitive = true,
                 };
 
-                //Parse the response
-                ChangeStatusWebsocketResponseModel resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options);
-                //Search through the friend accounts and see if the message that the account involved is in the list of friends
-                for(int i =0; i < this.Friends.Count; i++)
-                {
-                    if (this.Friends[i].FriendId == resp.AccountId)
-                    {
-                        //Change the color depending on which status it is set
-                        if(resp.NewStatus == "Online")
-                        {
-                            this.Friends[i].Status = "Online";
-                            this.Friends[i].StatusBackgroundColor = Colors.Green;
-                            this.Friends[i].StatusStrokeColor = Colors.DarkGreen;
-                        }
-                        else
-                        {
-                            this.Friends[i].Status = "Offline";
-                            this.Friends[i].StatusBackgroundColor = Colors.Gray;
-                            this.Friends[i].StatusStrokeColor = Colors.DarkGray;
+                try {
+                    //Parse the response
+                    ChangeStatusWebsocketResponseModel resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options);
+                    if (resp != null) {
+                        //Search through the friend accounts and see if the message that the account involved is in the list of friends
+                        for (int i = 0; i < this.Friends.Count; i++) {
+                            if (this.Friends[i].FriendId == resp.AccountId) {
+                                //Change the color depending on which status it is set
+                                if (resp.NewStatus == "Online") {
+                                    this.Friends[i].Status = "Online";
+                                    this.Friends[i].StatusBackgroundColor = Colors.Green;
+                                    this.Friends[i].StatusStrokeColor = Colors.DarkGreen;
+                                }
+                                else {
+                                    this.Friends[i].Status = "Offline";
+                                    this.Friends[i].StatusBackgroundColor = Colors.Gray;
+                                    this.Friends[i].StatusStrokeColor = Colors.DarkGray;
+                                }
+                            }
                         }
                     }
+                    return;
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());    
                 }
-                return;
             }
 
             if (message.IndexOf("newPhoto") != -1) {
@@ -140,6 +144,7 @@ namespace WillowClient.ViewModel
                                 this.Friends[i].ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + upm.id.ToString() + ".png";
                             }
                         }
+                        return;
                     }
                 } catch(Exception ex) {
                     Console.WriteLine(ex.ToString());
@@ -148,50 +153,43 @@ namespace WillowClient.ViewModel
 
             //Some friend is calling
             if(message.IndexOf("callee") != -1) {
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                };
+                try {
+                    var options = new JsonSerializerOptions {
+                        PropertyNameCaseInsensitive = true,
+                    };
 
-                //Parse the response
-                CallFriendModel cfm = JsonSerializer.Deserialize<CallFriendModel>(message, options);
-                //Search through all the friends and find the one that is calling
-                if(cfm != null) {
-                    if (cfm.option == "Call")
-                    {
-                        for (int i = 0; i < this.Friends.Count; i++)
-                        {
-                            if (this.Friends[i].FriendId == cfm.caller)
-                            {
-                                //Go to the CalleePage
-                                await MainThread.InvokeOnMainThreadAsync(async () =>
-                                    await Shell.Current.GoToAsync(nameof(CalleePage), true, new Dictionary<string, object>
-                                    {
+                    //Parse the response
+                    CallFriendModel cfm = JsonSerializer.Deserialize<CallFriendModel>(message, options);
+                    //Search through all the friends and find the one that is calling
+                    if (cfm != null) {
+                        if (cfm.option == "Call") {
+                            for (int i = 0; i < this.Friends.Count; i++) {
+                                if (this.Friends[i].FriendId == cfm.caller) {
+                                    //Go to the CalleePage
+                                    await MainThread.InvokeOnMainThreadAsync(async () =>
+                                        await Shell.Current.GoToAsync(nameof(CalleePage), true, new Dictionary<string, object>
+                                        {
                                     {"roomID", cfm.roomId},
                                     {"account", this.Account},
                                     {"friend", this.Friends[i]},
                                     {"audio", false },
                                     {"video", false },
-                                    })
-                                );
-                                break;
+                                        })
+                                    );
+                                    break;
+                                }
                             }
                         }
-                    }
-                    if (cfm.option == "Cancel")
-                    {
-                        //Go back to where the application was before the call
-                        await MainThread.InvokeOnMainThreadAsync(async () =>
-                            await Shell.Current.Navigation.PopAsync()
-                        );
-                    }
-                    if(cfm.option == "Answer")
-                    {
-                        //The friend answered the call
-                        for (int i = 0; i < this.Friends.Count; i++)
-                        {
-                            if (this.Friends[i].FriendId == cfm.caller)
-                            {
+                        if (cfm.option == "Cancel") {
+                            //Go back to where the application was before the call
+                            await MainThread.InvokeOnMainThreadAsync(async () =>
+                                await Shell.Current.Navigation.PopAsync()
+                            );
+                        }
+                        if (cfm.option == "Answer") {
+                            //The friend answered the call
+                            for (int i = 0; i < this.Friends.Count; i++) {
+                                if (this.Friends[i].FriendId == cfm.caller) {
 #if ANDROID
                                 await MainThread.InvokeOnMainThreadAsync(async () =>
                                     await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
@@ -203,30 +201,32 @@ namespace WillowClient.ViewModel
                                         { "video", true },
                                     }));
 #else
-                                await MainThread.InvokeOnMainThreadAsync(async () => 
-                                    await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
-                                    {
+                                    await MainThread.InvokeOnMainThreadAsync(async () =>
+                                        await Shell.Current.GoToAsync(nameof(WindowsCallPage), true, new Dictionary<string, object>
+                                        {
                                         {"roomID", cfm.roomId },
                                         {"account", account },
                                         {"friend", this.Friends[i] },
                                         {"audio", true},
                                         {"video", true },
-                                    }));
+                                        }));
 #endif
-                                break;
+                                    break;
+                                }
                             }
                         }
+                        if (cfm.option == "Deny") {
+                            //The friend denied the call
+                            //Go back to where the application was before the call
+                            await MainThread.InvokeOnMainThreadAsync(async () =>
+                                await Shell.Current.Navigation.PopAsync()
+                            );
+                        }
+                        return;
                     }
-                    if(cfm.option == "Deny")
-                    {
-                        //The friend denied the call
-                        //Go back to where the application was before the call
-                        await MainThread.InvokeOnMainThreadAsync(async () =>
-                            await Shell.Current.Navigation.PopAsync()
-                        );
-                    }
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());
                 }
-                return;
             }
 
             //It is a message from another user
@@ -238,23 +238,35 @@ namespace WillowClient.ViewModel
                 };
 
                 //Parse the response
-                CreateGroupResponseModel resp = JsonSerializer.Deserialize<CreateGroupResponseModel>(message, options);
+                try {
+                    CreateGroupResponseModel resp = JsonSerializer.Deserialize<CreateGroupResponseModel>(message, options);
 
-                //Notify that the group has been created (move the client to the group page)
-                //await Shell.Current.DisplayAlert("Group created!", "Group" + resp.GroupName + "has been created", "Ok");
+                    //Notify that the group has been created (move the client to the group page)
+                    //await Shell.Current.DisplayAlert("Group created!", "Group" + resp.GroupName + "has been created", "Ok");
+                    if (resp != null) {
 
-                GroupModel gm = new GroupModel();
-                gm.CreatorId = resp.CreatorId;
-                gm.GroupName = resp.GroupName;
-                gm.RoomId = resp.RoomId;
-                //gm.Participants = resp.Participants as List<int>;
+                        GroupModel gm = new GroupModel();
+                        gm.CreatorId = resp.CreatorId;
+                        gm.GroupName = resp.GroupName;
+                        gm.RoomId = resp.RoomId;
+                        gm.Participants = new List<int>();
+                        gm.LastMessage = "Start conversation";
+                        foreach (var participantId in resp.Participants) {
+                            gm.Participants.Add(participantId);
+                        }
+                        //gm.Participants = resp.Participants as List<int>;
 
-                this.Groups.Insert(0, gm);
+                        this.Groups.Insert(0, gm);
+                        this.GroupsSearchResults.Insert(0, gm);
 
-                //Clear the friends selected for the group
-                this.CreateGroupSelectedFriends.Clear();
-                this.CreateGroupSelected = false;
-                return;
+                        //Clear the friends selected for the group
+                        this.CreateGroupSelectedFriends.Clear();
+                        this.CreateGroupSelected = false;
+                        return;
+                    }
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                }
             }
 
             if (message.IndexOf("data") != -1)
@@ -309,9 +321,12 @@ namespace WillowClient.ViewModel
                         {
                             if(privMessageModel.RoomId == this.Groups[i].RoomId)
                             {
-                                if(privMessageModel.SenderId == this.Account.Id)
+                                //Create the hour format from the date the message was sent
+                                var timestamp = DateTime.Now.ToString("HH:mm");
+                                if (privMessageModel.SenderId == this.Account.Id)
                                 {
                                     this.Groups[i].LastMessage = "You: " + privMessageModel.Data;
+                                    this.Groups[i].LastMessageTimestamp = timestamp;
                                 }
                                 else
                                 {
@@ -322,6 +337,7 @@ namespace WillowClient.ViewModel
                                             senderIndex = j;
                                         }
                                     this.Groups[i].LastMessage = this.Groups[i].ParticipantNames[senderIndex] + ": " + privMessageModel.Data;
+                                    this.Groups[i].LastMessage = timestamp;
                                 }
                                 //Move the conversation to the top
                                 List<GroupModel> CopyGroups = new();
@@ -388,6 +404,12 @@ namespace WillowClient.ViewModel
                     Friends.Clear();
                 }
 
+                if (CreateGroupSearchResults.Count != 0)
+                    CreateGroupSearchResults.Clear();
+
+                if (FriendsSearchResults.Count != 0)
+                    FriendsSearchResults.Clear();
+
                 foreach (var friend in friends)
                 {
                     //Update the date format to show only the hour if the message is from Today
@@ -422,10 +444,14 @@ namespace WillowClient.ViewModel
                     {
                         FriendStatusModel friendStatusModel = new FriendStatusModel(friend, Colors.Green, Colors.DarkGreen);
                         Friends.Add(friendStatusModel);
+                        CreateGroupSearchResults.Add(friendStatusModel);
+                        FriendsSearchResults.Add(friendStatusModel);
                     } else
                     {
                         FriendStatusModel friendStatusModel = new FriendStatusModel(friend, Colors.Gray, Colors.DarkGray);
                         Friends.Add(friendStatusModel);
+                        CreateGroupSearchResults.Add(friendStatusModel);
+                        FriendsSearchResults.Add(friendStatusModel);
                     }
 
                 }
@@ -441,6 +467,25 @@ namespace WillowClient.ViewModel
             }
         }
 
+        public void SearchbarFriendsTextChanged(string newText) {
+            if(this.FriendsSearchResults.Count != 0)
+                this.FriendsSearchResults.Clear();
+
+            //If the new text is empty string then add all the friends in the search results
+            if (newText == null || newText == "") {
+                foreach (var friend in this.Friends)
+                    this.FriendsSearchResults.Add(friend);
+                return;
+            }
+
+            //Search in the friends list all the friends that contain the newText in their display name and add them in the search results
+            foreach (var friend in this.Friends) {
+                if (friend != null && (friend.DisplayName.ToLower().Contains(newText.ToLower()) || friend.LastMessage.ToLower().Contains(newText.ToLower()) )) {
+                    this.FriendsSearchResults.Add(friend);
+                }
+            }
+        }
+
         async Task GetGroupsAsync()
         {
             try
@@ -453,6 +498,9 @@ namespace WillowClient.ViewModel
                 {
                     Groups.Clear();
                 }
+
+                if (GroupsSearchResults.Count != 0)
+                    GroupsSearchResults.Clear();
 
                 foreach (var group in groups)
                 {
@@ -474,7 +522,14 @@ namespace WillowClient.ViewModel
                             group.LastMessageTimestamp = messageDate.ToString("dddd");
                         }
                     }
+                    if(group.GroupPictureUrl == "NULL" || group.GroupPictureUrl == null) {
+                        group.GroupPictureUrl = Constants.defaultGroupPicture;
+                    } else {
+                        group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + group.GroupPictureUrl;
+                    }
+
                     Groups.Add(group);
+                    this.GroupsSearchResults.Add(group);
                 }
             }
             catch (Exception e)
@@ -485,6 +540,25 @@ namespace WillowClient.ViewModel
             finally
             {
 
+            }
+        }
+
+        public void SearchbarGroupsTextChanged(string newText) {
+            if (this.GroupsSearchResults.Count != 0)
+                this.GroupsSearchResults.Clear();
+
+            //If the new text is empty string then add all the friends in the search results
+            if (newText == null || newText == "") {
+                foreach (var group in this.Groups)
+                    this.GroupsSearchResults.Add(group);
+                return;
+            }
+
+            //Search in the friends list all the friends that contain the newText in their display name and add them in the search results
+            foreach (var group in this.Groups) {
+                if (group != null && (group.GroupName.ToLower().Contains(newText.ToLower()) || group.LastMessage.ToLower().Contains(newText.ToLower()))) {
+                    this.GroupsSearchResults.Add(group);
+                }
             }
         }
 
@@ -647,6 +721,51 @@ namespace WillowClient.ViewModel
             await Shell.Current.GoToAsync(nameof(CreateGroupPage), true);
         }
 
+        public void SearchbarCreateGroupTextChanged(string newText) {
+            //Clear the previous list results
+           if(this.CreateGroupSearchResults.Count != 0)
+                this.CreateGroupSearchResults.Clear();
+
+            //If the new text is empty string then add all the friends in the search results
+            if(newText == null || newText == "") {
+                foreach (var friend in this.Friends)
+                    this.CreateGroupSearchResults.Add(friend);
+                return;
+            }
+
+            //Search in the friends list all the friends that contain the newText in their display name and add them in the search results
+            foreach(var friend in this.Friends) {
+                if(friend != null && friend.DisplayName.Contains(newText)) {
+                    this.CreateGroupSearchResults.Add(friend);
+                }
+            }
+        }
+
+        public async void SelectImageForNewGroup(ImageButton imageButton) {
+            List<string> actions = new List<string>
+            {
+                "Take photo",
+                "Upload photo"
+            };
+            string res = await Shell.Current.DisplayActionSheet("Change photo", "Cancel", null, actions.ToArray());
+            if (res == actions[0]) {
+                if (MediaPicker.Default.IsCaptureSupported) {
+                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+                    if (photo != null) {
+                        int i = 0;
+                    }
+                }
+            }
+            else {
+                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+                if (photo != null) {
+                    this.CreateGroupPhoto = await photo.OpenReadAsync();
+                    //Change the source of the image in the group icon
+                    imageButton.Source = ImageSource.FromStream(() => this.CreateGroupPhoto);
+                }
+            }
+        }
+
         [RelayCommand]
         async Task ExitCreateGroup()
         {
@@ -747,6 +866,11 @@ namespace WillowClient.ViewModel
                 {"numberFriends", this.Friends.Count },
                 {"numberGroups", this.Groups.Count}
             });
+        }
+
+        [RelayCommand]
+        async Task Logout() {
+            await Shell.Current.Navigation.PopToRootAsync();
         }
 
         [RelayCommand]

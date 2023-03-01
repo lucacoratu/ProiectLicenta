@@ -12,6 +12,11 @@ namespace WillowClient.Model {
 	    public int CreatorId { get; set; }
 	    public string CreationDate { get; set; }  
 	    public List<int> Participants { get; set; }
-	    public List<string> ParticipantNames { get; set; }  
+	    public List<string> ParticipantNames { get; set; }
+        private string groupPictureUrl;
+        public string GroupPictureUrl {
+            get => groupPictureUrl;
+            set => SetProperty(ref groupPictureUrl, value);
+        }
     }
 }

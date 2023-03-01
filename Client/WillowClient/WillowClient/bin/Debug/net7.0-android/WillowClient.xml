@@ -190,11 +190,11 @@
         <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.IsGroupOwner">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.isGroupOwner"/>
         </member>
-        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.prepareUICommand">
-            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUICommand"/>.</summary>
+        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.changeGroupPictureCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.ChangeGroupPictureCommand"/>.</summary>
         </member>
-        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUICommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.PrepareUI"/>.</summary>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.ChangeGroupPictureCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.ChangeGroupPicture"/>.</summary>
         </member>
         <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.participantTapCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.ParticipantTapCommand"/>.</summary>
@@ -352,6 +352,12 @@
         <member name="P:WillowClient.ViewModel.MainViewModel.GoToSettingsWindowsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToSettingsWindows"/>.</summary>
         </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.logoutCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.LogoutCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.LogoutCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.Logout"/>.</summary>
+        </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.goToReportABugCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToReportABugCommand"/>.</summary>
         </member>
@@ -457,11 +463,20 @@
         <member name="P:WillowClient.ViewModel.UserProfileViewModel.CommonGroupsText">
             <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.commonGroupsText"/>
         </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.ParticipantsText">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.participantsText"/>
+        </member>
         <member name="F:WillowClient.ViewModel.UserProfileViewModel.goBackCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.UserProfileViewModel.GoBackCommand"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.UserProfileViewModel.GoBackCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.UserProfileViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.UserProfileViewModel.tapCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.UserProfileViewModel.TapCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.TapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.UserProfileViewModel.Tap(WillowClient.Model.CommonGroupWithParticipantsModel)"/>.</summary>
         </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
             <summary>

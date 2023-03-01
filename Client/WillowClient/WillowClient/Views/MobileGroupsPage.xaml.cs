@@ -9,4 +9,10 @@ public partial class MobileGroupsPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+    private void TextField_TextChanged(object sender, TextChangedEventArgs e) {
+        string newText = e.NewTextValue;
+        var vm = BindingContext as MainViewModel;
+        vm.SearchbarGroupsTextChanged(newText);
+    }
 }

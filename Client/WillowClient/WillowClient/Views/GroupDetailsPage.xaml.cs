@@ -13,5 +13,6 @@ public partial class GroupDetailsPage : ContentPage
     private void ContentPage_Loaded(object sender, EventArgs e) {
 		GroupDetailsViewModel vm = BindingContext as GroupDetailsViewModel;
 		vm.PopulateGroupParticipants();
+		vm.PrepareUI();
     }
 }

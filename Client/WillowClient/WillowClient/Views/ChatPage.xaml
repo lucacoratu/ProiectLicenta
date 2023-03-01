@@ -60,7 +60,7 @@
                                  Margin="0,0,10,0"
                                  ImageSource="{Binding Friend.ProfilePictureUrl}"
                                  WidthRequest="40"
-                                 BorderWidth="1.3"
+                                 BorderWidth="0"
                                  BorderColor="WhiteSmoke"
                                  CornerRadius="32"
                                  FlexLayout.AlignSelf="Center" />

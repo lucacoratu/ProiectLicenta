@@ -12,6 +12,7 @@ type CommonGroup struct {
 	CreationDate     string   `json:"creationDate"`
 	Participants     []int64  `json:"participants"`
 	ParticipantNames []string `json:"participantNames"`
+	GroupPictureUrl  string   `json:"groupPictureUrl"`
 }
 
 func (cg *CommonGroup) ToJSON(w io.Writer) error {

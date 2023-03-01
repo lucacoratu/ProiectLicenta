@@ -73,6 +73,7 @@ func InitServer(address string) error {
 
 	//Initialize the gorilla servemux
 	serveMux := mux.NewRouter()
+	serveMux.PathPrefix("/chat/groups/static/").Handler(http.StripPrefix("/chat/groups/static/", http.FileServer(http.Dir("./static/"))))
 	//Create the subrouter that will handle POST methods
 	getSubrouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getSubrouter.HandleFunc("/privaterooms/{id:[0-9]+}", handlerChat.GetPrivateRooms)
@@ -86,6 +87,7 @@ func InitServer(address string) error {
 	postSubrouter := serveMux.Methods(http.MethodPost).Subrouter()
 	postSubrouter.HandleFunc("/privateroom/create", handlerChat.CreatePrivateRoom)
 	postSubrouter.HandleFunc("/privateroom", handlerChat.GetRoomId)
+	postSubrouter.HandleFunc("/chat/group/updatepicture", handlerChat.UpdateGroupPicture)
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 

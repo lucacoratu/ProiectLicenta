@@ -7,6 +7,7 @@ using System.Net.WebSockets;
 using WillowClient.Model;
 using System.Net.Http.Json;
 using System.Net;
+using System.Net.Http.Headers;
 
 namespace WillowClient.Services
 {
@@ -46,24 +47,27 @@ namespace WillowClient.Services
 
         async Task ReadMessage()
         {
-            WebSocketReceiveResult result;
-            string receivedMessage = "";
-            var message = new ArraySegment<byte>(new byte[4096]);
-            do
-            {
-                result = await client.ReceiveAsync(message, CancellationToken.None);
-                if (result.MessageType != WebSocketMessageType.Text)
-                    break;
-                var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
-                receivedMessage = Encoding.UTF8.GetString(messageBytes);
-                //Console.WriteLine("Received: {0}", receivedMessage);
-            }
-            while (!result.EndOfMessage);
+            try {
+                WebSocketReceiveResult result;
+                string receivedMessage = "";
+                var message = new ArraySegment<byte>(new byte[4096]);
+                do {
+                    result = await client.ReceiveAsync(message, CancellationToken.None);
+                    if (result.MessageType != WebSocketMessageType.Text)
+                        break;
+                    var messageBytes = message.Skip(message.Offset).Take(result.Count).ToArray();
+                    receivedMessage = Encoding.UTF8.GetString(messageBytes);
+                    //Console.WriteLine("Received: {0}", receivedMessage);
+                }
+                while (!result.EndOfMessage);
 
-            //Call all the callbackfunctions registered to be called when the read event finished
-            foreach(var function in this.recvCallbacks)
-            {
-                var res = function(receivedMessage);
+                //Call all the callbackfunctions registered to be called when the read event finished
+                foreach (var function in this.recvCallbacks) {
+                    var res = function(receivedMessage);
+                }
+            } catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+                return;
             }
         }
 
@@ -87,8 +91,14 @@ namespace WillowClient.Services
 
         public async Task<List<HistoryMessageModel>> GetMessageHistory(int roomId)
         {
-            var response = await this.m_httpClient.GetAsync(Constants.chatServerUrl + "history/" + roomId.ToString());
-            return await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
+            try {
+                var url = Constants.chatServerUrl + "history/" + roomId.ToString();
+                var response = await this.m_httpClient.GetAsync(url);
+                //response = new HttpResponseMessage();
+                return await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
+            } catch (Exception ex) {
+                return new List<HistoryMessageModel>();
+            }
         }
 
         public async Task<List<GroupModel>> GetGroups(int accountId, string session)
@@ -113,6 +123,27 @@ namespace WillowClient.Services
             }
 
             return commonGroups;
+        }
+
+        public async Task<bool> UpdateGroupPicture(int roomId, Stream picture, string session) {
+            using (var multipartFormContent = new MultipartFormDataContent()) {
+                multipartFormContent.Add(new StringContent(roomId.ToString()), "roomId");
+
+                var fileStreamContent = new StreamContent(picture);
+                fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                multipartFormContent.Add(fileStreamContent, name: "groupPicture", fileName: "upload.png");
+
+                //Add the session cookie
+                var url = Constants.serverURL + "/chat/group/updatepicture";
+                var baseAddress = new Uri(url);
+
+                this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+                var response = await this.m_httpClient.PostAsync(baseAddress, multipartFormContent);
+                if (response.IsSuccessStatusCode)
+                    return true;
+            }
+            return false;
         }
 
         public void RegisterReadCallback(Func<string, Task> callbackFunction)

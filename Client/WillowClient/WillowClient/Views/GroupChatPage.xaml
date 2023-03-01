@@ -59,9 +59,9 @@
                 <HorizontalStackLayout FlexLayout.AlignSelf="Center">
                     <toolkit:AvatarView
                              HeightRequest="40" Margin="0,0,10,0"
-                             ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                             ImageSource="{Binding Group.GroupPictureUrl}"
                              WidthRequest="40"
-                             BorderWidth="1.3"
+                             BorderWidth="0"
                              BorderColor="WhiteSmoke"
                              CornerRadius="32"
                              FlexLayout.AlignSelf="Center" />

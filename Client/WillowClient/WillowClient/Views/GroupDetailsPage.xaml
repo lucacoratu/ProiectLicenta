@@ -33,12 +33,12 @@
         <VerticalStackLayout Padding="10">
             <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
                 <HorizontalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer/>
+                    <TapGestureRecognizer Command="{Binding ChangeGroupPictureCommand}"/>
                 </HorizontalStackLayout.GestureRecognizers>
                 <toolkit:AvatarView 
                     HeightRequest="110"
                     Margin="0,0,0,0"
-                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                    ImageSource="{Binding Group.GroupPictureUrl}"
                     WidthRequest="110"
                     BorderWidth="0"
                     BorderColor="WhiteSmoke"

@@ -13,8 +13,8 @@
              IconImageSource="groups.png">
     <Grid RowDefinitions="40, *" ColumnDefinitions="*">
         <!--<SearchBar Grid.Row="0" Placeholder="Search messages..." Margin="5" HorizontalOptions="Center" VerticalOptions="Center"/>-->
-        <material:TextField Grid.Row="0" Title="Search messages" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
-        <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+        <material:TextField Grid.Row="0" Title="Search messages" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentSecondDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5" TextChanged="TextField_TextChanged"/>
+        <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding GroupsSearchResults}" SelectionMode="None" VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:GroupModel">
                     <HorizontalStackLayout Padding="10" Spacing="6" Margin="5,0,5,0">
@@ -25,9 +25,9 @@
                         </HorizontalStackLayout.GestureRecognizers>
                         <toolkit:AvatarView
                                     HeightRequest="45"
-                                    ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                    ImageSource="{Binding GroupPictureUrl}"
                                     WidthRequest="45"
-                                    BorderWidth="1.4"
+                                    BorderWidth="0"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
                                     >

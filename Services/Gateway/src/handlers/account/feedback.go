@@ -43,7 +43,7 @@ func (f *Feedback) ForwardRequest(proxyProtocol string, proxyHost string, r *htt
 	for h, val := range r.Header {
 		proxyReq.Header[h] = val
 	}
-	f.logger.Debug(proxyReq.Header)
+	f.logger.Info(proxyReq.Header)
 
 	httpClient := &http.Client{}
 	resp, err := httpClient.Do(proxyReq)
@@ -158,6 +158,38 @@ func (f *Feedback) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
 	f.logger.Debug("Forwarding the message to Account Service")
 	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
 	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}
+
+func (f *Feedback) GetGroupPicture(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("/chat/groups/static/ hit (GET method)")
+	f.logger.Debug("Forwarding message to Account Service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		f.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	f.logger.Info(returnData)
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}
+
+func (f *Feedback) UpdateGroupPicture(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("Endpoint /chat/group/updatepicture hit (GET method)")
+	f.logger.Debug("Forwarding message to Account Service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		f.logger.Error(err.Error())
 		http.Error(rw, err.Error(), http.StatusInternalServerError)
 		return
 	}

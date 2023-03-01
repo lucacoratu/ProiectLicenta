@@ -15,6 +15,7 @@ type GetGroup struct {
 	LastMessageSender    int64    `json:"lastMessageSender"`
 	Participants         []int64  `json:"participants"`
 	ParticipantNames     []string `json:"participantNames"`
+	GroupPictureUrl      string   `json:"groupPictureUrl"`
 }
 
 func (gg *GetGroup) ToJSON(w io.Writer) error {

@@ -12,94 +12,114 @@
              Title="UserProfilePage"
              Loaded="ContentPage_Loaded"
              >
-    <VerticalStackLayout>
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="0,0,15,15" />
-            </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
-                    </ImageButton.Source>
-                </ImageButton>
-                <HorizontalStackLayout Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
-                    <Label FontFamily="{StaticResource ApplicationFont}"  Text="{Binding UserProfile.DisplayName}" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-                    <Label FontFamily="{StaticResource ApplicationFont}"  Text="'s Profile" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-                </HorizontalStackLayout>
-            </Grid>
-        </Border>
-        <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
-            <toolkit:AvatarView 
-                    HeightRequest="110"
-                    Margin="0,0,0,0"
-                    ImageSource="{Binding UserProfile.ProfilePictureUrl}"
-                    WidthRequest="110"
-                    BorderWidth="0"
-                    BorderColor="WhiteSmoke"
-                    CornerRadius="60" />
-            <Border HorizontalOptions="Start" BackgroundColor="{Binding UserProfile.StatusBackgroundColor}" WidthRequest="23" HeightRequest="23" StrokeThickness="1.1" Stroke="{Binding UserProfile.StatusStrokeColor}" Margin="-30,0,0,0" VerticalOptions="End">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="40"/>
+                    <RoundRectangle CornerRadius="0,0,15,15" />
                 </Border.StrokeShape>
+                <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+                    <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <HorizontalStackLayout Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label FontFamily="{StaticResource ApplicationFont}"  Text="{Binding UserProfile.DisplayName}" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                        <Label FontFamily="{StaticResource ApplicationFont}"  Text="'s Profile" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </Grid>
             </Border>
-        </HorizontalStackLayout>
-        <Label Text="{Binding UserProfile.DisplayName}" FontSize="16" FontAttributes="Bold" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-        <Grid HeightRequest="95" Margin="10,5,10,2" Padding="5,10,5,10" ColumnSpacing="60" ColumnDefinitions="*,*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
-            <Frame Grid.Column="0" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
-                <VerticalStackLayout Spacing="6" >
-                    <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                        <ImageButton WidthRequest="20" HeightRequest="20">
-                            <ImageButton.Source>
-                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}"/>
-                            </ImageButton.Source>
-                        </ImageButton>
-                    </Frame>
-                    <Label FontFamily="{StaticResource ApplicationFont}" Text="Call" HorizontalOptions="Center" TextColor="WhiteSmoke"></Label>
-                </VerticalStackLayout>
-            </Frame>
-            <Frame Grid.Column="1" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
-                <VerticalStackLayout Spacing="6">
-                    <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                        <ImageButton WidthRequest="18" HeightRequest="18">
-                            <ImageButton.Source>
-                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}"/>
-                            </ImageButton.Source>
-                        </ImageButton>
-                    </Frame>
-                    <Label FontFamily="{StaticResource ApplicationFont}" Text="Video" HorizontalOptions="Center" TextColor="WhiteSmoke"></Label>
-                </VerticalStackLayout>
-            </Frame>
-        </Grid>
-        <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
-            <Label FontFamily="{StaticResource ApplicationFont}" Text="Status text" TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
-        </Frame>
-        <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
-            <HorizontalStackLayout>
-                <Label FontFamily="{StaticResource ApplicationFont}" Text="Member since: " TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
-                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding UserProfile.JoinDate}" TextColor="{StaticResource AccentSecondDarkColor}" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
+            <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
+                <toolkit:AvatarView 
+                        HeightRequest="110"
+                        Margin="0,0,0,0"
+                        ImageSource="{Binding UserProfile.ProfilePictureUrl}"
+                        WidthRequest="110"
+                        BorderWidth="0"
+                        BorderColor="WhiteSmoke"
+                        CornerRadius="60" />
+                <Border HorizontalOptions="Start" BackgroundColor="{Binding UserProfile.StatusBackgroundColor}" WidthRequest="23" HeightRequest="23" StrokeThickness="1.1" Stroke="{Binding UserProfile.StatusStrokeColor}" Margin="-30,0,0,0" VerticalOptions="End">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="40"/>
+                    </Border.StrokeShape>
+                </Border>
             </HorizontalStackLayout>
-        </Frame>
-        <Frame IsEnabled="{Binding UserProfile.AreFriends}" IsVisible="{Binding UserProfile.AreFriends}" BackgroundColor="#414141" Margin="10,15,10,2" Padding="20,10,20,10" CornerRadius="20">
-            <VerticalStackLayout Spacing="10">
-                <Label FontFamily="{StaticResource ApplicationFont}" Text="You are not friends" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
-                <Button FontFamily="{StaticResource ApplicationFont}" WidthRequest="200" Text="Send friend request" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}"></Button>
-            </VerticalStackLayout>
-        </Frame>
-        <HorizontalStackLayout Margin="10,15,0,0" Spacing="5">
-            <Label Text="{Binding NumberCommonGroups}" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center"/>
-            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding CommonGroupsText}" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center"/>
-        </HorizontalStackLayout>
-        <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
-            <CollectionView ItemsSource="{Binding CommonGroups}" SelectionMode="None" >
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:CommonGroupModel">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding GroupName}"/>
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </Frame>
-    </VerticalStackLayout>
+            <Label Text="{Binding UserProfile.DisplayName}" FontSize="16" FontAttributes="Bold" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            <Grid HeightRequest="95" Margin="10,5,10,2" Padding="5,10,5,10" ColumnSpacing="60" ColumnDefinitions="*,*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+                <Frame Grid.Column="0" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
+                    <VerticalStackLayout Spacing="6" >
+                        <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                            <ImageButton WidthRequest="20" HeightRequest="20">
+                                <ImageButton.Source>
+                                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}"/>
+                                </ImageButton.Source>
+                            </ImageButton>
+                        </Frame>
+                        <Label FontFamily="{StaticResource ApplicationFont}" Text="Call" HorizontalOptions="Center" TextColor="WhiteSmoke"></Label>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Column="1" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
+                    <VerticalStackLayout Spacing="6">
+                        <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                            <ImageButton WidthRequest="18" HeightRequest="18">
+                                <ImageButton.Source>
+                                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}"/>
+                                </ImageButton.Source>
+                            </ImageButton>
+                        </Frame>
+                        <Label FontFamily="{StaticResource ApplicationFont}" Text="Video" HorizontalOptions="Center" TextColor="WhiteSmoke"></Label>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Status text" TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
+            </Frame>
+            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
+                <HorizontalStackLayout>
+                    <Label FontFamily="{StaticResource ApplicationFont}" Text="Member since: " TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
+                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding UserProfile.JoinDate}" TextColor="{StaticResource AccentSecondDarkColor}" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame IsEnabled="{Binding UserProfile.AreFriends}" IsVisible="{Binding UserProfile.AreFriends}" BackgroundColor="#414141" Margin="10,15,10,2" Padding="20,10,20,10" CornerRadius="20">
+                <VerticalStackLayout Spacing="10">
+                    <Label FontFamily="{StaticResource ApplicationFont}" Text="You are not friends" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
+                    <Button FontFamily="{StaticResource ApplicationFont}" WidthRequest="200" Text="Send friend request" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}"></Button>
+                </VerticalStackLayout>
+            </Frame>
+            <HorizontalStackLayout Margin="10,15,0,0" Spacing="5">
+                <Label Text="{Binding NumberCommonGroups}" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" Text="{Binding CommonGroupsText}" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center"/>
+            </HorizontalStackLayout>
+            <Frame BackgroundColor="#414141" Margin="10,5,10,10" Padding="20,10,20,10" CornerRadius="20">
+                <CollectionView ItemsSource="{Binding CommonGroups}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:CommonGroupWithParticipantsModel">
+                            <Grid ColumnDefinitions="50,*" Margin="0,7,0,7">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserProfileViewModel}}, Path=TapCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Grid.GestureRecognizers>
+                                <toolkit:AvatarView 
+                                    Grid.Column="0"
+                                    HeightRequest="45"
+                                    Margin="0,0,0,0"
+                                    ImageSource="{Binding GroupPictureUrl}"
+                                    WidthRequest="45"
+                                    BorderWidth="0"
+                                    BorderColor="WhiteSmoke"
+                                    CornerRadius="60" />
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding GroupName}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="15" FontAttributes="Bold"/>
+                                    <Label Text="{Binding ParticipantsText}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="13"/>
+                                    <Line Margin="0,3,0,0" Grid.ColumnSpan="2" BackgroundColor="#606060" Opacity="1" HeightRequest="1"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

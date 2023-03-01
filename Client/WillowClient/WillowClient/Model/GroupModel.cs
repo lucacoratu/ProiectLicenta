@@ -30,5 +30,10 @@ namespace WillowClient.Model
         public int LastMessageSender { get; set; }
 
         public List<string> ParticipantNames { get; set; }
+        private string groupPictureUrl;
+        public string GroupPictureUrl {
+            get => groupPictureUrl;
+            set => SetProperty(ref groupPictureUrl, value);
+        }
     }
 }

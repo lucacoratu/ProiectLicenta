@@ -106,6 +106,9 @@ namespace WillowClient.ViewModel
             Dictionary<string, List<MessageModel>> groupsAndMessages = new();
 
             int roomId = this.Group.RoomId;
+            if (Group.LastMessageSender == 0 && Group.LastMessageTimestamp == null) {
+                return;
+            }
             var historyMessages = await this.chatService.GetMessageHistory(roomId);
             foreach (var historyMessage in historyMessages)
             {
@@ -200,12 +203,17 @@ namespace WillowClient.ViewModel
         public async void CreateGroupParticipantsList() {
             if(this.ParticipantNames != "")
                 this.ParticipantNames = "";
+            if (this.ParticipantNames == null)
+                this.ParticipantNames = "";
+
             this.ParticipantNames += "You, ";
-            for(int i =0; i < this.Group.ParticipantNames.Count; i++) {
-                if (i != this.Group.ParticipantNames.Count - 1)
-                    this.ParticipantNames += this.Group.ParticipantNames[i] + ", ";
-                else
-                    this.ParticipantNames += this.Group.ParticipantNames[i];
+            if (this.Group.ParticipantNames != null) {
+                for (int i = 0; i < this.Group.ParticipantNames.Count; i++) {
+                    if (i != this.Group.ParticipantNames.Count - 1)
+                        this.ParticipantNames += this.Group.ParticipantNames[i] + ", ";
+                    else
+                        this.ParticipantNames += this.Group.ParticipantNames[i];
+                }
             }
         }
 
@@ -257,7 +265,7 @@ namespace WillowClient.ViewModel
             //Create the structure that will hold the data which will be json encoded and sent to the server
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.Group.RoomId, data = this.MessageText, messageType = "Text" };
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
-            this.chatService.SendMessageAsync(jsonMessage);
+            chatService.SendMessageAsync(jsonMessage);
             //Add the message into the collection view for the current user
             bool found = false;
             foreach (var e in this.MessageGroups)
@@ -284,8 +292,6 @@ namespace WillowClient.ViewModel
 
         [RelayCommand]
         public async Task GoToGroupDetails() {
-
-
             await Shell.Current.GoToAsync(nameof(GroupDetailsPage), true, new Dictionary<string, object> {
                 {"group", this.Group },
                 {"account", this.Account },

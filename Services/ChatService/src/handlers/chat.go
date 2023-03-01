@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"io"
 	"net/http"
+	"os"
 	"willow/chatservice/data"
 	"willow/chatservice/database"
 	jsonerrors "willow/chatservice/errors"
@@ -323,6 +325,9 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 	groups.ToJSON(rw)
 }
 
+/*
+ * This function will return all the common groups of 2 users
+ */
 func (ch *Chat) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
 	ch.logger.Info("Endpoint /chat/commongroups/{idfirst:[0-9]+}/{idsecond:[0-9]+} hit (GET method)")
 	vars := mux.Vars(r)
@@ -352,4 +357,67 @@ func (ch *Chat) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(http.StatusOK)
 	commonGroups.ToJSON(rw)
+}
+
+/*
+ * This function will update the group photo by saving the multipart form data on the disk
+ */
+func (ch *Chat) UpdateGroupPicture(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /chat/group/updatepicture hit (GET method)")
+	//Parse the multipart request (maximum 20MB upload)
+	r.ParseMultipartForm(10 << 20)
+
+	roomId := r.FormValue("roomId")
+	if roomId == "" {
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Room id has to be specified in the form"))
+		return
+	}
+
+	file, _, err := r.FormFile("groupPicture")
+	//Check if an error occured
+	if err != nil {
+		ch.logger.Info("Cannot get the file or the handler")
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Failed!"))
+		return
+	}
+	//Close the file when the function ends
+	defer file.Close()
+
+	//Create an empty file on the disk
+	dst, err := os.Create("./static/" + roomId + ".png")
+	//Check for errors
+	if err != nil {
+		ch.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer dst.Close()
+
+	// Copy the uploaded file to the created file on the filesystem
+	if _, err := io.Copy(dst, file); err != nil {
+		ch.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rId, err := strconv.ParseInt(roomId, 10, 64)
+	if err != nil {
+		//Remove the file created
+		ch.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	//Update the value in the database
+	_, err = ch.dbConn.UpdateGroupPicture(rId, roomId+".png")
+	if err != nil {
+		ch.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write([]byte("Group picture updated"))
 }

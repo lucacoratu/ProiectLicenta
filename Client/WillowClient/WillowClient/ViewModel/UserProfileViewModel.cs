@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using WillowClient.Model;
 using WillowClient.Services;
+using WillowClient.Views;
 
 namespace WillowClient.ViewModel {
     [QueryProperty(nameof(UserId), "userId")]
@@ -31,7 +32,10 @@ namespace WillowClient.ViewModel {
         [ObservableProperty]
         private string commonGroupsText;
 
-        public ObservableCollection<CommonGroupModel> CommonGroups { get; } = new();
+        [ObservableProperty]
+        private string participantsText;
+
+        public ObservableCollection<CommonGroupWithParticipantsModel> CommonGroups { get; } = new();
 
         private ProfileService profileService;
 
@@ -43,9 +47,10 @@ namespace WillowClient.ViewModel {
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
         }
 
-        ~UserProfileViewModel() {
-            this.chatService.UnregisterReadCallback(MessageReceivedOnWebsocket);
-        }
+        //TO DO ... Check if it works with this destructor
+        //~UserProfileViewModel() {
+        //    this.chatService.UnregisterReadCallback(MessageReceivedOnWebsocket);
+        //}
 
         public async Task MessageReceivedOnWebsocket(string message) {
             //It is a message specifing the new status of a user
@@ -55,22 +60,28 @@ namespace WillowClient.ViewModel {
                 };
 
                 //Parse the response
-                ChangeStatusWebsocketResponseModel resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options);
-                //Check if the account which changed its state is the one in the profile page
-                if (this.UserProfile.Id== resp.AccountId) {
-                    //Change the color depending on which status it is set
-                    if (resp.NewStatus == "Online") {
-                        this.UserProfile.Status = "Online";
-                        this.UserProfile.StatusBackgroundColor = Colors.Green;
-                        this.UserProfile.StatusStrokeColor = Colors.DarkGreen;
+                try {
+                    ChangeStatusWebsocketResponseModel resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options);
+                    //Check if the account which changed its state is the one in the profile page
+                    if (this.UserProfile.Id == resp.AccountId) {
+                        //Change the color depending on which status it is set
+                        if (resp.NewStatus == "Online") {
+                            this.UserProfile.Status = "Online";
+                            this.UserProfile.StatusBackgroundColor = Colors.Green;
+                            this.UserProfile.StatusStrokeColor = Colors.DarkGreen;
+                        }
+                        else {
+                            this.UserProfile.Status = "Offline";
+                            this.UserProfile.StatusBackgroundColor = Colors.Gray;
+                            this.UserProfile.StatusStrokeColor = Colors.DarkGray;
+                        }
                     }
-                    else {
-                        this.UserProfile.Status = "Offline";
-                        this.UserProfile.StatusBackgroundColor = Colors.Gray;
-                        this.UserProfile.StatusStrokeColor = Colors.DarkGray;
-                    }
+                    return;
                 }
-                return;
+                catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                    return;
+                }
             }
         }
 
@@ -84,7 +95,22 @@ namespace WillowClient.ViewModel {
                 this.CommonGroups.Clear();
             var commonGroups = await this.chatService.GetCommonGroups(this.Account.Id, this.UserId, Globals.Session);
             foreach(var group in commonGroups) {
-                this.CommonGroups.Add(group);
+                CommonGroupWithParticipantsModel mod = new CommonGroupWithParticipantsModel{ CreationDate = group.CreationDate, CreatorId = group.CreatorId, GroupName = group.GroupName,  RoomId = group.RoomId, Participants = group.Participants, ParticipantNames = group.ParticipantNames };
+                mod.ParticipantsText += "You, ";
+                for(int i = 0; i < group.ParticipantNames.Count; i++) {
+                    if(i != group.ParticipantNames.Count - 1) {
+                        mod.ParticipantsText += group.ParticipantNames[i] + ", ";
+                    } else {
+                        mod.ParticipantsText += group.ParticipantNames[i];
+                    }
+                }
+                if(group.GroupPictureUrl == null || group.GroupPictureUrl == "NULL") {
+                    mod.GroupPictureUrl = Constants.defaultGroupPicture;
+                } else {
+                    mod.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + group.GroupPictureUrl;
+                }
+
+                this.CommonGroups.Add(mod);
             }
             this.NumberCommonGroups = this.CommonGroups.Count;
             if(this.NumberCommonGroups == 0 || this.NumberCommonGroups == 1) {
@@ -115,6 +141,19 @@ namespace WillowClient.ViewModel {
             userAccount.JoinDate = DateTime.Parse(userAccount.JoinDate).ToString("dd MMMM yyyy");
 
             this.UserProfile = new UserProfileModel { Id = userAccount.Id, DisplayName = userAccount.DisplayName, Email = userAccount.Email, JoinDate = userAccount.JoinDate, Status = userAccount.Status, ProfilePictureUrl = profilePicture, AreFriends = areFriends, StatusBackgroundColor = statusBackgroundColor, StatusStrokeColor = statusStrokeColor };
+        }
+
+        [RelayCommand]
+        async Task Tap(CommonGroupWithParticipantsModel cgm) {
+            if (cgm == null)
+                return;
+
+            GroupModel gm = new GroupModel { GroupName = cgm.GroupName, CreatorId = cgm.CreatorId, RoomId = cgm.RoomId, GroupPictureUrl = cgm.GroupPictureUrl, LastMessage = "", LastMessageTimestamp = "", LastMessageSender = 0, ParticipantNames = cgm.ParticipantNames, Participants = cgm.Participants };
+            await Shell.Current.GoToAsync(nameof(GroupChatPage), true, new Dictionary<string, object>
+            {
+                {"group", gm},
+                {"account", Account},
+            });
         }
     }
 }

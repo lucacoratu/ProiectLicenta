@@ -352,7 +352,7 @@ func (conn *MysqlConnection) CreateGroup(groupName string, creatorID int64) (int
  */
 func (conn *MysqlConnection) GetUserGroups(accountID int64) (data.GetGroups, error) {
 	//Prepare the statement that will get all the groups of an account
-	stmtSelect, err := conn.db.Prepare("SELECT rooms.ID, rooms.groupName, rooms.CreatorId, rooms.creationDate FROM rooms INNER JOIN user_room ON user_room.RoomID = rooms.ID WHERE user_room.UserID = ? AND rooms.isGroup = true")
+	stmtSelect, err := conn.db.Prepare("SELECT rooms.ID, rooms.groupName, rooms.CreatorId, rooms.creationDate, rooms.groupPicture FROM rooms INNER JOIN user_room ON user_room.RoomID = rooms.ID WHERE user_room.UserID = ? AND rooms.isGroup = true")
 	//Check if an error occured while inserting into the database
 	if err != nil {
 		conn.logger.Error("Error occured while preparing the get groups select statment", err.Error())
@@ -367,7 +367,7 @@ func (conn *MysqlConnection) GetUserGroups(accountID int64) (data.GetGroups, err
 	returnData := make(data.GetGroups, 0)
 	for rows.Next() {
 		aux := data.GetGroup{}
-		err := rows.Scan(&aux.RoomId, &aux.GroupName, &aux.CreatorId, &aux.CreationDate)
+		err := rows.Scan(&aux.RoomId, &aux.GroupName, &aux.CreatorId, &aux.CreationDate, &aux.GroupPictureUrl)
 		if err != nil {
 			conn.logger.Error("Error occured while fetching get groups data", err.Error())
 			break
@@ -453,11 +453,33 @@ func (conn *MysqlConnection) GetCommonGroups(idFirst int64, idSecond int64) (dat
 	for _, groupFirst := range getGroupsFirst {
 		for _, groupSecond := range getGroupsSecond {
 			if groupFirst.RoomId == groupSecond.RoomId {
-				commonGroups = append(commonGroups, data.CommonGroup{GroupName: groupFirst.GroupName, RoomId: groupFirst.RoomId, CreatorId: groupFirst.CreatorId, CreationDate: groupFirst.CreationDate, Participants: groupFirst.Participants, ParticipantNames: groupFirst.ParticipantNames})
+				commonGroups = append(commonGroups, data.CommonGroup{GroupName: groupFirst.GroupName, RoomId: groupFirst.RoomId, CreatorId: groupFirst.CreatorId, CreationDate: groupFirst.CreationDate, Participants: groupFirst.Participants, ParticipantNames: groupFirst.ParticipantNames, GroupPictureUrl: groupFirst.GroupPictureUrl})
 				break
 			}
 		}
 	}
 
 	return commonGroups, nil
+}
+
+/*
+ * This function will update the group image
+ */
+func (conn *MysqlConnection) UpdateGroupPicture(roomId int64, newPicture string) (bool, error) {
+	//Prepare the update statement
+	stmtUpdate, err := conn.db.Prepare("UPDATE rooms SET groupPicture = ? WHERE ID = ?")
+	//Check if an error occured
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the update statement for group picture", err.Error())
+		return false, err
+	}
+
+	_, err = stmtUpdate.Exec(newPicture, roomId)
+	//Check if an error occured
+	if err != nil {
+		conn.logger.Error("Error occured when executing the update statement for group picture", err.Error())
+		return false, err
+	}
+
+	return true, nil
 }

@@ -313,7 +313,7 @@ namespace WillowClient.ViewModel
             //Create the structure that will hold the data which will be json encoded and sent to the server
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.roomId, data = this.MessageText, messageType = "Text"};
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
-            this.chatService.SendMessageAsync(jsonMessage);
+            chatService.SendMessageAsync(jsonMessage);
             //Add the message into the collection view for the current user
             bool found = false;
             foreach(var e in this.MessageGroups)

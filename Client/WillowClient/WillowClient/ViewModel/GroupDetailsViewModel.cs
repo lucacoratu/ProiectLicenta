@@ -33,8 +33,10 @@ namespace WillowClient.ViewModel {
         public ObservableCollection<GroupParticipantModel> Participants { get; set; } = new();
 
         private ProfileService profileService;
-        public GroupDetailsViewModel(ProfileService ps) {
+        private ChatService chatService;
+        public GroupDetailsViewModel(ProfileService ps, ChatService cs) {
             this.profileService = ps;
+            this.chatService = cs;
         }
 
         public async void PopulateGroupParticipants() {
@@ -71,7 +73,42 @@ namespace WillowClient.ViewModel {
         }
 
         [RelayCommand]
-        public async void PrepareUI() {
+        public async Task ChangeGroupPicture() {
+            List<string> actions = new List<string>
+{
+                "Take photo",
+                "Upload photo"
+            };
+            string res = await Shell.Current.DisplayActionSheet("Change photo", "Cancel", null, actions.ToArray());
+            if (res == actions[0]) {
+                if (MediaPicker.Default.IsCaptureSupported) {
+                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+                    if (photo != null) {
+                        int i = 0;
+                    }
+                }
+            }
+            else {
+                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
+                if (photo != null) {
+                    Stream photoStream = await photo.OpenReadAsync();
+                    bool uploadedResult = await this.chatService.UpdateGroupPicture(this.Group.RoomId, photoStream, Globals.Session);
+                    if (uploadedResult) {
+                        //Send a messsage to all the other clients that the profile picture has been changed
+                        //UpdateUserProfilePictureForAllUsers();
+                        this.Group.GroupPictureUrl = "";
+                        this.Group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + this.Group.RoomId + ".png"; 
+
+                        await Shell.Current.DisplayAlert("Group picture", "Group picture has been updated", "Ok");
+                        //Update the picture in the box
+                        //this.Account.ProfilePictureUrl = "";
+                        //this.Account.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + this.Account.Id + ".png";
+                    }
+                }
+            }
+        }
+
+        public void PrepareUI() {
             if (this.Account.Id == this.Group.CreatorId)
                 this.IsGroupOwner = true;
             else
@@ -84,7 +121,7 @@ namespace WillowClient.ViewModel {
                 return;
 
             await Shell.Current.GoToAsync(nameof(UserProfilePage), true, new Dictionary<string, object> {
-                {"userId", participant.Id },
+                { "userId", participant.Id },
                 { "account", this.Account },
             });
         }
