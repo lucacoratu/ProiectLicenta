@@ -109,7 +109,7 @@
                                         HeightRequest="45"
                                         ImageSource="{Binding ProfilePictureUrl}"
                                         WidthRequest="45"
-                                        BorderWidth="1.4"
+                                        BorderWidth="0"
                                         BorderColor="WhiteSmoke"
                                         CornerRadius="32"
                                         >

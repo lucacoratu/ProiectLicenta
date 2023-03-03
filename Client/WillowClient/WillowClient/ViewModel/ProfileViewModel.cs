@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace WillowClient.ViewModel
         ProfileService profileService;
 
         ChatService chatService;
+
+        private Stream profilePictureStream;
         public ProfileViewModel(ProfileService ps, ChatService chatService) {
             this.profileService = ps;
             this.chatService = chatService;
@@ -61,8 +64,7 @@ namespace WillowClient.ViewModel
             this.chatService.SendMessageAsync(JsonSerializer.Serialize(upm));
         }
 
-        [RelayCommand]
-        async Task ChangeProfilePicture()
+        public async void ChangeProfilePicture(AvatarView profileAvatar)
         {
             List<string> actions = new List<string>
             {
@@ -89,9 +91,11 @@ namespace WillowClient.ViewModel
                         //Send a messsage to all the other clients that the profile picture has been changed
                         UpdateUserProfilePictureForAllUsers();
                         await Shell.Current.DisplayAlert("Profile picture", "Your profile picture has been updated", "Ok");
+                        this.profilePictureStream = photoStream;
                         //Update the picture in the box
                         this.Account.ProfilePictureUrl = "";
                         this.Account.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + this.Account.Id + ".png";
+                        //profileAvatar.ImageSource = ImageSource.FromStream(() => this.profilePictureStream);
                     }
                 }
             }

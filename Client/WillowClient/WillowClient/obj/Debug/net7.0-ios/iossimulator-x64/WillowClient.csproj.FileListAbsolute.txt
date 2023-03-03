@@ -293,8 +293,8 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimul
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\UraniumUI.Icons.MaterialIcons.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\UraniumUI.Material.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\f\NeusharpBold.otf
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\build-signature\signature
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\map.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\f\Labrada-Medium.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\f\Labrada-Regular.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\f\Labrada.ttf
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\default_group.png

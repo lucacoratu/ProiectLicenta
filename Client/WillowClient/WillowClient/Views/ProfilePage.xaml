@@ -33,7 +33,7 @@
             </Grid>
         </Border>
         <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
-            <toolkit:AvatarView 
+            <toolkit:AvatarView x:Name="profilePicture"
                     HeightRequest="110"
                     Margin="0,0,0,0"
                     ImageSource="{Binding Account.ProfilePictureUrl}"
@@ -43,7 +43,7 @@
                     CornerRadius="60" />
             <Frame CornerRadius="15" WidthRequest="30" HeightRequest="30" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ChangeProfilePictureCommand}"/>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                 </Frame.GestureRecognizers>
                 <Image WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center">
                     <Image.Source>

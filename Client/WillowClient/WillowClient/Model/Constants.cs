@@ -41,7 +41,9 @@ namespace WillowClient.Model
         public static string signalingWsUrl = "wss://localhost:8090/notifications";
 #endif
 
-        public static string defaultProfilePicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
-        public static string defaultGroupPicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+        //public static string defaultProfilePicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+        public static string defaultProfilePicture = "default_profile_icon.png";
+        //public static string defaultGroupPicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+        public static string defaultGroupPicture = "default_group.png";
     }
 }

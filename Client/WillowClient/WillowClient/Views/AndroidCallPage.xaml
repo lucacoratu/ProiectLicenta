@@ -9,9 +9,9 @@
              Title="PageAndroid"
              Loaded="ContentPage_Loaded"
              >
-    <Grid RowDefinitions="*">
-        <controls:CustomWebView x:Name="webView" Grid.Row="0"/>
-        <Frame Grid.Row="0" HorizontalOptions="Center" VerticalOptions="End" Margin="0,0,0,20" Background="Red" CornerRadius="60">
+    <Grid RowDefinitions="*,35" ColumnDefinitions="*,40,*">
+        <controls:CustomWebView x:Name="webView" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <Frame Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" WidthRequest="35" HeightRequest="35" VerticalOptions="End" Margin="0,0,0,20" Background="Red" CornerRadius="60">
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Frame.GestureRecognizers>

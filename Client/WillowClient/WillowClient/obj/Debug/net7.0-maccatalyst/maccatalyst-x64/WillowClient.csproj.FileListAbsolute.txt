@@ -290,3 +290,4 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\Labrada-Medium.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\Labrada-Regular.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\Labrada.ttf
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\default_group.png

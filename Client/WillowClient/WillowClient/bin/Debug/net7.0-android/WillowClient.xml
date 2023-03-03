@@ -394,12 +394,6 @@
         <member name="P:WillowClient.ViewModel.ProfileViewModel.GoToEditProfileCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ProfileViewModel.GoToEditProfile"/>.</summary>
         </member>
-        <member name="F:WillowClient.ViewModel.ProfileViewModel.changeProfilePictureCommand">
-            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ProfileViewModel.ChangeProfilePictureCommand"/>.</summary>
-        </member>
-        <member name="P:WillowClient.ViewModel.ProfileViewModel.ChangeProfilePictureCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ProfileViewModel.ChangeProfilePicture"/>.</summary>
-        </member>
         <member name="P:WillowClient.ViewModel.RegisterViewModel.Username">
             <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.username"/>
         </member>

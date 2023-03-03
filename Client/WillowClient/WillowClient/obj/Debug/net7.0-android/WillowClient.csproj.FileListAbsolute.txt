@@ -998,6 +998,7 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resi
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\f\Labrada-Medium.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\f\Labrada-Regular.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\map.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\default_group.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\mscorlib.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\System.Collections.Concurrent.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\System.Data.Common.dll

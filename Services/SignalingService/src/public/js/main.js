@@ -21,6 +21,34 @@ var platform = document.querySelector("#platform");
 platform = platform.innerHTML;
 
 
+//Create a pointer to remote stream object to determine the framerate
+var remoteStreamCopy = null;
+var currentFrameRate = 0;
+var localStreamCopy = null;
+var localCurrentFrameRate = 0;
+
+//Define a function which will be called once every second to change the frame rate
+setInterval(() => {
+   //Update the frame rate of the remote stream
+    if(remoteStreamCopy !== null) {
+        //Get the remote framerate
+        //console.log(remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate);
+        currentFrameRate = remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate;
+        console.log("Remote current frame rate = ", currentFrameRate);
+
+        //Get the local framerate
+        localCurrentFrameRate = localStreamCopy.getVideoTracks()[0].getSettings().frameRate;
+        console.log("Local current frame rate = ", localCurrentFrameRate);
+
+        //Show the remote value of the framerate
+        var frameRateLabel = document.querySelector("#labelFrameRate");
+        frameRateLabel.innerHTML = currentFrameRate.toFixed(2);
+
+        //Show the local value of the framerate
+        var localFrameRateLabel = document.querySelector("#labelLocalFrameRate");
+        localFrameRateLabel.innerHTML = localCurrentFrameRate.toFixed(2);
+    }
+}, 1000);
 
 //Join the room
 var ws = 0;
@@ -210,6 +238,8 @@ function onCreateSessionDescriptionError(error) {
 function handleRemoteStreamAdded(event) {
     console.log('Remote stream added.');
     remoteStream = event.stream;
+    //Copy of the remote stream
+    remoteStreamCopy = remoteStream;
     remoteVideo.srcObject = remoteStream;
 }
 
@@ -254,6 +284,8 @@ function gotStream(stream) {
     console.log('Adding local stream.');
     localStream = stream;
     localVideo.srcObject = stream;
+    localStreamCopy = stream;
+
     sendMessage('got user media');
     if (isInitiator) {
       maybeStart();

@@ -251,6 +251,7 @@ namespace WillowClient.ViewModel
                         gm.RoomId = resp.RoomId;
                         gm.Participants = new List<int>();
                         gm.LastMessage = "Start conversation";
+                        gm.GroupPictureUrl = Constants.defaultGroupPicture;
                         foreach (var participantId in resp.Participants) {
                             gm.Participants.Add(participantId);
                         }
@@ -337,7 +338,7 @@ namespace WillowClient.ViewModel
                                             senderIndex = j;
                                         }
                                     this.Groups[i].LastMessage = this.Groups[i].ParticipantNames[senderIndex] + ": " + privMessageModel.Data;
-                                    this.Groups[i].LastMessage = timestamp;
+                                    this.Groups[i].LastMessageTimestamp = timestamp;
                                 }
                                 //Move the conversation to the top
                                 List<GroupModel> CopyGroups = new();
@@ -435,7 +436,7 @@ namespace WillowClient.ViewModel
                     }
 
                     if (friend.ProfilePictureUrl == "NULL") {
-                        friend.ProfilePictureUrl = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+                        friend.ProfilePictureUrl = Constants.defaultProfilePicture;
                     } else {
                         friend.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + friend.ProfilePictureUrl;
                     }
