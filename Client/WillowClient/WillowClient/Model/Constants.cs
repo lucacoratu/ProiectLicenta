@@ -1,5 +1,6 @@
 ﻿//#define LOCAL_ANDROID
 //#define LOCAL_ANDROID_HOME
+#define LOCAL_ANDROID_MOTOC
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +22,17 @@ namespace WillowClient.Model
         public static string signalingServerURL = "https://172.20.10.8:8090/";
         public static string signalingWsUrl = "wss://";
 #elif LOCAL_ANDROID_HOME
-        public static string serverURL = "http://192.168.0.107:8080";
-        public static string wsServerUrl = "ws://192.168.0.107:8087/";
-        public static string chatServerUrl = "http://192.168.0.107:8087/";
-        public static string signalingServerURL = "https://192.168.0.107:8090/";
-        public static string signalingWsUrl = "wss://";
+        public static string serverURL = "http://192.168.0.103:8080";
+        public static string wsServerUrl = "ws://192.168.0.103:8087/";
+        public static string chatServerUrl = "http://192.168.0.103:8087/";
+        public static string signalingServerURL = "https://192.168.0.103:8090/";
+        public static string signalingWsUrl = "wss://192.168.0.103:8090/notifications";
+#elif LOCAL_ANDROID_MOTOC
+        public static string serverURL = "http://192.168.137.1:8080";
+        public static string wsServerUrl = "ws://192.168.137.1:8087/";
+        public static string chatServerUrl = "http://192.168.137.1:8087/";
+        public static string signalingServerURL = "https://192.168.137.1:8090/";
+        public static string signalingWsUrl = "wss://192.168.137.1:8090/notifications";
 #else
         public static string serverURL = "http://10.0.2.2:8080";
         public static string wsServerUrl = "ws://10.0.2.2:8087/";
@@ -40,7 +47,6 @@ namespace WillowClient.Model
         public static string signalingServerURL = "https://localhost:8090/";
         public static string signalingWsUrl = "wss://localhost:8090/notifications";
 #endif
-
         //public static string defaultProfilePicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
         public static string defaultProfilePicture = "default_profile_icon.png";
         //public static string defaultGroupPicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";

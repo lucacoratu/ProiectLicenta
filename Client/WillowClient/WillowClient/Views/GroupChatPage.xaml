@@ -77,8 +77,8 @@
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout FlexLayout.AlignSelf="Center" Margin="0,0,10,0">
-                    <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" Padding="2" HeightRequest="38" WidthRequest="38" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png"/>
-                    <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" Padding="2" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="call.png"/>
+                    <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" Padding="2" HeightRequest="38" WidthRequest="38" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="video.png" Command="{Binding GoToGroupCallCommand}"/>
+                    <ImageButton BackgroundColor="Transparent" BorderColor="Transparent" Padding="2" HeightRequest="30" WidthRequest="30" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="call.png" Command="{Binding GoToGroupCallCommand}"/>
                 </HorizontalStackLayout>
             </FlexLayout>
         </Border>

@@ -32,8 +32,9 @@ body{
 .label-framerate {
     position: fixed;
     z-index: 5;
-    top: 0;
-    left: 0;
+    display: inline;
+    top: 100;
+    left: 100;
     margin: 20;
     padding: 0;
     width: 100%;
@@ -72,7 +73,6 @@ body{
     padding: 0;
     margin: 0;
     position: absolute;
-    top: 0;
     left: 79%;
     color: red;
 }

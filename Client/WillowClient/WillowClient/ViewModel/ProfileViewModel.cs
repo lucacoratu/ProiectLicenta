@@ -79,19 +79,30 @@ namespace WillowClient.ViewModel
                     FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
                     if(photo != null)
                     {
-                        int i = 0;
+                        Stream photoStream = await photo.OpenReadAsync();
+                        //this.profilePictureStream = await photo.OpenReadAsync();
+                        bool uploadedResult = await this.profileService.ChangeProfilePicture(photoStream, this.Account.Id, this.Session);
+                        if (uploadedResult) {
+                            //Send a messsage to all the other clients that the profile picture has been changed
+                            UpdateUserProfilePictureForAllUsers();
+                            await Shell.Current.DisplayAlert("Profile picture", "Your profile picture has been updated", "Ok");
+                            //Update the picture in the box
+                            this.Account.ProfilePictureUrl = "";
+                            this.Account.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + this.Account.Id + ".png";
+                            //profileAvatar.ImageSource = ImageSource.FromStream(() => this.profilePictureStream);
+                        }
                     }
                 }
-            } else {
+            } else if (res == actions[1]) {
                 FileResult photo = await MediaPicker.Default.PickPhotoAsync();
                 if(photo != null) {
                     Stream photoStream = await photo.OpenReadAsync();
+                    //this.profilePictureStream = await photo.OpenReadAsync();
                     bool uploadedResult = await this.profileService.ChangeProfilePicture(photoStream, this.Account.Id, this.Session);
                     if(uploadedResult) {
                         //Send a messsage to all the other clients that the profile picture has been changed
                         UpdateUserProfilePictureForAllUsers();
                         await Shell.Current.DisplayAlert("Profile picture", "Your profile picture has been updated", "Ok");
-                        this.profilePictureStream = photoStream;
                         //Update the picture in the box
                         this.Account.ProfilePictureUrl = "";
                         this.Account.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + this.Account.Id + ".png";

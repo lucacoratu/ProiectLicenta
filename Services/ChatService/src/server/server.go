@@ -95,8 +95,8 @@ func InitServer(address string) error {
 		Addr:         svc.Address,
 		Handler:      serveMux,
 		IdleTimeout:  120 * time.Second,
-		WriteTimeout: 1 * time.Second,
-		ReadTimeout:  1 * time.Second,
+		WriteTimeout: 60 * time.Second,
+		ReadTimeout:  60 * time.Second,
 	}
 
 	//Server finished initialization

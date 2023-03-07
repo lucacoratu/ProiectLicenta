@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.AndroidGroupCallPage"
+             xmlns:controls="clr-namespace:WillowClient"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             Title="PageAndroid"
+             Loaded="ContentPage_Loaded"
+             >
+    <Grid RowDefinitions="*,35" ColumnDefinitions="*,40,*">
+        <controls:CustomWebView x:Name="webView" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <Frame Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" WidthRequest="35" HeightRequest="35" VerticalOptions="End" Margin="0,0,0,20" Background="Red" CornerRadius="60">
+            <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="end_call.png"/>
+        </Frame>
+    </Grid>
+</ContentPage>

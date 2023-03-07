@@ -84,11 +84,20 @@ namespace WillowClient.ViewModel {
                 if (MediaPicker.Default.IsCaptureSupported) {
                     FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
                     if (photo != null) {
-                        int i = 0;
+                        Stream photoStream = await photo.OpenReadAsync();
+                        bool uploadedResult = await this.chatService.UpdateGroupPicture(this.Group.RoomId, photoStream, Globals.Session);
+                        if (uploadedResult) {
+                            //Send a messsage to all the other clients that the profile picture has been changed
+                            //UpdateUserProfilePictureForAllUsers();
+                            this.Group.GroupPictureUrl = "";
+                            this.Group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + this.Group.RoomId + ".png";
+
+                            await Shell.Current.DisplayAlert("Group picture", "Group picture has been updated", "Ok");
+                        }
                     }
                 }
             }
-            else {
+            else if(res == actions[1]) {
                 FileResult photo = await MediaPicker.Default.PickPhotoAsync();
                 if (photo != null) {
                     Stream photoStream = await photo.OpenReadAsync();
@@ -100,9 +109,6 @@ namespace WillowClient.ViewModel {
                         this.Group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + this.Group.RoomId + ".png"; 
 
                         await Shell.Current.DisplayAlert("Group picture", "Group picture has been updated", "Ok");
-                        //Update the picture in the box
-                        //this.Account.ProfilePictureUrl = "";
-                        //this.Account.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + this.Account.Id + ".png";
                     }
                 }
             }

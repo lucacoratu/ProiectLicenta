@@ -193,6 +193,27 @@ namespace WillowClient.ViewModel
             this.IsBusy = false;
         }
 
+        public async void TerminateGroupCall(WebView webView) {
+            if (this.IsBusy)
+                return;
+
+            this.IsBusy = true;
+            //Invoke javascript code to leave the call
+
+            var script = """
+               console.log(ws);
+               """;
+#if WINDOWS
+            //string result = "null";
+            //while(result == "null")
+            await webView.EvaluateJavaScriptAsync("leaveCall()");
+#else
+            webView.Eval(script);
+#endif
+            await Shell.Current.Navigation.PopAsync();
+            this.IsBusy = false;
+        }
+
         public void InitializeCall(WebView webView)
         {
             //TO DO... Send details about the call to the signaling service
@@ -200,6 +221,15 @@ namespace WillowClient.ViewModel
             webView.Source = Constants.signalingServerURL + "room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=android";
 #else
             webView.Source = Constants.signalingServerURL + "room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=windows";  
+#endif
+        }
+
+        public void InitializeGroupCall(WebView webView) {
+            //TO DO... Send details about the call to the signaling service
+#if ANDROID
+            webView.Source = Constants.signalingServerURL + "group?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=android" + "&accountID=" + this.Account.Id.ToString();
+#else
+            webView.Source = Constants.signalingServerURL + "group?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=windows" + "&accountID=" + this.Account.Id.ToString();
 #endif
         }
     }

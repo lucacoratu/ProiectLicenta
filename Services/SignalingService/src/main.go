@@ -18,9 +18,10 @@ func main() {
 	not := server.NewNotifications(serverLogger)
 
 	http.Handle("/", http.FileServer(http.Dir("./public")))
-	http.Handle("/create", http.HandlerFunc(server.CreateRoomRequestHandler))
 	http.Handle("/join", http.HandlerFunc(server.JoinRoomRequestHandler))
+	http.Handle("/joingroup", http.HandlerFunc(server.JoinGroupRequestHandler))
 	http.Handle("/room", http.HandlerFunc(server.RoomRequestHandler))
+	http.Handle("/group", http.HandlerFunc(server.GroupRequestHandler))
 	http.Handle("/notifications", http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		not.NotificationsHandler(pool, rw, r)
 	}))

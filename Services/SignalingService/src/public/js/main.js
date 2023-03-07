@@ -6,7 +6,7 @@ var isInitiator = false;
 var isStarted = false;
 var localStream;
 var pc;
-var remoteStream;
+var remoteStream = null;
 var turnReady;
 
 //Get the options of the call (video and audio enabled/disabled)
@@ -27,33 +27,42 @@ var currentFrameRate = 0;
 var localStreamCopy = null;
 var localCurrentFrameRate = 0;
 
-//Define a function which will be called once every second to change the frame rate
-setInterval(() => {
-   //Update the frame rate of the remote stream
-    if(remoteStreamCopy !== null) {
-        //Get the remote framerate
-        //console.log(remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate);
-        currentFrameRate = remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate;
-        console.log("Remote current frame rate = ", currentFrameRate);
+window.onload = function() {
+    console.log("On load called");
+    //Define a function which will be called once every second to change the frame rate
+    setInterval(function() {
+        //Update the frame rate of the remote stream
+        //console.log("Set interval");
+        console.log(remoteStreamCopy);
+        if(remoteStreamCopy !== null) {
+            //Get the remote framerate
+            //console.log(remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate);
+            console.log(remoteStreamCopy.getVideoTracks()[0].getSettings());
+            currentFrameRate = remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate;
+            console.log("Remote current frame rate = ", currentFrameRate);
 
-        //Get the local framerate
-        localCurrentFrameRate = localStreamCopy.getVideoTracks()[0].getSettings().frameRate;
-        console.log("Local current frame rate = ", localCurrentFrameRate);
+            //Show the remote value of the framerate
+            var frameRateLabel = document.querySelector("#labelFrameRate");
+            frameRateLabel.innerHTML = currentFrameRate.toFixed(2);
+        }
+        
+        if(localStreamCopy !== null) {
+            //Get the local framerate
+            localCurrentFrameRate = localStreamCopy.getVideoTracks()[0].getSettings().frameRate;
+            console.log("Local current frame rate = ", localCurrentFrameRate);
 
-        //Show the remote value of the framerate
-        var frameRateLabel = document.querySelector("#labelFrameRate");
-        frameRateLabel.innerHTML = currentFrameRate.toFixed(2);
-
-        //Show the local value of the framerate
-        var localFrameRateLabel = document.querySelector("#labelLocalFrameRate");
-        localFrameRateLabel.innerHTML = localCurrentFrameRate.toFixed(2);
-    }
-}, 1000);
+            //Show the local value of the framerate
+            var localFrameRateLabel = document.querySelector("#labelLocalFrameRate");
+            localFrameRateLabel.innerHTML = localCurrentFrameRate.toFixed(2);
+        }
+    }, 1000);
+}
 
 //Join the room
 var ws = 0;
 if(platform === "android")
-    ws = new WebSocket("wss://10.0.2.2:8090/join?roomID=" + roomID);
+    ws = new WebSocket("wss://192.168.137.1:8090/join?roomID=" + roomID);
+    //ws = new WebSocket("wss://10.0.2.2:8090/join?roomID=" + roomID);
 else if(platform === "windows"){
     ws = new WebSocket("wss://localhost:8090/join?roomID=" + roomID);
 }

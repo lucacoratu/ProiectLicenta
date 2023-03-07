@@ -35,18 +35,18 @@
         <video id="localVideo" class="local-video" autoplay muted playsinline></video>
         <img id="localImage" class="local-image" src="images/user.png" hidden></image>
 
-        <label id="labelFrameRate" class="label-framerate"></label>
-        <label id="labelLocalFrameRate" class="label-local-framerate"></label>
+        <b id="labelFrameRate" class="label-framerate">FPS</b>
+        <b id="labelLocalFrameRate" class="label-local-framerate">FPS</b>
 
         <!-- Buttons ui -->
-        <div class="buttonsDiv">
-            <!-- <img class="muteButton" src="images/microphone.png"></img> -->
-            <!-- <div class="leaveContainer">
+        <!-- <div class="buttonsDiv">
+            <img class="muteButton" src="images/microphone.png"></img>
+             <div class="leaveContainer">
                 <img class="leaveImage" src="images/hangup.png"></img> 
                 <label class="leaveLabel">Leave</button>
-            </div> -->
-            <!-- <button class="cameraButton">Camera</button> -->
-        </div>
+            </div>
+             <button class="cameraButton">Camera</button>
+        </div> -->
 
         <h2 id="roomID" hidden>{{.RoomID}}</h2>
         <h2 id="audioEnabled" hidden>{{.AudioEnabled}}</h2>

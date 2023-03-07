@@ -178,6 +178,12 @@
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetailsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetails"/>.</summary>
         </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.goToGroupCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.GoToGroupCall"/>.</summary>
+        </member>
         <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.Account">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.account"/>
         </member>

@@ -132,8 +132,8 @@ func InitServer(address string) error {
 	server = &http.Server{
 		Addr:         address,
 		Handler:      serveMuxServer,
-		ReadTimeout:  1 * time.Second,
-		WriteTimeout: 1 * time.Second,
+		ReadTimeout:  60 * time.Second,
+		WriteTimeout: 60 * time.Second,
 		IdleTimeout:  120 * time.Second,
 	}
 

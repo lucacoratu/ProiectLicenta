@@ -297,5 +297,28 @@ namespace WillowClient.ViewModel
                 {"account", this.Account },
             });
         }
+
+        [RelayCommand]
+        public async Task GoToGroupCall() {
+#if ANDROID
+            await Shell.Current.GoToAsync(nameof(AndroidGroupCallPage), true, new Dictionary<string, object>
+            {
+                {"roomID", Group.RoomId },
+                {"account", Account },
+                {"friend", null},
+                {"audio", true},
+                {"video", true },
+            });
+#else
+            await Shell.Current.GoToAsync(nameof(WindowsGroupCallPage), true, new Dictionary<string, object>
+                {
+                {"roomID", Group.RoomId },
+                {"account", Account },
+                {"friend", null},
+                {"audio", true},
+                {"video", true },
+            });
+#endif
+        }
     }
 }

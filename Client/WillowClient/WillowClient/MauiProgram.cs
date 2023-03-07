@@ -67,6 +67,7 @@ public static class MauiProgram
         builder.Services.AddTransient<WindowsCallPage>();
 #if ANDROID
 		builder.Services.AddTransient<AndroidCallPage>();
+		builder.Services.AddTransient<AndroidGroupCallPage>();
 #endif
 		builder.Services.AddSingleton<CreateGroupPage>();
 		builder.Services.AddSingleton<AddFriendPage>();
@@ -86,6 +87,8 @@ public static class MauiProgram
 
 		builder.Services.AddTransient<UserProfilePage>();
 		builder.Services.AddTransient<UserProfileViewModel>();
+
+		builder.Services.AddTransient<WindowsGroupCallPage>();
 
 
         return builder.Build();
