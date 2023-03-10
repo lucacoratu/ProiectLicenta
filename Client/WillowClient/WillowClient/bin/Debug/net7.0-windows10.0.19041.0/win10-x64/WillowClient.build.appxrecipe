@@ -604,10 +604,10 @@
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.28\lib\net6.0\WinRT.Runtime.dll">
       <PackagePath>WinRT.Runtime.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui\4.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.dll">
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui\5.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.dll">
       <PackagePath>CommunityToolkit.Maui.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui.core\4.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.Core.dll">
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui.core\5.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.Core.dll">
       <PackagePath>CommunityToolkit.Maui.Core.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.mvvm\8.1.0\lib\net6.0\CommunityToolkit.Mvvm.dll">
@@ -693,6 +693,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\plainer.maui\1.6.2\lib\net7.0\Plainer.Maui.dll">
       <PackagePath>Plainer.Maui.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\plugin.localnotification\10.1.4\lib\net7.0\Plugin.LocalNotification.dll">
+      <PackagePath>Plugin.LocalNotification.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\uraniumui\2.3.1\lib\net7.0-windows10.0.19041\UraniumUI.dll">
       <PackagePath>UraniumUI.dll</PackagePath>

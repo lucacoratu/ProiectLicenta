@@ -82,38 +82,27 @@ namespace WillowClient.ViewModel
                 return;
             }
 
-            //Some friend is calling
-            if (message.IndexOf("callee") != -1)
-            {
-                //var options1 = new JsonSerializerOptions
-                //{
-                //    PropertyNameCaseInsensitive = true,
-                //};
-
-                ////Parse the response
-                //CallFriendModel cfm = JsonSerializer.Deserialize<CallFriendModel>(message, options1);
-                ////Search through all the friends and find the one that is calling
-                //if (cfm != null)
-                //{
-                //    if (cfm.option == "Call")
-                //    {
-                //        if (this.Friend.FriendId == cfm.caller)
-                //        {
-                //            //Go to the CalleePage
-                //            await MainThread.InvokeOnMainThreadAsync(async () =>
-                //                await Shell.Current.GoToAsync(nameof(CalleePage), true, new Dictionary<string, object>
-                //                {
-                //                {"roomID", this.Friend.RoomID},
-                //                {"account", this.Account},
-                //                {"friend", this.Friend},
-                //                {"audio", false },
-                //                {"video", false },
-                //                })
-                //            );
-                //        }
-                //    }
-                //}
-                return;
+            //Check if the message is new reaction
+            if(message.IndexOf("emojiReaction") != -1) {
+                var options1 = new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true,
+                };
+                try {
+                    //Parse the JSON response
+                    SendReactionModel srm = JsonSerializer.Deserialize<SendReactionModel>(message, options1);
+                    if (srm != null) {
+                        //Add the reaction to the specific message
+                        //Add a new reaction in the collection view
+                        foreach (var group in this.MessageGroups) {
+                            foreach (var messageModel in group) {
+                                if (Int32.Parse(messageModel.MessageId) == srm.messageId)
+                                    messageModel.Reactions.Add(new ReactionModel { Id = 0, Emoji = srm.emojiReaction, ReactionDate = DateTime.Now.ToString("dd MMMM yyyy"), SenderId = srm.senderId});
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    Console.WriteLine(e.ToString());
+                }
             }
 
             //Parse the JSON
@@ -122,19 +111,16 @@ namespace WillowClient.ViewModel
                 PropertyNameCaseInsensitive = true,
             };
 
-            WebSocketMessageModel? websocketMessage = JsonSerializer.Deserialize<WebSocketMessageModel>(message, options);
-            if (websocketMessage != null)
+            try
             {
-                try
+                //Parse the JSON body of the message
+                PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
+                if (privMessageModel != null)
                 {
-                    //Parse the JSON body of the message
-                    PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
-                    if (privMessageModel != null)
-                    {
+                    if (privMessageModel.RoomId == this.roomId) {
                         //This is a private message received from another user
                         //Check if the sender is the current user from the private conversation
-                        if (privMessageModel.SenderId == this.friend.FriendId)
-                        {
+                        if (privMessageModel.SenderId == this.friend.FriendId) {
                             //This is the friend that sent the message
                             //this.Messages.Add(new MessageModel
                             //{
@@ -142,10 +128,8 @@ namespace WillowClient.ViewModel
                             //    Text = privMessageModel.Data,
                             //    TimeStamp = DateTime.Now.ToString("HH:mm")
                             //});
-                            foreach (var e in this.MessageGroups)
-                            {
-                                if (e.Name == "Today")
-                                {
+                            foreach (var e in this.MessageGroups) {
+                                if (e.Name == "Today") {
                                     e.Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm") });
                                     //e.Name = "Today";
                                 }
@@ -154,12 +138,12 @@ namespace WillowClient.ViewModel
                         }
                     }
                 }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
             return;
         }
         
@@ -197,15 +181,15 @@ namespace WillowClient.ViewModel
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
                     if (!groupsAndMessages.ContainsKey(group))
                         groupsAndMessages.Add(group, new List<MessageModel>());
-                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = historyMessage.Data, TimeStamp = msgDate });
+                    //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, Reactions = historyMessage.Reactions });
                     
-                    this.Messages.Add(new MessageModel
-                    {
-                        Owner = MessageOwner.OtherUser,
-                        Text = historyMessage.Data,
-                        TimeStamp = msgDate,
-                    });
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate };
+                    if (historyMessage.Reactions != null) {
+                        foreach (var reaction in historyMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
 
+                    groupsAndMessages[group].Add(msgModel);
                 }
                 else
                 {
@@ -227,14 +211,16 @@ namespace WillowClient.ViewModel
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
                     if (!groupsAndMessages.ContainsKey(group))
                         groupsAndMessages.Add(group, new List<MessageModel>());
-                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = historyMessage.Data, TimeStamp = msgDate });
 
-                    this.Messages.Add(new MessageModel
-                    {
-                        Owner = MessageOwner.CurrentUser,
-                        Text = historyMessage.Data,
-                        TimeStamp = msgDate,
-                    });
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate };
+                    if (historyMessage.Reactions != null) {
+                        foreach (var reaction in historyMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
+
+                    groupsAndMessages[group].Add(msgModel);
+
+                    this.Messages.Add(msgModel);
                 }
             }
             //this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));
@@ -411,6 +397,13 @@ namespace WillowClient.ViewModel
                 { "userId", this.Friend.FriendId },
                 { "account", account }
             });
+        }
+
+        public void ReactToMessage(int messageId, string emojiReaction) {
+            //Create the model object which will be sent as a json to the server
+            SendReactionModel srm = new SendReactionModel { messageId = messageId, emojiReaction = emojiReaction, senderId = this.Account.Id, roomId = this.roomId };
+            string jsonMessage = JsonSerializer.Serialize(srm);
+            this.chatService.SendMessageAsync(jsonMessage);
         }
     }
 }

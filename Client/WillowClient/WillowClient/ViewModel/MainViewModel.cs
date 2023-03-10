@@ -51,6 +51,7 @@ namespace WillowClient.ViewModel
         private FriendService friendService;
         private ChatService chatService;
         private SignalingService signalingService;
+        private NotificationService notificationService;
         public ObservableCollection<FriendStatusModel> Friends { get; } = new();
         public ObservableCollection<FriendStatusModel> CreateGroupSearchResults { get;  } = new();
         public ObservableCollection<FriendStatusModel> FriendsSearchResults { get; } = new();
@@ -63,10 +64,11 @@ namespace WillowClient.ViewModel
 
         public ObservableCollection<FriendRequestModel> SentFriendRequests { get; } = new();
 
-        public MainViewModel(FriendService friendService, ChatService chatService, SignalingService signalingService)
+        public MainViewModel(FriendService friendService, ChatService chatService, SignalingService signalingService, NotificationService notificationService)
         {
             this.friendService = friendService;
             this.chatService = chatService;
+            this.notificationService = notificationService;
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
             this.signalingService = signalingService;
             this.signalingService.RegisterReadCallback(MessageReceivedOnSignalingWebsocket);
@@ -300,6 +302,9 @@ namespace WillowClient.ViewModel
                                 {
                                     this.Friends[i].LastMessage = privMessageModel.Data;
                                     this.Friends[i].LastMessageTimestamp = timestamp;
+
+                                    //Send a push notification that a new message has been received from the friend
+                                    this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, privMessageModel.Data);
                                 }
                                 //Move the conversation to the top
                                 List<FriendStatusModel> CopyFriends = new();
@@ -339,6 +344,7 @@ namespace WillowClient.ViewModel
                                         }
                                     this.Groups[i].LastMessage = this.Groups[i].ParticipantNames[senderIndex] + ": " + privMessageModel.Data;
                                     this.Groups[i].LastMessageTimestamp = timestamp;
+                                    this.notificationService.SendGroupChatNotification(this.Groups[i].GroupName, this.Groups[i].LastMessage);
                                 }
                                 //Move the conversation to the top
                                 List<GroupModel> CopyGroups = new();

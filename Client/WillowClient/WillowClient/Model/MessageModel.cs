@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,10 @@ namespace WillowClient.Model
     public class MessageModel
     {
         public MessageOwner Owner { get; set; }
+        public string MessageId { get; set; }
         public string TimeStamp { get; set; }
         public string Text { get; set; }
         public string SenderName { get; set; }
+        public ObservableCollection<ReactionModel> Reactions { get; } = new();
     }
 }

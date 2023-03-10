@@ -7,6 +7,11 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.companyname.willowclient" android:versionCode="1" android:versionName="1.0">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -42,6 +47,7 @@
   <permission android:name="com.companyname.willowclient.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature" />
   <uses-permission android:name="com.companyname.willowclient.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
   <application android:name="crc643d22fa04dc1777af.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@android:mipmap/sym_def_app_icon" android:label="WillowClient" android:requestLegacyExternalStorage="true" android:roundIcon="@android:mipmap/sym_def_app_icon" android:supportsRtl="true" android:usesCleartextTraffic="true">
+    <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <activity android:name="crc643d22fa04dc1777af.MainActivity" android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:exported="true" android:theme="@style/Maui.SplashTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -56,6 +62,17 @@
     <activity android:name="crc64ba438d8f48cf7e75.IntermediateActivity" android:configChanges="orientation|screenSize" android:exported="true" />
     <receiver android:name="crc640a8d9a12ddbf2cf2.BatteryBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Battery Broadcast Receiver" />
     <receiver android:name="crc640a8d9a12ddbf2cf2.EnergySaverBroadcastReceiver" android:enabled="true" android:exported="false" android:label="Essentials Energy Saver Broadcast Receiver" />
+    <receiver android:name="plugin.LocalNotification.GeofenceTransitionsIntentReceiver" android:enabled="true" android:exported="false" android:label="Plugin LocalNotification Geofence Transitions Receiver" />
+    <receiver android:name="plugin.LocalNotification.NotificationActionReceiver" android:enabled="true" android:exported="false" android:label="Plugin LocalNotification Action Receiver" />
+    <receiver android:name="plugin.LocalNotification.ScheduledAlarmReceiver" android:enabled="true" android:exported="false" android:label="Plugin LocalNotification Scheduled Alarm Receiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+        <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+        <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+        <category android:name="android.intent.category.HOME" />
+      </intent-filter>
+    </receiver>
     <service android:name="crc64396a3fe5f8138e3f.KeepAliveService" />
     <provider android:name="mono.MonoRuntimeProvider" android:authorities="com.companyname.willowclient.mono.MonoRuntimeProvider.__mono_init__" android:exported="false" android:initOrder="1999999999" />
     <provider android:name="androidx.startup.InitializationProvider" android:authorities="com.companyname.willowclient.androidx-startup" android:exported="false" tools:node="merge">
@@ -64,5 +81,7 @@
     </provider>
     <uses-library android:name="androidx.window.extensions" android:required="false" />
     <uses-library android:name="androidx.window.sidecar" android:required="false" />
+    <activity android:name="com.google.android.gms.common.api.GoogleApiActivity" android:exported="false" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
   </application>
 </manifest>

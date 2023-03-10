@@ -14,7 +14,7 @@
              >
     <ScrollView>
         <VerticalStackLayout>
-            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="0,0,15,15" />
                 </Border.StrokeShape>
@@ -25,8 +25,8 @@
                         </ImageButton.Source>
                     </ImageButton>
                     <HorizontalStackLayout Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
-                        <Label FontFamily="{StaticResource ApplicationFont}"  Text="{Binding UserProfile.DisplayName}" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-                        <Label FontFamily="{StaticResource ApplicationFont}"  Text="'s Profile" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="18" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                        <Label FontFamily="{StaticResource ApplicationFont}"  Text="{Binding UserProfile.DisplayName}" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                        <Label FontFamily="{StaticResource ApplicationFont}"  Text="'s Profile" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                     </HorizontalStackLayout>
                 </Grid>
             </Border>

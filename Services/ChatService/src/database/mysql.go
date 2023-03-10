@@ -295,12 +295,44 @@ func (conn *MysqlConnection) GetRoomParticipants(senderId int64, roomId int64) (
 }
 
 /*
+ * This function will get all the reactions of a message in a certain room
+ * It will return a list of reactions if no error occured and nil for error
+ * It will return an empty list and the error if something fails
+ */
+func (conn *MysqlConnection) GetMessageReactions(messageId int64, roomId int64) ([]data.Reaction, error) {
+	//Prepare the statement for getting all the reactions of a message
+	stmtReactions, err := conn.db.Prepare("SELECT ID,Emoji,UserId,ReactionDate FROM reactions INNER JOIN message_reaction ON message_reaction.ReactionId = reactions.ID WHERE message_reaction.MessageId = ?")
+	//Check if an error occured during the statement preparation
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the select for reactions", err.Error())
+		return make([]data.Reaction, 0), err
+	}
+	//Execute the statement
+	rows, err := stmtReactions.Query(messageId)
+	//Check if an error occured
+	if err != nil {
+		conn.logger.Error("Error occured when executing the select statement for reactions", err.Error())
+		return make([]data.Reaction, 0), err
+	}
+
+	//Get all the reactions of the
+	reactions := make([]data.Reaction, 0)
+	for rows.Next() {
+		reaction := data.Reaction{}
+		rows.Scan(&reaction.Id, &reaction.Emoji, &reaction.SenderId, &reaction.ReactionDate)
+		reactions = append(reactions, reaction)
+	}
+
+	return reactions, nil
+}
+
+/*
  * This function will extract all the messages from the database of a certain room that is received as a parameter
  * If an error occurs then an error != nil will be returned, else nil will be returned
  */
 func (conn *MysqlConnection) GetHistory(roomId int64) (data.Messages, error) {
 	//Prepare the select statement which will get all the messages
-	stmtSelect, err := conn.db.Prepare("SELECT TypeID,Data,SendDate,UserID FROM messages WHERE RoomID = ?")
+	stmtSelect, err := conn.db.Prepare("SELECT ID,TypeID,Data,SendDate,UserID FROM messages WHERE RoomID = ?")
 	//Check if an error occured while getting the chat history
 	if err != nil {
 		//An error occured during the select statement
@@ -320,11 +352,20 @@ func (conn *MysqlConnection) GetHistory(roomId int64) (data.Messages, error) {
 	messages := make(data.Messages, 0)
 	for rows.Next() {
 		message := data.Message{}
-		err := rows.Scan(&message.TypeID, &message.Data, &message.SendDate, &message.UserId)
+		err := rows.Scan(&message.Id, &message.TypeID, &message.Data, &message.SendDate, &message.UserId)
 		if err != nil {
 			conn.logger.Error("Error occured during history data fetch", err.Error())
 			return make(data.Messages, 0), err
 		}
+		//For every message get the reactions
+		//Get the reactions for the message
+		reactions, err := conn.GetMessageReactions(message.Id, 0)
+		//Check if an error occured
+		if err != nil {
+			conn.logger.Error("Error occcured when getting the message reactions, message id = ", message.Id, err.Error())
+			return make(data.Messages, 0), err
+		}
+		message.Reactions = append(message.Reactions, reactions...)
 		messages = append(messages, message)
 	}
 
@@ -482,4 +523,120 @@ func (conn *MysqlConnection) UpdateGroupPicture(roomId int64, newPicture string)
 	}
 
 	return true, nil
+}
+
+/*
+ * This function will check if the user already reacted to the message
+ * It will return false if the user did not react to the message
+ * Else it will return true
+ * If an error occurs during the statements inside the function then the error return parameter will not be nil
+ */
+func (conn *MysqlConnection) CheckUserReactedToMessage(messageId int64, userId int64) (bool, error) {
+	//Prepare the statement which will get the number of user reactions to a specific message
+	stmtNumberReactions, err := conn.db.Prepare("SELECT COUNT(message_reaction.ReactionId) FROM reactions INNER JOIN message_reaction ON message_reaction.ReactionId = reactions.ID WHERE reactions.UserID = ? AND message_reaction.MessageId = ?")
+	//Check if an error occured during the preparation of the sql statement
+	if err != nil {
+		conn.logger.Error("Error occured during the preparation of sql statment for checking if user reacted to message", err.Error())
+		return false, err
+	}
+	//Execute the statement
+	row := stmtNumberReactions.QueryRow(userId, messageId)
+	//Check if an error occured when executing the sql statement
+	if row.Err() != nil {
+		conn.logger.Error("Error occured during the execution of sql statement for checking if user reacted to message", row.Err().Error())
+		return false, row.Err()
+	}
+
+	//Get the number of reactions of a user to a message
+	var numberReactions int64 = 0
+	err = row.Scan(&numberReactions)
+	//Check if an error occured during the extraction of data
+	if err != nil {
+		conn.logger.Error("Error ocured when scanning for the number of reactions to a message by a user", err.Error())
+		return false, err
+	}
+	conn.logger.Debug("Number reactions", numberReactions)
+	//Check if the number of reactions is 0
+	if numberReactions != 0 {
+		//The user already reacted to this message
+		return true, nil
+	}
+	//The user did not react to the message
+	return false, nil
+}
+
+/*
+ * This function will insert a new reaction in the reactions table
+ */
+func (conn *MysqlConnection) InsertReaction(emojiReaction string, senderId int64) (int64, error) {
+	//Prepare the insert statement
+	stmtInsert, err := conn.db.Prepare("INSERT INTO reactions(Emoji, UserId) VALUES (?,?)")
+	//Check if an error occured during the insert statement preparation
+	if err != nil {
+		conn.logger.Error("Error occured during the insert reaction preparation", err.Error())
+		return 0, err
+	}
+	//Execute the sql statement
+	res, err := stmtInsert.Exec(emojiReaction, senderId)
+	//Check if an error occured
+	if err != nil {
+		conn.logger.Error("Error occured when executing the reaction insert statement", err.Error())
+		return 0, err
+	}
+	//Return the values
+	return res.LastInsertId()
+}
+
+/*
+ * This function will create an entry in message_reaction table which will tie a reaction to a message
+ * If the insert was successful then true will be returned and nil for error
+ * Else an error will be returned
+ */
+func (conn *MysqlConnection) TieReactionToMessage(messageId int64, reactionId int64) (bool, error) {
+	//Prepare the statement for inserting the entry
+	stmtInsert, err := conn.db.Prepare("INSERT INTO message_reaction(MessageId,ReactionId) VALUES(?,?)")
+	//Check if an error occured during statement preparation
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the statement for message_reaction insertion", err.Error())
+		return false, err
+	}
+	//Execute the statement with the values received as a parameter
+	_, err = stmtInsert.Exec(messageId, reactionId)
+	if err != nil {
+		conn.logger.Error("Error occured when executing the insert statement in message_reaction", err.Error())
+		return false, err
+	}
+	return true, nil
+}
+
+/*
+ * This function will insert a new reaction to a specific message, but first it will check if the user already reacted to this message
+ * If the user did not react to the message then the reaction will be inserted and associated with a specific message
+ */
+func (conn *MysqlConnection) AddMessageReaction(sendReact data.SendReact) (int64, error) {
+	//Check if the user reacted to the message
+	conn.logger.Debug("Add message reaction called")
+	alreadyReacted, err := conn.CheckUserReactedToMessage(sendReact.MessageId, sendReact.SenderId)
+	if err != nil {
+		return 0, err
+	}
+	if alreadyReacted {
+		return 0, errors.New("user already reacted to the message")
+	}
+
+	//Insert the reaction in the reactions table
+	reactionId, err := conn.InsertReaction(sendReact.EmojiReaction, sendReact.SenderId)
+	//Check if an error occured during the insert reaction function
+	if err != nil {
+		conn.logger.Error("Error occured when inserting the reaction", err.Error())
+		return 0, errors.New("could not insert the reaction")
+	}
+
+	//Assign the reaction to the message
+	_, err = conn.TieReactionToMessage(sendReact.MessageId, reactionId)
+	if err != nil {
+		return 0, err
+	}
+
+	return reactionId, nil
 }

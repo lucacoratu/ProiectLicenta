@@ -44,7 +44,7 @@
                 <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Create new group" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>-->
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
@@ -54,7 +54,7 @@
                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
                     </ImageButton.Source>
                 </ImageButton>
-                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Create new group" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Create new group" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
         <VerticalStackLayout Grid.Row="1" Padding="12">
@@ -87,7 +87,7 @@
                                             HeightRequest="45"
                                             ImageSource="{Binding ProfilePictureUrl}"
                                             WidthRequest="45"
-                                            BorderWidth="1.3"
+                                            BorderWidth="0"
                                             BorderColor="WhiteSmoke"
                                             CornerRadius="32"
                                             />

@@ -18,6 +18,7 @@
             <Color x:Key="AccentDarkColor">#483D8B</Color>
             <!--<Color x:Key="AccentDarkColor">#2B1347</Color>-->
             <Color x:Key="AccentSecondDarkColor">#7B68EE</Color>
+            <Color x:Key="AccentThirdDarkColor">#534896</Color>
             <Color x:Key="ErrorDarkColor">OrangeRed</Color>
             <Color x:Key="ButtonDarkBorderColor">#3e2f94</Color>
             <Color x:Key="ButtonDarkHoverColor">#362791</Color>

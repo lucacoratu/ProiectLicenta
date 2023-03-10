@@ -359,6 +359,50 @@ func (pool *Pool) MessageReceived(message Message) {
 			}
 		}
 	}
+
+	//Check if the message is react to message
+	sendReactionMessage := data.SendReact{}
+	err = json.Unmarshal([]byte(message.Body), &sendReactionMessage)
+	isSendReaction := true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isSendReaction = false
+	}
+	if isSendReaction && sendReactionMessage.MessageId != 0 && sendReactionMessage.SenderId != 0 && sendReactionMessage.RoomId != 0 {
+		pool.logger.Debug("Received reaction for message with id", sendReactionMessage.SenderId, "in room with id", sendReactionMessage.RoomId, "reaction", sendReactionMessage.EmojiReaction)
+		_, err := pool.dbConn.AddMessageReaction(sendReactionMessage)
+		if err != nil {
+			message.C.Conn.WriteMessage(1, []byte("could not insert reaction"))
+			return
+		}
+		//Get all the participants of the room
+		participants, err := pool.dbConn.GetRoomParticipants(sendReactionMessage.SenderId, sendReactionMessage.RoomId)
+		pool.logger.Debug(participants)
+		//Check if an error occured when getting the room participants
+		if err != nil {
+			message.C.Conn.WriteMessage(1, []byte("could not insert reaction"))
+			return
+		}
+		//Announce the sender that the reaction has been registered
+		err = message.C.Conn.WriteJSON(sendReactionMessage)
+		//Check if an error occured
+		if err != nil {
+			pool.logger.Error("Error occured when announcing the user that his reaction has been registered", err.Error())
+		}
+		//Send a message to all the users in the room that the user reacted to a message
+		for client := range pool.Clients {
+			for _, participant := range participants {
+				if client.Id == participant {
+					//Send the message that a user reacted to a message
+					err := client.Conn.WriteJSON(sendReactionMessage)
+					if err != nil {
+						pool.logger.Error("Error occured when announcing the other users in a room that a new reaction has been added", err.Error())
+						continue
+					}
+				}
+			}
+		}
+	}
 }
 
 /*

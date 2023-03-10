@@ -34,6 +34,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Resources.Sty
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/ViewsPopups/ReactMessagePopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.ViewsPopups.ReactMessagePopup.xaml
+build_metadata.AdditionalFiles.TargetPath = ViewsPopups\ReactMessagePopup.xaml
+build_metadata.AdditionalFiles.RelativePath = ViewsPopups\ReactMessagePopup.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/AddFriendPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.AddFriendPage.xaml

@@ -4,6 +4,7 @@ using WillowClient.Views;
 using CommunityToolkit.Maui;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using UraniumUI;
+using Plugin.LocalNotification;
 #if ANDROID
 using WillowClient.Platforms.Android;
 #endif
@@ -19,6 +20,9 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
 			.UseMauiCompatibility()
+#if ANDROID
+			.UseLocalNotification()
+#endif
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -89,6 +93,9 @@ public static class MauiProgram
 		builder.Services.AddTransient<UserProfileViewModel>();
 
 		builder.Services.AddTransient<WindowsGroupCallPage>();
+
+		//Notification service
+		builder.Services.AddSingleton<NotificationService>();
 
 
         return builder.Build();

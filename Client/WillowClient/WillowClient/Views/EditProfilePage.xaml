@@ -21,7 +21,7 @@
             </ImageButton>
             <Label Text="Edit Profile" FontSize="18" TextColor="WhiteSmoke" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
         </Grid>-->
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
@@ -31,7 +31,7 @@
                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
                     </ImageButton.Source>
                 </ImageButton>
-                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Edit Profile" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Edit Profile" FontSize="16" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
         <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">

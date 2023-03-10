@@ -136,30 +136,42 @@ namespace WillowClient.ViewModel
                     if (!groupsAndMessages.ContainsKey(group))
                         groupsAndMessages.Add(group, new List<MessageModel>());
 
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "Unknown" };
+                    if (historyMessage.Reactions != null) {
+                        foreach (var reaction in historyMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
+                    
+
                     //Find the sender name of the message
                     int indexSender = this.Group.Participants.IndexOf(historyMessage.UserId);
                     if (indexSender != -1) {
-                        groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = historyMessage.Data, TimeStamp = msgDate, SenderName = this.Group.ParticipantNames[indexSender] });
-                    } else {
-                        groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "Unknown" });
+                        msgModel.SenderName = this.Group.ParticipantNames[indexSender];
+                        //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = this.Group.ParticipantNames[indexSender] });
                     }
+                    // else {
+                    //    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "Unknown" });
+                    //}
 
-
-                    if (indexSender != -1) {
-                        this.Messages.Add(new MessageModel {
-                            Owner = MessageOwner.OtherUser,
-                            Text = historyMessage.Data,
-                            TimeStamp = msgDate,
-                            SenderName = this.Group.ParticipantNames[indexSender],
-                        });
-                    } else {
-                        this.Messages.Add(new MessageModel {
-                            Owner = MessageOwner.OtherUser,
-                            Text = historyMessage.Data,
-                            TimeStamp = msgDate,
-                            SenderName = "Unknown",
-                        });
-                    }
+                    groupsAndMessages[group].Add(msgModel);
+                    this.Messages.Add(msgModel);
+                    //if (indexSender != -1) {
+                    //    this.Messages.Add(new MessageModel {
+                    //        Owner = MessageOwner.OtherUser,
+                    //        MessageId = historyMessage.Id.ToString(),
+                    //        Text = historyMessage.Data,
+                    //        TimeStamp = msgDate,
+                    //        SenderName = this.Group.ParticipantNames[indexSender],
+                    //    });
+                    //} else {
+                    //    this.Messages.Add(new MessageModel {
+                    //        Owner = MessageOwner.OtherUser,
+                    //        MessageId = historyMessage.Id.ToString(),
+                    //        Text = historyMessage.Data,
+                    //        TimeStamp = msgDate,
+                    //        SenderName = "Unknown",
+                    //    });
+                    //}
                 }
                 else
                 {
@@ -181,15 +193,16 @@ namespace WillowClient.ViewModel
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
                     if (!groupsAndMessages.ContainsKey(group))
                         groupsAndMessages.Add(group, new List<MessageModel>());
-                    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "You" });
+                    //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "You" });
 
-                    this.Messages.Add(new MessageModel
-                    {
-                        Owner = MessageOwner.CurrentUser,
-                        Text = historyMessage.Data,
-                        TimeStamp = msgDate,
-                        SenderName = "You",
-                    });
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "You" };
+                    if (historyMessage.Reactions != null) {
+                        foreach (var reaction in historyMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
+
+                    groupsAndMessages[group].Add(msgModel);
+                    this.Messages.Add(msgModel);
                 }
             }
             //this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));

@@ -29,25 +29,25 @@
     <AppXManifest Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-03-07T19:50:45.704</Modified>
+      <Modified>2023-03-10T15:53:12.517</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-03-07T18:22:17.545</Modified>
+      <Modified>2023-03-10T15:53:11.968</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\WillowClient.runtimeconfig.json">
       <PackagePath>WillowClient.runtimeconfig.json</PackagePath>
-      <Modified>2023-03-01T06:04:14.129</Modified>
+      <Modified>2023-03-07T20:29:28.559</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\WillowClient.dll">
       <PackagePath>WillowClient.dll</PackagePath>
-      <Modified>2023-03-07T18:22:14.611</Modified>
+      <Modified>2023-03-10T15:53:09.387</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>WillowClient.exe</PackagePath>
-      <Modified>2023-03-07T18:22:14.708</Modified>
+      <Modified>2023-03-10T15:53:09.473</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.win-x64\7.0.3\runtimes\win-x64\lib\net7.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -805,13 +805,13 @@
       <PackagePath>WinRT.Runtime.dll</PackagePath>
       <Modified>2022-11-16T01:34:42.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui\4.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.dll">
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui\5.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.dll">
       <PackagePath>CommunityToolkit.Maui.dll</PackagePath>
-      <Modified>2023-01-23T15:19:02.000</Modified>
+      <Modified>2023-03-01T08:24:46.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui.core\4.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.Core.dll">
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui.core\5.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.Core.dll">
       <PackagePath>CommunityToolkit.Maui.Core.dll</PackagePath>
-      <Modified>2023-01-23T15:19:06.000</Modified>
+      <Modified>2023-03-01T08:24:50.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.mvvm\8.1.0\lib\net6.0\CommunityToolkit.Mvvm.dll">
       <PackagePath>CommunityToolkit.Mvvm.dll</PackagePath>
@@ -925,6 +925,10 @@
       <PackagePath>Plainer.Maui.dll</PackagePath>
       <Modified>2022-12-09T20:37:30.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\plugin.localnotification\10.1.4\lib\net7.0\Plugin.LocalNotification.dll">
+      <PackagePath>Plugin.LocalNotification.dll</PackagePath>
+      <Modified>2023-03-04T09:35:02.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\uraniumui\2.3.1\lib\net7.0-windows10.0.19041\UraniumUI.dll">
       <PackagePath>UraniumUI.dll</PackagePath>
       <Modified>2023-02-17T18:51:44.000</Modified>
@@ -951,7 +955,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\WillowClient.deps.json">
       <PackagePath>WillowClient.deps.json</PackagePath>
-      <Modified>2023-03-07T19:50:45.503</Modified>
+      <Modified>2023-03-10T15:53:12.312</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\7.0.59\ref\net7.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
       <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>

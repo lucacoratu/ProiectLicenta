@@ -9,7 +9,7 @@
     ".NETCoreApp,Version=v7.0/win10-x64": {
       "WillowClient/1.0": {
         "dependencies": {
-          "CommunityToolkit.Maui": "4.0.0",
+          "CommunityToolkit.Maui": "5.0.0",
           "CommunityToolkit.Mvvm": "8.1.0",
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Microsoft.Extensions.DependencyInjection": "7.0.0",
@@ -19,6 +19,7 @@
           "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop": "7.0.59",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.755",
           "Microsoft.WindowsAppSDK": "1.2.221209.1",
+          "Plugin.LocalNotification": "10.1.4",
           "UraniumUI": "2.3.1",
           "UraniumUI.Icons.FontAwesome": "2.3.1",
           "UraniumUI.Icons.MaterialIcons": "2.3.1",
@@ -797,9 +798,9 @@
           }
         }
       },
-      "CommunityToolkit.Maui/4.0.0": {
+      "CommunityToolkit.Maui/5.0.0": {
         "dependencies": {
-          "CommunityToolkit.Maui.Core": "4.0.0"
+          "CommunityToolkit.Maui.Core": "5.0.0"
         },
         "runtime": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.dll": {
@@ -808,7 +809,7 @@
           }
         }
       },
-      "CommunityToolkit.Maui.Core/4.0.0": {
+      "CommunityToolkit.Maui.Core/5.0.0": {
         "runtime": {
           "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.Core.dll": {
             "assemblyVersion": "1.0.0.0",
@@ -1030,6 +1031,14 @@
           }
         }
       },
+      "Plugin.LocalNotification/10.1.4": {
+        "runtime": {
+          "lib/net7.0/Plugin.LocalNotification.dll": {
+            "assemblyVersion": "10.1.4.0",
+            "fileVersion": "10.1.4.0"
+          }
+        }
+      },
       "UraniumUI/2.3.1": {
         "dependencies": {
           "InputKit.Maui": "4.2.7",
@@ -1102,19 +1111,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "CommunityToolkit.Maui/4.0.0": {
+    "CommunityToolkit.Maui/5.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-76XJVmDRXoKooARQK7tuwvjAnOwF39nmNoRhHGU1cpElJuKZ4v5Y1QlkSJjxaNaubY4JyplZiDPXK60dsEoPRg==",
-      "path": "communitytoolkit.maui/4.0.0",
-      "hashPath": "communitytoolkit.maui.4.0.0.nupkg.sha512"
+      "sha512": "sha512-iIEnYmQxFPH650rtcUlVrFy1/gLuvDLqvLVcnMCzWTJAFCSkNDspPY8EmGGN37FOqBSzQ7OttReyAZiroAjVdA==",
+      "path": "communitytoolkit.maui/5.0.0",
+      "hashPath": "communitytoolkit.maui.5.0.0.nupkg.sha512"
     },
-    "CommunityToolkit.Maui.Core/4.0.0": {
+    "CommunityToolkit.Maui.Core/5.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UBlKxyJisLvbZJvi9o125erFl1bMDSBDvkfgdUFiCt6nTVLA+c3y22LMz1poY7s+zmE2A5iphmqT1SWnkTNWAg==",
-      "path": "communitytoolkit.maui.core/4.0.0",
-      "hashPath": "communitytoolkit.maui.core.4.0.0.nupkg.sha512"
+      "sha512": "sha512-gZp9b++c8fR1QRVsizrQRCeKxVh+RmC9+2IsPC+qpm/nQNHSyWq6PoIp555cb05zQ/AUyM7OTYnzA1BU1JNl4Q==",
+      "path": "communitytoolkit.maui.core/5.0.0",
+      "hashPath": "communitytoolkit.maui.core.5.0.0.nupkg.sha512"
     },
     "CommunityToolkit.Mvvm/8.1.0": {
       "type": "package",
@@ -1227,6 +1236,13 @@
       "sha512": "sha512-yIq981cxxQN4AT1kVRxyJTLeuHpViebUbbx6H5C6QwfUdy0oXELhhJ9VUTVfxqP+Ssyw/VEUGPmd+4un6Ma0sQ==",
       "path": "plainer.maui/1.6.2",
       "hashPath": "plainer.maui.1.6.2.nupkg.sha512"
+    },
+    "Plugin.LocalNotification/10.1.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Jhva/5NIms2VY6eKOonsKpZEZFxU90Tr6b+aDasIFxB16+rWUrQqBA+I1C7pQDh/09sK31EeRqnZ/2RZYZt3pg==",
+      "path": "plugin.localnotification/10.1.4",
+      "hashPath": "plugin.localnotification.10.1.4.nupkg.sha512"
     },
     "UraniumUI/2.3.1": {
       "type": "package",

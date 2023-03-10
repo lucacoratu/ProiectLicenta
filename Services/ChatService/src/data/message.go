@@ -6,10 +6,12 @@ import (
 )
 
 type Message struct {
-	TypeID   int64  `json:"typeId"`
-	Data     string `json:"data"`
-	SendDate string `json:"sendDate"`
-	UserId   int64  `json:"userId"`
+	Id        int64      `json:"id"`
+	TypeID    int64      `json:"typeId"`
+	Data      string     `json:"data"`
+	SendDate  string     `json:"sendDate"`
+	UserId    int64      `json:"userId"`
+	Reactions []Reaction `json:"reactions"`
 }
 
 func (m *Message) ToJSON(w io.Writer) error {

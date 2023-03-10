@@ -18,6 +18,9 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
+    <MauiXaml Update="ViewsPopups\ReactMessagePopup.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\AddFriendPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

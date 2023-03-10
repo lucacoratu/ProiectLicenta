@@ -61,7 +61,7 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[4.0.0, )"
+              "version": "[5.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -91,6 +91,10 @@
               "target": "Package",
               "version": "[7.0.59, )",
               "autoReferenced": true
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[10.1.4, )"
             },
             "UraniumUI": {
               "target": "Package",
@@ -199,7 +203,7 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[4.0.0, )"
+              "version": "[5.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -229,6 +233,10 @@
               "target": "Package",
               "version": "[7.0.59, )",
               "autoReferenced": true
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[10.1.4, )"
             },
             "UraniumUI": {
               "target": "Package",
@@ -282,7 +290,7 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[4.0.0, )"
+              "version": "[5.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -312,6 +320,10 @@
               "target": "Package",
               "version": "[7.0.59, )",
               "autoReferenced": true
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[10.1.4, )"
             },
             "UraniumUI": {
               "target": "Package",
@@ -366,7 +378,7 @@
           "dependencies": {
             "CommunityToolkit.Maui": {
               "target": "Package",
-              "version": "[4.0.0, )"
+              "version": "[5.0.0, )"
             },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
@@ -412,6 +424,10 @@
               "target": "Package",
               "version": "[1.2.221209.1, )",
               "autoReferenced": true
+            },
+            "Plugin.LocalNotification": {
+              "target": "Package",
+              "version": "[10.1.4, )"
             },
             "UraniumUI": {
               "target": "Package",
