@@ -15,18 +15,18 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="SentMessageTemplate" x:DataType="model:MessageModel">
-                <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5" RowDefinitions="1,*">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
                     <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,10,0"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout>
-                            <Label BackgroundColor="{StaticResource AccentThirdDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,0,0" FontSize="13" />
+                            <Label BackgroundColor="{StaticResource AccentThirdDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,0,0" FontSize="14" />
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
                                 <CollectionView Grid.Column="0" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="model:ReactionModel">
-                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="10" VerticalTextAlignment="Start"/>
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
@@ -37,7 +37,7 @@
                 </Grid>
             </DataTemplate>
             <DataTemplate x:Key="ReceivedMessageTemplate" x:DataType="model:MessageModel">
-                <Grid ColumnDefinitions="*,*,*" Margin="0,3,0,5" RowDefinitions="1,*">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                     </Grid.GestureRecognizers>
@@ -47,17 +47,17 @@
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout Padding="0" VerticalOptions="Start">
-                            <Label BackgroundColor="#505050" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,0" FontSize="13"/>
-                            <HorizontalStackLayout Padding="0" Margin="0" HeightRequest="15" Spacing="15">
-                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
-                                <CollectionView ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
+                            <Label BackgroundColor="#505050" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,0" FontSize="14"/>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
+                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
+                                <CollectionView Grid.Column="1" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="model:ReactionModel">
-                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="10" VerticalTextAlignment="Start"/>
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
-                            </HorizontalStackLayout>
+                            </Grid>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
@@ -109,7 +109,7 @@
                 </HorizontalStackLayout>
             </FlexLayout>
         </Border>
-        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" Margin="0,0,0,0"  BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
+        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" Margin="2,0,2,0"  BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="model:MessageGroupModel">
                     <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Name}" BackgroundColor="Transparent" Padding="0,10,0,10" HorizontalOptions="Center" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" />

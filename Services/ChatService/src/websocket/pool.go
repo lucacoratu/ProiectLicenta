@@ -246,7 +246,7 @@ func (pool *Pool) MessageReceived(message Message) {
 
 	if isChatMessage && chatMessageData.RoomID != 0 && chatMessageData.Data != "" {
 		pool.logger.Info("Chat message received on the socket")
-		err = pool.dbConn.InsertMessageIntoRoom(chatMessageData.RoomID, chatMessageData.MessageType, message.C.Id, chatMessageData.Data)
+		messageId, err := pool.dbConn.InsertMessageIntoRoom(chatMessageData.RoomID, chatMessageData.MessageType, message.C.Id, chatMessageData.Data)
 		//Check if the insert was succesfull
 		if err != nil {
 			//Return an error message to the client
@@ -270,12 +270,12 @@ func (pool *Pool) MessageReceived(message Message) {
 		pool.logger.Info("Found the particapants ids,", accIds)
 		//Check if the other user is connected, if it is then sent the message to the other user as well
 		var found bool = false
+		response := PrivateMessageResponse{MessageID: messageId, SenderID: message.C.Id, RoomID: chatMessageData.RoomID, Data: chatMessageData.Data, MessageType: chatMessageData.MessageType}
 		for _, id := range accIds {
 			for client, _ := range pool.Clients {
 				if client.Id == id {
 					//Send the message to him
 					found = true
-					response := PrivateMessageResponse{SenderID: message.C.Id, RoomID: chatMessageData.RoomID, Data: chatMessageData.Data, MessageType: chatMessageData.MessageType}
 					err = client.Conn.WriteJSON(response)
 					if err != nil {
 						pool.logger.Error(err.Error())
@@ -288,20 +288,21 @@ func (pool *Pool) MessageReceived(message Message) {
 				pool.logger.Info("The message could not be sent to the receiver, he might be offline")
 			}
 		}
+		message.C.Conn.WriteJSON(response)
 		//Send the message back to the client as well
-		for client, _ := range pool.Clients {
-			if client.Id == message.C.Id {
-				//Send the message to him
-				found = true
-				response := PrivateMessageResponse{SenderID: message.C.Id, RoomID: chatMessageData.RoomID, Data: chatMessageData.Data, MessageType: chatMessageData.MessageType}
-				err = client.Conn.WriteJSON(response)
-				if err != nil {
-					pool.logger.Error(err.Error())
-					break
-				}
-				pool.logger.Info("Sent the message to the sender")
-			}
-		}
+		// for client, _ := range pool.Clients {
+		// 	if client.Id == message.C.Id {
+		// 		//Send the message to him
+		// 		found = true
+		// 		response := PrivateMessageResponse{MessageID: messageId, SenderID: message.C.Id, RoomID: chatMessageData.RoomID, Data: chatMessageData.Data, MessageType: chatMessageData.MessageType}
+		// 		err = client.Conn.WriteJSON(response)
+		// 		if err != nil {
+		// 			pool.logger.Error(err.Error())
+		// 			break
+		// 		}
+		// 		pool.logger.Info("Sent the message to the sender")
+		// 	}
+		// }
 		return
 	}
 

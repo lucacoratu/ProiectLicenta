@@ -61,6 +61,27 @@ namespace WillowClient.ViewModel
                 PropertyNameCaseInsensitive = true,
             };
 
+            //Check if the message is new reaction
+            if (message.IndexOf("emojiReaction") != -1) {
+                try {
+                    //Parse the JSON response
+                    SendReactionModel srm = JsonSerializer.Deserialize<SendReactionModel>(message, options);
+                    if (srm != null) {
+                        //Add the reaction to the specific message
+                        //Add a new reaction in the collection view
+                        foreach (var group in this.MessageGroups) {
+                            foreach (var messageModel in group) {
+                                if (Int32.Parse(messageModel.MessageId) == srm.messageId)
+                                    messageModel.Reactions.Add(new ReactionModel { Id = 0, Emoji = srm.emojiReaction, ReactionDate = DateTime.Now.ToString("dd MMMM yyyy"), SenderId = srm.senderId });
+                            }
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.ToString());
+                }
+            }
+
             try
             {
                 //Parse the JSON body of the message
@@ -78,13 +99,21 @@ namespace WillowClient.ViewModel
                         //    Text = privMessageModel.Data,
                         //    TimeStamp = DateTime.Now.ToString("HH:mm")
                         //});
+                        MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() };
+                        bool added = false;
                         foreach (var e in this.MessageGroups)
                         {
                             if (e.Name == "Today")
                             {
-                                e.Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                                e.Add(msgModel);
+                                added = true;
                                 //e.Name = "Today";
                             }
+                        }
+                        if(!added) {
+                            List<MessageModel> messageModels = new();
+                            messageModels.Add(msgModel);
+                            this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
                         }
                         return;
                     }
@@ -146,6 +175,7 @@ namespace WillowClient.ViewModel
                     //Find the sender name of the message
                     int indexSender = this.Group.Participants.IndexOf(historyMessage.UserId);
                     if (indexSender != -1) {
+                        msgModel.Owner = MessageOwner.OtherUser;
                         msgModel.SenderName = this.Group.ParticipantNames[indexSender];
                         //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = this.Group.ParticipantNames[indexSender] });
                     }
@@ -154,7 +184,8 @@ namespace WillowClient.ViewModel
                     //}
 
                     groupsAndMessages[group].Add(msgModel);
-                    this.Messages.Add(msgModel);
+                    //this.Messages.Add(msgModel);
+                    
                     //if (indexSender != -1) {
                     //    this.Messages.Add(new MessageModel {
                     //        Owner = MessageOwner.OtherUser,
@@ -332,6 +363,13 @@ namespace WillowClient.ViewModel
                 {"video", true },
             });
 #endif
+        }
+
+        public void ReactToMessage(int messageId, string emojiReaction) {
+            //Create the model object which will be sent as a json to the server
+            SendReactionModel srm = new SendReactionModel { messageId = messageId, emojiReaction = emojiReaction, senderId = this.Account.Id, roomId = Group.RoomId };
+            string jsonMessage = JsonSerializer.Serialize(srm);
+            this.chatService.SendMessageAsync(jsonMessage);
         }
     }
 }

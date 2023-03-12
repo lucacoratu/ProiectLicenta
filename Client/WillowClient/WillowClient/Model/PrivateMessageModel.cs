@@ -8,6 +8,7 @@ namespace WillowClient.Model
 {
     public class PrivateMessageModel
     {
+        public int Id { get; set; }
         public int RoomId { get; set; }
         public string Data { get; set; }
         public string MessageType { get; set; }

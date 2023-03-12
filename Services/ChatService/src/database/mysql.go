@@ -195,25 +195,30 @@ func (conn *MysqlConnection) GetRoomId(accountId int64, friendId int64) (int64, 
  * This function will insert a message into the database. This function will need the room id, typeName, senderId and the data of the message
  * This function will return nil if everything was ok or an error != nil if something happened during the insertion of the message
  */
-func (conn *MysqlConnection) InsertMessageIntoRoom(roomId int64, typeName string, senderID int64, data string) error {
+func (conn *MysqlConnection) InsertMessageIntoRoom(roomId int64, typeName string, senderID int64, data string) (int64, error) {
 	//Prepare the insert message statement
 	stmtInsert, err := conn.db.Prepare("INSERT INTO messages (RoomID, TypeID, Data, UserID) VALUES (?, (SELECT ID FROM messagetypes WHERE TypeName = ?), ?, ?)")
 	//Check if an error occured when preparing the insert statement of the message into the database
 	if err != nil {
 		//An error occured
 		conn.logger.Error("Error occured when preparing the insert message statement", err.Error())
-		return err
+		return -1, err
 	}
 	//Execute the insert statement with the data received from the client
-	_, err = stmtInsert.Exec(roomId, typeName, data, senderID)
+	result, err := stmtInsert.Exec(roomId, typeName, data, senderID)
 	//Check if an error occured when inserting the message into the database
 	if err != nil {
 		//An error occured
 		conn.logger.Error("Error occured when executing the insert message statement", err.Error())
-		return err
+		return -1, err
+	}
+	insertedId, err := result.LastInsertId()
+	if err != nil {
+		conn.logger.Error("Error occured when getting the last inserted id of a message", err.Error())
+		return -1, err
 	}
 	//Check if there was only 1 row affected (TO DO...)
-	return nil
+	return insertedId, nil
 }
 
 /*

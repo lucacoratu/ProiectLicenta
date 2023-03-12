@@ -71,6 +71,7 @@ type PrivateMessage struct {
 }
 
 type PrivateMessageResponse struct {
+	MessageID   int64  `json:"id"`
 	RoomID      int64  `json:"roomID"`
 	Data        string `json:"data"`
 	MessageType string `json:"messageType"`

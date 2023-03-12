@@ -99,6 +99,7 @@ namespace WillowClient.ViewModel
                                     messageModel.Reactions.Add(new ReactionModel { Id = 0, Emoji = srm.emojiReaction, ReactionDate = DateTime.Now.ToString("dd MMMM yyyy"), SenderId = srm.senderId});
                             }
                         }
+                        return;
                     }
                 } catch (Exception e) {
                     Console.WriteLine(e.ToString());
@@ -128,10 +129,31 @@ namespace WillowClient.ViewModel
                             //    Text = privMessageModel.Data,
                             //    TimeStamp = DateTime.Now.ToString("HH:mm")
                             //});
+                            bool added = false;
+                            MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() };
                             foreach (var e in this.MessageGroups) {
                                 if (e.Name == "Today") {
-                                    e.Add(new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                                    e.Add(msgModel);
                                     //e.Name = "Today";
+                                    added = true;
+                                }
+                            }
+                            if (!added) {
+                                //Create the group named today and add the message to the group
+                                List<MessageModel> messageModels = new List<MessageModel>();
+                                messageModels.Add(msgModel);
+                                this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
+                            }
+                            return;
+                        } else {
+                            //He is the one that sent the message so update the message id
+                            foreach(var e in this.MessageGroups) {
+                                if(e.Name == "Today") {
+                                    foreach(var m in e) {
+                                        if(m.MessageId == "-1" && m.Text == privMessageModel.Data) {
+                                            m.MessageId = privMessageModel.Id.ToString();
+                                        }
+                                    }
                                 }
                             }
                             return;
@@ -307,7 +329,7 @@ namespace WillowClient.ViewModel
             {
                 if (e.Name == "Today")
                 {
-                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = "-1" });
                     //e.Name = "Today";
                     found = true;
                 }
@@ -316,7 +338,7 @@ namespace WillowClient.ViewModel
             if (!found)
             {
                 List<MessageModel> messages = new();
-                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
+                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = "-1" });
                 this.MessageGroups.Add(new MessageGroupModel("Today", messages));
             }
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
