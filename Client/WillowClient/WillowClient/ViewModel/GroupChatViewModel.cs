@@ -116,6 +116,22 @@ namespace WillowClient.ViewModel
                             this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
                         }
                         return;
+                    } else {
+                        //Add the message into the collection view for the current user
+                        bool found = false;
+                        foreach (var e in this.MessageGroups) {
+                            if (e.Name == "Today") {
+                                e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
+                                //e.Name = "Today";
+                                found = true;
+                            }
+                        }
+                        //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
+                        if (!found) {
+                            List<MessageModel> messages = new();
+                            messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
+                            this.MessageGroups.Add(new MessageGroupModel("Today", messages));
+                        }
                     }
                 }
             }
@@ -310,24 +326,6 @@ namespace WillowClient.ViewModel
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.Group.RoomId, data = this.MessageText, messageType = "Text" };
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
             chatService.SendMessageAsync(jsonMessage);
-            //Add the message into the collection view for the current user
-            bool found = false;
-            foreach (var e in this.MessageGroups)
-            {
-                if (e.Name == "Today")
-                {
-                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You" });
-                    //e.Name = "Today";
-                    found = true;
-                }
-            }
-            //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
-            if (!found)
-            {
-                List<MessageModel> messages = new();
-                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You" });
-                this.MessageGroups.Add(new MessageGroupModel("Today", messages));
-            }
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
             this.MessageText = "";

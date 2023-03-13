@@ -146,15 +146,30 @@ namespace WillowClient.ViewModel
                             }
                             return;
                         } else {
-                            //He is the one that sent the message so update the message id
-                            foreach(var e in this.MessageGroups) {
-                                if(e.Name == "Today") {
-                                    foreach(var m in e) {
-                                        if(m.MessageId == "-1" && m.Text == privMessageModel.Data) {
-                                            m.MessageId = privMessageModel.Id.ToString();
-                                        }
-                                    }
+                            ////He is the one that sent the message so update the message id
+                            //foreach(var e in this.MessageGroups) {
+                            //    if(e.Name == "Today") {
+                            //        foreach(var m in e) {
+                            //            if(m.MessageId == "-1" && m.Text == privMessageModel.Data) {
+                            //                m.MessageId = privMessageModel.Id.ToString();
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //Add the message into the collection view for the current user
+                            bool found = false;
+                            foreach (var e in this.MessageGroups) {
+                                if (e.Name == "Today") {
+                                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
+                                    //e.Name = "Today";
+                                    found = true;
                                 }
+                            }
+                            //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
+                            if (!found) {
+                                List<MessageModel> messages = new();
+                                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
+                                this.MessageGroups.Add(new MessageGroupModel("Today", messages));
                             }
                             return;
                         }
@@ -323,24 +338,7 @@ namespace WillowClient.ViewModel
 
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
             chatService.SendMessageAsync(jsonMessage);
-            //Add the message into the collection view for the current user
-            bool found = false;
-            foreach(var e in this.MessageGroups)
-            {
-                if (e.Name == "Today")
-                {
-                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = "-1" });
-                    //e.Name = "Today";
-                    found = true;
-                }
-            }
-            //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
-            if (!found)
-            {
-                List<MessageModel> messages = new();
-                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = "-1" });
-                this.MessageGroups.Add(new MessageGroupModel("Today", messages));
-            }
+
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
             this.MessageText = "";
