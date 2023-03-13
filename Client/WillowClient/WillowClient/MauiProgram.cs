@@ -5,6 +5,7 @@ using CommunityToolkit.Maui;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
 using UraniumUI;
 using Plugin.LocalNotification;
+using WillowClient.Database;
 #if ANDROID
 using WillowClient.Platforms.Android;
 #endif
@@ -96,6 +97,9 @@ public static class MauiProgram
 
 		//Notification service
 		builder.Services.AddSingleton<NotificationService>();
+
+		//Database service
+		builder.Services.AddSingleton<DatabaseService>();
 
 
         return builder.Build();

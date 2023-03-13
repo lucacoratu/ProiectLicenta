@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WillowClient.Database;
 using WillowClient.Model;
 using WillowClient.Services;
 using WillowClient.Views;
@@ -16,10 +17,13 @@ namespace WillowClient.ViewModel;
 public partial class LoginViewModel : BaseViewModel
 {
     private LoginService m_LoginService;
+    private DatabaseService databaseService;
 
-    public LoginViewModel()
+    public LoginViewModel(DatabaseService databaseService)
     {
         this.m_LoginService = new LoginService();
+        this.databaseService = databaseService;
+
         this.LoginCommand = new Command(async () => await Login());
         this.GoToRegisterCommand = new Command(async () => await GoToRegister());
 #if ANDROID
@@ -43,12 +47,90 @@ public partial class LoginViewModel : BaseViewModel
     [ObservableProperty]
     private bool phoneVisibility;
 
+    [ObservableProperty]
+    private bool rememberMe = false;
+
     public Command LoginCommand { get; }
     public Command GoToRegisterCommand { get; }
 
     async Task GoToRegister()
     {
         await Shell.Current.GoToAsync(nameof(RegisterPage));
+    }
+
+    async Task LoginFromDatabase(string username, string password) {
+        var model = new LoginModel { Username = username, Password = password };
+        var res = await this.m_LoginService.LoginIntoAccount(model);
+        var options = new JsonSerializerOptions {
+            PropertyNameCaseInsensitive = true,
+        };
+
+        ErrorModel? err = JsonSerializer.Deserialize<ErrorModel>(res, options);
+        if (err != null) {
+            if (err.Error != null) {
+                Error = err.Error;
+                return;
+            }
+        }
+
+        AccountModel? accountModel = JsonSerializer.Deserialize<AccountModel>(res, options);
+        if (accountModel != null) {
+            if (accountModel.DisplayName != null) {
+                //The account will be returned from the server
+                //Redirect to the main page because the user logged in succesfully
+
+                string session = this.m_LoginService.GetSessionCookie();
+                //Error = session;
+                string idHex = accountModel.Id.ToString("X");
+                int lenPadding = 6 - idHex.Length;
+                string hexID = "#";
+                for (int i = 0; i < lenPadding; i++) {
+                    hexID += "0";
+                }
+                hexID += idHex;
+
+                String joinDate = DateTime.Parse(accountModel.JoinDate).ToString("dd MMMM yyyy");
+                accountModel.JoinDate = joinDate;
+
+                if (accountModel.ProfilePictureUrl == "NULL") {
+                    accountModel.ProfilePictureUrl = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+                }
+                else {
+                    accountModel.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + accountModel.ProfilePictureUrl;
+                }
+
+                Globals.Session = session;
+#if ANDROID
+                await Shell.Current.GoToAsync(nameof(MobileMainPage), true, new Dictionary<string, object>
+                {
+                    {"account", accountModel },
+                    {"hexID", hexID},
+                    {"session", session }
+                });
+                //await Shell.Current.GoToAsync(nameof(MobileTabviewMainPage), true);
+#else
+                await Shell.Current.GoToAsync(nameof(MainPage), true, new Dictionary<string, object>
+                {
+                    {"account", accountModel },
+                    {"hexID", hexID},
+                    {"session", session }
+                });
+#endif
+            }
+        }
+    }
+
+    public async void AutoLoginUser() {
+        bool hasAccountRemembered = await this.databaseService.HasAccountRemembered();
+        if(hasAccountRemembered) {
+            //Get the credentials from the database
+            //Login into the account
+            var account = await this.databaseService.GetAccount();
+            if (account == null)
+                return;
+
+            await this.LoginFromDatabase(account.Username, account.Password);
+        }
     }
 
     private bool VerifyUsernameInput(string? username)
@@ -140,6 +222,11 @@ public partial class LoginViewModel : BaseViewModel
                 }
                 else {
                     accountModel.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + accountModel.ProfilePictureUrl;
+                }
+
+                //Save the account details into the database
+                if(RememberMe) {
+                    _ = await this.databaseService.SaveAccount(accountModel.Id, Username, Password, true);
                 }
 
                 Globals.Session = session;

@@ -291,3 +291,9 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\Labrada-Regular.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\f\Labrada.ttf
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\default_group.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\Plugin.LocalNotification.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\SQLite-net.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\SQLitePCLRaw.batteries_v2.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\SQLitePCLRaw.core.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\SQLitePCLRaw.provider.e_sqlite3.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\libe_sqlite3.dylib

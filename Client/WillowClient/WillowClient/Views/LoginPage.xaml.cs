@@ -47,4 +47,10 @@ public partial class LoginPage : ContentPage
         this.entryPassword.IsEnabled = true;
 #endif
     }
+
+    private void ContentPage_Loaded(object sender, EventArgs e) {
+        //Check if the remember me checkbox was checked and auto login the user
+        var vm = BindingContext as LoginViewModel;
+        vm.AutoLoginUser();
+    }
 }

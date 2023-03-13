@@ -51,5 +51,18 @@ namespace WillowClient.Model
         public static string defaultProfilePicture = "default_profile_icon.png";
         //public static string defaultGroupPicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
         public static string defaultGroupPicture = "default_group.png";
+
+        //Strings used for sqlite3 local database
+        public const string databaseFilename = "willow.db3";
+
+        public const SQLite.SQLiteOpenFlags databaseFlags = 
+            // open the database in read/write mode
+            SQLite.SQLiteOpenFlags.ReadWrite |
+            // create the database if it doesn't exist
+            SQLite.SQLiteOpenFlags.Create |
+            // enable multi-threaded database access
+            SQLite.SQLiteOpenFlags.SharedCache;
+
+        public static string databasePath => Path.Combine(FileSystem.AppDataDirectory, databaseFilename);
     }
 }

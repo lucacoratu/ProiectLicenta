@@ -10,6 +10,7 @@
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             Loaded="ContentPage_Loaded"
              >
     <ScrollView>
         <VerticalStackLayout>
@@ -23,7 +24,7 @@
                 <material:TextField x:Name="entryPassword" FontFamily="{StaticResource ApplicationFont}" Title="Password" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Lock}}" Text="{Binding Password}" MaxLength="20" AccentColor="{StaticResource AccentSecondDarkColor}" IsPassword="True" material:AllowClear="True" ClearButtonVisibility="WhileEditing" Unfocused="entryPassword_Unfocused">
                     <!--<validation:RequiredValidation/>-->
                 </material:TextField>
-                <material:CheckBox Text="Remember me?" FontFamily="{StaticResource ApplicationFont}" Color="{StaticResource AccentSecondDarkColor}" TextColor="WhiteSmoke" IconColor="WhiteSmoke" />
+                <material:CheckBox Text="Remember me?" FontFamily="{StaticResource ApplicationFont}" Color="{StaticResource AccentSecondDarkColor}" IsChecked="{Binding RememberMe}" TextColor="WhiteSmoke" IconColor="WhiteSmoke" />
                 <Button Text="Login" StyleClass="FilledButton" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" TextColor="WhiteSmoke" input:FormView.IsSubmitButton="True" Clicked="Button_Clicked"></Button>
                 <HorizontalStackLayout Spacing="20">
                     <Label Text="Don't have an account?" FontFamily="{StaticResource ApplicationFont}" Style="{StaticResource WillowMediumLabelStyle}"></Label>

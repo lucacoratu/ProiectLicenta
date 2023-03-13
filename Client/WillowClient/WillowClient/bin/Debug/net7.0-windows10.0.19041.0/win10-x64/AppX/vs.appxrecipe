@@ -29,25 +29,25 @@
     <AppXManifest Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-03-12T22:15:19.807</Modified>
+      <Modified>2023-03-13T19:28:21.679</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-03-12T22:15:19.288</Modified>
+      <Modified>2023-03-13T19:28:21.169</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\WillowClient.runtimeconfig.json">
       <PackagePath>WillowClient.runtimeconfig.json</PackagePath>
-      <Modified>2023-03-12T19:55:46.687</Modified>
+      <Modified>2023-03-13T19:28:20.878</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\WillowClient.dll">
       <PackagePath>WillowClient.dll</PackagePath>
-      <Modified>2023-03-12T22:15:16.374</Modified>
+      <Modified>2023-03-13T19:28:18.509</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>WillowClient.exe</PackagePath>
-      <Modified>2023-03-12T22:15:16.529</Modified>
+      <Modified>2023-03-13T19:28:18.622</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.win-x64\7.0.3\runtimes\win-x64\lib\net7.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -929,6 +929,22 @@
       <PackagePath>Plugin.LocalNotification.dll</PackagePath>
       <Modified>2023-03-04T09:35:02.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\sqlite-net-pcl\1.8.116\lib\netstandard2.0\SQLite-net.dll">
+      <PackagePath>SQLite-net.dll</PackagePath>
+      <Modified>2021-09-02T21:04:32.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\sqlitepclraw.bundle_green\2.1.4\lib\netstandard2.0\SQLitePCLRaw.batteries_v2.dll">
+      <PackagePath>SQLitePCLRaw.batteries_v2.dll</PackagePath>
+      <Modified>2023-01-10T20:21:26.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\sqlitepclraw.core\2.1.4\lib\netstandard2.0\SQLitePCLRaw.core.dll">
+      <PackagePath>SQLitePCLRaw.core.dll</PackagePath>
+      <Modified>2023-01-10T20:18:32.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\sqlitepclraw.provider.e_sqlite3\2.1.4\lib\net6.0-windows7.0\SQLitePCLRaw.provider.e_sqlite3.dll">
+      <PackagePath>SQLitePCLRaw.provider.e_sqlite3.dll</PackagePath>
+      <Modified>2023-01-10T20:18:52.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\uraniumui\2.3.1\lib\net7.0-windows10.0.19041\UraniumUI.dll">
       <PackagePath>UraniumUI.dll</PackagePath>
       <Modified>2023-02-17T18:51:44.000</Modified>
@@ -953,9 +969,13 @@
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.dll</PackagePath>
       <Modified>2022-11-08T19:31:24.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.1.4\runtimes\win-x64\native\e_sqlite3.dll">
+      <PackagePath>e_sqlite3.dll</PackagePath>
+      <Modified>2023-01-10T20:13:40.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\WillowClient.deps.json">
       <PackagePath>WillowClient.deps.json</PackagePath>
-      <Modified>2023-03-12T22:15:19.597</Modified>
+      <Modified>2023-03-13T19:28:21.469</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\7.0.59\ref\net7.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
       <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>
@@ -975,23 +995,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>
-      <Modified>2023-02-28T20:58:36.650</Modified>
+      <Modified>2023-03-13T17:56:32.127</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png">
       <PackagePath>splashSplashScreen.scale-125.png</PackagePath>
-      <Modified>2023-02-28T20:58:36.666</Modified>
+      <Modified>2023-03-13T17:56:32.142</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png">
       <PackagePath>splashSplashScreen.scale-150.png</PackagePath>
-      <Modified>2023-02-28T20:58:36.688</Modified>
+      <Modified>2023-03-13T17:56:32.163</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png">
       <PackagePath>splashSplashScreen.scale-200.png</PackagePath>
-      <Modified>2023-02-28T20:58:36.721</Modified>
+      <Modified>2023-03-13T17:56:32.196</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
       <PackagePath>splashSplashScreen.scale-400.png</PackagePath>
-      <Modified>2023-02-28T20:58:36.846</Modified>
+      <Modified>2023-03-13T17:56:32.316</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\f\Labrada-Medium.ttf">
       <PackagePath>Labrada-Medium.ttf</PackagePath>
@@ -1055,23 +1075,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-100.png">
       <PackagePath>dotnet_bot.scale-100.png</PackagePath>
-      <Modified>2023-03-02T22:28:24.777</Modified>
+      <Modified>2023-03-13T17:56:32.430</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
       <PackagePath>dotnet_bot.scale-125.png</PackagePath>
-      <Modified>2023-03-02T22:28:24.787</Modified>
+      <Modified>2023-03-13T17:56:32.441</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
       <PackagePath>dotnet_bot.scale-150.png</PackagePath>
-      <Modified>2023-03-02T22:28:24.800</Modified>
+      <Modified>2023-03-13T17:56:32.456</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
       <PackagePath>dotnet_bot.scale-200.png</PackagePath>
-      <Modified>2023-03-02T22:28:24.819</Modified>
+      <Modified>2023-03-13T17:56:32.473</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
       <PackagePath>dotnet_bot.scale-400.png</PackagePath>
-      <Modified>2023-03-02T22:28:24.862</Modified>
+      <Modified>2023-03-13T17:56:32.514</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\end_call.scale-100.png">
       <PackagePath>end_call.scale-100.png</PackagePath>

@@ -323,3 +323,8 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\mscordaccore_amd64_amd64_7.0.323.6910.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\default_group.scale-100.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Plugin.LocalNotification.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\SQLite-net.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\SQLitePCLRaw.batteries_v2.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\SQLitePCLRaw.core.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\SQLitePCLRaw.provider.e_sqlite3.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\e_sqlite3.dll
