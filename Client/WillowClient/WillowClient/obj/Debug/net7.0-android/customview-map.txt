@@ -2,6 +2,8 @@
 @string/appbar_scrolling_view_behavior;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\172\jl\res\layout\navigationlayout.xml
 {urn:oasis:names:tc:xliff:document:1.2}g;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\182\jl\res\values\values.xml
 {urn:oasis:names:tc:xliff:document:1.2}g;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\183\jl\res\values\values.xml
+adaptive-icon;obj\Debug\net7.0-android\resizetizer\r\mipmap-anydpi-v26\willow.xml
+adaptive-icon;obj\Debug\net7.0-android\resizetizer\r\mipmap-anydpi-v26\willow_round.xml
 alpha;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\169\jl\res\anim\enterfromleft.xml
 alpha;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\169\jl\res\anim\exittoleft.xml
 alpha;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\172\jl\res\anim\nav_default_enter_anim.xml
@@ -16,6 +18,8 @@ androidx.fragment.app.FragmentContainerView;D:\ProiectLicenta\Client\WillowClien
 attr;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\170\jl\res\values\attrs.xml
 attr;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\172\jl\res\values\attr.xml
 attr;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\182\jl\res\values\values.xml
+background;obj\Debug\net7.0-android\resizetizer\r\mipmap-anydpi-v26\willow.xml
+background;obj\Debug\net7.0-android\resizetizer\r\mipmap-anydpi-v26\willow_round.xml
 bitmap;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\182\jl\res\drawable\common_google_signin_btn_icon_dark_normal.xml
 bitmap;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\182\jl\res\drawable\common_google_signin_btn_icon_disabled.xml
 bitmap;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\182\jl\res\drawable\common_google_signin_btn_icon_light_normal.xml
@@ -204,6 +208,8 @@ eat-comment;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-
 enum;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\182\jl\res\values\values.xml
 external-cache-path;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\173\jl\res\xml\microsoft_maui_essentials_fileprovider_file_paths.xml
 external-path;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\173\jl\res\xml\microsoft_maui_essentials_fileprovider_file_paths.xml
+foreground;obj\Debug\net7.0-android\resizetizer\r\mipmap-anydpi-v26\willow.xml
+foreground;obj\Debug\net7.0-android\resizetizer\r\mipmap-anydpi-v26\willow_round.xml
 integer;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\183\jl\res\values\values.xml
 item;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\170\jl\res\values\styles.xml
 item;D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\172\jl\res\drawable\maui_splash.xml

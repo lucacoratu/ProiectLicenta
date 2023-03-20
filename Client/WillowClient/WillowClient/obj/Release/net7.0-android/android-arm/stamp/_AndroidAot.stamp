@@ -13,6 +13,11 @@ obj\Release\net7.0-android\android-arm\aot\Microsoft.Extensions.Primitives.dll.s
 obj\Release\net7.0-android\android-arm\aot\Microsoft.Maui.Graphics.dll.so
 obj\Release\net7.0-android\android-arm\aot\Plainer.Maui.dll.so
 obj\Release\net7.0-android\android-arm\aot\Plugin.LocalNotification.dll.so
+obj\Release\net7.0-android\android-arm\aot\SQLite-net.dll.so
+obj\Release\net7.0-android\android-arm\aot\SQLitePCLRaw.batteries_v2.dll.so
+obj\Release\net7.0-android\android-arm\aot\SQLitePCLRaw.core.dll.so
+obj\Release\net7.0-android\android-arm\aot\SQLitePCLRaw.lib.e_sqlite3.android.dll.so
+obj\Release\net7.0-android\android-arm\aot\SQLitePCLRaw.provider.e_sqlite3.dll.so
 obj\Release\net7.0-android\android-arm\aot\UraniumUI.dll.so
 obj\Release\net7.0-android\android-arm\aot\UraniumUI.Icons.FontAwesome.dll.so
 obj\Release\net7.0-android\android-arm\aot\UraniumUI.Icons.MaterialIcons.dll.so
@@ -84,6 +89,7 @@ obj\Release\net7.0-android\android-arm\aot\System.Numerics.Vectors.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.ObjectModel.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.Private.Uri.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.Private.Xml.dll.so
+obj\Release\net7.0-android\android-arm\aot\System.Runtime.InteropServices.RuntimeInformation.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.Runtime.InteropServices.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.Runtime.Numerics.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.Runtime.dll.so
@@ -97,6 +103,7 @@ obj\Release\net7.0-android\android-arm\aot\System.Threading.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.Web.HttpUtility.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.Xml.ReaderWriter.dll.so
 obj\Release\net7.0-android\android-arm\aot\System.dll.so
+obj\Release\net7.0-android\android-arm\aot\netstandard.dll.so
 obj\Release\net7.0-android\android-arm\aot\Java.Interop.dll.so
 obj\Release\net7.0-android\android-arm\aot\Mono.Android.dll.so
 obj\Release\net7.0-android\android-arm\aot\Microsoft.Maui.dll.so

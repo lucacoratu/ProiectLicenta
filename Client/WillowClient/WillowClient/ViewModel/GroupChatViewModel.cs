@@ -25,6 +25,13 @@ namespace WillowClient.ViewModel
 
         [ObservableProperty]
         private string messageText;
+
+        [ObservableProperty]
+        private bool loadingMessages;
+
+        [ObservableProperty]
+        private bool noMessages;
+
         //public ObservableCollection<MessageModel> Messages { get; } = new();
 
         private ChatService chatService;
@@ -75,6 +82,7 @@ namespace WillowClient.ViewModel
                                     messageModel.Reactions.Add(new ReactionModel { Id = 0, Emoji = srm.emojiReaction, ReactionDate = DateTime.Now.ToString("dd MMMM yyyy"), SenderId = srm.senderId });
                             }
                         }
+                        return;
                     }
                 }
                 catch (Exception e) {
@@ -121,7 +129,7 @@ namespace WillowClient.ViewModel
                         bool found = false;
                         foreach (var e in this.MessageGroups) {
                             if (e.Name == "Today") {
-                                e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
+                                e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
                                 //e.Name = "Today";
                                 found = true;
                             }
@@ -129,7 +137,7 @@ namespace WillowClient.ViewModel
                         //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
                         if (!found) {
                             List<MessageModel> messages = new();
-                            messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
+                            messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
                             this.MessageGroups.Add(new MessageGroupModel("Today", messages));
                         }
                     }
@@ -148,14 +156,15 @@ namespace WillowClient.ViewModel
             if (Messages.Count != 0)
                 Messages.Clear();
 
+            LoadingMessages = true;
             Dictionary<string, List<MessageModel>> groupsAndMessages = new();
 
             int roomId = this.Group.RoomId;
             if (Group.LastMessageSender == 0 && Group.LastMessageTimestamp == null) {
                 return;
             }
-            var historyMessages = await this.chatService.GetMessageHistory(roomId);
-            foreach (var historyMessage in historyMessages)
+
+            await foreach (var historyMessage in this.chatService.GetMessageHistoryAsync(roomId))
             {
                 //Create the MessageModel list
                 if (historyMessage.UserId != this.Account.Id)
@@ -193,32 +202,12 @@ namespace WillowClient.ViewModel
                     if (indexSender != -1) {
                         msgModel.Owner = MessageOwner.OtherUser;
                         msgModel.SenderName = this.Group.ParticipantNames[indexSender];
-                        //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = this.Group.ParticipantNames[indexSender] });
                     }
-                    // else {
-                    //    groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "Unknown" });
-                    //}
 
                     groupsAndMessages[group].Add(msgModel);
-                    //this.Messages.Add(msgModel);
                     
-                    //if (indexSender != -1) {
-                    //    this.Messages.Add(new MessageModel {
-                    //        Owner = MessageOwner.OtherUser,
-                    //        MessageId = historyMessage.Id.ToString(),
-                    //        Text = historyMessage.Data,
-                    //        TimeStamp = msgDate,
-                    //        SenderName = this.Group.ParticipantNames[indexSender],
-                    //    });
-                    //} else {
-                    //    this.Messages.Add(new MessageModel {
-                    //        Owner = MessageOwner.OtherUser,
-                    //        MessageId = historyMessage.Id.ToString(),
-                    //        Text = historyMessage.Data,
-                    //        TimeStamp = msgDate,
-                    //        SenderName = "Unknown",
-                    //    });
-                    //}
+                    this.Messages.Add(msgModel);
+                    
                 }
                 else
                 {
@@ -240,7 +229,6 @@ namespace WillowClient.ViewModel
                     //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
                     if (!groupsAndMessages.ContainsKey(group))
                         groupsAndMessages.Add(group, new List<MessageModel>());
-                    //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "You" });
 
                     MessageModel msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, SenderName = "You" };
                     if (historyMessage.Reactions != null) {
@@ -252,11 +240,15 @@ namespace WillowClient.ViewModel
                     this.Messages.Add(msgModel);
                 }
             }
-            //this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));
+
+            if (groupsAndMessages.Count == 0)
+                NoMessages = true;
+
             foreach (var e in groupsAndMessages)
             {
                 this.MessageGroups.Add(new MessageGroupModel(e.Key as string, e.Value as List<MessageModel>));
             }
+            LoadingMessages = false;
         }
 
         [RelayCommand]
@@ -325,7 +317,7 @@ namespace WillowClient.ViewModel
             //Create the structure that will hold the data which will be json encoded and sent to the server
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.Group.RoomId, data = this.MessageText, messageType = "Text" };
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
-            chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
             this.MessageText = "";
@@ -363,11 +355,11 @@ namespace WillowClient.ViewModel
 #endif
         }
 
-        public void ReactToMessage(int messageId, string emojiReaction) {
+        public async void ReactToMessage(int messageId, string emojiReaction) {
             //Create the model object which will be sent as a json to the server
             SendReactionModel srm = new SendReactionModel { messageId = messageId, emojiReaction = emojiReaction, senderId = this.Account.Id, roomId = Group.RoomId };
             string jsonMessage = JsonSerializer.Serialize(srm);
-            this.chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
         }
     }
 }

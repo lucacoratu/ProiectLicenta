@@ -9,6 +9,63 @@ var pc;
 var remoteStream = null;
 var turnReady;
 
+//Worker which will encrypt the data
+const worker = new Worker('js/worker.js');
+
+if ('MediaStreamTrackProcessor' in window && 'MediaStreamTrackGenerator' in window) {
+    // Insertable streams for `MediaStreamTrack` is supported.
+    console.log("Support insertable streams", true);
+}
+
+//Create the transformer for the video stream
+const transformerSender = new TransformStream({
+    async transform(encodedFrame, controller) {
+        // Reconstruct the original frame.
+        //console.log("Frame received for encryption");
+        //console.log(encodedFrame);
+        const newData = new ArrayBuffer(encodedFrame.allocationSize());
+        encodedFrame.copyTo(newData);
+        //console.log(newData);
+
+        //const view = new DataView(encodedFrame.data);
+
+        // const newData = new ArrayBuffer(encodedFrame.data.byteLength);
+        const newView = new DataView(newData);
+
+        //Xor all the bytes with 0x4b
+        const xor_value = 0x4b;
+        for (let i = 0; i < encodedFrame.allocationSize(); ++i)
+             newView.setInt8(i, newView.getInt8(i) ^ xor_value);
+
+        encodedFrame.data = newData;
+        controller.enqueue(encodedFrame);
+    }
+});
+
+const transformerReceiver = new TransformStream({
+    async transform(encodedFrame, controller) {
+        // Reconstruct the original frame.
+        //console.log("Frame received for decryption");
+        //console.log(encodedFrame);
+        const newData = new ArrayBuffer(encodedFrame.allocationSize());
+        encodedFrame.copyTo(newData);
+        //console.log(newData);
+
+        //const view = new DataView(encodedFrame.data);
+
+        // const newData = new ArrayBuffer(encodedFrame.data.byteLength);
+        const newView = new DataView(newData);
+
+        //Xor all the bytes with 0x4b
+        const xor_value = 0x4b;
+        for (let i = 0; i < encodedFrame.allocationSize(); ++i)
+            newView.setInt8(i, newView.getInt8(i) ^ xor_value);
+        
+        encodedFrame.data = newData;
+        controller.enqueue(encodedFrame);
+    }
+})
+
 //Get the options of the call (video and audio enabled/disabled)
 var audio = document.querySelector("#audioEnabled");
 var video = document.querySelector("#videoEnabled");
@@ -33,23 +90,25 @@ window.onload = function() {
     setInterval(function() {
         //Update the frame rate of the remote stream
         //console.log("Set interval");
-        console.log(remoteStreamCopy);
+        //console.log(remoteStreamCopy);
         if(remoteStreamCopy !== null) {
             //Get the remote framerate
             //console.log(remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate);
-            console.log(remoteStreamCopy.getVideoTracks()[0].getSettings());
+            //console.log(remoteStreamCopy.getVideoTracks()[0].getSettings());
             currentFrameRate = remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate;
-            console.log("Remote current frame rate = ", currentFrameRate);
+            //console.log("Remote current frame rate = ", currentFrameRate);
 
             //Show the remote value of the framerate
             var frameRateLabel = document.querySelector("#labelFrameRate");
             frameRateLabel.innerHTML = currentFrameRate.toFixed(2);
         }
+
+        console.log(remoteStream.getAudioTracks());
         
         if(localStreamCopy !== null) {
             //Get the local framerate
             localCurrentFrameRate = localStreamCopy.getVideoTracks()[0].getSettings().frameRate;
-            console.log("Local current frame rate = ", localCurrentFrameRate);
+            //console.log("Local current frame rate = ", localCurrentFrameRate);
 
             //Show the local value of the framerate
             var localFrameRateLabel = document.querySelector("#labelLocalFrameRate");
@@ -71,6 +130,72 @@ ws.onopen = function(event) {
     let msg = {content: "create or join"};
     console.log(JSON.stringify(msg));
     ws.send(JSON.stringify(msg));
+}
+
+var muted = false;
+var cameraEnabled = true;
+//Function for handling muting and unmuting the microphone
+function toggleMicrophone() {
+    console.log("Toggle microphone called");
+    var muted_button = document.querySelector("#microphone_button");
+    if(muted == false) {
+        muted = true;
+        //Change the font icon of the microphone button
+        muted_button.innerHTML = '<i class="fa fa-microphone-slash" style="font-size: 30px; color: whitesmoke;" ></i>'
+        //Mute the microphone
+        console.log(localStream.getAudioTracks());
+        localStream.getAudioTracks()[0].enabled = false;
+    } else { 
+        muted = false;
+        muted_button.innerHTML = '<i class="fa fa-microphone" style="font-size: 30px; color: whitesmoke;" ></i>'
+        //Unmute the microphone
+        localStream.getAudioTracks()[0].enabled = true;
+        console.log(localStream.getAudioTracks());
+    }
+}
+
+function toggleCamera() {
+    var camera_button = document.querySelector("#camera_button");
+    if(cameraEnabled == true) {
+        cameraEnabled = false;
+        camera_button.innerHTML = '<i class="fa fa-video-slash" style="font-size: 30px; color: whitesmoke;"></i>';
+        localStream.getVideoTracks()[0].enabled = false;
+        // localStream.getVideoTracks()[0].stop();
+        // localStream.removeTrack(localStream.getVideoTracks()[0]);
+        // console.log(localStream.getVideoTracks());
+    } else {
+        cameraEnabled = true;
+        camera_button.innerHTML = '<i class="fa fa-video" style="font-size: 30px; color: whitesmoke;"></i>';
+        
+        //Get the video stream from the camera
+        // var streamConstraints = {
+        //     audio: false,
+        //     video: { facingMode: "user" }
+        // };
+
+        // navigator.mediaDevices.getUserMedia(streamConstraints)
+        // .then((stream) => {
+        //     localStream.addTrack(stream.getVideoTracks()[0]);
+        // })
+        // .catch((error) => {
+        //     console.log("error: ", error);
+        // })
+
+    }
+}
+
+
+function PeerMuted() {
+    console.log("The other user is muted!");
+    //Show an icon on the remote video signifying the user is muted
+    const muted_div = document.querySelector("#remote_muted");
+    muted_div.style.display = "block";
+}
+
+function PeerUnmuted() {
+    console.log("The other user unmuted");
+    const muted_div = document.querySelector("#remote_muted");
+    muted_div.style.display = "none";
 }
 
 function leaveCall() {
@@ -172,12 +297,14 @@ if(video.innerHTML === "true") {
 //Displaying Local Stream and Remote Stream on webpage
 var localVideo = document.querySelector('#localVideo');
 var remoteVideo = document.querySelector('#remoteVideo');
+
 //console.log("Going to find Local media");
 navigator.mediaDevices.getUserMedia(localStreamConstraints)
 .then(gotStream)
 .catch(function(e) {
   alert('getUserMedia() error: ' + e.name);
 });
+
 
 function sendMessage(message) {
     console.log('Client sending message: ', message);
@@ -246,7 +373,19 @@ function onCreateSessionDescriptionError(error) {
 
 function handleRemoteStreamAdded(event) {
     console.log('Remote stream added.');
+
+    // //Decode the remote stream
     remoteStream = event.stream;
+    
+    // const videoTrack = remoteStream.getVideoTracks()[0];
+
+    // const trackProcessor = new MediaStreamTrackProcessor({ track: videoTrack });
+    // const trackGenerator = new MediaStreamTrackGenerator({ kind: 'video' });
+
+    // trackProcessor.readable.pipeThrough(transformerReceiver).pipeTo(trackGenerator.writable);
+
+    // remoteStream = new MediaStream([trackGenerator]);
+
     //Copy of the remote stream
     remoteStreamCopy = remoteStream;
     remoteVideo.srcObject = remoteStream;
@@ -280,6 +419,7 @@ function maybeStart(){
       console.log('>>>>>> creating peer connection');
       createPeerConnection();
       pc.addStream(localStream);
+      //pc.addStream(localStream);
       isStarted = true;
       console.log('isInitiator', isInitiator);
       if (isInitiator) {
@@ -294,6 +434,15 @@ function gotStream(stream) {
     localStream = stream;
     localVideo.srcObject = stream;
     localStreamCopy = stream;
+
+    // const videoTrack = stream.getVideoTracks()[0];
+
+    // const trackProcessor = new MediaStreamTrackProcessor({ track: videoTrack });
+    // const trackGenerator = new MediaStreamTrackGenerator({ kind: 'video' });
+
+    // trackProcessor.readable.pipeThrough(transformerSender).pipeTo(trackGenerator.writable);
+
+    // localStream = new MediaStream([trackGenerator]);
 
     sendMessage('got user media');
     if (isInitiator) {

@@ -230,6 +230,44 @@ func (ch *Chat) GetRoomHistory(rw http.ResponseWriter, r *http.Request) {
 }
 
 /*
+ * This function will get the messages fro ma room with an id greater than the value specified by the user
+ */
+func (ch *Chat) GetRoomHistoryAfterAMessage(rw http.ResponseWriter, r *http.Request) {
+	//Log that the endpoint has been hit
+	ch.logger.Info("Endpoint /history/{id:[0-9]+}/{knownId:[0-9]+} (GET method)")
+	//Get the values the user specified
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	//Check if an error occured and send an error message to the client
+	if err != nil {
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	//Get the last known id of the message
+	lastId, err := strconv.Atoi(vars["knownId"])
+	if err != nil {
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	messages, err := ch.dbConn.GetHistoryWithId(int64(id), int64(lastId))
+	if err != nil {
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	messages.ToJSON(rw)
+}
+
+/*
  * This function will create a new group (room that will have a name)
  */
 func (ch *Chat) CreateGroup(rw http.ResponseWriter, r *http.Request) {

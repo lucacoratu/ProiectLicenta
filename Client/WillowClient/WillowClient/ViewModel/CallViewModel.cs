@@ -78,7 +78,7 @@ namespace WillowClient.ViewModel
             }
         }
 
-        public void StartCalling()
+        public async void StartCalling()
         {
             if (this.IsBusy)
                 return;
@@ -92,7 +92,7 @@ namespace WillowClient.ViewModel
                 option = "Call"
             };
             string jsonMessage = JsonSerializer.Serialize(cfm);
-            this.chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
             this.IsBusy = false;
         }
 
@@ -111,7 +111,7 @@ namespace WillowClient.ViewModel
                 option = "Answer"
             };
             string jsonMessage = JsonSerializer.Serialize(cfm);
-            this.chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
 #if ANDROID
             await Shell.Current.GoToAsync(nameof(AndroidCallPage), true, new Dictionary<string, object>
             {
@@ -148,7 +148,7 @@ namespace WillowClient.ViewModel
                 option = "Deny"
             };
             string jsonMessage = JsonSerializer.Serialize(cfm);
-            this.chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
             await MainThread.InvokeOnMainThreadAsync(async () =>
                 await Shell.Current.Navigation.PopAsync()
             );
@@ -169,7 +169,7 @@ namespace WillowClient.ViewModel
                 option = "Cancel"
             };
             string jsonMessage = JsonSerializer.Serialize(cfm);
-            this.chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
             //Send a notification through the websocket to close the call
             await Shell.Current.Navigation.PopAsync();
             this.IsBusy = false;

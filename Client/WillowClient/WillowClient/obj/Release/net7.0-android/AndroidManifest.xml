@@ -29,7 +29,7 @@
   <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
   <uses-feature android:name="android.hardware.camera" />
   <uses-feature android:name="android.hardware.camera.autofocus" />
-  <application android:allowBackup="true" android:icon="@android:mipmap/sym_def_app_icon" android:roundIcon="@android:mipmap/sym_def_app_icon" android:supportsRtl="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:name="crc643d22fa04dc1777af.MainApplication" android:label="WillowClient" android:extractNativeLibs="true">
+  <application android:allowBackup="true" android:icon="@mipmap/willow" android:roundIcon="@mipmap/willow_round" android:supportsRtl="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:name="crc643d22fa04dc1777af.MainApplication" android:label="Willow" android:extractNativeLibs="true">
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <receiver android:enabled="true" android:exported="false" android:label="Plugin LocalNotification Geofence Transitions Receiver" android:name="plugin.LocalNotification.GeofenceTransitionsIntentReceiver" />
     <receiver android:enabled="true" android:exported="false" android:label="Plugin LocalNotification Action Receiver" android:name="plugin.LocalNotification.NotificationActionReceiver" />

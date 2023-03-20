@@ -26,6 +26,18 @@ namespace WillowClient.Database {
 
             //Create the account table where the user preferences of the account will be stored
             _ = await this.databaseConnection.CreateTableAsync<Account>();
+
+            //Create the friends table where the account friends will be cached
+            _ = await this.databaseConnection.CreateTableAsync<Friend>();
+
+            //Create the friend_message table where corelations between room and messages will be cached
+            _ = await this.databaseConnection.CreateTableAsync<RoomMessage>();
+
+            //Create the messages table where all messages will be cached
+            _ = await this.databaseConnection.CreateTableAsync<Message>();
+
+            //Create the key value table where the cached data will be stored like in a redis database
+            _ = await this.databaseConnection.CreateTableAsync<KeyValue>();
         }
 
         //Initialize the database if it doesn't exist on the device
@@ -75,6 +87,101 @@ namespace WillowClient.Database {
             var numberInserted = await this.databaseConnection.InsertOrReplaceAsync(account);
             if (numberInserted != 1)
                 return false;
+            return true;
+        }
+
+        //Cache friends in the local database for quicker loading
+        public async Task<bool> SaveFriends(List<FriendModel> listFriends) {
+            foreach(var friend in listFriends) {
+                Friend f = new Friend {
+                    Id = friend.FriendId,
+                    BefriendDate = DateTime.Now,
+                    JoinDate = DateTime.Parse(friend.JoinDate),
+                    DisplayName = friend.DisplayName,
+                    LastOnline = DateTime.Parse(friend.LastOnline),
+                    Status = friend.Status,
+                    RoomID = friend.RoomID,
+                    LastMessage = friend.LastMessage,
+                    LastMessageTimestamp = DateTime.Parse(friend.LastMessageTimestamp),
+                };
+                //Save the model in the database
+                _ = await this.databaseConnection.InsertOrReplaceAsync(f);
+            }
+            return true;
+        }
+
+        //Save or update the local friends
+        public async Task<bool> UpdateLocalFriends(List<Friend> listLocalFriends) {
+            foreach(var localFriend in listLocalFriends) {
+                _ = await this.databaseConnection.InsertOrReplaceAsync(localFriend);
+            }
+            return true;
+        }
+
+        //Get the cached friends from the database
+        public async Task<List<Friend>> GetLocalFriends() {
+            await this.InitDatabase();
+            return await this.databaseConnection.Table<Friend>().ToListAsync();
+        }
+
+        //Save key value data in the corresponding table
+        public async Task<bool> SaveKeyValueData(string key, string value, DateTime expirationDate) {
+            //Check if the values are correct
+            if (key == null || value == null)
+                return false;
+
+            //Check if the date is not before the current date
+            if (expirationDate <= DateTime.Now)
+                return false;
+
+            await this.InitDatabase();
+
+            _ = await this.databaseConnection.InsertAsync(new KeyValue { Key = key, Value = value, ExpirationDate = expirationDate});
+            return true;
+        }
+
+        //Save key value data with default expiration date current timestamp plus one day
+        public async Task<bool> SaveKeyValueData(string key, string value) {
+            //Check if the values are correct
+            if (key == null || value == null)
+                return false;
+
+            DateTime expirationDate = DateTime.Now.AddDays(1);
+            await this.InitDatabase();
+
+            _ = await this.databaseConnection.InsertOrReplaceAsync(new KeyValue { Key = key, Value = value, ExpirationDate = expirationDate });
+            return true;
+        }
+
+        //Get the cached entry with the specified key
+        public async Task<string> GetCachedEntry(string key) {
+            if(key == null)
+                return null;
+
+            await this.InitDatabase();
+            int count = await this.databaseConnection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM keyvalue");
+            if (count == 0)
+                return null;
+            try {
+                KeyValue result = await this.databaseConnection.GetAsync<KeyValue>(key);
+                return result.Value;
+            } catch(Exception ex) {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        //Delete cached data that expired
+        public async Task<bool> DeleteExpiredCachedData() {
+            await this.InitDatabase();
+
+            //Get all the cached entries in the database
+            var cachedData = await this.databaseConnection.Table<KeyValue>().ToListAsync();
+            foreach(KeyValue kv in cachedData) {
+                _ = await this.databaseConnection.DeleteAsync(kv);
+            }
+
+            //Return the result
             return true;
         }
     }

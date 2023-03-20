@@ -13,6 +13,11 @@ obj\Release\net7.0-android\android-arm64\aot\Microsoft.Extensions.Primitives.dll
 obj\Release\net7.0-android\android-arm64\aot\Microsoft.Maui.Graphics.dll.so
 obj\Release\net7.0-android\android-arm64\aot\Plainer.Maui.dll.so
 obj\Release\net7.0-android\android-arm64\aot\Plugin.LocalNotification.dll.so
+obj\Release\net7.0-android\android-arm64\aot\SQLite-net.dll.so
+obj\Release\net7.0-android\android-arm64\aot\SQLitePCLRaw.batteries_v2.dll.so
+obj\Release\net7.0-android\android-arm64\aot\SQLitePCLRaw.core.dll.so
+obj\Release\net7.0-android\android-arm64\aot\SQLitePCLRaw.lib.e_sqlite3.android.dll.so
+obj\Release\net7.0-android\android-arm64\aot\SQLitePCLRaw.provider.e_sqlite3.dll.so
 obj\Release\net7.0-android\android-arm64\aot\UraniumUI.dll.so
 obj\Release\net7.0-android\android-arm64\aot\UraniumUI.Icons.FontAwesome.dll.so
 obj\Release\net7.0-android\android-arm64\aot\UraniumUI.Icons.MaterialIcons.dll.so
@@ -84,6 +89,7 @@ obj\Release\net7.0-android\android-arm64\aot\System.Numerics.Vectors.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.ObjectModel.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.Private.Uri.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.Private.Xml.dll.so
+obj\Release\net7.0-android\android-arm64\aot\System.Runtime.InteropServices.RuntimeInformation.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.Runtime.InteropServices.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.Runtime.Numerics.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.Runtime.dll.so
@@ -97,6 +103,7 @@ obj\Release\net7.0-android\android-arm64\aot\System.Threading.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.Web.HttpUtility.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.Xml.ReaderWriter.dll.so
 obj\Release\net7.0-android\android-arm64\aot\System.dll.so
+obj\Release\net7.0-android\android-arm64\aot\netstandard.dll.so
 obj\Release\net7.0-android\android-arm64\aot\Java.Interop.dll.so
 obj\Release\net7.0-android\android-arm64\aot\Mono.Android.dll.so
 obj\Release\net7.0-android\android-arm64\aot\Microsoft.Maui.dll.so

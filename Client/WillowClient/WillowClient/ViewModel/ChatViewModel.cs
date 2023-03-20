@@ -32,6 +32,12 @@ namespace WillowClient.ViewModel
         private string messageText;
 
         [ObservableProperty]
+        private bool loadingMessages;
+
+        [ObservableProperty]
+        private bool noMessages;
+
+        [ObservableProperty]
         private string lastOnlineText = "Last Online:";
 
         //public ObservableCollection<MessageModel> Messages { get; } = new();
@@ -160,7 +166,7 @@ namespace WillowClient.ViewModel
                             bool found = false;
                             foreach (var e in this.MessageGroups) {
                                 if (e.Name == "Today") {
-                                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
+                                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
                                     //e.Name = "Today";
                                     found = true;
                                 }
@@ -168,7 +174,7 @@ namespace WillowClient.ViewModel
                             //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
                             if (!found) {
                                 List<MessageModel> messages = new();
-                                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
+                                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
                                 this.MessageGroups.Add(new MessageGroupModel("Today", messages));
                             }
                             return;
@@ -184,7 +190,7 @@ namespace WillowClient.ViewModel
             return;
         }
         
-        public async void GetHistory()
+        public async Task GetHistory()
         {
             //If there are any elements in the list then clear it
             if (Messages.Count != 0)
@@ -192,8 +198,7 @@ namespace WillowClient.ViewModel
 
             Dictionary<string, List<MessageModel>> groupsAndMessages = new();
 
-            var historyMessages = await this.chatService.GetMessageHistory(this.roomId);
-            foreach(var historyMessage in historyMessages)
+            await foreach(var historyMessage in this.chatService.GetMessageHistoryAsync(this.roomId))
             {
                 //Create the MessageModel list
                 if (historyMessage.UserId != this.Account.Id)
@@ -227,6 +232,7 @@ namespace WillowClient.ViewModel
                     }
 
                     groupsAndMessages[group].Add(msgModel);
+                    this.Messages.Add(msgModel);
                 }
                 else
                 {
@@ -260,9 +266,157 @@ namespace WillowClient.ViewModel
                     this.Messages.Add(msgModel);
                 }
             }
+
+            if (groupsAndMessages.Count == 0)
+                NoMessages = true;
+
             //this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));
             foreach(var e in groupsAndMessages)
             {
+                this.MessageGroups.Add(new MessageGroupModel(e.Key as string, e.Value as List<MessageModel>));
+            }
+        }
+
+        public async Task GetHistoryWithCache() {
+            //If there are any elements in the list then clear it
+            if (Messages.Count != 0)
+                Messages.Clear();
+
+            int lastId = 0;
+            Dictionary<string, List<MessageModel>> groupsAndMessages = new();
+
+            await foreach(var historyMessage in this.chatService.GetMessageHistoryWithCache(this.roomId)) {
+                //Create the MessageModel list
+                if (historyMessage.UserId != this.Account.Id) {
+                    //Convert date to a cleaner format
+                    var messageDateString = DateTime.Parse(historyMessage.SendDate);
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else {
+                            group = messageDateString.ToString("dd MMMM yyyy");
+                        }
+                    }
+
+                    //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    if (!groupsAndMessages.ContainsKey(group))
+                        groupsAndMessages.Add(group, new List<MessageModel>());
+                    //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, Reactions = historyMessage.Reactions });
+
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate };
+                    if (historyMessage.Reactions != null) {
+                        foreach (var reaction in historyMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
+
+                    this.Messages.Add(msgModel);
+
+                    if (this.Messages.Count < 20)
+                        groupsAndMessages[group].Add(msgModel);             
+                }
+                else {
+                    var messageDateString = DateTime.Parse(historyMessage.SendDate);
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else {
+                            group = messageDateString.ToString("dd MMMM yyyy");
+                        }
+                    }
+                    //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    if (!groupsAndMessages.ContainsKey(group))
+                        groupsAndMessages.Add(group, new List<MessageModel>());
+
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate };
+                    if (historyMessage.Reactions != null) {
+                        foreach (var reaction in historyMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
+
+                    this.Messages.Add(msgModel);
+
+                    if (this.Messages.Count < 20)
+                        groupsAndMessages[group].Add(msgModel);
+                }
+
+                lastId = historyMessage.Id;
+            }
+
+            await foreach(var newMessage in this.chatService.GetMessagesWithIdGreater(this.roomId, lastId)) {
+                //Create the MessageModel list
+                if (newMessage.UserId != this.Account.Id) {
+                    //Convert date to a cleaner format
+                    var messageDateString = DateTime.Parse(newMessage.SendDate);
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else {
+                            group = messageDateString.ToString("dd MMMM yyyy");
+                        }
+                    }
+
+                    //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    if (!groupsAndMessages.ContainsKey(group))
+                        groupsAndMessages.Add(group, new List<MessageModel>());
+                    //groupsAndMessages[group].Add(new MessageModel { Owner = MessageOwner.OtherUser, MessageId = historyMessage.Id.ToString(), Text = historyMessage.Data, TimeStamp = msgDate, Reactions = historyMessage.Reactions });
+
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageId = newMessage.Id.ToString(), Text = newMessage.Data, TimeStamp = msgDate };
+                    if (newMessage.Reactions != null) {
+                        foreach (var reaction in newMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
+
+                    groupsAndMessages[group].Add(msgModel);
+                }
+                else {
+                    var messageDateString = DateTime.Parse(newMessage.SendDate);
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else {
+                            group = messageDateString.ToString("dd MMMM yyyy");
+                        }
+                    }
+                    //TODO...Check if the group exists, if not then create it and add the message to it, else add the message to the existing group
+                    if (!groupsAndMessages.ContainsKey(group))
+                        groupsAndMessages.Add(group, new List<MessageModel>());
+
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = newMessage.Id.ToString(), Text = newMessage.Data, TimeStamp = msgDate };
+                    if (newMessage.Reactions != null) {
+                        foreach (var reaction in newMessage.Reactions)
+                            msgModel.Reactions.Add(reaction);
+                    }
+
+                    groupsAndMessages[group].Add(msgModel);
+
+                    this.Messages.Add(msgModel);
+                }
+            }
+
+            if (groupsAndMessages.Count == 0)
+                NoMessages = true;
+
+            foreach (var e in groupsAndMessages) {
                 this.MessageGroups.Add(new MessageGroupModel(e.Key as string, e.Value as List<MessageModel>));
             }
         }
@@ -291,7 +445,11 @@ namespace WillowClient.ViewModel
                 this.LastOnlineText = "Online";
                 this.Friend.LastOnline = "";
             }
-            this.GetHistory();
+
+            LoadingMessages = true;
+            await this.GetHistory();
+            //await this.GetHistoryWithCache();
+            LoadingMessages = false;
         }
 
         [RelayCommand]
@@ -337,7 +495,7 @@ namespace WillowClient.ViewModel
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.roomId, data = this.MessageText, messageType = "Text"};
 
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
-            chatService.SendMessageAsync(jsonMessage);
+            await chatService.SendMessageAsync(jsonMessage);
 
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
@@ -419,11 +577,11 @@ namespace WillowClient.ViewModel
             });
         }
 
-        public void ReactToMessage(int messageId, string emojiReaction) {
+        public async void ReactToMessage(int messageId, string emojiReaction) {
             //Create the model object which will be sent as a json to the server
             SendReactionModel srm = new SendReactionModel { messageId = messageId, emojiReaction = emojiReaction, senderId = this.Account.Id, roomId = this.roomId };
             string jsonMessage = JsonSerializer.Serialize(srm);
-            this.chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
         }
     }
 }

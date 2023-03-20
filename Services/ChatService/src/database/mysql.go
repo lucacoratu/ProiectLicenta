@@ -379,6 +379,52 @@ func (conn *MysqlConnection) GetHistory(roomId int64) (data.Messages, error) {
 }
 
 /*
+ * This function will get the messages from a room with the id greater than the one specified by the user
+ * Returns a list of messages that have id greater
+ * Returns nil if an error occurs
+ */
+func (conn MysqlConnection) GetHistoryWithId(roomId int64, messageId int64) (data.Messages, error) {
+	//Prepare the select statement to get the messages with greater id from room
+	stmtSelect, err := conn.db.Prepare("SELECT ID,TypeID,Data,SendDate,UserID FROM messages WHERE RoomID = ? AND ID > ?")
+	//Check if an error occurs
+	if err != nil {
+		//An error occured when preparing the select statement
+		conn.logger.Error("Error occured during history select preparation", err.Error())
+		return make(data.Messages, 0), err
+	}
+	//Execute the select statement
+	rows, err := stmtSelect.Query(roomId, messageId)
+	//Check if an error occured
+	if err != nil {
+		conn.logger.Error("Error occured when executing the select statement", err.Error())
+		return make(data.Messages, 0), err
+	}
+	//Get all the data from the rows
+	messages := make(data.Messages, 0)
+	for rows.Next() {
+		message := data.Message{}
+		err := rows.Scan(&message.Id, &message.TypeID, &message.Data, &message.SendDate, &message.UserId)
+		if err != nil {
+			conn.logger.Error("Error occured during history data fetch", err.Error())
+			return make(data.Messages, 0), err
+		}
+		//For every message get the reactions
+		//Get the reactions for the message
+		reactions, err := conn.GetMessageReactions(message.Id, 0)
+		//Check if an error occured
+		if err != nil {
+			conn.logger.Error("Error occcured when getting the message reactions, message id = ", message.Id, err.Error())
+			return make(data.Messages, 0), err
+		}
+		message.Reactions = append(message.Reactions, reactions...)
+		messages = append(messages, message)
+	}
+
+	//Return the data
+	return messages, nil
+}
+
+/*
  * This function will create a new room and return the id of the room that it inserted
  * An error will also be returned if the room could not be created
  */
@@ -475,6 +521,9 @@ func (conn *MysqlConnection) GetLastMessageFromRoom(roomID int64) (string, strin
 	}
 
 	//The other account id has been found so return it
+	if len(lastMessage) > 100 {
+		lastMessage = lastMessage[:100]
+	}
 	return lastMessage, lastMessageTimestamp, userId, nil
 }
 

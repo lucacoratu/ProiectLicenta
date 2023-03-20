@@ -501,3 +501,36 @@ func (conn *Connection) UpdateProfilePictureURL(accountId int64, url string) err
 
 	return nil
 }
+
+/*
+ * This function will get all users from the database
+ */
+func (conn *Connection) GetUsers(accountId int64) (data.Accounts, error) {
+	//Prepare the select statement to get all the users
+	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accountstatus.Status, accounts.ProfilePictureUrl FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID != ?")
+	//Check if an error occured when preparing the statement
+	if err != nil {
+		conn.l.Error("Error occured when preparing the select statement for getting users", err.Error())
+		return make(data.Accounts, 0), err
+	}
+	//Execute the select statement
+	rows, err := stmtSelect.Query(accountId)
+	//Check if an error occured when executing the select statement
+	if err != nil {
+		conn.l.Error("Error occured when executing the select statement for getting users", err.Error())
+		return make(data.Accounts, 0), err
+	}
+	//Get all the users from the rows
+	users := make(data.Accounts, 0)
+	for rows.Next() {
+		user := data.Account{}
+		err = rows.Scan(&user.ID, &user.DisplayName, &user.JoinDate, &user.Status, &user.ProfilePictureUrl)
+		//Check if an error occured when fetching data from the row
+		if err != nil {
+			conn.l.Error("Error occurred when fetching data from row", err.Error())
+			return make(data.Accounts, 0), err
+		}
+		users = append(users, user)
+	}
+	return users, nil
+}

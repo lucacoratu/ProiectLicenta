@@ -46,7 +46,7 @@
   </queries>
   <permission android:name="com.companyname.willowclient.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature" />
   <uses-permission android:name="com.companyname.willowclient.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-  <application android:name="crc643d22fa04dc1777af.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:extractNativeLibs="true" android:icon="@android:mipmap/sym_def_app_icon" android:label="WillowClient" android:requestLegacyExternalStorage="true" android:roundIcon="@android:mipmap/sym_def_app_icon" android:supportsRtl="true" android:usesCleartextTraffic="true">
+  <application android:name="crc643d22fa04dc1777af.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:extractNativeLibs="true" android:icon="@mipmap/willow" android:label="Willow" android:requestLegacyExternalStorage="true" android:roundIcon="@mipmap/willow_round" android:supportsRtl="true" android:usesCleartextTraffic="true">
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <receiver android:name="plugin.LocalNotification.GeofenceTransitionsIntentReceiver" android:enabled="true" android:exported="false" android:label="Plugin LocalNotification Geofence Transitions Receiver" />
     <receiver android:name="plugin.LocalNotification.NotificationActionReceiver" android:enabled="true" android:exported="false" android:label="Plugin LocalNotification Action Receiver" />

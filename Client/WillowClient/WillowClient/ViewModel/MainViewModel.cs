@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WillowClient.Database;
+using WillowClient.Database.Model;
 using WillowClient.Model;
 using WillowClient.Services;
 using WillowClient.Views;
@@ -48,13 +50,31 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private string statusStrokeColor;
 
+        [ObservableProperty]
+        private bool loadingGroups;
+
+        [ObservableProperty]
+        private bool noGroups;
+
+        [ObservableProperty]
+        private bool loadingFriends;
+
+        [ObservableProperty]
+        private bool noFriends;
+
+        [ObservableProperty]
+        private bool hasFriends;
+
         private FriendService friendService;
         private ChatService chatService;
         private SignalingService signalingService;
         private NotificationService notificationService;
+        private DatabaseService databaseService;
         public ObservableCollection<FriendStatusModel> Friends { get; } = new();
         public ObservableCollection<FriendStatusModel> CreateGroupSearchResults { get;  } = new();
         public ObservableCollection<FriendStatusModel> FriendsSearchResults { get; } = new();
+        public ObservableCollection<FriendRecommendationModel> FriendRecommendations { get; } = new();
+
         private Stream CreateGroupPhoto { get; set; }
         public ObservableCollection<FriendStatusModel> CreateGroupSelectedFriends { get; set; } = new();
         public ObservableCollection<GroupModel> Groups { get; } = new();
@@ -64,11 +84,12 @@ namespace WillowClient.ViewModel
 
         public ObservableCollection<FriendRequestModel> SentFriendRequests { get; } = new();
 
-        public MainViewModel(FriendService friendService, ChatService chatService, SignalingService signalingService, NotificationService notificationService)
+        public MainViewModel(FriendService friendService, ChatService chatService, SignalingService signalingService, NotificationService notificationService, DatabaseService databaseService)
         {
             this.friendService = friendService;
             this.chatService = chatService;
             this.notificationService = notificationService;
+            this.databaseService = databaseService;
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
             this.signalingService = signalingService;
             this.signalingService.RegisterReadCallback(MessageReceivedOnSignalingWebsocket);
@@ -93,7 +114,7 @@ namespace WillowClient.ViewModel
                     hexString += hexID[i];
                 var accountId = int.Parse(hexString, System.Globalization.NumberStyles.HexNumber);
                 string setAccountIdMessage = "{\"setAccountId\":" + accountId.ToString() + "}";
-                this.chatService.SendMessageAsync(setAccountIdMessage);
+                await this.chatService.SendMessageAsync(setAccountIdMessage);
                 return;
             }
 
@@ -371,10 +392,25 @@ namespace WillowClient.ViewModel
             }
         }
 
-        public async void LoadData()
+        public async Task LoadData()
         {
+            //await GetGroupsAsync();
+            //Get the groups without the last message updated from the local database
+            LoadingGroups = true;
+            NoGroups = false;
+            await GetGroupsWithCacheAsync();
+            LoadingGroups = false;
+            if (Groups.Count == 0)
+                NoGroups = true;
+
+            LoadingFriends = true;
             await GetFriendsAsync();
-            await GetGroupsAsync();
+            LoadingFriends = false;
+            if (Friends.Count == 0)
+                NoFriends = true;
+            HasFriends = !NoFriends;
+
+            //Update the last message text and last message timestamp for groups
         }
 
         [RelayCommand]
@@ -397,64 +433,160 @@ namespace WillowClient.ViewModel
                 });
         }
 
+        async Task UpdateLocalFriendsWithRemote(List<FriendModel> remoteFriends) {
+            //Go through all the remote friends and if there is a new one update the caching database
+            //Update the search results as well because that are the ones that are displayed
+            foreach(var remoteFriend in remoteFriends) {
+                bool found = false;
+                for(int i =0; i < this.Friends.Count; i++) {
+                    if (this.Friends[i].FriendId == remoteFriend.FriendId) {
+                        found = true;
+                        //Update the data that changes often
+                        this.Friends[i].LastMessage = remoteFriend.LastMessage;
+                        //this.CreateGroupSearchResults[i].LastMessage = remoteFriend.LastMessage;
+                        //this.FriendsSearchResults[i].LastMessage = remoteFriend.LastMessage;
+                        //Update last message timestamp
+                        //Update the date format to show only the hour if the message is from Today
+                        if (this.Friends[i].LastMessageTimestamp != "") {
+                            DateTime messageDate = DateTime.Parse(remoteFriend.LastMessageTimestamp);
+                            double diffDays = (DateTime.Now - messageDate).TotalDays;
+                            if (diffDays <= 1.0 && diffDays >= 0.0) {
+                                string messageTimestamp = messageDate.ToString("HH:mm");
+                                this.Friends[i].LastMessageTimestamp = messageTimestamp;
+                                //this.CreateGroupSearchResults[i].LastMessageTimestamp = messageTimestamp;
+                                //this.FriendsSearchResults[i].LastMessageTimestamp = messageTimestamp;
+                            }
+                            else if (diffDays > 1.0 && diffDays <= 2.0) {
+                                this.Friends[i].LastMessageTimestamp = "Yesterday";
+                                //this.CreateGroupSearchResults[i].LastMessageTimestamp = "Yesterday";
+                                //this.FriendsSearchResults[i].LastMessageTimestamp = "Yesterday";
+                            }
+                            else {
+                                this.Friends[i].LastMessageTimestamp = messageDate.ToString("dddd");
+                                //this.CreateGroupSearchResults[i].LastMessageTimestamp = messageDate.ToString("dddd");
+                                //this.FriendsSearchResults[i].LastMessageTimestamp = messageDate.ToString("dddd");
+                            }
+                        }
+
+                        if (remoteFriend.ProfilePictureUrl == "NULL") {
+                            this.Friends[i].ProfilePictureUrl = Constants.defaultProfilePicture;
+                            //this.CreateGroupSearchResults[i].ProfilePictureUrl = Constants.defaultProfilePicture;
+                            //this.FriendsSearchResults[i].ProfilePictureUrl = Constants.defaultProfilePicture;
+                        } else {
+                            this.Friends[i].ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + remoteFriend.ProfilePictureUrl;
+                            //this.CreateGroupSearchResults[i].ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + remoteFriend.ProfilePictureUrl;
+                            //this.FriendsSearchResults[i].ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + remoteFriend.ProfilePictureUrl;
+                        }
+
+                        if (remoteFriend.Status == "Online") {
+                            this.Friends[i].StatusBackgroundColor = Colors.Green;
+                            this.Friends[i].StatusStrokeColor = Colors.DarkGreen;
+
+                            //this.CreateGroupSearchResults[i].StatusBackgroundColor = Colors.Green;
+                            //this.CreateGroupSearchResults[i].StatusStrokeColor = Colors.DarkGreen;
+
+                            //this.FriendsSearchResults[i].StatusBackgroundColor = Colors.Green;
+                            //this.FriendsSearchResults[i].StatusStrokeColor = Colors.DarkGreen;
+                        } else {
+                            this.Friends[i].StatusBackgroundColor = Colors.Gray;
+                            this.Friends[i].StatusStrokeColor = Colors.DarkGray;
+
+                            //this.CreateGroupSearchResults[i].StatusBackgroundColor = Colors.Gray;
+                            //this.CreateGroupSearchResults[i].StatusStrokeColor = Colors.DarkGray;
+
+                            //this.FriendsSearchResults[i].StatusBackgroundColor = Colors.Gray;
+                            //this.FriendsSearchResults[i].StatusStrokeColor = Colors.DarkGray;
+                        }
+                        break;
+                    }
+                }
+                if (!found) { 
+                    FriendStatusModel f = new FriendStatusModel(remoteFriend, Colors.Gray, Colors.DarkGray);
+                    // Update the status
+                    if(remoteFriend.Status == "Online") {
+                        f.StatusBackgroundColor = Colors.Green;
+                        f.StatusStrokeColor = Colors.DarkGreen;
+                    }
+                    Friends.Add(f);
+                    FriendsSearchResults.Add(f);
+                    CreateGroupSearchResults.Add(f);
+                }
+            }
+
+            //Update the friends in the database
+            await this.databaseService.SaveFriends(remoteFriends);
+        }
+
         [RelayCommand]
         async Task GetFriendsAsync()
         {
             try
             {
-                string hexString = "";
-                for(int i = 1; i < hexID.Length; i++)
-                    hexString += hexID[i];
-                var friends = await friendService.GetFriends(int.Parse(hexString, System.Globalization.NumberStyles.HexNumber), Session);
                 if (Friends.Count != 0)
-                {
                     Friends.Clear();
-                }
 
                 if (CreateGroupSearchResults.Count != 0)
                     CreateGroupSearchResults.Clear();
 
                 if (FriendsSearchResults.Count != 0)
                     FriendsSearchResults.Clear();
+                //Try the local database to see if the friends are cached
+                //If there are friends cached in the local database then show them and then search for remote friends and update the details if necessary
+                //var localFriends = await this.databaseService.GetLocalFriends();
 
-                foreach (var friend in friends)
-                {
+                //////If the local list is not empty display this list then update it with the remote one where is necessary
+                //if (localFriends != null) {
+                //    foreach (var localFriend in localFriends) {
+                //        FriendStatusModel f = new FriendStatusModel(localFriend, Colors.Gray, Colors.DarkGray);
+                //        Friends.Add(f);
+                //        CreateGroupSearchResults.Add(f);
+                //        FriendsSearchResults.Add(f);
+                //    }
+                //}
+
+                //Get the remote list of friends
+                string hexString = "";
+                for(int i = 1; i < hexID.Length; i++)
+                    hexString += hexID[i];
+                var friends = await friendService.GetFriends(int.Parse(hexString, System.Globalization.NumberStyles.HexNumber), Session);
+
+                //await this.UpdateLocalFriendsWithRemote(friends);
+
+                //_ = await this.databaseService.SaveFriends(friends);
+
+                foreach (var friend in friends) {
                     //Update the date format to show only the hour if the message is from Today
-                    if (friend.LastMessageTimestamp != "")
-                    {
+                    if (friend.LastMessageTimestamp != "") {
                         //string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
                         //friend.LastMessageTimestamp = messageTimestamp;
                         DateTime messageDate = DateTime.Parse(friend.LastMessageTimestamp);
                         double diffDays = (DateTime.Now - messageDate).TotalDays;
-                        if (diffDays <= 1.0 && diffDays >= 0.0)
-                        {
+                        if (diffDays <= 1.0 && diffDays >= 0.0) {
                             string messageTimestamp = messageDate.ToString("HH:mm");
                             friend.LastMessageTimestamp = messageTimestamp;
                         }
-                        else if (diffDays > 1.0 && diffDays <= 2.0)
-                        {
+                        else if (diffDays > 1.0 && diffDays <= 2.0) {
                             friend.LastMessageTimestamp = "Yesterday";
                         }
-                        else
-                        {
+                        else {
                             friend.LastMessageTimestamp = messageDate.ToString("dddd");
                         }
                     }
 
                     if (friend.ProfilePictureUrl == "NULL") {
                         friend.ProfilePictureUrl = Constants.defaultProfilePicture;
-                    } else {
+                    }
+                    else {
                         friend.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + friend.ProfilePictureUrl;
                     }
 
-                    if (friend.Status == "Online")
-                    {
+                    if (friend.Status == "Online") {
                         FriendStatusModel friendStatusModel = new FriendStatusModel(friend, Colors.Green, Colors.DarkGreen);
                         Friends.Add(friendStatusModel);
                         CreateGroupSearchResults.Add(friendStatusModel);
                         FriendsSearchResults.Add(friendStatusModel);
-                    } else
-                    {
+                    }
+                    else {
                         FriendStatusModel friendStatusModel = new FriendStatusModel(friend, Colors.Gray, Colors.DarkGray);
                         Friends.Add(friendStatusModel);
                         CreateGroupSearchResults.Add(friendStatusModel);
@@ -463,7 +595,7 @@ namespace WillowClient.ViewModel
 
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 //Debug.WriteLine(e);
                 await Shell.Current.DisplayAlert("Error!", $"Unable to get friends: {e.Message}", "OK");
@@ -490,6 +622,51 @@ namespace WillowClient.ViewModel
                 if (friend != null && (friend.DisplayName.ToLower().Contains(newText.ToLower()) || friend.LastMessage.ToLower().Contains(newText.ToLower()) )) {
                     this.FriendsSearchResults.Add(friend);
                 }
+            }
+        }
+
+        async Task GetGroupsWithCacheAsync() {
+            try {
+                if (this.Groups.Count != 0)
+                    this.Groups.Clear();
+
+                if (GroupsSearchResults.Count != 0)
+                    GroupsSearchResults.Clear();
+
+                await foreach (var group in this.chatService.GetGroupsWithCache(this.Account.Id, Globals.Session)) {
+                    //Show group one by one
+                    Console.WriteLine("Got group in ui function");
+                    if (group.LastMessageTimestamp != "") {
+                        DateTime messageDate;
+                        if (DateTime.TryParse(group.LastMessageTimestamp, out messageDate)) {
+                            double diffDays = (DateTime.Now - messageDate).TotalDays;
+                            if (diffDays <= 1.0 && diffDays >= 0.0) {
+                                string messageTimestamp = messageDate.ToString("HH:mm");
+                                group.LastMessageTimestamp = messageTimestamp;
+                            }
+                            else if (diffDays > 1.0 && diffDays <= 2.0) {
+                                group.LastMessageTimestamp = "Yesterday";
+                            }
+                            else {
+                                group.LastMessageTimestamp = messageDate.ToString("dddd");
+                            }
+                        }
+                    }
+
+                    if (group.GroupPictureUrl == "NULL" || group.GroupPictureUrl == null || group.GroupPictureUrl.Contains("default")) {
+                        group.GroupPictureUrl = Constants.defaultGroupPicture;
+                    }
+                    else {
+                        if(!group.GroupPictureUrl.Contains(Constants.chatServerUrl + "chat/groups/static/"))
+                            group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + group.GroupPictureUrl;
+                    }
+
+                    Groups.Add(group);
+                    this.GroupsSearchResults.Add(group);
+                }
+            } catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return;
             }
         }
 
@@ -719,7 +896,7 @@ namespace WillowClient.ViewModel
             }
 
             string jsonMessage = JsonSerializer.Serialize(createGroupMessageModel);
-            this.chatService.SendMessageAsync(jsonMessage);
+            await this.chatService.SendMessageAsync(jsonMessage);
         }
 
         [RelayCommand]
@@ -806,6 +983,25 @@ namespace WillowClient.ViewModel
         async Task ExitFriendRequests()
         {
             _ = await Shell.Current.Navigation.PopAsync();
+        }
+
+        public async void GetFriendRequestRecommendations() {
+            //Clear the list of friend recommendations
+            if (FriendRecommendations.Count != 0)
+                FriendRecommendations.Clear();
+            //Get the recommendations from the server
+            var friendRecommendations = await this.friendService.GetFriendRecommendations(Account.Id, Globals.Session);
+            if (friendRecommendations != null) {
+                foreach (var friendRecommendation in friendRecommendations) {
+                    var joinDate = DateTime.Parse(friendRecommendation.JoinDate);
+                    friendRecommendation.JoinDate = joinDate.ToString("D");
+                    if(friendRecommendation.ProfilePictureUrl == "NULL")
+                        friendRecommendation.ProfilePictureUrl = Constants.defaultProfilePicture;
+                    else
+                        friendRecommendation.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + friendRecommendation.ProfilePictureUrl;
+                    FriendRecommendations.Add(friendRecommendation);
+                }
+            }
         }
 
         [RelayCommand]

@@ -8,6 +8,9 @@ using WillowClient.Model;
 using System.Net.Http.Json;
 using System.Net;
 using System.Net.Http.Headers;
+using WillowClient.Database;
+using System.Text.Json;
+using System.Net.Security;
 
 namespace WillowClient.Services
 {
@@ -18,7 +21,8 @@ namespace WillowClient.Services
         private HttpClientHandler m_handler;
         private CookieContainer m_CookieContainer;
         private List<Func<string, Task>> recvCallbacks;
-        public ChatService()
+        private DatabaseService databaseService;
+        public ChatService(DatabaseService databaseService)
         {
             client = new ClientWebSocket();
             this.m_CookieContainer = new CookieContainer();
@@ -26,6 +30,8 @@ namespace WillowClient.Services
             this.m_handler.CookieContainer = this.m_CookieContainer;
             this.m_httpClient = new HttpClient(this.m_handler);
             this.recvCallbacks = new();
+            this.databaseService = databaseService;
+
             this.ConnectToServerAsync();
         }
 
@@ -71,7 +77,7 @@ namespace WillowClient.Services
             }
         }
 
-        public async void SendMessageAsync(string message)
+        public async Task SendMessageAsync(string message)
         {
             //if (!CanSendMessage(message))
             //    return;
@@ -101,15 +107,136 @@ namespace WillowClient.Services
             }
         }
 
+        public async IAsyncEnumerable<HistoryMessageModel> GetMessageHistoryAsync(int roomId) {
+            var url = Constants.chatServerUrl + "history/" + roomId.ToString();
+            var response = await this.m_httpClient.GetAsync(url);
+            //response = new HttpResponseMessage();
+            var messages = await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
+            if(messages != null) {
+                foreach(var message in messages)
+                    yield return message;
+            }
+        }
+
+        public async IAsyncEnumerable<HistoryMessageModel> GetMessagesWithIdGreater(int roomId, int knownMessageId) {
+            var url = Constants.chatServerUrl + "history/" + roomId.ToString() + "/" + knownMessageId.ToString();
+            var response = await this.m_httpClient.GetAsync(url);
+            var messages = await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
+            foreach(var message in messages) 
+                yield return message;
+        }
+
+        public async IAsyncEnumerable<HistoryMessageModel> GetMessageHistoryWithCache(int roomId) {
+            var url = Constants.chatServerUrl + "history/" + roomId.ToString();
+            //Get the local messages
+            var localMessages = await this.databaseService.GetCachedEntry(url);
+            var options = new JsonSerializerOptions {
+                PropertyNameCaseInsensitive = true,
+            };
+            //Parse the messages
+            if (localMessages != null) {
+                List<HistoryMessageModel> messages = null;
+                messages = JsonSerializer.Deserialize<List<HistoryMessageModel>>(localMessages, options);
+                if (messages != null) {
+                    //Return the most recent 20 messages from cache
+                    for(int i = 0; i < messages.Count; i++) {
+                        yield return messages[i];
+                    }
+                    //yield break;
+                }
+            }
+
+            var response = await this.m_httpClient.GetAsync(url);
+            var remoteMessages = await response.Content.ReadFromJsonAsync<List<HistoryMessageModel>>();
+            if (localMessages == null && remoteMessages != null) {
+                //Return the most recent 20 messages
+                for(int i = 0; i < remoteMessages.Count; i++) {
+                    yield return remoteMessages[i];
+                }
+            }
+            _ = await this.databaseService.SaveKeyValueData(url, JsonSerializer.Serialize(remoteMessages));
+        }
+
         public async Task<List<GroupModel>> GetGroups(int accountId, string session)
         {
-            var url = Constants.serverURL + "/chat/groups/" + accountId.ToString();
-            var baseAddress = new Uri(url);
-            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+            try {
+                var url = Constants.serverURL + "/chat/groups/" + accountId.ToString();
+                //Get the local groups from the sqlite3 database
+                //var cachedGroups = await this.databaseService.GetCachedEntry(url);
+                //if (cachedGroups != null || cachedGroups != "") {
+                //    //Deserialize the cached data
+                //    var localGroups = JsonSerializer.Deserialize<List<GroupModel>>(cachedGroups);
+                //    //If there are any cached groups then return them
+                //    if(localGroups.Count != 0)
+                //        return localGroups;
+                //}
 
-            var response = await this.m_httpClient.GetAsync(baseAddress);
-            return await response.Content.ReadFromJsonAsync<List<GroupModel>>();
+                var baseAddress = new Uri(url);
+                this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+                var response = await this.m_httpClient.GetAsync(baseAddress);
+                //var responseString = await response.Content.ReadAsStringAsync();
+                //var remoteGroups =  JsonSerializer.Deserialize<List<GroupModel>>(responseString);
+                ////Cache the remote groups
+                //_ = await this.databaseService.SaveKeyValueData(url, responseString);
+                return await response.Content.ReadFromJsonAsync<List<GroupModel>>();
+            } catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+                return new List<GroupModel>();
+            }
         }
+
+        public async IAsyncEnumerable<GroupModel> GetGroupsWithCache(int accountId, string session) {
+            var url = Constants.serverURL + "/chat/groups/" + accountId.ToString();
+
+            //Load the cached data
+            var cachedGroups = await this.databaseService.GetCachedEntry(url);
+            List<GroupModel> localGroups = null;
+            var options = new JsonSerializerOptions {
+                PropertyNameCaseInsensitive = true,
+            };
+            if (cachedGroups != null) {
+                //Deserialize the cached data
+                localGroups = JsonSerializer.Deserialize<List<GroupModel>>(cachedGroups);
+                //If there are any cached groups then return them
+                if (localGroups != null) {
+                    if (localGroups.Count != 0) {
+                        //Sort the groups by the last message date
+                        localGroups = localGroups.OrderByDescending(group => group.LastMessageTimestamp).ToList();
+                        foreach (var group in localGroups) {
+                            yield return group;
+                        }
+                        //yield break;
+                    }
+                }
+            }
+
+            List<GroupModel> remoteGroups = null;
+            try {
+                var baseAddress = new Uri(url);
+                this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+                //Get the remote groups if there is one new then return it
+                var response = await this.m_httpClient.GetAsync(baseAddress);
+                remoteGroups = await response.Content.ReadFromJsonAsync<List<GroupModel>>();
+            } catch(Exception e) {
+                Console.WriteLine(e.Message);
+            }
+
+            Console.WriteLine("Got remote groups");
+
+            //If the cached groups are null then return the remote groups
+            if (localGroups == null || localGroups.Count == 0) {
+                if (remoteGroups != null) {
+                    //Sort the remote groups
+                    remoteGroups = remoteGroups.OrderByDescending(group => group.LastMessageTimestamp).ToList();
+                    foreach (var group in remoteGroups)
+                        yield return group;
+                }
+            }
+
+            //Cache the remote groups in the local database
+            _ = await this.databaseService.SaveKeyValueData(url, JsonSerializer.Serialize(remoteGroups));
+        } 
 
         public async Task<List<CommonGroupModel>> GetCommonGroups(int idFirst, int idSecond, string session) {
             var url = Constants.serverURL + "/chat/commongroups/" + idFirst.ToString() + "/" + idSecond.ToString();

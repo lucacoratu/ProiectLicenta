@@ -15,30 +15,22 @@
              Title="FriendRequestPage"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
-    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
-        <!--<Border Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+    <Grid RowDefinitions="Auto,40,*" ColumnDefinitions="*">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitFriendRequestsCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
-                <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Friend requests" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-            </Grid>
-        </Border>-->
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="0,0,15,15" />
-            </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitFriendRequestsCommand}">
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="24" HeightRequest="24" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitFriendRequestsCommand}">
                     <ImageButton.Source>
                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
                     </ImageButton.Source>
                 </ImageButton>
-                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Friend Requests" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Friend Requests" FontSize="16" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
-        <CollectionView Grid.Row="1" x:Name="friendRequestsCollectionView" ItemsSource="{Binding FriendRequests}" SelectionMode="None">
+        <material:TextField Grid.Row="1" x:Name="searchFriendRequests" Title="Search friend requests" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentSecondDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5"/>
+        <CollectionView Grid.Row="2" x:Name="friendRequestsCollectionView" ItemsSource="{Binding FriendRequests}" SelectionMode="None">
             <CollectionView.ItemTemplate FontFamily="{StaticResource ApplicationFont}">
                 <DataTemplate x:DataType="model:FriendRequestModel">
                     <SwipeView>

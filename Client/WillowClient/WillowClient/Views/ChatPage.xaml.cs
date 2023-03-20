@@ -30,8 +30,12 @@ public partial class ChatPage : ContentPage
     {
         ChatViewModel viewModel = BindingContext as ChatViewModel;
         MessageGroupModel group = viewModel.MessageGroups.FirstOrDefault(a => a.Name == "Today");
-        MessageModel monkey = group[group.Count - 1];
-        messageGrid.ScrollTo(monkey, group);
+        if (group != null) {
+            if (group.Count > 0) {
+                MessageModel monkey = group[group.Count - 1];
+                messageGrid.ScrollTo(monkey, group);
+            }
+        }
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WillowClient.Database.Model;
 
 namespace WillowClient.Model
 {
@@ -69,6 +70,21 @@ namespace WillowClient.Model
             JoinDate = f.JoinDate;
             RoomID = f.RoomID;
             LastMessageTimestamp = f.LastMessageTimestamp;
+            LastMessage = f.LastMessage;
+            ProfilePictureUrl = f.ProfilePictureUrl;
+            this.statusBackgroundColor = statusBackgroundColor;
+            this.statusStrokeColor = statusStrokeColor;
+        }
+
+        public FriendStatusModel(Friend f, Color statusBackgroundColor, Color statusStrokeColor) {
+            FriendId = f.Id;
+            DisplayName = f.DisplayName;
+            BefriendDate = f.BefriendDate.ToString();
+            LastOnline = f.LastOnline.ToString();
+            Status = f.Status;
+            JoinDate = f.JoinDate.ToString();
+            RoomID = f.RoomID;
+            LastMessageTimestamp = f.LastMessageTimestamp.ToString();
             LastMessage = f.LastMessage;
             ProfilePictureUrl = f.ProfilePictureUrl;
             this.statusBackgroundColor = statusBackgroundColor;

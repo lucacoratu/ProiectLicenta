@@ -760,6 +760,21 @@
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
       <PackagePath>splashSplashScreen.scale-400.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\willowSplashScreen.scale-100.png">
+      <PackagePath>willowSplashScreen.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\willowSplashScreen.scale-125.png">
+      <PackagePath>willowSplashScreen.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\willowSplashScreen.scale-150.png">
+      <PackagePath>willowSplashScreen.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\willowSplashScreen.scale-200.png">
+      <PackagePath>willowSplashScreen.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\willowSplashScreen.scale-400.png">
+      <PackagePath>willowSplashScreen.scale-400.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\f\Labrada-Medium.ttf">
       <PackagePath>Labrada-Medium.ttf</PackagePath>
     </AppxPackagedFile>
@@ -796,6 +811,9 @@
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\camera.scale-100.png">
       <PackagePath>camera.scale-100.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\chat.scale-100.png">
+      <PackagePath>chat.scale-100.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\clipboard.scale-100.png">
       <PackagePath>clipboard.scale-100.png</PackagePath>
     </AppxPackagedFile>
@@ -819,6 +837,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
       <PackagePath>dotnet_bot.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\empty_chat.scale-100.png">
+      <PackagePath>empty_chat.scale-100.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\end_call.scale-100.png">
       <PackagePath>end_call.scale-100.png</PackagePath>
@@ -891,6 +912,144 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\video_camera.scale-100.png">
       <PackagePath>video_camera.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willow.ico">
+      <PackagePath>willow.ico</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-100.png">
+      <PackagePath>willowLargeTile.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-125.png">
+      <PackagePath>willowLargeTile.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-150.png">
+      <PackagePath>willowLargeTile.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-200.png">
+      <PackagePath>willowLargeTile.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLargeTile.scale-400.png">
+      <PackagePath>willowLargeTile.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-lightunplated_targetsize-16.png">
+      <PackagePath>willowLogo.altform-lightunplated_targetsize-16.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-lightunplated_targetsize-24.png">
+      <PackagePath>willowLogo.altform-lightunplated_targetsize-24.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-lightunplated_targetsize-256.png">
+      <PackagePath>willowLogo.altform-lightunplated_targetsize-256.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-lightunplated_targetsize-32.png">
+      <PackagePath>willowLogo.altform-lightunplated_targetsize-32.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-lightunplated_targetsize-48.png">
+      <PackagePath>willowLogo.altform-lightunplated_targetsize-48.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-unplated_targetsize-16.png">
+      <PackagePath>willowLogo.altform-unplated_targetsize-16.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-unplated_targetsize-24.png">
+      <PackagePath>willowLogo.altform-unplated_targetsize-24.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-unplated_targetsize-256.png">
+      <PackagePath>willowLogo.altform-unplated_targetsize-256.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-unplated_targetsize-32.png">
+      <PackagePath>willowLogo.altform-unplated_targetsize-32.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.altform-unplated_targetsize-48.png">
+      <PackagePath>willowLogo.altform-unplated_targetsize-48.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-100.png">
+      <PackagePath>willowLogo.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-125.png">
+      <PackagePath>willowLogo.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-150.png">
+      <PackagePath>willowLogo.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-200.png">
+      <PackagePath>willowLogo.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.scale-400.png">
+      <PackagePath>willowLogo.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.targetsize-16.png">
+      <PackagePath>willowLogo.targetsize-16.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.targetsize-24.png">
+      <PackagePath>willowLogo.targetsize-24.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.targetsize-256.png">
+      <PackagePath>willowLogo.targetsize-256.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.targetsize-32.png">
+      <PackagePath>willowLogo.targetsize-32.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowLogo.targetsize-48.png">
+      <PackagePath>willowLogo.targetsize-48.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-100.png">
+      <PackagePath>willowMediumTile.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-125.png">
+      <PackagePath>willowMediumTile.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-150.png">
+      <PackagePath>willowMediumTile.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-200.png">
+      <PackagePath>willowMediumTile.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowMediumTile.scale-400.png">
+      <PackagePath>willowMediumTile.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-100.png">
+      <PackagePath>willowSmallTile.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-125.png">
+      <PackagePath>willowSmallTile.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-150.png">
+      <PackagePath>willowSmallTile.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-200.png">
+      <PackagePath>willowSmallTile.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowSmallTile.scale-400.png">
+      <PackagePath>willowSmallTile.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-100.png">
+      <PackagePath>willowStoreLogo.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-125.png">
+      <PackagePath>willowStoreLogo.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-150.png">
+      <PackagePath>willowStoreLogo.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-200.png">
+      <PackagePath>willowStoreLogo.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowStoreLogo.scale-400.png">
+      <PackagePath>willowStoreLogo.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-100.png">
+      <PackagePath>willowWideTile.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-125.png">
+      <PackagePath>willowWideTile.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-150.png">
+      <PackagePath>willowWideTile.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-200.png">
+      <PackagePath>willowWideTile.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\willowWideTile.scale-400.png">
+      <PackagePath>willowWideTile.scale-400.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\x_sign.scale-100.png">
       <PackagePath>x_sign.scale-100.png</PackagePath>

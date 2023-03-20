@@ -11,39 +11,21 @@
              xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              BackgroundColor="{AppThemeBinding Dark={StaticResource PageDarkBackgroundColor}, Light={StaticResource PageLightBackgroundColor}}">
     <Grid RowDefinitions="Auto,*" ColumnDefinitions="*" Margin="0" Padding="0">
-        <!--<Border Grid.Row="0" HeightRequest="70" BackgroundColor="#7B68EE">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="0,0,15,15" />
-            </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="#7B68EE" >
-                <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitReportABugCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
-                <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Report a bug" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-            </Grid>
-        </Border>-->
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitReportABugCommand}">
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="24" HeightRequest="24" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitReportABugCommand}">
                     <ImageButton.Source>
                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
                     </ImageButton.Source>
                 </ImageButton>
-                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Report a bug" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Report a bug" FontSize="16" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
         <VerticalStackLayout Grid.Row="1" Padding="25" Spacing="10">
             <material:PickerField SelectedItem="{Binding SelectedCategory}"  FontFamily="{StaticResource ApplicationFont}" Title="Select a category" AccentColor="{StaticResource AccentSecondDarkColor}" ItemsSource="{Binding Categories}">
-                <!--<material:PickerField.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Accounts</x:String>
-                        <x:String>Voice</x:String>
-                        <x:String>Video</x:String>
-                        <x:String>Private chat</x:String>
-                        <x:String>Group chat</x:String>
-                    </x:Array>
-                </material:PickerField.ItemsSource>-->
             </material:PickerField>
             <material:EditorField Text="{Binding BugReportDescription}"  FontFamily="{StaticResource ApplicationFont}" Title="Insert a description" AccentColor="{StaticResource AccentSecondDarkColor}"/>
             <Button Command="{Binding SubmitBugReportCommand}" FontFamily="{StaticResource ApplicationFont}" WidthRequest="100" TextColor="WhiteSmoke" Text="Submit" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}"></Button>

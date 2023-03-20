@@ -16,7 +16,7 @@
         <ResourceDictionary>
             <DataTemplate x:Key="SentMessageTemplate" x:DataType="model:MessageModel">
                 <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
-                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}" Opacity="0.9">
+                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='250', iOS='250', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,10,0"/>
                         </Border.StrokeShape>
@@ -42,7 +42,7 @@
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                     </Grid.GestureRecognizers>
                     <Label Text="{Binding MessageId}" IsVisible="False" IsEnabled="True" TextColor="Transparent" Grid.Row="0" HeightRequest="10" BackgroundColor="Transparent" Margin="0,-50,0,0" Grid.Column="2"/>
-                    <Border Grid.Row="1" Margin="3,0,0,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                    <Border Grid.Row="1" Margin="3,0,0,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='250', iOS='250', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
@@ -84,7 +84,9 @@
                                  BorderWidth="0"
                                  BorderColor="WhiteSmoke"
                                  CornerRadius="32"
-                                 FlexLayout.AlignSelf="Center"/>
+                                 FlexLayout.AlignSelf="Center"
+                                 BackgroundColor="Transparent"
+                        />
                     <VerticalStackLayout Spacing="0" FlexLayout.AlignSelf="Center" Margin="0,0,10,0">
                         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Friend.DisplayName}" TextColor="WhiteSmoke" FontSize="13" FontAttributes="Bold"/>
                         <HorizontalStackLayout Spacing="10">
@@ -93,7 +95,7 @@
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
-                <HorizontalStackLayout FlexLayout.AlignSelf="Center" Margin="0,0,10,0">
+                <HorizontalStackLayout FlexLayout.AlignSelf="Center" Margin="0,0,4,0" Spacing="3">
                     <ImageButton Margin="5,0,5,0" FlexLayout.AlignSelf="Center" Command="{Binding VideoCallPeerCommand}">
                         <ImageButton.Source>
                             <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20" Color="WhiteSmoke"/>
@@ -116,6 +118,15 @@
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
         </CollectionView>
+        <!-- Collection view empty view-->
+        <StackLayout Grid.Row="1" Grid.Column="0" IsVisible="{Binding NoMessages}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,0" Spacing="5">
+            <Image Source="empty_chat.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill"/>
+            <Label Text="There are no messages in this group" TextColor="WhiteSmoke" FontFamily="{x:StaticResource ApplicationFont}" FontSize="14" FontAttributes="Bold"/>
+            <Label HorizontalOptions="Center" FontFamily="{x:StaticResource ApplicationFont}" Text="Be first to say hello"/>
+        </StackLayout>
+        <StackLayout Grid.Row="1" Grid.Column="0" Margin="0,-10,0,0" HorizontalOptions="Center" VerticalOptions="Start">
+            <ActivityIndicator IsRunning="True" IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ChatViewModel}}, Path=LoadingMessages}" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ChatViewModel}}, Path=LoadingMessages}"/>
+        </StackLayout>
         <Border StrokeThickness="0" Grid.Row="2" HeightRequest="40" BackgroundColor="Black" Padding="4">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="15,15,0,0" />

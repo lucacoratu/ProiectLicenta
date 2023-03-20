@@ -3,6 +3,7 @@ package handlers
 import (
 	"io"
 	"net/http"
+	"strconv"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
 	jsonerrors "willow/accountservice/errors"
@@ -183,4 +184,33 @@ func (frReq *FriendRequest) ViewSentFriendRequests(rw http.ResponseWriter, r *ht
 	rw.WriteHeader(response.StatusCode)
 	//rw.Write(respBody)
 	accs.ToJSON(rw)
+}
+
+/*
+ * This function will get as list of accounts that the user can send friend requests to
+ */
+func (frReq *FriendRequest) GetFriendsRecommendations(rw http.ResponseWriter, r *http.Request) {
+	frReq.logger.Info("Endpoint /account/{id:[0-9]+}/friendrecommendations hit (GET method)")
+	//Get the account id from the url
+	vars := mux.Vars(r)
+	accountId, err := strconv.Atoi(vars["id"])
+	//Check if an error occured when parsing the account id in the url
+	if err != nil {
+		frReq.logger.Error("Error occured when parsing the account id", err.Error())
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Internal server error"))
+		return
+	}
+	//Get the friend recommendations
+	users, err := frReq.dbConn.GetUsers(int64(accountId))
+	//Check if an error occured
+	if err != nil {
+		frReq.logger.Error("Error occured when getting the friend recommendations", err.Error())
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Internal server error"))
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	users.ToJSON(rw)
 }

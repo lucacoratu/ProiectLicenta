@@ -35,15 +35,6 @@
         </Style>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*">
-        <!--<Border Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="0,0,15,15" />
-            </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding ExitCreateGroupCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
-                <Label Grid.Column="1" Grid.ColumnSpan="2" Text="Create new group" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-            </Grid>
-        </Border>-->
         <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
@@ -77,42 +68,50 @@
             <!--<SearchBar FontFamily="{StaticResource ApplicationFont}" Placeholder="Search for people to add" PlaceholderColor="Gray" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>-->
             <material:TextField Padding="10" Margin="0,10,0,0" FontFamily="{StaticResource ApplicationFont}" Title="Search friends" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" TextChanged="SearchInputTextChanged">
             </material:TextField>
-            <Frame BackgroundColor="#414141" Margin="10,5,10,10" Padding="0" CornerRadius="20">
-            <CollectionView x:Name="createGroupCollectionView" ItemsSource="{Binding CreateGroupSearchResults}" SelectionMode="Multiple" SelectionChanged="createGroupCollectionView_SelectionChanged">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:FriendStatusModel">
-                        <HorizontalStackLayout>
-                            <HorizontalStackLayout Padding="10" Spacing="6">
-                                <toolkit:AvatarView
-                                            HeightRequest="45"
-                                            ImageSource="{Binding ProfilePictureUrl}"
-                                            WidthRequest="45"
-                                            BorderWidth="0"
-                                            BorderColor="WhiteSmoke"
-                                            CornerRadius="32"
-                                            />
-                                <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" Stroke="{Binding StatusStrokeColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Margin="-20,0,0,0" VerticalOptions="End">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10,10,10,10"/>
-                                    </Border.StrokeShape>
-                                </Border>
-                            </HorizontalStackLayout>
-                            <Grid ColumnDefinitions="*">
-                                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
-                                    <Label FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" Text="{Binding DisplayName}" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
-                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="Status text" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
-                                    <!--<Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>-->
-                                </VerticalStackLayout>
-                            </Grid>
+            <Frame IsVisible="{Binding HasFriends}" IsEnabled="{Binding HasFriends}" BackgroundColor="#414141" Margin="10,5,10,10" Padding="0" CornerRadius="20">
+                <CollectionView x:Name="createGroupCollectionView" ItemsSource="{Binding CreateGroupSearchResults}" SelectionMode="Multiple" SelectionChanged="createGroupCollectionView_SelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:FriendStatusModel">
+                            <HorizontalStackLayout>
+                                <HorizontalStackLayout Padding="10" Spacing="6">
+                                    <toolkit:AvatarView
+                                                HeightRequest="45"
+                                                ImageSource="{Binding ProfilePictureUrl}"
+                                                WidthRequest="45"
+                                                BorderWidth="0"
+                                                BorderColor="WhiteSmoke"
+                                                CornerRadius="32"
+                                                />
+                                    <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" Stroke="{Binding StatusStrokeColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Margin="-20,0,0,0" VerticalOptions="End">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10,10,10,10"/>
+                                        </Border.StrokeShape>
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Grid ColumnDefinitions="*">
+                                    <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                        <Label FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" Text="{Binding DisplayName}" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
+                                        <Label FontFamily="{StaticResource ApplicationFont}" Text="Status text" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
+                                        <!--<Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>-->
+                                    </VerticalStackLayout>
+                                </Grid>
                                 <!--<Grid RowDefinitions="*,Auto" ColumnDefinitions="195,Auto">
-                                --><!--<Button FontFamily="{StaticResource ApplicationFont}" Grid.Row="0" Grid.Column="1" BackgroundColor="{StaticResource AccentDarkColor}" HorizontalOptions="Start" HeightRequest="30" WidthRequest="60" FontSize="12" Text="Add" TextColor="WhiteSmoke"/>--><!--
-                            </Grid>-->
-                        </HorizontalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                    -->
+                                <!--<Button FontFamily="{StaticResource ApplicationFont}" Grid.Row="0" Grid.Column="1" BackgroundColor="{StaticResource AccentDarkColor}" HorizontalOptions="Start" HeightRequest="30" WidthRequest="60" FontSize="12" Text="Add" TextColor="WhiteSmoke"/>-->
+                                <!--
+                                </Grid>-->
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Frame>
-            <Button FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" Margin="0,10,0,0" Text="Create" TextColor="WhiteSmoke" HorizontalOptions="Center" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
+            <!--Empty view for when there are no friends to create a group with-->
+            <StackLayout IsVisible="{Binding NoFriends}" IsEnabled="{Binding NoFriends}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,10,0,0" Spacing="5">
+                <Image Source="no_friends.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill"/>
+                <Label Text="Sorry, you don't have any friends" HorizontalOptions="Center" TextColor="WhiteSmoke" FontFamily="{x:StaticResource ApplicationFont}" FontSize="14" FontAttributes="Bold"/>
+                <Label HorizontalOptions="Center" FontFamily="{x:StaticResource ApplicationFont}" Text="Make friends by sending friend requests"/>
+            </StackLayout>
+            <Button IsEnabled="{Binding HasFriends}" IsVisible="{Binding HasFriends}" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" Margin="0,10,0,0" Text="Create" TextColor="WhiteSmoke" HorizontalOptions="Center" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
         </VerticalStackLayout>
     <!--</ScrollView>-->
     </Grid>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\dotnet_bot.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\dotnet_bot@2x.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\dotnet_bot@3x.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\add_picture.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\answer.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\audio.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\back.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\call.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\camera.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\clipboard.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\default_group.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\default_profile_icon.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\end_call.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\feedback_account.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\feedback_chat.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\feedback_video.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\feedback_voice.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\friends.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\groups.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\home_icon.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\login_image.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\login_password.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\login_user.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\login_username.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\map.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\microphone.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\open_menu.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\plus_group.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\register.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\register_display_name.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\register_email.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\register_image.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\settings.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\settings_icon.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\video.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\video_camera.png" />
+    <BundleResource Include="D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Release\net7.0-maccatalyst\resizetizer\r\Resources\x_sign.png" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\Labrada-Medium.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\Labrada-Regular.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\Labrada.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\NeusharpBold.otf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\OpenSans-Regular.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\OpenSans-Semibold.ttf" />
+  </ItemGroup>
+</Project>

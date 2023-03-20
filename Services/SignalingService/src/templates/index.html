@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- Import SocketIO for signalling -->
-        <!-- <script src="/socket.io/socket.io.js"></script> -->
         <!-- Import JQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
@@ -10,43 +8,38 @@
         <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
         
         <!-- Import TURN config -->
-        <script src="js/config.js"></script>
+        <script src="js/config.js" defer></script>
 
         <!-- Import script containing WebRTC related functions -->
         <script src="js/main.js" defer></script>
+
+        <!-- Font awesome icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
         <!-- Import style sheet -->
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <!-- <div id ="video_container" style="margin-top: 6%;">
-            <div class="local_div" id="div1">
-                <video id="localVideo" class="" autoplay muted playsinline></video>
-                <image id="localImage" class="" hidden></image>
-            </div>
-            <div class="remote_div" id="div2">
-                <video id="remoteVideo" class="" autoplay playsinline></video>
-                <image id="remoteImage" class="" hidden></image>
-            </div>
-        </div>
-        <div> -->
         <video id="remoteVideo" class="remote-video" autoplay playsinline></video>
-        <img id="remoteImage" class="remote-image" src="images/user.png" hidden></image>
+        <div id="remote_muted" style="display: none;">
+            <i class="fa fa-microphone-slash"></i>
+        </div>
+        <!-- <img id="remoteImage" class="remote-image" src="images/user.png" hidden></image> -->
         <video id="localVideo" class="local-video" autoplay muted playsinline></video>
-        <img id="localImage" class="local-image" src="images/user.png" hidden></image>
+        <!-- <img id="localImage" class="local-image" src="images/user.png" hidden></image> -->
 
         <b id="labelFrameRate" class="label-framerate">FPS</b>
         <b id="labelLocalFrameRate" class="label-local-framerate">FPS</b>
 
         <!-- Buttons ui -->
-        <!-- <div class="buttonsDiv">
-            <img class="muteButton" src="images/microphone.png"></img>
-             <div class="leaveContainer">
-                <img class="leaveImage" src="images/hangup.png"></img> 
-                <label class="leaveLabel">Leave</button>
+        <div class="buttonsDiv">
+            <div id="microphone_button" onclick="toggleMicrophone();">
+                <i class="fa fa-microphone" style="font-size: 30px; color: whitesmoke;" ></i>
             </div>
-             <button class="cameraButton">Camera</button>
-        </div> -->
+            <div id="camera_button" onclick="toggleCamera();">
+                <i class="fa fa-video" style="font-size: 30px; color: whitesmoke;"></i>
+            </div>
+        </div>
 
         <h2 id="roomID" hidden>{{.RoomID}}</h2>
         <h2 id="audioEnabled" hidden>{{.AudioEnabled}}</h2>

@@ -129,6 +129,9 @@ public partial class LoginViewModel : BaseViewModel
             if (account == null)
                 return;
 
+            Username = account.Username;
+            Password = account.Password;
+            RememberMe = true;
             await this.LoginFromDatabase(account.Username, account.Password);
         }
     }

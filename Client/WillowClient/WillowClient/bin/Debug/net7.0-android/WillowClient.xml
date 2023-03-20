@@ -52,6 +52,12 @@
         <member name="P:WillowClient.ViewModel.ChatViewModel.MessageText">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.messageText"/>
         </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.LoadingMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.loadingMessages"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.NoMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.noMessages"/>
+        </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.LastOnlineText">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.lastOnlineText"/>
         </member>
@@ -135,6 +141,12 @@
         </member>
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.MessageText">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.messageText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.LoadingMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.loadingMessages"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.NoMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.noMessages"/>
         </member>
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.ParticipantNames">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.participantNames"/>
@@ -258,6 +270,21 @@
         </member>
         <member name="P:WillowClient.ViewModel.MainViewModel.StatusStrokeColor">
             <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.statusStrokeColor"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.LoadingGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.loadingGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.LoadingFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.loadingFriends"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noFriends"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.HasFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.hasFriends"/>
         </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>

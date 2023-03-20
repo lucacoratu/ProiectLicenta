@@ -56,12 +56,12 @@ namespace WillowClient.ViewModel
                 });
         }
 
-        void UpdateUserProfilePictureForAllUsers() {
+        async void UpdateUserProfilePictureForAllUsers() {
             UpdateProfilePictureModel upm = new UpdateProfilePictureModel {
                 id = this.Account.Id,
                 newPhoto = "newPhoto",
             };
-            this.chatService.SendMessageAsync(JsonSerializer.Serialize(upm));
+            await this.chatService.SendMessageAsync(JsonSerializer.Serialize(upm));
         }
 
         public async void ChangeProfilePicture(AvatarView profileAvatar)
