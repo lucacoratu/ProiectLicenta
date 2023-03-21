@@ -13,6 +13,7 @@ namespace WillowClient.Model {
         public bool AreFriends { get; set; }
         public string Status { get; set; }
         public string JoinDate { get; set; }
+        public string About { get; set; }
 
         private string profilePictureUrl;
         public string ProfilePictureUrl {

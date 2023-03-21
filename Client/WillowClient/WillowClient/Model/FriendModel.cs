@@ -37,5 +37,7 @@ namespace WillowClient.Model
             get => profilePictureUrl;
             set => SetProperty(ref profilePictureUrl, value);
         }
+
+        public string About { get; set; }
     }
 }

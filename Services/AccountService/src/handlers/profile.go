@@ -169,3 +169,32 @@ func (prof *Profile) UpdateProfilePicture(rw http.ResponseWriter, r *http.Reques
 	rw.WriteHeader(http.StatusOK)
 	rw.Write([]byte("File upload succesful"))
 }
+
+/*
+ * This function will update the account about message
+ */
+func (prof *Profile) UpdateAboutMessage(rw http.ResponseWriter, r *http.Request) {
+	//Log that the endpoint has beem hit
+	prof.l.Info("Endpoint /account/update/about hit (GET Method)")
+	//Parse the request body
+	updateAbout := data.UpdateAbout{}
+	err := updateAbout.FromJSON(r.Body)
+	//Check if an error occured when parsing the update about json body
+	if err != nil {
+		prof.l.Error("Error occured when parsing the update about json body", err.Error())
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Internal server error"))
+		return
+	}
+	//Update the about in the database
+	res, err := prof.dbConn.UpdateAbout(updateAbout.AccountId, updateAbout.NewAbout)
+	if !res {
+		prof.l.Error("Error occured when updating the about in the database", err.Error())
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Internal server error"))
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write([]byte("About updated"))
+}

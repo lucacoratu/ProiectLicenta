@@ -34,7 +34,7 @@
 		<!-- App Icon -->
 		<!--<MauiImage Include="Resources\AppIcon\appiconfg.svg" />-->
 		<!--<MauiIcon Include="Resources\AppIcon\willow.png" Color="WhiteSmoke" Aspect="AspectFill" />-->
-		<MauiIcon Include="Resources\AppIcon\willow.svg" BaseSize="128,128"/>
+		<MauiIcon Include="Resources\AppIcon\willow.svg" BaseSize="128,128" />
 
 		<!-- Splash Screen -->
 		<!--<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#303030" BaseSize="128,128" />-->
@@ -140,6 +140,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\EditProfilePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditStatusPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FriendRequestPage.xaml">

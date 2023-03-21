@@ -123,6 +123,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/friend/delete", handlerFriends.DeleteFriends)
 	postRouter.HandleFunc("/accounts/reportbug", handlerFeedback.AddBugReport)
 	postRouter.HandleFunc("/accounts/picture", handlerProfile.UpdateProfilePicture)
+	postRouter.HandleFunc("/account/update/about", handlerProfile.UpdateAboutMessage)
 	postRouter.HandleFunc("/chat/group/updatepicture", handlerChat.UpdateGroupPicture)
 	postRouter.Use(handlerAuth.ValidateSessionCookie)
 

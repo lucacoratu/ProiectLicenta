@@ -13,14 +13,6 @@
              Title="EditProfile"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
     <VerticalStackLayout>
-        <!--<Grid ColumnDefinitions="*">
-            <ImageButton Grid.Column="0" Margin="10" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
-                <ImageButton.Source>
-                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
-                </ImageButton.Source>
-            </ImageButton>
-            <Label Text="Edit Profile" FontSize="18" TextColor="WhiteSmoke" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
-        </Grid>-->
         <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />

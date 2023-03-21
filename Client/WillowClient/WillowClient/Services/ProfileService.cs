@@ -7,6 +7,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using WillowClient.Model;
+using static System.Collections.Specialized.BitVector32;
 
 namespace WillowClient.Services {
     public class ProfileService {
@@ -39,6 +40,17 @@ namespace WillowClient.Services {
                 if (response.IsSuccessStatusCode)
                     return true;
             }
+            return false;
+        }
+
+        public async Task<bool> ChangeAboutMessage(string newMessage, int accountId, string session) {
+            var url = Constants.serverURL + "/account/update/about";
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.PostAsync(url, JsonContent.Create(new UpdateAboutModel { accountId = accountId, newAbout = newMessage }));
+            if (response.IsSuccessStatusCode)
+                return true;
             return false;
         }
 

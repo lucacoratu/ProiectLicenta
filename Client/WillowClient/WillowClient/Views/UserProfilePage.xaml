@@ -73,7 +73,7 @@
                 </Frame>
             </Grid>
             <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
-                <Label FontFamily="{StaticResource ApplicationFont}" Text="Status text" TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding UserProfile.About}" TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
             </Frame>
             <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
                 <HorizontalStackLayout>
@@ -91,11 +91,11 @@
                 <Label Text="{Binding NumberCommonGroups}" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"/>
                 <Label FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" Text="{Binding CommonGroupsText}" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center"/>
             </HorizontalStackLayout>
-            <Frame BackgroundColor="#414141" Margin="10,5,10,10" Padding="20,10,20,10" CornerRadius="20">
+            <Frame BackgroundColor="#414141" Margin="10,5,10,10" Padding="10,10,10,10" CornerRadius="20">
                 <CollectionView ItemsSource="{Binding CommonGroups}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:CommonGroupWithParticipantsModel">
-                            <Grid ColumnDefinitions="50,*" Margin="0,7,0,7">
+                            <Grid ColumnDefinitions="50,*" Margin="0,5,0,5">
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:UserProfileViewModel}}, Path=TapCommand}"
@@ -114,7 +114,7 @@
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                     <Label Text="{Binding GroupName}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="14" FontAttributes="Bold"/>
                                     <Label Text="{Binding ParticipantsText}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="12"/>
-                                    <Line Margin="0,3,0,0" Grid.ColumnSpan="2" BackgroundColor="#FFFFFF" Opacity="0.4" HeightRequest="1"/>
+                                    <Line Margin="0,3,0,0" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke" Opacity="0.4" HeightRequest="1"/>
                                 </VerticalStackLayout>
                             </Grid>
                         </DataTemplate>

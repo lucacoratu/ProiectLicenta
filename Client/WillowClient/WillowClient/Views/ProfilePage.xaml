@@ -6,19 +6,14 @@
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:DataType="viewmodel:ProfileViewModel"
              Title="ProfilePage"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
              >
     <VerticalStackLayout>
-        <!--<Grid  ColumnDefinitions="*">
-            <ImageButton Grid.Column="0" Margin="10" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
-                <ImageButton.Source>
-                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
-                </ImageButton.Source>
-            </ImageButton>
-            <Label Text="Profile" FontSize="18" TextColor="WhiteSmoke" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
-        </Grid>-->
         <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
@@ -55,6 +50,18 @@
         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.DisplayName}" FontSize="16" FontAttributes="Bold" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.Email}" FontSize="14" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
         <Button FontFamily="{StaticResource ApplicationFont}" Margin="80,10,80,0" Text="Edit Profile" TextColor="WhiteSmoke" FontAttributes="Bold" BackgroundColor="{StaticResource AccentDarkColor}" Command="{Binding GoToEditProfileCommand}"/>
+        <!--<Label FontFamily="{StaticResource ApplicationFont}" Margin="40,10,40,0" Text="Status" TextColor="WhiteSmoke"/>-->
+        <Line Margin="40,20,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
+        <Grid Margin="40,10,40,0" ColumnDefinitions="*,Auto">
+            <Label Grid.Column="0"  Text="{Binding Account.About}" VerticalOptions="Center" TextColor="WhiteSmoke" LineBreakMode="WordWrap"/>
+            <Frame HorizontalOptions="End" Grid.Column="1" VerticalOptions="Center" WidthRequest="32" HeightRequest="32" CornerRadius="20">
+                <ImageButton WidthRequest="20" HeightRequest="20" Command="{Binding GoToEditStatusCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.PenClip}" Color="Gray"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Frame>
+        </Grid>
         <Line Margin="40,10,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
         <Grid Margin="0,15,0,0" ColumnDefinitions="*,*">
             <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
@@ -68,35 +75,5 @@
         </Grid>
         <Line Margin="40,10,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
         
-        <!--<Line Margin="40,10,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
-        <Grid Margin="60,10,60,0" ColumnDefinitions="*,*">
-            <HorizontalStackLayout>
-                <Frame Grid.Column="0" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
-                    <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">
-                        <ImageButton.Source>
-                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Info}" Color="WhiteSmoke"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </Frame>
-                <Label HorizontalOptions="Start" Grid.Column="1" Margin="10,0,0,0" Text="Information" TextColor="WhiteSmoke" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="14" FontAttributes="Bold"/>
-            </HorizontalStackLayout>
-            <Frame HorizontalOptions="End" Grid.Column="2" WidthRequest="32" HeightRequest="32" CornerRadius="20">
-                <ImageButton WidthRequest="20" HeightRequest="20">
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowRight}" Color="Gray"/>
-                    </ImageButton.Source>
-                </ImageButton>
-            </Frame>
-        </Grid>
-        <HorizontalStackLayout Margin="60,10,60,0">
-            <Frame WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
-                <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowRightFromBracket}" Color="WhiteSmoke"/>
-                    </ImageButton.Source>
-                </ImageButton>
-            </Frame>
-            <Label Margin="10,0,0,0"  Text="Logout" TextColor="Red" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="14" FontAttributes="Bold"/>
-        </HorizontalStackLayout>-->
     </VerticalStackLayout>
 </ContentPage>

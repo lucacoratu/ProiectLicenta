@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +60,12 @@ namespace WillowClient.ViewModel
                 }
 
                 //The registration was successful
-                Error = "Registration successful!";
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                string text = "Account has been registered, go to login";
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(text, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
             }
             catch(Exception e)
             {

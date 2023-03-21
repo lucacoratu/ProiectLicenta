@@ -94,6 +94,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.EditPro
 build_metadata.AdditionalFiles.TargetPath = Views\EditProfilePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\EditProfilePage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/EditStatusPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.EditStatusPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\EditStatusPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\EditStatusPage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/FriendRequestPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.FriendRequestPage.xaml

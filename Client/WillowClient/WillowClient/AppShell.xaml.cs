@@ -22,6 +22,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ReportABugPage), typeof(ReportABugPage));
         Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
         Routing.RegisterRoute(nameof(EditProfilePage), typeof(EditProfilePage));
+        Routing.RegisterRoute(nameof(EditStatusPage), typeof(EditStatusPage));
         Routing.RegisterRoute(nameof(DesktopSettingsPage), typeof(DesktopSettingsPage));
         Routing.RegisterRoute(nameof(GroupDetailsPage), typeof(GroupDetailsPage));
         Routing.RegisterRoute(nameof(UserProfilePage), typeof(UserProfilePage));

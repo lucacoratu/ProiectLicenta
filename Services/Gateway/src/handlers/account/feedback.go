@@ -197,3 +197,18 @@ func (f *Feedback) UpdateGroupPicture(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }
+
+func (f *Feedback) UpdateAboutMessage(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("Endpoint /account/update/about hit (POST method)")
+	f.logger.Debug("Forwarding request to Account Service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		f.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}

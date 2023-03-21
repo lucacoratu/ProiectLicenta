@@ -140,7 +140,7 @@ namespace WillowClient.ViewModel {
 
             userAccount.JoinDate = DateTime.Parse(userAccount.JoinDate).ToString("dd MMMM yyyy");
 
-            this.UserProfile = new UserProfileModel { Id = userAccount.Id, DisplayName = userAccount.DisplayName, Email = userAccount.Email, JoinDate = userAccount.JoinDate, Status = userAccount.Status, ProfilePictureUrl = profilePicture, AreFriends = areFriends, StatusBackgroundColor = statusBackgroundColor, StatusStrokeColor = statusStrokeColor };
+            this.UserProfile = new UserProfileModel { Id = userAccount.Id, DisplayName = userAccount.DisplayName, Email = userAccount.Email, JoinDate = userAccount.JoinDate, Status = userAccount.Status, ProfilePictureUrl = profilePicture, AreFriends = areFriends, StatusBackgroundColor = statusBackgroundColor, StatusStrokeColor = statusStrokeColor, About = userAccount.About };
         }
 
         [RelayCommand]

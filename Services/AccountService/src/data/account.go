@@ -18,7 +18,8 @@ type Account struct {
 	LastOnline        string `json:"lastOnline"`
 	Status            string `json:"status"`
 	JoinDate          string `json:"joinDate"`
-	ProfilePictureUrl string `json:""profilePictureUrl"`
+	ProfilePictureUrl string `json:"profilePictureUrl"`
+	About             string `json:"about"`
 }
 
 /*

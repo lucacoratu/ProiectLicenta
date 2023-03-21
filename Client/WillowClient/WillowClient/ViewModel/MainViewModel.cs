@@ -993,13 +993,23 @@ namespace WillowClient.ViewModel
             var friendRecommendations = await this.friendService.GetFriendRecommendations(Account.Id, Globals.Session);
             if (friendRecommendations != null) {
                 foreach (var friendRecommendation in friendRecommendations) {
-                    var joinDate = DateTime.Parse(friendRecommendation.JoinDate);
-                    friendRecommendation.JoinDate = joinDate.ToString("D");
-                    if(friendRecommendation.ProfilePictureUrl == "NULL")
-                        friendRecommendation.ProfilePictureUrl = Constants.defaultProfilePicture;
-                    else
-                        friendRecommendation.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + friendRecommendation.ProfilePictureUrl;
-                    FriendRecommendations.Add(friendRecommendation);
+                    //Check if the friend recommendation is not a friend of the user
+                    bool isFriend = false;
+                    foreach(var friend in Friends) {
+                        if (friend.FriendId == friendRecommendation.Id) {
+                            isFriend = true;
+                            break;
+                        }
+                    }
+                    if (!isFriend) {
+                        var joinDate = DateTime.Parse(friendRecommendation.JoinDate);
+                        friendRecommendation.JoinDate = joinDate.ToString("D");
+                        if (friendRecommendation.ProfilePictureUrl == "NULL")
+                            friendRecommendation.ProfilePictureUrl = Constants.defaultProfilePicture;
+                        else
+                            friendRecommendation.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + friendRecommendation.ProfilePictureUrl;
+                        FriendRecommendations.Add(friendRecommendation);
+                    }
                 }
             }
         }
@@ -1016,23 +1026,8 @@ namespace WillowClient.ViewModel
             {
                 //Remove the friend request from the list of pending friend requests
                 this.FriendRequests.Remove(f);
-                //Update the list of friends
-                //var friends = await friendService.GetFriends(myId, Session);
-                //if (this.Friends.Count != 0)
-                //{
-                //    this.Friends.Clear();
-                //}
 
-                //foreach (var friend in friends)
-                //{
-                //    //Update the date format to show only the hour if the message is from Today
-                //    if (friend.LastMessageTimestamp != "")
-                //    {
-                //        string messageTimestamp = DateTime.Parse(friend.LastMessageTimestamp).ToString("HH:mm");
-                //        friend.LastMessageTimestamp = messageTimestamp;
-                //    }
-                //    this.Friends.Add(friend);
-                //}
+                //Update the list of friends
                 await GetFriendsAsync();
             }
             else
@@ -1098,5 +1093,6 @@ namespace WillowClient.ViewModel
                     {"session",  this.Session},
                 });
         }
+
     }
 }

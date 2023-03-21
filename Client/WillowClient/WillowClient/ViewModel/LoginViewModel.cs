@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Maui.Alerts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using WillowClient.Database;
 using WillowClient.Model;
 using WillowClient.Services;
 using WillowClient.Views;
+using CommunityToolkit.Maui.Core;
 
 namespace WillowClient.ViewModel;
 
@@ -109,6 +111,13 @@ public partial class LoginViewModel : BaseViewModel
                 });
                 //await Shell.Current.GoToAsync(nameof(MobileTabviewMainPage), true);
 #else
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                string text = "Account has been registered, go to login";
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(text, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+
                 await Shell.Current.GoToAsync(nameof(MainPage), true, new Dictionary<string, object>
                 {
                     {"account", accountModel },
