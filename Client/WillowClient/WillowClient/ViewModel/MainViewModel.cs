@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -65,6 +67,9 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private bool hasFriends;
 
+        [ObservableProperty]
+        private bool noFriendRequests;
+
         private FriendService friendService;
         private ChatService chatService;
         private SignalingService signalingService;
@@ -74,7 +79,8 @@ namespace WillowClient.ViewModel
         public ObservableCollection<FriendStatusModel> CreateGroupSearchResults { get;  } = new();
         public ObservableCollection<FriendStatusModel> FriendsSearchResults { get; } = new();
         public ObservableCollection<FriendRecommendationModel> FriendRecommendations { get; } = new();
-
+        public ObservableCollection<FriendRecommendationModel> FriendRecommendationSearchResults { get; } = new();
+        private List<FriendRecommendationModel> selectedFriendRecommendations { get; } = new();
         private Stream CreateGroupPhoto { get; set; }
         public ObservableCollection<FriendStatusModel> CreateGroupSelectedFriends { get; set; } = new();
         public ObservableCollection<GroupModel> Groups { get; } = new();
@@ -273,10 +279,15 @@ namespace WillowClient.ViewModel
                         gm.GroupName = resp.GroupName;
                         gm.RoomId = resp.RoomId;
                         gm.Participants = new List<int>();
+                        gm.ParticipantNames = new List<string>();
                         gm.LastMessage = "Start conversation";
                         gm.GroupPictureUrl = Constants.defaultGroupPicture;
                         foreach (var participantId in resp.Participants) {
                             gm.Participants.Add(participantId);
+                            foreach (var friend in Friends) {
+                                if (participantId == friend.FriendId)
+                                    gm.ParticipantNames.Add(friend.DisplayName);
+                            }
                         }
                         //gm.Participants = resp.Participants as List<int>;
 
@@ -286,6 +297,10 @@ namespace WillowClient.ViewModel
                         //Clear the friends selected for the group
                         this.CreateGroupSelectedFriends.Clear();
                         this.CreateGroupSelected = false;
+
+                        //Remove the no groups icon
+                        NoGroups = false;
+
                         return;
                     }
                 } catch(Exception ex) {
@@ -398,7 +413,9 @@ namespace WillowClient.ViewModel
             //Get the groups without the last message updated from the local database
             LoadingGroups = true;
             NoGroups = false;
-            await GetGroupsWithCacheAsync();
+            //await GetGroupsWithCacheAsync();
+            //await GetGroupsAsync();
+            await GetGroupsAsyncEnumerable();
             LoadingGroups = false;
             if (Groups.Count == 0)
                 NoGroups = true;
@@ -727,6 +744,59 @@ namespace WillowClient.ViewModel
             }
         }
 
+        async Task GetGroupsAsyncEnumerable() {
+            string hexString = "";
+            for (int i = 1; i < hexID.Length; i++)
+                hexString += hexID[i];
+            
+            if (Groups.Count != 0) {
+                Groups.Clear();
+            }
+
+            if (GroupsSearchResults.Count != 0)
+                GroupsSearchResults.Clear();
+
+            try { 
+                await foreach (var group in this.chatService.GetGroupsAsyncEnumerable(int.Parse(hexString, System.Globalization.NumberStyles.HexNumber), Globals.Session)) {
+                    if (group.LastMessageTimestamp != "") {
+                        DateTime messageDate = DateTime.Parse(group.LastMessageTimestamp);
+                        double diffDays = (DateTime.Now - messageDate).TotalDays;
+                        if (diffDays <= 1.0 && diffDays >= 0.0) {
+                            string messageTimestamp = messageDate.ToString("HH:mm");
+                            group.LastMessageTimestamp = messageTimestamp;
+                        }
+                        else if (diffDays > 1.0 && diffDays <= 2.0) {
+                            group.LastMessageTimestamp = "Yesterday";
+                        }
+                        else {
+                            group.LastMessageTimestamp = messageDate.ToString("dddd");
+                        }
+                    }
+                    if (group.GroupPictureUrl == "NULL" || group.GroupPictureUrl == null) {
+                        group.GroupPictureUrl = Constants.defaultGroupPicture;
+                    }
+                    else {
+                        group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + group.GroupPictureUrl;
+                    }
+
+                    Groups.Add(group);
+                    this.GroupsSearchResults.Add(group);
+                }
+
+                //Sort the groups by last message timestamp
+
+            }
+            catch (Exception e)
+            {
+                //Debug.WriteLine(e);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to get groups: {e.Message}", "OK");
+            }
+            finally
+            {
+
+            }
+        }
+
         public void SearchbarGroupsTextChanged(string newText) {
             if (this.GroupsSearchResults.Count != 0)
                 this.GroupsSearchResults.Clear();
@@ -830,8 +900,7 @@ namespace WillowClient.ViewModel
             string input = this.AddFriendEntryText;
             //Validate the input before sending it
             bool res = ValidateAddFriendInput(input);
-            if (res)
-            {
+            if (res) {
                 //Send the friend request to the specified account
                 string[] fields = input.Split(' ');
                 int friendId = ConvertHexToFriendId(fields[1]);
@@ -840,12 +909,29 @@ namespace WillowClient.ViewModel
                 if (res)
                 {
                     //The friend request has been sent
-                    await Shell.Current.DisplayAlert("FriendRequest", "FriendRequest has been sent", "Ok");
+                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                    string text = "Friend request has been sent!";
+                    ToastDuration duration = ToastDuration.Short;
+                    double fontSize = 14;
+                    var toast = Toast.Make(text, duration, fontSize);
+                    await toast.Show(cancellationTokenSource.Token);
                 } else
                 {
                     //The friend request couldn't be sent
-                    await Shell.Current.DisplayAlert("FriendRequest", "FriendRequest couldn't be sent!", "Ok");
+                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                    string text = "Couldn't send the friend request!";
+                    ToastDuration duration = ToastDuration.Short;
+                    double fontSize = 14;
+                    var toast = Toast.Make(text, duration, fontSize);
+                    await toast.Show(cancellationTokenSource.Token);
                 }
+            } else {
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                string text = "Invalid username and id format!";
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(text, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
             }
         }
 
@@ -897,6 +983,18 @@ namespace WillowClient.ViewModel
 
             string jsonMessage = JsonSerializer.Serialize(createGroupMessageModel);
             await this.chatService.SendMessageAsync(jsonMessage);
+
+            //Notify the user a group has been created
+            //CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            string text = "Group has been created!";
+            //ToastDuration duration = ToastDuration.Long;
+            //double fontSize = 14;
+            //var toast = Toast.Make(text, duration, fontSize);
+            //await toast.Show();
+
+            SnackbarOptions opt = new SnackbarOptions();
+            opt.CornerRadius = 20;
+            await Shell.Current.DisplaySnackbar(text, visualOptions: opt); 
         }
 
         [RelayCommand]
@@ -975,8 +1073,19 @@ namespace WillowClient.ViewModel
             await Shell.Current.GoToAsync(nameof(FriendRequestPage), true);
             var requests = await this.friendService.GetFriendRequest(this.Account.Id, Session);
             this.FriendRequests.Clear();
-            foreach (var request in requests)
-                this.FriendRequests.Add(request);
+            if (requests != null) {
+                foreach (var request in requests) {
+                    if (request.ProfilePictureUrl == "NULL")
+                        request.ProfilePictureUrl = Constants.defaultProfilePicture;
+                    else
+                        request.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + request.ProfilePictureUrl;
+                    this.FriendRequests.Add(request);
+                }
+            }
+
+            NoFriendRequests = false;
+            if (FriendRequests.Count == 0)
+                NoFriendRequests = true;
         }
 
         [RelayCommand]
@@ -985,10 +1094,40 @@ namespace WillowClient.ViewModel
             _ = await Shell.Current.Navigation.PopAsync();
         }
 
+        public void FriendRecommendationSelectionChanged(List<FriendRecommendationModel> newSelectedItems) {
+            //Clear the previous selection
+            if (this.selectedFriendRecommendations.Count > 0)
+                this.selectedFriendRecommendations.Clear();
+            //Return if the new selected items list is null
+            if (newSelectedItems == null)
+                return;
+            //Return if there is no item selected now
+            if (newSelectedItems.Count == 0)
+                return;
+            //Update the selected items list
+            foreach(var item in newSelectedItems)
+                this.selectedFriendRecommendations.Add(item);
+        }
+
+        public void SearchbarFriendRecommendationsTextChanged(string newText) {
+            //Clear the current selected items
+            if (FriendRecommendationSearchResults.Count > 0)
+                FriendRecommendationSearchResults.Clear();
+            //Add the recommendations that match the newText
+            foreach(var recommendation in FriendRecommendations) {
+                if(recommendation.DisplayName.Contains(newText))
+                    FriendRecommendationSearchResults.Add(recommendation);
+            }
+        }
+
         public async void GetFriendRequestRecommendations() {
             //Clear the list of friend recommendations
             if (FriendRecommendations.Count != 0)
                 FriendRecommendations.Clear();
+            //Clear the list of search results
+            if (FriendRecommendationSearchResults.Count != 0)
+                FriendRecommendationSearchResults.Clear();
+
             //Get the recommendations from the server
             var friendRecommendations = await this.friendService.GetFriendRecommendations(Account.Id, Globals.Session);
             if (friendRecommendations != null) {
@@ -1009,8 +1148,28 @@ namespace WillowClient.ViewModel
                         else
                             friendRecommendation.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + friendRecommendation.ProfilePictureUrl;
                         FriendRecommendations.Add(friendRecommendation);
+                        FriendRecommendationSearchResults.Add(friendRecommendation);
                     }
                 }
+            }
+        }
+
+        [RelayCommand]
+        async Task SendFriendRequestsToSelectedRecommendations() {
+            bool allFriendRequestsSent = true;
+            foreach(var selectedRecommendation in this.selectedFriendRecommendations) {
+                bool res = await this.friendService.SendFriendRequest(Account.Id, selectedRecommendation.Id, Globals.Session);
+                if (!res)
+                    allFriendRequestsSent = false;
+            }
+
+            if (allFriendRequestsSent) {
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                string text = "Friend requests have been sent";
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(text, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
             }
         }
 
@@ -1026,6 +1185,10 @@ namespace WillowClient.ViewModel
             {
                 //Remove the friend request from the list of pending friend requests
                 this.FriendRequests.Remove(f);
+
+                NoFriendRequests = false;
+                if (this.FriendRequests.Count == 0)
+                    NoFriendRequests = true;
 
                 //Update the list of friends
                 await GetFriendsAsync();
@@ -1047,6 +1210,9 @@ namespace WillowClient.ViewModel
             if (res)
             {
                 this.FriendRequests.Remove(f);
+                NoFriendRequests = false;
+                if (this.FriendRequests.Count == 0)
+                    NoFriendRequests = true;
             }
             else
             {

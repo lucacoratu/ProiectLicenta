@@ -125,6 +125,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/accounts/picture", handlerProfile.UpdateProfilePicture)
 	postRouter.HandleFunc("/account/update/about", handlerProfile.UpdateAboutMessage)
 	postRouter.HandleFunc("/chat/group/updatepicture", handlerChat.UpdateGroupPicture)
+	postRouter.HandleFunc("/account/cansend/friendrequest", handlerFriends.CanSendFriendRequest)
 	postRouter.Use(handlerAuth.ValidateSessionCookie)
 
 	//Log that the handlers have been added

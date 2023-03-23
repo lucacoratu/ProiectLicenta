@@ -37,8 +37,8 @@ public partial class CreateGroupPage : ContentPage
 
     private void ContentPage_Loaded(object sender, EventArgs e)
     {
-        var vm = BindingContext as MainViewModel;
-        vm.LoadData();
+        //var vm = BindingContext as MainViewModel;
+        //vm.LoadData();
     }
 
     private void SearchInputTextChanged(object sender, TextChangedEventArgs e) {

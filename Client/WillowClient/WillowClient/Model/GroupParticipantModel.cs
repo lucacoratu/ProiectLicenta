@@ -10,5 +10,6 @@ namespace WillowClient.Model {
         public string DisplayName { get; set; }
         public string ProfilePictureUrl { get; set; }
         public string Owner { get; set; }
+        public string About { get; set; }
     }
 }

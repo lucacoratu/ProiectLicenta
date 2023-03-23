@@ -28,14 +28,14 @@
             </Grid>
         </VerticalStackLayout>
         <Grid Grid.Row="1" ColumnDefinitions="*,*" RowDefinitions="*">
-            <Grid HeightRequest="{OnPlatform Android=24, WinUI=50, iOS=24}" WidthRequest="{OnPlatform Android=24, WinUI=50, iOS=24}">
+            <Grid HeightRequest="{OnPlatform Android=30, WinUI=50, iOS=30}" WidthRequest="{OnPlatform Android=30, WinUI=50, iOS=30}">
                 <Frame Padding="0" BackgroundColor="Transparent" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Background="Green" CornerRadius="60">
-                    <ImageButton WidthRequest="{OnPlatform Android=24, WinUI=35, iOS=24}" HeightRequest="{OnPlatform Android=24, WinUI=35, iOS=24}" Margin="2" Source="answer.png" Command="{Binding AnswerCallCommand}"/>
+                    <ImageButton WidthRequest="{OnPlatform Android=30, WinUI=35, iOS=30}" HeightRequest="{OnPlatform Android=30, WinUI=35, iOS=30}" Margin="2" Source="answer.png" Command="{Binding AnswerCallCommand}"/>
                 </Frame>
             </Grid>
-            <Grid HeightRequest="{OnPlatform Android=24, WinUI=50, iOS=24}" WidthRequest="{OnPlatform Android=24, WinUI=50, iOS=24}" Grid.Row="0" Grid.Column="1">
+            <Grid HeightRequest="{OnPlatform Android=30, WinUI=50, iOS=30}" WidthRequest="{OnPlatform Android=30, WinUI=50, iOS=30}" Grid.Row="0" Grid.Column="1">
             <Frame Padding="0" BackgroundColor="Red" HorizontalOptions="Center" VerticalOptions="Center"  CornerRadius="60">
-                    <ImageButton  WidthRequest="{OnPlatform Android=24, WinUI=35, iOS=24}" HeightRequest="{OnPlatform Android=24, WinUI=35, iOS=24}" Margin="2" Source="end_call.png" Command="{Binding DenyCallCommand}"/>
+                    <ImageButton  WidthRequest="{OnPlatform Android=30, WinUI=35, iOS=30}" HeightRequest="{OnPlatform Android=30, WinUI=35, iOS=30}" Margin="2" Source="end_call.png" Command="{Binding DenyCallCommand}"/>
             </Frame>
             </Grid>
         </Grid>

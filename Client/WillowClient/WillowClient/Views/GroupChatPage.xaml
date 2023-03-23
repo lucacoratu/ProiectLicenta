@@ -132,7 +132,7 @@
             </Border.StrokeShape>
             <FlexLayout Grid.Row="2" HeightRequest="40">
                 <Button FontFamily="{StaticResource ApplicationFont}" Text="+" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding PickFileCommand}"/>
-                <Entry FontFamily="{StaticResource ApplicationFont}" Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send"/>
+                <Entry FontFamily="{StaticResource ApplicationFont}" Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"/>
                 <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
                 <Button FontFamily="{StaticResource ApplicationFont}" Text=">" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding SendMessageCommand}"/>
             </FlexLayout>

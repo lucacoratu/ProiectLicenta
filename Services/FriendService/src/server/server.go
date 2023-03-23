@@ -59,6 +59,8 @@ func InitServer(address string) error {
 	postSubrouter.HandleFunc("/friend/add", handlerFriend.AddFriend)
 	//Add the function for deleting a friend
 	postSubrouter.HandleFunc("/friend/delete", handlerFriend.DeleteFriend)
+	//Add the function to get if the user can send a friend request to other user
+	postSubrouter.HandleFunc("/account/cansend/friendrequest", handlerFriendRequest.CanSendFriendRequest)
 
 	//Get the subrouter for the GET method
 	getSubrouter := serveMux.Methods(http.MethodGet).Subrouter()

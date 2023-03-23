@@ -80,7 +80,7 @@ func (conn *Connection) CloseConnection() error {
  * If the friendship does not exist then false will be returned and nil for the error
  * If an error occurs during the check then true and not nil (for the error) will be returned
  */
-func (conn *Connection) checkFriendshipExists(accountID int, friendID int) (bool, error) {
+func (conn *Connection) CheckFriendshipExists(accountID int, friendID int) (bool, error) {
 	//Prepare the statement that will check if the friendship exists
 	stmtSelect, err := conn.db.Prepare("SELECT * FROM Friendships WHERE (AccountID = ? AND FriendID = ?) OR (FriendID = ? AND AccountID = ?)")
 	//Check if an error occured during the preparation of the statement
@@ -116,7 +116,7 @@ func (conn *Connection) checkFriendshipExists(accountID int, friendID int) (bool
  */
 func (conn *Connection) AddFriend(accID int, friendID int) error {
 	//Check if the friendship already exists in the database
-	flag, err := conn.checkFriendshipExists(accID, friendID)
+	flag, err := conn.CheckFriendshipExists(accID, friendID)
 	if err != nil {
 		//An error occured during the checkFriendshipExists function
 		return err

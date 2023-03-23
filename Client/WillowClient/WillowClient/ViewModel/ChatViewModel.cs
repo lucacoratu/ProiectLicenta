@@ -101,8 +101,10 @@ namespace WillowClient.ViewModel
                         //Add a new reaction in the collection view
                         foreach (var group in this.MessageGroups) {
                             foreach (var messageModel in group) {
-                                if (Int32.Parse(messageModel.MessageId) == srm.messageId)
-                                    messageModel.Reactions.Add(new ReactionModel { Id = 0, Emoji = srm.emojiReaction, ReactionDate = DateTime.Now.ToString("dd MMMM yyyy"), SenderId = srm.senderId});
+                                if (Int32.Parse(messageModel.MessageId) == srm.messageId) {
+                                    messageModel.Reactions.Add(new ReactionModel { Id = 0, Emoji = srm.emojiReaction, ReactionDate = DateTime.Now.ToString("dd MMMM yyyy"), SenderId = srm.senderId });
+                                    return;
+                                }
                             }
                         }
                         return;
@@ -150,6 +152,7 @@ namespace WillowClient.ViewModel
                                 messageModels.Add(msgModel);
                                 this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
                             }
+                            NoMessages = false;
                             return;
                         } else {
                             ////He is the one that sent the message so update the message id
@@ -177,6 +180,7 @@ namespace WillowClient.ViewModel
                                 messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
                                 this.MessageGroups.Add(new MessageGroupModel("Today", messages));
                             }
+                            NoMessages = false;
                             return;
                         }
                     }
@@ -463,29 +467,35 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async void TakePhoto()
         {
-            if (MediaPicker.Default.IsCaptureSupported)
-            {
-                FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+            try {
+                if (MediaPicker.Default.IsCaptureSupported) {
+                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
 
-                if (photo != null)
-                {
-                    // save the file into local storage
-                    string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
+                    if (photo != null) {
+                        // save the file into local storage
+                        string localFilePath = Path.Combine(FileSystem.CacheDirectory, photo.FileName);
 
-                    using Stream sourceStream = await photo.OpenReadAsync();
-                    using FileStream localFileStream = File.OpenWrite(localFilePath);
+                        using Stream sourceStream = await photo.OpenReadAsync();
+                        using FileStream localFileStream = File.OpenWrite(localFilePath);
 
-                    await sourceStream.CopyToAsync(localFileStream);
+                        await sourceStream.CopyToAsync(localFileStream);
+                    }
                 }
+            } catch(Exception ex) {
+                Console.WriteLine(ex.ToString());
             }
         }
 
         [RelayCommand]
         public async Task PickFile()
         {
-            var res = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "Select file(s)", FileTypes = FilePickerFileType.Images });
-            if (res == null)
-                return;
+            try {
+                var res = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "Select file(s)", FileTypes = FilePickerFileType.Images });
+                if (res == null)
+                    return;
+            } catch(Exception ex) { 
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         [RelayCommand]
@@ -545,7 +555,7 @@ namespace WillowClient.ViewModel
                 {"account", account },
                 {"friend", friend},
                 {"audio", true},
-                {"video", false },
+                {"video", true },
             });
 
             //#if ANDROID

@@ -27,6 +27,7 @@
                                          BorderColor="WhiteSmoke"
                                          CornerRadius="50"
                                          HorizontalOptions="Center"
+                                         BackgroundColor="#505050"
                            />
                 </Frame>
             </Grid>
@@ -56,9 +57,9 @@
                 </ImageButton>
                 <Label FontFamily="{StaticResource ApplicationFont}" Text="Video" FontSize="12"/>
             </VerticalStackLayout>
-            <Grid Padding="0,20,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" RowDefinitions="{OnPlatform Android=20, WinUI=50, iOS=20}" ColumnDefinitions="{OnPlatform Android=20, WinUI=50, iOS=20}" HorizontalOptions="Center">
+            <Grid Padding="0,20,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" RowDefinitions="{OnPlatform Android=30, WinUI=50, iOS=30}" ColumnDefinitions="{OnPlatform Android=30, WinUI=50, iOS=30}" HorizontalOptions="Center">
             <Frame Padding="0" HorizontalOptions="Center" VerticalOptions="Center" Background="Red" CornerRadius="60">
-                    <ImageButton Padding="0" WidthRequest="{OnPlatform Android=20, WinUI=40, iOS=20}" HeightRequest="{OnPlatform Android=20, WinUI=40, iOS=20}" Margin="2" Source="end_call.png" Command="{Binding EndCallCommand}"/>
+                    <ImageButton Padding="0" WidthRequest="{OnPlatform Android=30, WinUI=40, iOS=30}" HeightRequest="{OnPlatform Android=30, WinUI=40, iOS=30}" Margin="2" Source="end_call.png" Command="{Binding EndCallCommand}"/>
             </Frame>
             </Grid>
         </Grid>

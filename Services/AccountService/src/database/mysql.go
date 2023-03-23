@@ -529,7 +529,7 @@ func (conn *Connection) UpdateAbout(accountId int64, newAbout string) (bool, err
  */
 func (conn *Connection) GetUsers(accountId int64) (data.Accounts, error) {
 	//Prepare the select statement to get all the users
-	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accountstatus.Status, accounts.ProfilePictureUrl FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID != ?")
+	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accountstatus.Status, accounts.ProfilePictureUrl, accounts.About FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID != ?")
 	//Check if an error occured when preparing the statement
 	if err != nil {
 		conn.l.Error("Error occured when preparing the select statement for getting users", err.Error())
@@ -546,7 +546,7 @@ func (conn *Connection) GetUsers(accountId int64) (data.Accounts, error) {
 	users := make(data.Accounts, 0)
 	for rows.Next() {
 		user := data.Account{}
-		err = rows.Scan(&user.ID, &user.DisplayName, &user.JoinDate, &user.Status, &user.ProfilePictureUrl)
+		err = rows.Scan(&user.ID, &user.DisplayName, &user.JoinDate, &user.Status, &user.ProfilePictureUrl, &user.About)
 		//Check if an error occured when fetching data from the row
 		if err != nil {
 			conn.l.Error("Error occurred when fetching data from row", err.Error())

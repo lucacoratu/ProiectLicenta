@@ -32,6 +32,7 @@
                                     BorderWidth="0"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
+                                    BackgroundColor="#505050"
                                     >
                             </toolkit:AvatarView>
                             <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="{Binding StatusStrokeColor}" Margin="-15,-20,0,0" VerticalOptions="End">

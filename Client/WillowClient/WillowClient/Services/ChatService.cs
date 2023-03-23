@@ -186,6 +186,18 @@ namespace WillowClient.Services
             }
         }
 
+        public async IAsyncEnumerable<GroupModel> GetGroupsAsyncEnumerable(int accountId, string session) {
+            var url = Constants.serverURL + "/chat/groups/" + accountId.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.GetAsync(baseAddress);
+            var groups = await response.Content.ReadFromJsonAsync<List<GroupModel>>();
+            groups = groups.OrderByDescending(group => group.LastMessageTimestamp).ToList();
+            foreach( var group in groups)
+                yield return group;
+        }
+
         public async IAsyncEnumerable<GroupModel> GetGroupsWithCache(int accountId, string session) {
             var url = Constants.serverURL + "/chat/groups/" + accountId.ToString();
 

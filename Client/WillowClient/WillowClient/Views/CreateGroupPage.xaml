@@ -35,11 +35,11 @@
         </Style>
     </ContentPage.Resources>
     <Grid RowDefinitions="Auto,*">
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
                 <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitCreateGroupCommand}">
                     <ImageButton.Source>
                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
@@ -60,7 +60,7 @@
                 </VerticalStackLayout>
                 <!--<Entry FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Placeholder="Insert the group name" Text="{Binding GroupName}" WidthRequest="240"/>-->
                 <input:FormView Grid.Column="1" WidthRequest="240">
-                    <material:TextField x:Name="groupNameTextField" FontFamily="{StaticResource ApplicationFont}" Title="Insert Group Name" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.UserGroup}}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" >
+                    <material:TextField x:Name="groupNameTextField" Text="{Binding GroupName}" FontFamily="{StaticResource ApplicationFont}" Title="Insert Group Name" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.UserGroup}}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" >
                         <!--<validation:RequiredValidation/>-->
                     </material:TextField>
                 </input:FormView>
@@ -81,6 +81,7 @@
                                                 BorderWidth="0"
                                                 BorderColor="WhiteSmoke"
                                                 CornerRadius="32"
+                                                BackgroundColor="Transparent"
                                                 />
                                     <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" Stroke="{Binding StatusStrokeColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Margin="-20,0,0,0" VerticalOptions="End">
                                         <Border.StrokeShape>

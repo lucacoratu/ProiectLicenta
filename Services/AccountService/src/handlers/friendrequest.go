@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"bytes"
+	"encoding/json"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"willow/accountservice/data"
@@ -210,7 +213,42 @@ func (frReq *FriendRequest) GetFriendsRecommendations(rw http.ResponseWriter, r 
 		rw.Write([]byte("Internal server error"))
 		return
 	}
+	//Create the list of recommendations with the users that don't share a friend request already
+	//Ask friend request service if the users have a friend request
+	recommendations := make(data.Accounts, 0)
+	for _, user := range users {
+		requestData := data.AreFriendsRequest{AccID: accountId, SenderID: user.ID}
+		//Try to marshal the request data to json
+		jsonData, err := json.Marshal(requestData)
+		//Check if an error occured when marshaling the data to json
+		if err != nil {
+			frReq.logger.Error("Error occured when marshaling data to request to friend request service if users have a friend request", err.Error(), requestData)
+			continue
+		}
+		res := ioutil.NopCloser(bytes.NewReader(jsonData))
+		response, err := http.Post("http://localhost:8083/arefriends", "application/json", res)
+		//Check if an error occured on the friend request service
+		if err != nil {
+			frReq.logger.Error("Error occured when sending request to friend request service to check if users already share a friend request", err.Error())
+			continue
+		}
+		//Check if the request was a succesful one
+		if response.StatusCode == http.StatusOK {
+			areFriendsResponse := data.AreFriendsResponse{}
+			err := areFriendsResponse.FromJSON(response.Body)
+			//Check if an error occured when parsing the response data
+			if err != nil {
+				frReq.logger.Error("Error occured when parsing the response from friend request service", err.Error())
+				continue
+			}
+
+			//If they don't have a friend request then add the user to the recommendation list
+			if !areFriendsResponse.Message {
+				recommendations = append(recommendations, user)
+			}
+		}
+	}
 
 	rw.WriteHeader(http.StatusOK)
-	users.ToJSON(rw)
+	recommendations.ToJSON(rw)
 }

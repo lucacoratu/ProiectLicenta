@@ -54,7 +54,8 @@ namespace WillowClient.ViewModel
         async Task GoBack()
         {
             //Change the account status to the previous one
-            Account.About = this.lastSetStatus;
+            if(this.lastSetStatus != null)
+                Account.About = this.lastSetStatus;
             await Shell.Current.Navigation.PopAsync();
         }
 

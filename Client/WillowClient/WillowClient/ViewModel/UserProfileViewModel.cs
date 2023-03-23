@@ -35,6 +35,12 @@ namespace WillowClient.ViewModel {
         [ObservableProperty]
         private string participantsText;
 
+        [ObservableProperty]
+        private bool loadingCommonGroups;
+
+        [ObservableProperty]
+        private bool loadedCommonGroups;
+
         public ObservableCollection<CommonGroupWithParticipantsModel> CommonGroups { get; } = new();
 
         private ProfileService profileService;
@@ -93,6 +99,9 @@ namespace WillowClient.ViewModel {
         public async void PopulateCommonGroups() {
             if(this.CommonGroups.Count != 0)
                 this.CommonGroups.Clear();
+
+            LoadingCommonGroups = true;
+            LoadedCommonGroups = false;
             var commonGroups = await this.chatService.GetCommonGroups(this.Account.Id, this.UserId, Globals.Session);
             foreach(var group in commonGroups) {
                 CommonGroupWithParticipantsModel mod = new CommonGroupWithParticipantsModel{ CreationDate = group.CreationDate, CreatorId = group.CreatorId, GroupName = group.GroupName,  RoomId = group.RoomId, Participants = group.Participants, ParticipantNames = group.ParticipantNames };
@@ -118,11 +127,12 @@ namespace WillowClient.ViewModel {
             } else {
                 this.CommonGroupsText = "Groups in Common";
             }
+            LoadingCommonGroups = false;
+            LoadedCommonGroups = true;
         }
 
         public async void PopulateProfileData() {
             var userAccount = await this.profileService.GetUserProfile(this.UserId, Globals.Session);
-            bool areFriends = true;
             string profilePicture = "";
             if (userAccount.ProfilePictureUrl != "NULL")
                 profilePicture = Constants.serverURL + "/accounts/static/" + userAccount.ProfilePictureUrl;
@@ -140,7 +150,11 @@ namespace WillowClient.ViewModel {
 
             userAccount.JoinDate = DateTime.Parse(userAccount.JoinDate).ToString("dd MMMM yyyy");
 
-            this.UserProfile = new UserProfileModel { Id = userAccount.Id, DisplayName = userAccount.DisplayName, Email = userAccount.Email, JoinDate = userAccount.JoinDate, Status = userAccount.Status, ProfilePictureUrl = profilePicture, AreFriends = areFriends, StatusBackgroundColor = statusBackgroundColor, StatusStrokeColor = statusStrokeColor, About = userAccount.About };
+            //Get if the current account and the one in the profile are friends
+            UserProfile = new UserProfileModel { Id = userAccount.Id, DisplayName = userAccount.DisplayName, Email = userAccount.Email, JoinDate = userAccount.JoinDate, Status = userAccount.Status, ProfilePictureUrl = profilePicture, AreFriends = true, StatusBackgroundColor = statusBackgroundColor, StatusStrokeColor = statusStrokeColor, About = userAccount.About };
+            
+            bool res = await this.profileService.AreUsersFriends(Account.Id, userAccount.Id, Globals.Session);
+            UserProfile.AreFriends = res;
         }
 
         [RelayCommand]

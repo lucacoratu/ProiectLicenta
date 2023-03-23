@@ -17,11 +17,11 @@
              >
     <ScrollView>
         <VerticalStackLayout>
-        <Border StrokeThickness="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
+        <Border StrokeThickness="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
                 <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
                     <ImageButton.Source>
                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
@@ -42,7 +42,8 @@
                     WidthRequest="110"
                     BorderWidth="0"
                     BorderColor="WhiteSmoke"
-                    CornerRadius="60" />
+                    CornerRadius="60"
+                    BackgroundColor="Transparent"/>
                 <Frame CornerRadius="15" WidthRequest="30" HeightRequest="30" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
                     <Image WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center">
                         <Image.Source>
@@ -112,12 +113,13 @@
                                         BorderWidth="0"
                                         BorderColor="WhiteSmoke"
                                         CornerRadius="32"
+                                        BackgroundColor="Transparent"
                                         >
                                 </toolkit:AvatarView>
                                 <Grid Grid.Column="1" ColumnDefinitions="*" RowDefinitions="*,*,Auto">
                                     <Label Grid.Row="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
                                     <Label Grid.Row="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Owner}" VerticalOptions="Center" HorizontalOptions="End" TextColor="WhiteSmoke" FontSize="13"/>
-                                    <Label Grid.Row="1" Text="Status text" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="12"/>
+                                    <Label Grid.Row="1" Text="{Binding About}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="12"/>
                                     <Line Margin="0,20,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"></Line>
                                 </Grid>
                             </Grid>

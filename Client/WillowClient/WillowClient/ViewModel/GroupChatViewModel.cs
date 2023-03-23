@@ -123,6 +123,7 @@ namespace WillowClient.ViewModel
                             messageModels.Add(msgModel);
                             this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
                         }
+                        NoMessages = false;
                         return;
                     } else {
                         //Add the message into the collection view for the current user
@@ -140,6 +141,7 @@ namespace WillowClient.ViewModel
                             messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
                             this.MessageGroups.Add(new MessageGroupModel("Today", messages));
                         }
+                        NoMessages = false;
                     }
                 }
             }
@@ -161,6 +163,8 @@ namespace WillowClient.ViewModel
 
             int roomId = this.Group.RoomId;
             if (Group.LastMessageSender == 0 && Group.LastMessageTimestamp == null) {
+                LoadingMessages = false;
+                NoMessages = true;
                 return;
             }
 
@@ -303,9 +307,13 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async Task PickFile()
         {
-            var res = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "Select file(s)", FileTypes = FilePickerFileType.Images });
-            if (res == null)
-                return;
+            try {
+                var res = await FilePicker.PickMultipleAsync(new PickOptions { PickerTitle = "Select file(s)", FileTypes = FilePickerFileType.Images });
+                if (res == null)
+                    return;
+            } catch(Exception ex) {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         [RelayCommand]

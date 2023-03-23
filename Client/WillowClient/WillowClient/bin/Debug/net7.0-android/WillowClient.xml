@@ -286,6 +286,9 @@
         <member name="P:WillowClient.ViewModel.MainViewModel.HasFriends">
             <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.hasFriends"/>
         </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoFriendRequests">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noFriendRequests"/>
+        </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>
         </member>
@@ -369,6 +372,12 @@
         </member>
         <member name="P:WillowClient.ViewModel.MainViewModel.ExitFriendRequestsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.ExitFriendRequests"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.sendFriendRequestsToSelectedRecommendationsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SendFriendRequestsToSelectedRecommendationsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SendFriendRequestsToSelectedRecommendationsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SendFriendRequestsToSelectedRecommendations"/>.</summary>
         </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.acceptFriendRequestCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.AcceptFriendRequestCommand"/>.</summary>
@@ -513,6 +522,12 @@
         </member>
         <member name="P:WillowClient.ViewModel.UserProfileViewModel.ParticipantsText">
             <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.participantsText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.LoadingCommonGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.loadingCommonGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.LoadedCommonGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.loadedCommonGroups"/>
         </member>
         <member name="F:WillowClient.ViewModel.UserProfileViewModel.goBackCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.UserProfileViewModel.GoBackCommand"/>.</summary>

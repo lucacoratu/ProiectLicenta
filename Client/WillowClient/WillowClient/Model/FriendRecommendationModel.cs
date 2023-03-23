@@ -11,6 +11,7 @@ namespace WillowClient.Model {
         public string JoinDate { get; set; }
         public string Status { get; set; }
         public string ProfilePictureUrl { get; set; }
+        public string About { get; set; }
     }
 
 }

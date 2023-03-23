@@ -67,11 +67,11 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <FlexLayout Direction="Row" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" JustifyContent="SpaceBetween">
+            <FlexLayout Direction="Row" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" JustifyContent="SpaceBetween">
                 <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                 <HorizontalStackLayout FlexLayout.AlignSelf="Center">
                     <HorizontalStackLayout.GestureRecognizers>
@@ -85,7 +85,7 @@
                                  BorderColor="WhiteSmoke"
                                  CornerRadius="32"
                                  FlexLayout.AlignSelf="Center"
-                                 BackgroundColor="Transparent"
+                                 BackgroundColor="#505050"
                         />
                     <VerticalStackLayout Spacing="0" FlexLayout.AlignSelf="Center" Margin="0,0,10,0">
                         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Friend.DisplayName}" TextColor="WhiteSmoke" FontSize="13" FontAttributes="Bold"/>
@@ -133,7 +133,7 @@
             </Border.StrokeShape>
             <FlexLayout Grid.Row="2" HeightRequest="40">
                 <Button FontFamily="{StaticResource ApplicationFont}" Text="+" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent"  Command="{Binding PickFileCommand}"/>
-                <Entry FontFamily="{StaticResource ApplicationFont}" MaxLength="10000" x:Name="messageText" Placeholder="Insert Message" PlaceholderColor="WhiteSmoke" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send"/>
+                <Entry FontFamily="{StaticResource ApplicationFont}" MaxLength="10000" x:Name="messageText" Placeholder="Insert Message" PlaceholderColor="WhiteSmoke" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"/>
                 <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"/>
                 <Button FontFamily="{StaticResource ApplicationFont}" Text=">" Margin="0" Padding="0" BackgroundColor="Transparent" TextColor="WhiteSmoke" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
             </FlexLayout>

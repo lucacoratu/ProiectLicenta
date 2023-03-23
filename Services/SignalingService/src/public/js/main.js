@@ -166,7 +166,7 @@ function toggleCamera() {
     } else {
         cameraEnabled = true;
         camera_button.innerHTML = '<i class="fa fa-video" style="font-size: 30px; color: whitesmoke;"></i>';
-        
+        localStream.getVideoTracks()[0].enabled = true;
         //Get the video stream from the camera
         // var streamConstraints = {
         //     audio: false,

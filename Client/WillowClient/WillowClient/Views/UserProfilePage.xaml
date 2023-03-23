@@ -14,11 +14,11 @@
              >
     <ScrollView>
         <VerticalStackLayout>
-            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="0,0,15,15" />
                 </Border.StrokeShape>
-                <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
                     <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
                         <ImageButton.Source>
                             <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
@@ -38,7 +38,9 @@
                         WidthRequest="110"
                         BorderWidth="0"
                         BorderColor="WhiteSmoke"
-                        CornerRadius="60" />
+                        CornerRadius="60"
+                        BackgroundColor="#505050"
+                    />
                 <Border HorizontalOptions="Start" BackgroundColor="{Binding UserProfile.StatusBackgroundColor}" WidthRequest="23" HeightRequest="23" StrokeThickness="1.1" Stroke="{Binding UserProfile.StatusStrokeColor}" Margin="-30,0,0,0" VerticalOptions="End">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="40"/>
@@ -87,11 +89,12 @@
                     <Button FontFamily="{StaticResource ApplicationFont}" WidthRequest="200" Text="Send friend request" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}"></Button>
                 </VerticalStackLayout>
             </Frame>
-            <HorizontalStackLayout Margin="10,15,0,0" Spacing="5">
+            <HorizontalStackLayout IsVisible="{Binding LoadedCommonGroups}" IsEnabled="{Binding LoadedCommonGroups}" Margin="10,15,0,0" Spacing="5">
                 <Label Text="{Binding NumberCommonGroups}" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center"/>
                 <Label FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" Text="{Binding CommonGroupsText}" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center"/>
             </HorizontalStackLayout>
-            <Frame BackgroundColor="#414141" Margin="10,5,10,10" Padding="10,10,10,10" CornerRadius="20">
+            <ActivityIndicator WidthRequest="32" HeightRequest="32" Margin="0,0,0,0" HorizontalOptions="Center" IsVisible="{Binding LoadingCommonGroups}" IsRunning="{Binding LoadingCommonGroups}" IsEnabled="{Binding LoadingCommonGroups}"/>
+            <Frame IsVisible="{Binding LoadedCommonGroups}" IsEnabled="{Binding LoadedCommonGroups}" BackgroundColor="#414141" Margin="10,5,10,10" Padding="10,10,10,10" CornerRadius="20">
                 <CollectionView ItemsSource="{Binding CommonGroups}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:CommonGroupWithParticipantsModel">
@@ -110,7 +113,7 @@
                                     BorderWidth="0"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="60"
-                                    BackgroundColor="Transparent"/>
+                                    BackgroundColor="#505050"/>
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                     <Label Text="{Binding GroupName}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="14" FontAttributes="Bold"/>
                                     <Label Text="{Binding ParticipantsText}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="12"/>

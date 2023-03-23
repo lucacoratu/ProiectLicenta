@@ -45,9 +45,9 @@ namespace WillowClient.ViewModel {
                 this.Participants.Clear();
 
             if (this.Account.Id == this.Group.CreatorId)
-                this.Participants.Add(new GroupParticipantModel { Id = this.Account.Id, DisplayName = "You", Owner = "Owner", ProfilePictureUrl = this.Account.ProfilePictureUrl });
+                this.Participants.Add(new GroupParticipantModel { Id = this.Account.Id, DisplayName = "You", Owner = "Owner", ProfilePictureUrl = this.Account.ProfilePictureUrl, About = this.Account.About });
             else
-                this.Participants.Add(new GroupParticipantModel { Id = this.Account.Id, DisplayName = "You", Owner = "", ProfilePictureUrl = this.Account.ProfilePictureUrl });
+                this.Participants.Add(new GroupParticipantModel { Id = this.Account.Id, DisplayName = "You", Owner = "", ProfilePictureUrl = this.Account.ProfilePictureUrl, About = this.Account.About });
 
             var auxParticipants = await profileService.GetGroupParticipantProfiles(this.Group.Participants, Globals.Session);
             for (int i = 0; i < auxParticipants.Count; i++) {
@@ -81,8 +81,29 @@ namespace WillowClient.ViewModel {
             };
             string res = await Shell.Current.DisplayActionSheet("Change photo", "Cancel", null, actions.ToArray());
             if (res == actions[0]) {
-                if (MediaPicker.Default.IsCaptureSupported) {
-                    FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+                try {
+                    if (MediaPicker.Default.IsCaptureSupported) {
+                        FileResult photo = await MediaPicker.Default.CapturePhotoAsync();
+                        if (photo != null) {
+                            Stream photoStream = await photo.OpenReadAsync();
+                            bool uploadedResult = await this.chatService.UpdateGroupPicture(this.Group.RoomId, photoStream, Globals.Session);
+                            if (uploadedResult) {
+                                //Send a messsage to all the other clients that the profile picture has been changed
+                                //UpdateUserProfilePictureForAllUsers();
+                                this.Group.GroupPictureUrl = "";
+                                this.Group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + this.Group.RoomId + ".png";
+
+                                await Shell.Current.DisplayAlert("Group picture", "Group picture has been updated", "Ok");
+                            }
+                        }
+                    }
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            else if(res == actions[1]) {
+                try {
+                    FileResult photo = await MediaPicker.Default.PickPhotoAsync();
                     if (photo != null) {
                         Stream photoStream = await photo.OpenReadAsync();
                         bool uploadedResult = await this.chatService.UpdateGroupPicture(this.Group.RoomId, photoStream, Globals.Session);
@@ -95,21 +116,8 @@ namespace WillowClient.ViewModel {
                             await Shell.Current.DisplayAlert("Group picture", "Group picture has been updated", "Ok");
                         }
                     }
-                }
-            }
-            else if(res == actions[1]) {
-                FileResult photo = await MediaPicker.Default.PickPhotoAsync();
-                if (photo != null) {
-                    Stream photoStream = await photo.OpenReadAsync();
-                    bool uploadedResult = await this.chatService.UpdateGroupPicture(this.Group.RoomId, photoStream, Globals.Session);
-                    if (uploadedResult) {
-                        //Send a messsage to all the other clients that the profile picture has been changed
-                        //UpdateUserProfilePictureForAllUsers();
-                        this.Group.GroupPictureUrl = "";
-                        this.Group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + this.Group.RoomId + ".png"; 
-
-                        await Shell.Current.DisplayAlert("Group picture", "Group picture has been updated", "Ok");
-                    }
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());
                 }
             }
         }

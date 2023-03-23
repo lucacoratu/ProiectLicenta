@@ -44,6 +44,8 @@ namespace WillowClient.Services
             if (response.IsSuccessStatusCode)
             {
                 friendsList = await response.Content.ReadFromJsonAsync<List<FriendModel>>();
+                //Sort the friendsList
+                friendsList = friendsList.OrderByDescending(friend => friend.LastMessageTimestamp).ToList();
             }
 
             return friendsList;

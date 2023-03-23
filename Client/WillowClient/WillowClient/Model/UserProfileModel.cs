@@ -10,7 +10,11 @@ namespace WillowClient.Model {
         public int Id { get; set; }
         public string DisplayName { get; set; }
         public string Email { get; set; }
-        public bool AreFriends { get; set; }
+        private bool areFriends;
+        public bool AreFriends {
+            get => areFriends; 
+            set => SetProperty(ref areFriends, value);
+        }
         public string Status { get; set; }
         public string JoinDate { get; set; }
         public string About { get; set; }

@@ -92,18 +92,24 @@ body{
 .buttonsDiv{
     position: absolute;
     z-index: 10;
-    top: 85%;
-    left: 30%;
-    right: 30%;
+    top: 90%;
+    left: 20%;
+    right: 20%;
+    bottom: 20px;
     padding: 0;
     margin-right: 10%;
-    width: 40%;
+    width: 60%;
     height: 10%;
-    background-color: #202020;
-    border: 1px solid whitesmoke;
+    background-color: transparent;
+    /*border: 1px solid whitesmoke;*/
     border-radius: 30px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.buttonsDiv > div {
+    margin-left: 30px;
+    margin-right: 30px;
 }

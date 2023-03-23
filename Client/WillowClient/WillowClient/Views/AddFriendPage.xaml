@@ -34,11 +34,11 @@
     </ContentPage.Resources>
     <ScrollView>
         <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
-            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="0,0,15,15" />
                 </Border.StrokeShape>
-                <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
                     <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="24" HeightRequest="24" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitAddFriendCommand}">
                         <ImageButton.Source>
                             <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
@@ -61,8 +61,8 @@
                         </ImageButton>
                     </Grid>
                 </input:FormView>
-                <material:TextField x:Name="searchRecommendations" Title="Search recommendations" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentSecondDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5" />
-                <CollectionView ItemsSource="{Binding FriendRecommendations}" SelectionMode="Multiple">
+                <material:TextField x:Name="searchRecommendations" Title="Search recommendations" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentSecondDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5" TextChanged="searchRecommendations_TextChanged" />
+                <CollectionView ItemsSource="{Binding FriendRecommendationSearchResults}" SelectionMode="Multiple" SelectionChanged="CollectionView_SelectionChanged">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:FriendRecommendationModel">
                             <HorizontalStackLayout Padding="10" Spacing="6">
@@ -75,15 +75,15 @@
                                             CornerRadius="32"
                                             BackgroundColor="Transparent"
                                             />
-                                <VerticalStackLayout Spacing="5">
+                                <VerticalStackLayout Spacing="1" VerticalOptions="Center">
                                     <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" TextColor="WhiteSmoke"/>
-                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding JoinDate}" VerticalOptions="Center" TextColor="WhiteSmoke"/>
+                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding About}" VerticalOptions="Center" TextColor="WhiteSmoke"/>
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <Button FontFamily="{StaticResource ApplicationFont}" Margin="20,10,20,0" Text="Send friend requests" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}"></Button>
+                <Button FontFamily="{StaticResource ApplicationFont}" Margin="20,10,20,0" Text="Send friend requests" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}" Command="{Binding SendFriendRequestsToSelectedRecommendationsCommand}"/>
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

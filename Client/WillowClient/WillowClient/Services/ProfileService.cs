@@ -54,6 +54,21 @@ namespace WillowClient.Services {
             return false;
         }
 
+        public async Task<bool> AreUsersFriends(int senderId, int userId, string session) {
+            var url = Constants.serverURL + "/account/cansend/friendrequest";
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.PostAsync(url, JsonContent.Create(new CanSendFriendRequestModel { senderId = senderId, userId = userId }));
+            if (response.IsSuccessStatusCode) {
+                var obj = await response.Content.ReadFromJsonAsync<CanSendFriendResponseModel>();
+                if(obj != null) {
+                    return obj.canSendRequest;
+                }
+            }
+            return false;
+        }
+
         public async Task<List<GroupParticipantModel>> GetGroupParticipantProfiles(List<int> participantIds, string session) {
             List<GroupParticipantModel> groupParticipants = new List<GroupParticipantModel>();
 
@@ -65,7 +80,7 @@ namespace WillowClient.Services {
                 var response = await this.m_httpClient.GetAsync(url);
                 if (response.IsSuccessStatusCode) {
                     var accountDetails = await response.Content.ReadFromJsonAsync<AccountModel>();
-                    groupParticipants.Add(new GroupParticipantModel() { Id = id, DisplayName = accountDetails.DisplayName, ProfilePictureUrl = accountDetails.ProfilePictureUrl });
+                    groupParticipants.Add(new GroupParticipantModel() { Id = id, DisplayName = accountDetails.DisplayName, ProfilePictureUrl = accountDetails.ProfilePictureUrl, About = accountDetails.About });
                 }
             }
 

@@ -31,7 +31,7 @@
                                     BorderWidth="0"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
-                                    BackgroundColor="Transparent"
+                                    BackgroundColor="#505050"
                                     >
                         </toolkit:AvatarView>
                         <!--<Grid ColumnDefinitions="260,*" RowDefinitions="*,Auto">

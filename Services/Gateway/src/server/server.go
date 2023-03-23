@@ -67,6 +67,7 @@ func InitServer(address string) error {
 	postRouter.HandleFunc("/accounts/picture", handlerFeedback.UpdateProfilePicture)
 	postRouter.HandleFunc("/chat/group/updatepicture", handlerFeedback.UpdateGroupPicture)
 	postRouter.HandleFunc("/account/update/about", handlerFeedback.UpdateAboutMessage)
+	postRouter.HandleFunc("/account/cansend/friendrequest", handlerFeedback.CanSendFriendRequest)
 
 	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.GetFriendRequests)

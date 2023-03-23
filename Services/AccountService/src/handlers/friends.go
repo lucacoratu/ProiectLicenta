@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"bytes"
+	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"willow/accountservice/data"
@@ -19,6 +22,47 @@ type Friends struct {
 
 func NewFriends(l logging.ILogger, db *database.Connection) *Friends {
 	return &Friends{logger: l, dbConn: db}
+}
+
+/*
+ * This function will forward a message to the url: proxyProtocol://proxyHost/uri. When forwarding the headers of the request will remain intact
+ * It will return an error if somethign happens during the forwarding of the message or the response body if the request was forwarded succesfully
+ */
+func (f *Friends) ForwardRequest(proxyProtocol string, proxyHost string, r *http.Request) ([]byte, error) {
+	// we need to buffer the body if we want to read it here and send it
+	// in the request.
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		//http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return nil, err
+	}
+
+	// you can reassign the body if you need to parse it as multipart
+	r.Body = ioutil.NopCloser(bytes.NewReader(body))
+
+	// create a new url from the raw RequestURI sent by the client
+	url := fmt.Sprintf("%s://%s%s", proxyProtocol, proxyHost, r.RequestURI)
+
+	proxyReq, _ := http.NewRequest(r.Method, url, bytes.NewReader(body))
+
+	// We may want to filter some headers, otherwise we could just use a shallow copy
+	// proxyReq.Header = req.Header
+	proxyReq.Header = make(http.Header)
+	for h, val := range r.Header {
+		proxyReq.Header[h] = val
+	}
+	f.logger.Info(proxyReq.Header)
+
+	httpClient := &http.Client{}
+	resp, err := httpClient.Do(proxyReq)
+	if err != nil {
+		//http.Error(rw, err.Error(), http.StatusBadGateway)
+		return nil, err
+	}
+	body2, _ := ioutil.ReadAll(resp.Body)
+	f.logger.Debug(string(body2))
+	defer resp.Body.Close()
+	return body2, nil
 }
 
 /*
@@ -111,4 +155,22 @@ func (f *Friends) GetFriends(rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(response.StatusCode)
 	accs.ToJSON(rw)
+}
+
+/*
+ * This function will forward the request to the friend service and get the response
+ */
+func (f *Friends) CanSendFriendRequest(rw http.ResponseWriter, r *http.Request) {
+	//Log that the endpoint has been hit
+	f.logger.Info("Endpoint /account/cansend/friendrequest hit (POST method)")
+	returnData, err := f.ForwardRequest("http", "localhost:8084", r)
+	if err != nil {
+		f.logger.Error("Error occured on friend service", err.Error())
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Internal server error"))
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
 }
