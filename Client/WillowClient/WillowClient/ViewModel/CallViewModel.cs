@@ -10,6 +10,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Text.Json;
 using WillowClient.Services;
+using Mopups.Services;
+using WillowClient.ViewsPopups;
 
 namespace WillowClient.ViewModel
 {
@@ -191,6 +193,11 @@ namespace WillowClient.ViewModel
             await Shell.Current.Navigation.PopAsync();
             await Shell.Current.Navigation.PopAsync();
             this.IsBusy = false;
+
+            //Ask the user for feedback
+#if ANDROID
+            await MopupService.Instance.PushAsync(new ReviewCallPopup(new CallFeedbackViewModel()), true);
+#endif
         }
 
         public async void TerminateGroupCall(WebView webView) {

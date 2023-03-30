@@ -10,6 +10,9 @@
         <member name="P:WillowClient.ViewModel.BaseViewModel.Error">
             <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.error"/>
         </member>
+        <member name="P:WillowClient.ViewModel.CallFeedbackViewModel.FeedbackText">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallFeedbackViewModel.feedbackText"/>
+        </member>
         <member name="P:WillowClient.ViewModel.CallViewModel.Friend">
             <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.friend"/>
         </member>
@@ -133,6 +136,12 @@
         <member name="P:WillowClient.ViewModel.FeedbackViewModel.ExitReportABugCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.FeedbackViewModel.ExitReportABug"/>.</summary>
         </member>
+        <member name="F:WillowClient.ViewModel.FeedbackViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.FeedbackViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.FeedbackViewModel.GoBack"/>.</summary>
+        </member>
         <member name="P:WillowClient.ViewModel.GroupChatViewModel.Group">
             <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.group"/>
         </member>
@@ -226,6 +235,12 @@
         <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.GoBackCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.GoBack"/>.</summary>
         </member>
+        <member name="F:WillowClient.ViewModel.InformationViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.InformationViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.InformationViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.InformationViewModel.GoBack"/>.</summary>
+        </member>
         <member name="P:WillowClient.ViewModel.LoginViewModel.Username">
             <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.username"/>
         </member>
@@ -289,6 +304,9 @@
         <member name="P:WillowClient.ViewModel.MainViewModel.NoFriendRequests">
             <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noFriendRequests"/>
         </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoSentFriendRequests">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noSentFriendRequests"/>
+        </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>
         </member>
@@ -343,6 +361,24 @@
         <member name="P:WillowClient.ViewModel.MainViewModel.CreateGroupMobileCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.CreateGroupMobile"/>.</summary>
         </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToInformationCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToInformationCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToInformationCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToInformation"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToSubmitedFeedbackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToSubmitedFeedbackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToSubmitedFeedbackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToSubmitedFeedback"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToNewFeedbackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToNewFeedbackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToNewFeedbackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToNewFeedback"/>.</summary>
+        </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.exitCreateGroupCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.ExitCreateGroupCommand"/>.</summary>
         </member>
@@ -372,6 +408,18 @@
         </member>
         <member name="P:WillowClient.ViewModel.MainViewModel.ExitFriendRequestsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.ExitFriendRequests"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToSentFriendRequestsMobileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToSentFriendRequestsMobileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToSentFriendRequestsMobileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToSentFriendRequestsMobile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.exitSentFriendRequestsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.ExitSentFriendRequestsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.ExitSentFriendRequestsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.ExitSentFriendRequests"/>.</summary>
         </member>
         <member name="F:WillowClient.ViewModel.MainViewModel.sendFriendRequestsToSelectedRecommendationsCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SendFriendRequestsToSelectedRecommendationsCommand"/>.</summary>

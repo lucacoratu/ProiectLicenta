@@ -114,6 +114,10 @@ namespace WillowClient.ViewModel
                 }
             }
 
+            if (message.IndexOf("callee") != -1) {
+                return;
+            }
+
             //Parse the JSON
             var options = new JsonSerializerOptions
             {

@@ -124,7 +124,7 @@ func (frReq *FriendRequest) ViewFriendRequests(rw http.ResponseWriter, r *http.R
 			continue
 		}
 		//f.logger.Info(*accDetails)
-		frAccount := data.FriendRequestAccount{AccountID: rd.SenderID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate, ProfilePictureUrl: accDetails.ProfilePictureUrl}
+		frAccount := data.FriendRequestAccount{AccountID: rd.SenderID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate, ProfilePictureUrl: accDetails.ProfilePictureUrl, About: accDetails.About}
 		frReq.logger.Debug(frAccount)
 		accs = append(accs, frAccount)
 	}
@@ -175,7 +175,7 @@ func (frReq *FriendRequest) ViewSentFriendRequests(rw http.ResponseWriter, r *ht
 			continue
 		}
 		//f.logger.Info(*accDetails)
-		frAccount := data.FriendRequestAccount{AccountID: rd.AccID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate}
+		frAccount := data.FriendRequestAccount{AccountID: rd.AccID, DisplayName: accDetails.DisplayName, RequestDate: rd.RequestDate, LastOnline: accDetails.LastOnline, JoinDate: accDetails.JoinDate, About: accDetails.About, ProfilePictureUrl: accDetails.ProfilePictureUrl}
 		frReq.logger.Debug(frAccount)
 		accs = append(accs, frAccount)
 	}

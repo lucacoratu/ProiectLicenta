@@ -60,6 +60,7 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+	  <PackageReference Include="Mopups" Version="1.1.1" />
 	  <PackageReference Include="Plugin.LocalNotification" Version="10.1.4" />
 	  <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.4" />
@@ -103,6 +104,9 @@
 	  <Compile Update="Views\EditProfilePage.xaml.cs">
 	    <DependentUpon>EditProfilePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\InformationPage.xaml.cs">
+	    <DependentUpon>InformationPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\WindowsCallPage.xaml.cs">
 	    <DependentUpon>WindowsCallPage.xaml</DependentUpon>
 	  </Compile>
@@ -116,6 +120,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="ViewsPopups\ReactMessagePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ViewsPopups\ReviewCallPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AddFriendPage.xaml">
@@ -151,13 +158,25 @@
 	  <MauiXaml Update="Views\GroupDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\InformationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\MobileMapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NewFeedbackPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ProfilePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ReportABugPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SentFriendRequestPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\SubmitedFeedbackPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UserProfilePage.xaml">

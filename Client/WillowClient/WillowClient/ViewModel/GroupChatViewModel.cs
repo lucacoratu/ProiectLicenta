@@ -90,6 +90,10 @@ namespace WillowClient.ViewModel
                 }
             }
 
+            if (message.IndexOf("callee") != -1) {
+                return;
+            }
+
             try
             {
                 //Parse the JSON body of the message

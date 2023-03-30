@@ -33,12 +33,15 @@ namespace WillowClient.ViewModel
 
         public ObservableCollection<string> Categories { get; } = new ();
 
+        public ObservableCollection<FeedbackQuestionModel> FeedbackQuestions { get;  } = new ();
+
         FeedbackService feedbackService;
 
         public FeedbackViewModel(FeedbackService feedbackService)
         {
             this.feedbackService = feedbackService;
             this.PopulateCategories();
+            this.PopulateFeedbackQuestions();
         }
 
         async void PopulateCategories()
@@ -49,6 +52,19 @@ namespace WillowClient.ViewModel
             {
                 this.Categories.Add(cat.name);
             }
+        }
+
+        async void PopulateFeedbackQuestions() {
+            FeedbackQuestionModel feedbackQuestion = new FeedbackQuestionModel { QuestionIndex = "1", Question = "How satisfied are you when using the app?" };
+            FeedbackQuestionModel feedbackQuestion2 = new FeedbackQuestionModel { QuestionIndex = "2", Question = "How satisfied are you with the chat?" };
+            FeedbackQuestionModel feedbackQuestion3 = new FeedbackQuestionModel { QuestionIndex = "3", Question = "How satisfied are you with the group chat?" };
+            FeedbackQuestionModel feedbackQuestion4 = new FeedbackQuestionModel { QuestionIndex = "4", Question = "How satisfied are you with the audio call?" };
+            FeedbackQuestionModel feedbackQuestion5 = new FeedbackQuestionModel { QuestionIndex = "5", Question = "How satisfied are you with the video call?" };
+            this.FeedbackQuestions.Add(feedbackQuestion);
+            this.FeedbackQuestions.Add(feedbackQuestion2);
+            this.FeedbackQuestions.Add(feedbackQuestion3);
+            this.FeedbackQuestions.Add(feedbackQuestion4);
+            this.FeedbackQuestions.Add(feedbackQuestion5);
         }
 
         [RelayCommand]
@@ -62,6 +78,11 @@ namespace WillowClient.ViewModel
         async Task ExitReportABug()
         {
             _ = await Shell.Current.Navigation.PopAsync();
+        }
+
+        [RelayCommand]
+        async Task GoBack() {
+            await Shell.Current.Navigation.PopAsync();
         }
         
     }

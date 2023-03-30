@@ -6,6 +6,7 @@ using Microsoft.Maui.Controls.Compatibility.Hosting;
 using UraniumUI;
 using Plugin.LocalNotification;
 using WillowClient.Database;
+using Mopups.Hosting;
 #if ANDROID
 using WillowClient.Platforms.Android;
 #endif
@@ -21,6 +22,7 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
 			.UseMauiCompatibility()
+			.ConfigureMopups()
 #if ANDROID
 			.UseLocalNotification()
 #endif
@@ -77,12 +79,17 @@ public static class MauiProgram
 		builder.Services.AddSingleton<CreateGroupPage>();
 		builder.Services.AddSingleton<AddFriendPage>();
 		builder.Services.AddSingleton<FriendRequestPage>();
+		builder.Services.AddSingleton<SentFriendRequestPage>();
 
-		builder.Services.AddSingleton<FeedbackViewModel>();
+        builder.Services.AddSingleton<FeedbackViewModel>();
 		builder.Services.AddSingleton<FeedbackService>();
 		builder.Services.AddSingleton<ReportABugPage>();
+		builder.Services.AddSingleton<InformationPage>();
+		builder.Services.AddSingleton<InformationViewModel>();
+		builder.Services.AddSingleton<SubmitedFeedbackPage>();
+		builder.Services.AddSingleton<NewFeedbackPage>();
 
-		builder.Services.AddTransient<ProfileViewModel>();
+        builder.Services.AddTransient<ProfileViewModel>();
 		builder.Services.AddTransient<ProfilePage>();
 		builder.Services.AddSingleton<ProfileService>();
         builder.Services.AddTransient<EditProfilePage>();
@@ -101,7 +108,6 @@ public static class MauiProgram
 
 		//Database service
 		builder.Services.AddSingleton<DatabaseService>();
-
 
         return builder.Build();
 	}

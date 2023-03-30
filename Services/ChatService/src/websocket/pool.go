@@ -154,6 +154,35 @@ func (pool *Pool) MessageReceived(message Message) {
 		//Exit the function as the message has been handled
 		return
 	}
+
+	//Check if the message received was accept friend request
+	acceptRequestData := AcceptFriendRequestMessage{}
+	err = json.Unmarshal([]byte(message.Body), &acceptRequestData)
+	var isAcceptRequest bool = true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isAcceptRequest = false
+	}
+
+	if isAcceptRequest && acceptRequestData.AccountId != 0 && acceptRequestData.FriendId != 0 {
+		pool.logger.Info("Message is Accept Request")
+		roomId, err := pool.dbConn.GetRoomId(int64(acceptRequestData.AccountId), int64(acceptRequestData.FriendId))
+		if err != nil {
+			pool.logger.Error(err.Error())
+			return
+		}
+		acceptRequestData.RoomId = int(roomId)
+		//Send the message to the friend
+		for client, _ := range pool.Clients {
+			if client.Id == int64(acceptRequestData.FriendId) {
+				client.Conn.WriteJSON(acceptRequestData)
+			}
+		}
+		//Echo the message back to the sender
+		message.C.Conn.WriteJSON(acceptRequestData)
+		return
+	}
+
 	//Check if the message is create group message
 	createGroupData := CreateGroupMessage{}
 	err = json.Unmarshal([]byte(message.Body), &createGroupData)

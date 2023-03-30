@@ -1077,3 +1077,7 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resi
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\mipmap-xxxhdpi\willow_foreground.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\no_friends.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\no_groups.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\AsyncAwaitBestPractices.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\Mopups.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc645f71566477e2fdd5\MopupGestureDetectorListener.java
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc648efb837642500d81\PopupPageRenderer.java

@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net7.0-android33.0": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -238,6 +251,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -2259,6 +2288,19 @@
       }
     },
     "net7.0-android33.0/android-arm": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -2495,6 +2537,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -4516,6 +4574,19 @@
       }
     },
     "net7.0-android33.0/android-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -4752,6 +4823,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -6773,6 +6860,19 @@
       }
     },
     "net7.0-android33.0/android-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -7009,6 +7109,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -9030,6 +9146,19 @@
       }
     },
     "net7.0-android33.0/android-x86": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -9266,6 +9395,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -11287,6 +11432,19 @@
       }
     },
     "net7.0-android33.0/ios-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -11523,6 +11681,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -13544,6 +13718,19 @@
       }
     },
     "net7.0-android33.0/maccatalyst-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -13780,6 +13967,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -15801,6 +16004,19 @@
       }
     },
     "net7.0-android33.0/win10-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -16037,6 +16253,22 @@
         "runtime": {
           "lib/net7.0-android33.0/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-android33.0/Mopups.dll": {
+            "related": ".aar;.xml"
           }
         }
       },
@@ -18058,6 +18290,19 @@
       }
     },
     "net7.0-ios16.1": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -18281,6 +18526,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -18441,6 +18702,19 @@
       }
     },
     "net7.0-ios16.1/android-arm": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -18664,6 +18938,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -18824,6 +19114,19 @@
       }
     },
     "net7.0-ios16.1/android-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -19047,6 +19350,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -19207,6 +19526,19 @@
       }
     },
     "net7.0-ios16.1/android-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -19430,6 +19762,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -19590,6 +19938,19 @@
       }
     },
     "net7.0-ios16.1/android-x86": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -19813,6 +20174,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -19973,6 +20350,19 @@
       }
     },
     "net7.0-ios16.1/ios-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -20196,6 +20586,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -20356,6 +20762,19 @@
       }
     },
     "net7.0-ios16.1/maccatalyst-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -20579,6 +20998,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -20739,6 +21174,19 @@
       }
     },
     "net7.0-ios16.1/win10-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -20962,6 +21410,22 @@
         "runtime": {
           "lib/net7.0-ios16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-ios16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -21122,6 +21586,19 @@
       }
     },
     "net7.0-maccatalyst16.1": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -21345,6 +21822,22 @@
         "runtime": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -21603,6 +22096,19 @@
       }
     },
     "net7.0-maccatalyst16.1/android-arm": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -21826,6 +22332,22 @@
         "runtime": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -21993,6 +22515,19 @@
       }
     },
     "net7.0-maccatalyst16.1/android-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -22216,6 +22751,22 @@
         "runtime": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -22383,6 +22934,19 @@
       }
     },
     "net7.0-maccatalyst16.1/android-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -22606,6 +23170,22 @@
         "runtime": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -22773,6 +23353,19 @@
       }
     },
     "net7.0-maccatalyst16.1/android-x86": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -22996,6 +23589,22 @@
         "runtime": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -23163,6 +23772,19 @@
       }
     },
     "net7.0-maccatalyst16.1/ios-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -23386,6 +24008,22 @@
         "runtime": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -23550,6 +24188,19 @@
       }
     },
     "net7.0-maccatalyst16.1/maccatalyst-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -23773,6 +24424,22 @@
         "runtime": {
           "lib/net7.0-maccatalyst16.1/Microsoft.Maui.Graphics.dll": {
             "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -23940,6 +24607,19 @@
       }
     },
     "net7.0-maccatalyst16.1/win10-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -24166,6 +24846,22 @@
           }
         }
       },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0-maccatalyst16.1/Mopups.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Plainer.Maui/1.6.2": {
         "type": "package",
         "compile": {
@@ -24330,6 +25026,19 @@
       }
     },
     "net7.0-windows10.0.19041": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -24694,6 +25403,22 @@
           }
         }
       },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Plainer.Maui/1.6.2": {
         "type": "package",
         "compile": {
@@ -24949,6 +25674,19 @@
       }
     },
     "net7.0-windows10.0.19041/android-arm": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -25283,6 +26021,22 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Plainer.Maui/1.6.2": {
@@ -25449,6 +26203,19 @@
       }
     },
     "net7.0-windows10.0.19041/android-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -25783,6 +26550,22 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Plainer.Maui/1.6.2": {
@@ -25949,6 +26732,19 @@
       }
     },
     "net7.0-windows10.0.19041/android-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -26283,6 +27079,22 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Plainer.Maui/1.6.2": {
@@ -26449,6 +27261,19 @@
       }
     },
     "net7.0-windows10.0.19041/android-x86": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -26783,6 +27608,22 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Plainer.Maui/1.6.2": {
@@ -26949,6 +27790,19 @@
       }
     },
     "net7.0-windows10.0.19041/ios-arm64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -27283,6 +28137,22 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Plainer.Maui/1.6.2": {
@@ -27446,6 +28316,19 @@
       }
     },
     "net7.0-windows10.0.19041/maccatalyst-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -27780,6 +28663,22 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Plainer.Maui/1.6.2": {
@@ -27946,6 +28845,19 @@
       }
     },
     "net7.0-windows10.0.19041/win10-x64": {
+      "AsyncAwaitBestPractices/6.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/AsyncAwaitBestPractices.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "CommunityToolkit.Maui/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -28288,6 +29200,22 @@
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
         }
       },
+      "Mopups/1.1.1": {
+        "type": "package",
+        "dependencies": {
+          "AsyncAwaitBestPractices": "6.0.4"
+        },
+        "compile": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Mopups.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Plainer.Maui/1.6.2": {
         "type": "package",
         "compile": {
@@ -28453,6 +29381,24 @@
     }
   },
   "libraries": {
+    "AsyncAwaitBestPractices/6.0.4": {
+      "sha512": "dO/ZfaT+5DMMnYUCmxAk2s1jEXUTDcgethroMj1kcmedO0MAu6WgvPP4gPYem/0kJASrnBcem+kr5ju3LaNdMw==",
+      "type": "package",
+      "path": "asyncawaitbestpractices/6.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "asyncawaitbestpractices.6.0.4.nupkg.sha512",
+        "asyncawaitbestpractices.nuspec",
+        "lib/netstandard1.0/AsyncAwaitBestPractices.dll",
+        "lib/netstandard1.0/AsyncAwaitBestPractices.xml",
+        "lib/netstandard2.0/AsyncAwaitBestPractices.dll",
+        "lib/netstandard2.0/AsyncAwaitBestPractices.xml",
+        "lib/netstandard2.1/AsyncAwaitBestPractices.dll",
+        "lib/netstandard2.1/AsyncAwaitBestPractices.xml"
+      ]
+    },
     "CommunityToolkit.Maui/5.0.0": {
       "sha512": "iIEnYmQxFPH650rtcUlVrFy1/gLuvDLqvLVcnMCzWTJAFCSkNDspPY8EmGGN37FOqBSzQ7OttReyAZiroAjVdA==",
       "type": "package",
@@ -29775,6 +30721,26 @@
         "tools/net5.0/zh-TW/Microsoft.Build.Msix.resources.dll",
         "tools/x64/GenXbf.dll",
         "tools/x86/GenXbf.dll"
+      ]
+    },
+    "Mopups/1.1.1": {
+      "sha512": "3hyQVRJbPJNZImlDxlV5GwbYGDyDvI6OWJpz/ifGANu1znd9eyCy0FDP9QTFp6pOP97nuMJHOd/wpVFb4nppvA==",
+      "type": "package",
+      "path": "mopups/1.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net7.0-android33.0/Mopups.aar",
+        "lib/net7.0-android33.0/Mopups.dll",
+        "lib/net7.0-android33.0/Mopups.xml",
+        "lib/net7.0-ios16.1/Mopups.dll",
+        "lib/net7.0-ios16.1/Mopups.xml",
+        "lib/net7.0-maccatalyst16.1/Mopups.dll",
+        "lib/net7.0-maccatalyst16.1/Mopups.xml",
+        "lib/net7.0/Mopups.dll",
+        "lib/net7.0/Mopups.xml",
+        "mopups.1.1.1.nupkg.sha512",
+        "mopups.nuspec"
       ]
     },
     "Plainer.Maui/1.6.2": {
@@ -32317,6 +33283,7 @@
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
       "Microsoft.Maui.Graphics >= 7.0.59",
+      "Mopups >= 1.1.1",
       "Plugin.LocalNotification >= 10.1.4",
       "SQLitePCLRaw.bundle_green >= 2.1.4",
       "UraniumUI >= 2.3.1",
@@ -32344,6 +33311,7 @@
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
       "Microsoft.Maui.Graphics >= 7.0.59",
+      "Mopups >= 1.1.1",
       "Plugin.LocalNotification >= 10.1.4",
       "SQLitePCLRaw.bundle_green >= 2.1.4",
       "UraniumUI >= 2.3.1",
@@ -32360,6 +33328,7 @@
       "Microsoft.Extensions.Logging >= 7.0.0",
       "Microsoft.Extensions.Logging.Abstractions >= 7.0.0",
       "Microsoft.Maui.Graphics >= 7.0.59",
+      "Mopups >= 1.1.1",
       "Plugin.LocalNotification >= 10.1.4",
       "SQLitePCLRaw.bundle_green >= 2.1.4",
       "UraniumUI >= 2.3.1",
@@ -32379,6 +33348,7 @@
       "Microsoft.Maui.Graphics.Win2D.WinUI.Desktop >= 7.0.59",
       "Microsoft.Windows.SDK.BuildTools >= 10.0.22621.755",
       "Microsoft.WindowsAppSDK >= 1.2.221209.1",
+      "Mopups >= 1.1.1",
       "Plugin.LocalNotification >= 10.1.4",
       "SQLitePCLRaw.bundle_green >= 2.1.4",
       "UraniumUI >= 2.3.1",
@@ -32479,6 +33449,10 @@
             "target": "Package",
             "version": "[7.0.59, )",
             "autoReferenced": true
+          },
+          "Mopups": {
+            "target": "Package",
+            "version": "[1.1.1, )"
           },
           "Plugin.LocalNotification": {
             "target": "Package",
@@ -32630,6 +33604,10 @@
             "version": "[7.0.59, )",
             "autoReferenced": true
           },
+          "Mopups": {
+            "target": "Package",
+            "version": "[1.1.1, )"
+          },
           "Plugin.LocalNotification": {
             "target": "Package",
             "version": "[10.1.4, )"
@@ -32724,6 +33702,10 @@
             "target": "Package",
             "version": "[7.0.59, )",
             "autoReferenced": true
+          },
+          "Mopups": {
+            "target": "Package",
+            "version": "[1.1.1, )"
           },
           "Plugin.LocalNotification": {
             "target": "Package",
@@ -32836,6 +33818,10 @@
             "target": "Package",
             "version": "[1.2.221209.1, )",
             "autoReferenced": true
+          },
+          "Mopups": {
+            "target": "Package",
+            "version": "[1.1.1, )"
           },
           "Plugin.LocalNotification": {
             "target": "Package",

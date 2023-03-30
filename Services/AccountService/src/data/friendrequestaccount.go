@@ -12,6 +12,7 @@ type FriendRequestAccount struct {
 	LastOnline        string `json:"lastOnline"`
 	JoinDate          string `json:"joinDate"`
 	ProfilePictureUrl string `json:"profilePictureUrl"`
+	About             string `json:"about"`
 }
 
 func (frReqAcc *FriendRequestAccount) ToJSON(w io.Writer) error {

@@ -604,6 +604,9 @@
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.28\lib\net6.0\WinRT.Runtime.dll">
       <PackagePath>WinRT.Runtime.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\asyncawaitbestpractices\6.0.4\lib\netstandard2.1\AsyncAwaitBestPractices.dll">
+      <PackagePath>AsyncAwaitBestPractices.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\communitytoolkit.maui\5.0.0\lib\net7.0-windows10.0.19041\CommunityToolkit.Maui.dll">
       <PackagePath>CommunityToolkit.Maui.dll</PackagePath>
     </AppxPackagedFile>
@@ -690,6 +693,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\microsoft.windowsappsdk\1.2.221209.1\lib\net6.0-windows10.0.18362.0\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll">
       <PackagePath>Microsoft.WindowsAppRuntime.Bootstrap.Net.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\mopups\1.1.1\lib\net7.0\Mopups.dll">
+      <PackagePath>Mopups.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\lucac\.nuget\packages\plainer.maui\1.6.2\lib\net7.0\Plainer.Maui.dll">
       <PackagePath>Plainer.Maui.dll</PackagePath>

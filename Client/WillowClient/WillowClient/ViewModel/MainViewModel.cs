@@ -70,11 +70,15 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private bool noFriendRequests;
 
+        [ObservableProperty]
+        private bool noSentFriendRequests;
+
         private FriendService friendService;
         private ChatService chatService;
         private SignalingService signalingService;
         private NotificationService notificationService;
         private DatabaseService databaseService;
+        private ProfileService profileService;
         public ObservableCollection<FriendStatusModel> Friends { get; } = new();
         public ObservableCollection<FriendStatusModel> CreateGroupSearchResults { get;  } = new();
         public ObservableCollection<FriendStatusModel> FriendsSearchResults { get; } = new();
@@ -90,9 +94,10 @@ namespace WillowClient.ViewModel
 
         public ObservableCollection<FriendRequestModel> SentFriendRequests { get; } = new();
 
-        public MainViewModel(FriendService friendService, ChatService chatService, SignalingService signalingService, NotificationService notificationService, DatabaseService databaseService)
+        public MainViewModel(FriendService friendService, ProfileService profileService ,ChatService chatService, SignalingService signalingService, NotificationService notificationService, DatabaseService databaseService)
         {
             this.friendService = friendService;
+            this.profileService = profileService;
             this.chatService = chatService;
             this.notificationService = notificationService;
             this.databaseService = databaseService;
@@ -156,6 +161,51 @@ namespace WillowClient.ViewModel
                     return;
                 } catch(Exception ex) {
                     Console.WriteLine(ex.ToString());    
+                }
+            }
+
+            //Friend request has been accepted
+            if(message.IndexOf("friendId") != -1) {
+                var options = new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true,
+                };
+                try {
+                    AcceptFriendRequestUpdateModel afrm = JsonSerializer.Deserialize<AcceptFriendRequestUpdateModel>(message, options);
+                    if(afrm != null) {
+                        //Get the profile of the user
+                        var profileId = afrm.accountID == this.Account.Id ? afrm.friendID : afrm.accountID;
+                        AccountModel newFriend = await this.profileService.GetUserProfile(profileId, Globals.Session);
+                        var newFriendModel = new FriendModel { 
+                            FriendId = newFriend.Id, 
+                            About = newFriend.About,
+                            BefriendDate = DateTime.Now.ToString(),
+                            DisplayName = newFriend.DisplayName,
+                            JoinDate = newFriend.JoinDate,
+                            Status = newFriend.Status,
+                            LastMessage = "Start conversation",
+                            LastMessageTimestamp = null,
+                            ProfilePictureUrl = newFriend.ProfilePictureUrl,
+                            LastOnline = newFriend.LastOnline,
+                            RoomID = afrm.roomID,
+                        };
+                        if (newFriendModel.ProfilePictureUrl == "NULL") {
+                            newFriendModel.ProfilePictureUrl = Constants.defaultProfilePicture;
+                        }
+                        else {
+                            newFriendModel.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + newFriendModel.ProfilePictureUrl;
+                        }
+
+                        FriendStatusModel newFriendStatusModel = null;
+                        if (newFriendModel.Status == "Online") {
+                            newFriendStatusModel = new FriendStatusModel(newFriendModel, Colors.Green, Colors.DarkGreen);
+                        } else {
+                            newFriendStatusModel = new FriendStatusModel(newFriendModel, Colors.Gray, Colors.DarkGray);
+                        }
+                        this.Friends.Insert(0,newFriendStatusModel);
+                        this.FriendsSearchResults.Insert(0, newFriendStatusModel);
+                    }
+                }catch(Exception ex) { 
+                    Console.WriteLine(ex.ToString());
                 }
             }
 
@@ -1049,6 +1099,21 @@ namespace WillowClient.ViewModel
         }
 
         [RelayCommand]
+        async Task GoToInformation() {
+            await Shell.Current.GoToAsync(nameof(InformationPage), true);
+        }
+
+        [RelayCommand]
+        async Task GoToSubmitedFeedback() {
+            await Shell.Current.GoToAsync(nameof(SubmitedFeedbackPage), true);
+        }
+
+        [RelayCommand]
+        async Task GoToNewFeedback() {
+            await Shell.Current.GoToAsync(nameof(NewFeedbackPage), true);
+        }
+
+        [RelayCommand]
         async Task ExitCreateGroup()
         {
             await Shell.Current.Navigation.PopAsync();
@@ -1092,6 +1157,31 @@ namespace WillowClient.ViewModel
         async Task ExitFriendRequests()
         {
             _ = await Shell.Current.Navigation.PopAsync();
+        }
+
+        [RelayCommand]
+        async Task GoToSentFriendRequestsMobile() {
+            await Shell.Current.GoToAsync(nameof(SentFriendRequestPage), true);
+            var requests = await this.friendService.GetSentFriendRequests(this.Account.Id, Session);
+            this.SentFriendRequests.Clear();
+            if (requests != null) {
+                foreach (var request in requests) {
+                    if (request.ProfilePictureUrl == "NULL")
+                        request.ProfilePictureUrl = Constants.defaultProfilePicture;
+                    else
+                        request.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + request.ProfilePictureUrl;
+                    this.SentFriendRequests.Add(request);
+                }
+            }
+
+            NoSentFriendRequests = false;
+            if (SentFriendRequests.Count == 0)
+                NoSentFriendRequests = true;
+        }
+
+        [RelayCommand]
+        async Task ExitSentFriendRequests() {
+            _ = await Shell.Current.Navigation.PopAsync(true);
         }
 
         public void FriendRecommendationSelectionChanged(List<FriendRecommendationModel> newSelectedItems) {
@@ -1191,7 +1281,18 @@ namespace WillowClient.ViewModel
                     NoFriendRequests = true;
 
                 //Update the list of friends
-                await GetFriendsAsync();
+                //await GetFriendsAsync();
+
+                //int roomId = 0;
+                //foreach(var friend in this.Friends) {
+                //    if(friend.FriendId == friendId) {
+                //        roomId = friend.RoomID;
+                //        break;
+                //    }
+                //}
+
+                //Send update for the user real time
+                await this.chatService.SendMessageAsync(JsonSerializer.Serialize(new AcceptFriendRequestModel { accountID = Account.Id, friendID = friendId }));
             }
             else
             {

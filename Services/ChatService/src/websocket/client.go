@@ -63,6 +63,12 @@ type ChangeStatusMessage struct {
 	NewStatus string `json:"newStatus"`
 }
 
+type AcceptFriendRequestMessage struct {
+	AccountId int `json:"accountId"`
+	FriendId  int `json:"friendId"`
+	RoomId    int `json:"roomid"`
+}
+
 type PrivateMessage struct {
 	RoomID      int64  `json:"roomID"`
 	Data        string `json:"data"`

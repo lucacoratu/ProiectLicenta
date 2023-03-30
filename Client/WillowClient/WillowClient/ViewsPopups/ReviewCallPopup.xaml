@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.ViewsPopups.ReviewCallPopup"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:CallFeedbackViewModel"
+             Title="ReviewCallPopup"
+             BackgroundColor="Transparent"
+             Opacity="0.6"
+             Loaded="PopupPage_Loaded">
+    <mopups:PopupPage.Animation>
+        <mopupsanim:ScaleAnimation DurationIn="500" EasingIn="500" PositionIn="Bottom" PositionOut="Center" ScaleIn="1" ScaleOut="0.7"/>
+    </mopups:PopupPage.Animation>
+    <Grid RowDefinitions="*" WidthRequest="250" HeightRequest="250" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent">
+        <Border Padding="10" VerticalOptions="Center" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark=#505050}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10,10,10,10"/>
+            </Border.StrokeShape>
+            <VerticalStackLayout Grid.Row="1">
+                <Label Text="{Binding FeedbackText}" VerticalOptions="Center" HorizontalOptions="Center" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="14" FontAttributes="Bold" />
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Grid.Column="0" VerticalOptions="Center" VerticalTextAlignment="Center" FontFamily="{StaticResource ApplicationFont}" Text="1" TextColor="WhiteSmoke" FontSize="10"/>
+                    <Slider Grid.Column="1" Margin="0,10,0,10" Minimum="1" Maximum="10" ThumbColor="{StaticResource AccentSecondDarkColor}" MinimumTrackColor="WhiteSmoke" MaximumTrackColor="WhiteSmoke"/>
+                    <Label Grid.Column="2" VerticalOptions="Center" VerticalTextAlignment="Center" FontFamily="{StaticResource ApplicationFont}" Text="10" TextColor="WhiteSmoke" FontSize="10"/>
+                </Grid>
+               <Button HorizontalOptions="Center" FontFamily="{StaticResource ApplicationFont}" Text="Send" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentSecondDarkColor}"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</mopups:PopupPage>

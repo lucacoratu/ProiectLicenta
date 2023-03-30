@@ -92,6 +92,10 @@
               "version": "[7.0.59, )",
               "autoReferenced": true
             },
+            "Mopups": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
             "Plugin.LocalNotification": {
               "target": "Package",
               "version": "[10.1.4, )"
@@ -242,6 +246,10 @@
               "version": "[7.0.59, )",
               "autoReferenced": true
             },
+            "Mopups": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
             "Plugin.LocalNotification": {
               "target": "Package",
               "version": "[10.1.4, )"
@@ -336,6 +344,10 @@
               "target": "Package",
               "version": "[7.0.59, )",
               "autoReferenced": true
+            },
+            "Mopups": {
+              "target": "Package",
+              "version": "[1.1.1, )"
             },
             "Plugin.LocalNotification": {
               "target": "Package",
@@ -448,6 +460,10 @@
               "target": "Package",
               "version": "[1.2.221209.1, )",
               "autoReferenced": true
+            },
+            "Mopups": {
+              "target": "Package",
+              "version": "[1.1.1, )"
             },
             "Plugin.LocalNotification": {
               "target": "Package",

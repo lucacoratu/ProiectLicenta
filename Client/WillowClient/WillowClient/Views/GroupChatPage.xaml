@@ -23,7 +23,7 @@
                         <VerticalStackLayout VerticalOptions="End" Spacing="0">
                             <Label Margin="0,0,0,0" FontAttributes="Bold" BackgroundColor="{StaticResource AccentDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding SenderName}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" FontSize="13"/>
                             <!--<Line Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="2"/>-->
-                            <Label BackgroundColor="{StaticResource AccentThirdDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,5,0" FontSize="14"/>
+                            <Label BackgroundColor="{StaticResource AccentThirdDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,0,0" FontSize="14"/>
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
                                 <CollectionView Grid.Column="0" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
                                     <CollectionView.ItemTemplate>
@@ -51,7 +51,7 @@
                         <VerticalStackLayout VerticalOptions="Start" Spacing="0">
                             <Label BackgroundColor="#404040" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" Text="{Binding SenderName}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" FontSize="13"/>
                             <!--<Line Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="2"></Line>-->
-                            <Label BackgroundColor="#505050" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,5,0" FontSize="14"/>
+                            <Label BackgroundColor="#505050" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,0" FontSize="14"/>
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
                                 <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
                                 <CollectionView Grid.Column="1" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">

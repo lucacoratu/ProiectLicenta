@@ -37,6 +37,9 @@
             </Frame>
         </Grid>
         <Grid Margin="10,10,10,0" ColumnDefinitions="*,40">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToInformationCommand}"/>
+            </Grid.GestureRecognizers>
             <HorizontalStackLayout>
                 <Frame Grid.Column="0" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
                     <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">
@@ -108,6 +111,9 @@
             <Label FontFamily="{StaticResource ApplicationFont}" HeightRequest="18" Text="Feedback" TextTransform="Uppercase" TextColor="WhiteSmoke" HorizontalOptions="Start" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
         </Frame>
         <Grid Margin="10,10,10,0" ColumnDefinitions="*,40">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToSubmitedFeedbackCommand}"/>
+            </Grid.GestureRecognizers>
             <HorizontalStackLayout>
                 <Frame Grid.Column="0" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
                     <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">
@@ -127,6 +133,9 @@
             </Frame>
         </Grid>
         <Grid Margin="10,10,10,0" ColumnDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToNewFeedbackCommand}"/>
+            </Grid.GestureRecognizers>
             <HorizontalStackLayout>
                 <Frame Grid.Column="0" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
                     <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">

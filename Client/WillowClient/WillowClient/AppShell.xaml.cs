@@ -17,12 +17,16 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(CreateGroupPage), typeof(CreateGroupPage));
         Routing.RegisterRoute(nameof(AddFriendPage), typeof(AddFriendPage));
         Routing.RegisterRoute(nameof(FriendRequestPage), typeof(FriendRequestPage));
+        Routing.RegisterRoute(nameof(SentFriendRequestPage), typeof(SentFriendRequestPage));
         Routing.RegisterRoute(nameof(CallerPage), typeof(CallerPage));
         Routing.RegisterRoute(nameof(CalleePage), typeof(CalleePage));
         Routing.RegisterRoute(nameof(ReportABugPage), typeof(ReportABugPage));
         Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
         Routing.RegisterRoute(nameof(EditProfilePage), typeof(EditProfilePage));
         Routing.RegisterRoute(nameof(EditStatusPage), typeof(EditStatusPage));
+        Routing.RegisterRoute(nameof(InformationPage), typeof(InformationPage));
+        Routing.RegisterRoute(nameof(SubmitedFeedbackPage), typeof(SubmitedFeedbackPage));
+        Routing.RegisterRoute(nameof(NewFeedbackPage), typeof(NewFeedbackPage));
         Routing.RegisterRoute(nameof(DesktopSettingsPage), typeof(DesktopSettingsPage));
         Routing.RegisterRoute(nameof(GroupDetailsPage), typeof(GroupDetailsPage));
         Routing.RegisterRoute(nameof(UserProfilePage), typeof(UserProfilePage));
