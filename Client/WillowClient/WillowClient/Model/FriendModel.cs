@@ -39,5 +39,8 @@ namespace WillowClient.Model
         }
 
         public string About { get; set; }
+
+        public string IdentityPublicKey { get; set; }
+        public string PreSignedPublicKey { get; set; }  
     }
 }

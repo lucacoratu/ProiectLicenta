@@ -16,7 +16,7 @@ type IConnection interface {
 	//Chat functionality functions
 	CreatePrivateRoom() (int64, error)
 	InsertUserIntoRoom(userId int64, roomId int64) error
-	InsertMessageIntoRoom(roomId int64, typeName string, senderID int64, data string) (int64, error)
+	InsertMessageIntoRoom(roomId int64, typeName string, senderID int64, data string, identityPublicKey string, ephemeralPublicKey string) (int64, error)
 	GetPrivateRoomUser(senderID int64, roomId int64) (int64, error)
 	GetRoomId(accountId int64, friendId int64) (int64, error)
 	GetHistory(roomId int64) (data.Messages, error)

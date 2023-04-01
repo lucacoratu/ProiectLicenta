@@ -3,6 +3,7 @@ public class MonoPackageManager_Resources {
 	public static String[] Assemblies = new String[]{
 		/* We need to ensure that "WillowClient.dll" comes first in this list. */
 		"WillowClient.dll",
+		"AsyncAwaitBestPractices.dll",
 		"CommunityToolkit.Maui.dll",
 		"CommunityToolkit.Maui.Core.dll",
 		"CommunityToolkit.Mvvm.dll",
@@ -16,6 +17,7 @@ public class MonoPackageManager_Resources {
 		"Microsoft.Extensions.Options.dll",
 		"Microsoft.Extensions.Primitives.dll",
 		"Microsoft.Maui.Graphics.dll",
+		"Mopups.dll",
 		"Plainer.Maui.dll",
 		"Plugin.LocalNotification.dll",
 		"SQLite-net.dll",
@@ -49,6 +51,7 @@ public class MonoPackageManager_Resources {
 		"Xamarin.AndroidX.Navigation.UI.dll",
 		"Xamarin.AndroidX.RecyclerView.dll",
 		"Xamarin.AndroidX.SavedState.dll",
+		"Xamarin.AndroidX.Security.SecurityCrypto.dll",
 		"Xamarin.AndroidX.SwipeRefreshLayout.dll",
 		"Xamarin.AndroidX.VersionedParcelable.dll",
 		"Xamarin.AndroidX.ViewPager.dll",

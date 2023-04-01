@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,14 @@ namespace WillowClient.Database.Model {
         [Column("displayName")]
         public string DisplayName { get; set; }
 
+        //The about of the friend
+        [Column("about")]
+        public string About { get; set; }
+
         //This column is determining the date the account befriended this one
         //It should not modify after caching
         [Column("befriendDate")]
-        public DateTime BefriendDate { get; set; }
+        public string BefriendDate { get; set; }
 
         //This column is representing the date when this friend was last online
         //It will modify regularly
@@ -51,10 +56,38 @@ namespace WillowClient.Database.Model {
         //This column is for storing the last message timestamp
         //It will modify often
         [Column("lastMessageTimestamp")]
-        public DateTime LastMessageTimestamp { get; set; }
+        public string LastMessageTimestamp { get; set; }
+
+        //This column is for storing the number of new messages in the friend conversation
+        [Column("numberNewMessages")]
+        public string NumberNewMessages { get; set; }
 
         //This column is for storing the profile picture url of the friend
         [Column("profilePictureUrl")]
         public string ProfilePictureUrl { get; set; }
+        //This column is for storing the public key of the friend
+        [Column("identityPubKey")]
+        public string IdentityPublicKey { get; set; }
+        //This column is for storing the pre signed public key of the friend
+        [Column("preSignedPubKey")]
+        public string PreSignedPublicKey { get; set; }
+        //This column is for storing the master secret between the accounts
+        [Column("masterSecret"), AllowNull]
+        public string MasterSecret { get; set; }
+        //This column is for storing the root key between the accounts
+        [Column("rootKey"), AllowNull]
+        public string RootKey { get ; set; }
+        //This column is for storing the chain key between the accounts
+        [Column("chainKey"), AllowNull]
+        public string ChainKey { get; set; }
+        //This column is for storing the ephemeral private key of the current user generated for the friend
+        [Column("ephemeralPrivate"), AllowNull]
+        public string EphemeralPrivateKey { get; set; }
+        //This column is for storing the ephemeral public key of the current user generated for the friend
+        [Column("ephemeralPublic"), AllowNull]
+        public string EphemeralPublicKey { get; set; }
+        //This column is for storing the ephemeral secret which will change when a message is received from the use
+        [Column("ephemeralSecret"), AllowNull]
+        public string EphemeralSecret { get; set; }
     }
 }

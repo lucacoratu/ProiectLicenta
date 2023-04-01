@@ -77,11 +77,13 @@ type PrivateMessage struct {
 }
 
 type PrivateMessageResponse struct {
-	MessageID   int64  `json:"id"`
-	RoomID      int64  `json:"roomID"`
-	Data        string `json:"data"`
-	MessageType string `json:"messageType"`
-	SenderID    int64  `json:"senderId"`
+	MessageID          int64  `json:"id"`
+	RoomID             int64  `json:"roomID"`
+	Data               string `json:"data"`
+	MessageType        string `json:"messageType"`
+	SenderID           int64  `json:"senderId"`
+	EphemeralPublicKey string `json:"ephemeralPublicKey"`
+	IdentityPublicKey  string `json:"identityPublicKey"`
 }
 
 type GroupMessage struct {
@@ -93,9 +95,11 @@ type GroupMessage struct {
 }
 
 type ChatMessage struct {
-	RoomID      int64  `json:"roomID"`
-	Data        string `json:"data"`
-	MessageType string `json:"messageType"`
+	RoomID             int64  `json:"roomID"`
+	Data               string `json:"data"`
+	MessageType        string `json:"messageType"`
+	IdentityPublicKey  string `json:"identityPublicKey"`
+	EphemeralPublicKey string `json:"ephemeralPublicKey"`
 }
 
 type CreateGroupMessage struct {

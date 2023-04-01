@@ -38,7 +38,7 @@ func (conn *Connection) InitializeConnection() error {
 	dbUser := "root"
 	dbPassword := "" //Password not required
 	dbHost := "localhost"
-	dbName := "accountsdb"
+	dbName := "willow"
 	dbConn, err := sql.Open("mysql", dbUser+":"+dbPassword+"@tcp("+dbHost+":3306)/"+dbName)
 	//dbConn, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/test")
 	if err != nil {
@@ -189,7 +189,7 @@ func (conn *Connection) InsertAccount(acc *data.Account) error {
 	}
 
 	//Prepare the query that will be executed with the values from the acc structure
-	stmtInsert, err := conn.db.Prepare("INSERT INTO accounts (Username, DisplayName, Email, PasswordHash, Salt) VALUES (?, ?, ?, ?, ?)")
+	stmtInsert, err := conn.db.Prepare("INSERT INTO accounts (Username, DisplayName, Email, PasswordHash, Salt, IdentityPublicKey, PreSignedPublicKey) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		conn.l.Error("Error occured when preparing the insert account query", err.Error())
 		return err
@@ -198,7 +198,7 @@ func (conn *Connection) InsertAccount(acc *data.Account) error {
 	defer stmtInsert.Close()
 
 	//Execute the query with the data in the structure
-	_, err = stmtInsert.Exec(acc.Username, acc.DisplayName, acc.Email, acc.PasswordHash, acc.Salt)
+	_, err = stmtInsert.Exec(acc.Username, acc.DisplayName, acc.Email, acc.PasswordHash, acc.Salt, acc.IdentityPublicKey, acc.PreSignedPublicKey)
 	if err != nil {
 		conn.l.Error("Error occured when executing the insert account query", err.Error())
 		return err
@@ -291,6 +291,35 @@ func (conn *Connection) LoginIntoAccount(username string, passwordHash string) (
 
 	//The user logged in successfully
 	return acc, nil
+}
+
+/*
+ * This function will get the public identity key of the account
+ */
+func (conn *Connection) GetAccountIdentityPublicKey(username string) (string, error) {
+	//Prepare the select statement for getting the public key
+	stmtSelect, err := conn.db.Prepare("SELECT IdentityPublicKey FROM accounts where Username = ?")
+	//Check if an error occured when preparing the sql statment for getting the identity public key
+	if err != nil {
+		conn.l.Error("Error occured when preparing the select statement for identity public key", err.Error())
+		return "", err
+	}
+	//Execute the select statement
+	res := stmtSelect.QueryRow(username)
+	//Check if an error occured when executing the select statement
+	if res.Err() != nil {
+		conn.l.Error("Error occured when executing the select statement for identity public key", err.Error())
+		return "", err
+	}
+	//Get the public key from the result
+	var identityPublic string = ""
+	err = res.Scan(&identityPublic)
+	//Check if an error occured when getting the data
+	if err != nil {
+		conn.l.Error("Error occured when scanning the data for identity public key", err.Error())
+		return "", err
+	}
+	return identityPublic, err
 }
 
 /*
@@ -395,7 +424,7 @@ func (conn *Connection) UpdateStatus(ID int, status string) error {
  */
 func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error) {
 	//Prepare the statement that will select the account details from the database
-	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accounts.LastOnline, accountstatus.Status, accounts.ProfilePictureUrl, accounts.About FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID = ?")
+	stmtSelect, err := conn.db.Prepare("SELECT accounts.ID, accounts.DisplayName, accounts.JoinDate, accounts.LastOnline, accountstatus.Status, accounts.ProfilePictureUrl, accounts.About, accounts.IdentityPublicKey, accounts.PreSignedPublicKey FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID = ?")
 	//Check if an error occured during the preparation of the select statement
 	if err != nil {
 		//An error occured during the preparation of the select statment
@@ -414,7 +443,7 @@ func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error
 
 	//Check if any rows are returned from the statement using scan
 	account := &data.Account{}
-	err = res.Scan(&account.ID, &account.DisplayName, &account.JoinDate, &account.LastOnline, &account.Status, &account.ProfilePictureUrl, &account.About)
+	err = res.Scan(&account.ID, &account.DisplayName, &account.JoinDate, &account.LastOnline, &account.Status, &account.ProfilePictureUrl, &account.About, &account.IdentityPublicKey, &account.PreSignedPublicKey)
 	if err != nil && err != sql.ErrNoRows {
 		//Another error than the one we are looking for occured
 		conn.l.Error("Error occured when fetching the rows in the jwt validation select ", err.Error())

@@ -95,14 +95,14 @@ namespace WillowClient.Database {
             foreach(var friend in listFriends) {
                 Friend f = new Friend {
                     Id = friend.FriendId,
-                    BefriendDate = DateTime.Now,
+                    BefriendDate = "",
                     JoinDate = DateTime.Parse(friend.JoinDate),
                     DisplayName = friend.DisplayName,
                     LastOnline = DateTime.Parse(friend.LastOnline),
                     Status = friend.Status,
                     RoomID = friend.RoomID,
                     LastMessage = friend.LastMessage,
-                    LastMessageTimestamp = DateTime.Parse(friend.LastMessageTimestamp),
+                    LastMessageTimestamp = friend.LastMessageTimestamp,
                 };
                 //Save the model in the database
                 _ = await this.databaseConnection.InsertOrReplaceAsync(f);
@@ -118,10 +118,150 @@ namespace WillowClient.Database {
             return true;
         }
 
+        public async Task<bool> UpdateLocalFriends(List<FriendModel> listRemoteFriends) {
+            List<Friend> friends = new List<Friend>();
+            foreach(var remoteFriend in listRemoteFriends) {
+                //Compute master secret
+                //Compute root key and chain key
+                friends.Add(new Friend { Id = remoteFriend.FriendId, BefriendDate = remoteFriend.BefriendDate, DisplayName = remoteFriend.DisplayName, JoinDate = DateTime.Parse(remoteFriend.JoinDate), LastMessage = remoteFriend.LastMessage, RoomID = remoteFriend.RoomID, LastMessageTimestamp = remoteFriend.LastMessageTimestamp, LastOnline = DateTime.Parse(remoteFriend.LastOnline), ProfilePictureUrl = remoteFriend.ProfilePictureUrl, Status = remoteFriend.Status, IdentityPublicKey = remoteFriend.IdentityPublicKey, PreSignedPublicKey = remoteFriend.PreSignedPublicKey });
+            }
+            _ = await this.databaseConnection.InsertAllAsync(friends);
+            return true;
+        }
+
+        public async Task<bool> DeleteLocalFriends() {
+            _ = await this.databaseConnection.DeleteAllAsync<Friend>();
+            return true;
+        }
+
+        public async Task<bool> DeleteMessages() {
+            _ = await this.databaseConnection.DeleteAllAsync<Message>();
+            _ = await this.databaseConnection.DeleteAllAsync<RoomMessage>();
+            return true;
+        }
+
+        public async Task<bool> SaveMessageInTheDatabase(PrivateMessageModel message, int roomId ,string senderName) {
+            //Insert the message in the corresponding table
+            Message msgDb = new Message { Id = message.Id, EphemeralPublic = message.EphemeralPublicKey, IdentityPublic = message.IdentityPublicKey, Owner = message.SenderId, SenderName = senderName, Text = message.Data, TimeStamp = DateTime.Now };
+            _ = await this.databaseConnection.InsertAsync(msgDb);
+            //Insert the room and message corelation
+            RoomMessage roomMessage = new RoomMessage { MessageId = message.Id, RoomId = roomId };
+            _ = await this.databaseConnection.InsertAsync(roomMessage);
+            return true;
+        }
+
+        public async Task<Message> GetLastMessageInRoom(int roomId) {
+            try {
+                var highestIdRoomMessage = await this.databaseConnection.Table<RoomMessage>().Where(roomMessage => roomMessage.RoomId == roomId).OrderByDescending(roomMessage => roomMessage.MessageId).ElementAtAsync(0);
+                var message = await this.databaseConnection.Table<Message>().Where(msg => msg.Id == highestIdRoomMessage.MessageId).FirstOrDefaultAsync();
+                return message;
+            } catch(Exception ex) {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        public async Task<int> GetNumberMessagesInRoom(int roomId) {
+            int numberMessages = await this.databaseConnection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM friend_message WHERE roomId = " + roomId.ToString());
+            return numberMessages;
+        }
+
+        public async Task<bool> SaveMasterKeyForFriend(int friendId, byte[] masterKey) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.MasterSecret = System.Convert.ToBase64String(masterKey);
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
+        }
+
+        public async Task<bool> SaveKeysForFriend(int friendId, byte[] masterSecret, byte[] chainKey, byte[] rootKey, string ephemeralPrivate, string ephemeralPublic) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.MasterSecret = System.Convert.ToBase64String(masterSecret);
+            friend.ChainKey = System.Convert.ToBase64String(chainKey);
+            friend.RootKey = System.Convert.ToBase64String(rootKey);
+            friend.EphemeralPrivateKey = ephemeralPrivate;
+            friend.EphemeralPublicKey = ephemeralPublic;
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
+        }
+
+        public async Task<bool> SaveEphemeralRootChainForFriend(int friendId, byte[] ephemeralSecret, byte[] chainKey, byte[] rootKey, string ephemeralPrivate, string ephemeralPublic) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.EphemeralSecret = System.Convert.ToBase64String(ephemeralSecret);
+            friend.ChainKey = System.Convert.ToBase64String(chainKey);
+            friend.RootKey = System.Convert.ToBase64String(rootKey);
+            friend.EphemeralPrivateKey = ephemeralPrivate;
+            friend.EphemeralPublicKey = ephemeralPublic;
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
+        }
+
+        public async Task<bool> SaveEphemeralRootChainForFriend(int friendId, byte[] ephemeralSecret, byte[] chainKey, byte[] rootKey) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.EphemeralSecret = System.Convert.ToBase64String(ephemeralSecret);
+            friend.ChainKey = System.Convert.ToBase64String(chainKey);
+            friend.RootKey = System.Convert.ToBase64String(rootKey);
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
+        }
+
+        public async Task<byte[]> GetChainKeyForFriend(int friendId) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            return System.Convert.FromBase64String(friend.ChainKey);
+        }
+
+        public async Task<byte[]> GetRootKeyForFriend(int friendId) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            return System.Convert.FromBase64String(friend.RootKey);
+        }
+
+        public async Task<string> GetEphemeralPrivateKey(int friendId) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            return friend.EphemeralPrivateKey;
+        }
+
+        public async Task<string> GetEphemeralPublicKey(int friendId) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            return friend.EphemeralPublicKey;
+        }
+
+        public async Task<bool> UpdateChainKeyForFriend(int friendId, byte[] newChainKey) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.ChainKey = System.Convert.ToBase64String(newChainKey);
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
+        }
+
         //Get the cached friends from the database
         public async Task<List<Friend>> GetLocalFriends() {
             await this.InitDatabase();
             return await this.databaseConnection.Table<Friend>().ToListAsync();
+        }
+
+        //Get the number of new messages of a friend
+        public async Task<int> GetNumberNewMessagesForFriend(int friendId) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            return friend.NumberNewMessages == null ? 0 : int.Parse(friend.NumberNewMessages);
+        }
+
+        //Get the local messages from the database
+        public async IAsyncEnumerable<Message> GetLocalMessagesInRoom(int roomId) {
+            //int countMessages = await this.databaseConnection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM friend_message WHERE roomId = " +  roomId.ToString());
+            //int skipCount = 0;
+            //if (countMessages > 20)
+            //    skipCount = countMessages - 20;
+            var roomMessage = await this.databaseConnection.Table<RoomMessage>().Where(roomMessage => roomMessage.RoomId == roomId).Skip(0).ToListAsync();
+            foreach(var messageRoom in roomMessage) {
+                var message = await this.databaseConnection.Table<Message>().Where(message => message.Id == messageRoom.MessageId).FirstOrDefaultAsync();
+                yield return message;
+            }
+        }
+
+        //Save the new messages in the database
+        public async Task<bool> UpdateNewMessagesForFriend(int friendId, int newNumberMessages) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.NumberNewMessages = newNumberMessages.ToString();
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
         }
 
         //Save key value data in the corresponding table

@@ -101,6 +101,8 @@ func InitServer(address string) error {
 	getRouter.HandleFunc("/friendrequest/viewsent/{id:[0-9]+}", handlerFriendRequests.ViewSentFriendRequests)
 	//Add the function to get the friendships
 	getRouter.HandleFunc("/friend/view/{id:[0-9]+}", handlerFriends.GetFriends)
+	//Add the function to get the friends with id greater than specified
+	getRouter.HandleFunc("/friend/viewnew/{accountId:[0-9]+}/{lastId:[0-9]+}", handlerFriends.GetNewerFriends)
 	//Add the function to get all the groups of the user
 	getRouter.HandleFunc("/chat/groups/{id:[0-9]+}", handlerChat.GetGroups)
 	//Add the function to get all the common groups of 2 users

@@ -17,6 +17,8 @@ type FriendAccount struct {
 	LastMessageTimestamp string `json:"lastMessageTimestamp"`
 	ProfilePictureUrl    string `json:"profilePictureUrl"`
 	About                string `json:"about"`
+	IdentityPublicKey    string `json:"identityPublicKey"`
+	PreSignedPublicKey   string `json:"preSignedPublicKey"`
 }
 
 func (fracc *FriendAccount) ToJSON(w io.Writer) error {

@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿#define CLEAR_MESSAGES
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Maui.Alerts;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ using WillowClient.Model;
 using WillowClient.Services;
 using WillowClient.Views;
 using CommunityToolkit.Maui.Core;
+using System.Security.Cryptography;
 
 namespace WillowClient.ViewModel;
 
@@ -50,7 +53,7 @@ public partial class LoginViewModel : BaseViewModel
     private bool phoneVisibility;
 
     [ObservableProperty]
-    private bool rememberMe = false;
+    private bool rememberMe = true;
 
     public Command LoginCommand { get; }
     public Command GoToRegisterCommand { get; }
@@ -173,6 +176,11 @@ public partial class LoginViewModel : BaseViewModel
     {
         var model = new LoginModel();
 
+//#if CLEAR_MESSAGES
+//        _ = await databaseService.DeleteLocalFriends();
+//        _ = await databaseService.DeleteMessages();
+//#endif
+
         bool checkRes = this.VerifyUsernameInput(Username);
         if(checkRes == false)
         {
@@ -192,6 +200,32 @@ public partial class LoginViewModel : BaseViewModel
         model.Username = Username;
         model.Password = Password;
 
+        ECDiffieHellman identityKey = ECDiffieHellman.Create();
+        ECDiffieHellman preSignedKey = ECDiffieHellman.Create();
+        string privateIdentityKey = null;
+        string privatePreSignedKey = null;
+
+        try {
+            //Get the key from the secure storage
+            privateIdentityKey = await SecureStorage.Default.GetAsync(Constants.identityKey);
+            privatePreSignedKey = await SecureStorage.Default.GetAsync(Constants.preSignedPrivate);
+            if (privateIdentityKey == null || privatePreSignedKey == null) {
+                await Shell.Current.DisplayAlert("Information", "You don't have a registered account using this device", "Ok");
+                return;
+            }
+
+            identityKey.ImportFromPem(privateIdentityKey);
+            preSignedKey.ImportFromPem(privatePreSignedKey);
+        } catch(Exception ex) {
+            await Shell.Current.DisplayAlert("Error", "Could not get the private keys", "Ok");
+            Console.WriteLine(ex.ToString());
+            return;
+        }
+
+        //Sign the username using the private key in the secure storage
+        var signature = Encryption.Utils.ECDSASignData(Username, privateIdentityKey);
+        model.Signature = signature;
+
         var res = await this.m_LoginService.LoginIntoAccount(model);
         var options = new JsonSerializerOptions
         {
@@ -203,6 +237,7 @@ public partial class LoginViewModel : BaseViewModel
             if (err.Error != null)
             {
                 Error = err.Error;
+                await Shell.Current.DisplayAlert("Error", Error, "Ok");
                 return;
             }
         }
@@ -242,6 +277,8 @@ public partial class LoginViewModel : BaseViewModel
                 }
 
                 Globals.Session = session;
+                Globals.identityKey = identityKey;
+                Globals.preSignedKey = preSignedKey;
 #if ANDROID
                 await Shell.Current.GoToAsync(nameof(MobileMainPage), true, new Dictionary<string, object>
                 {

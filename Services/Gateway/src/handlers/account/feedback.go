@@ -227,3 +227,18 @@ func (f *Feedback) CanSendFriendRequest(rw http.ResponseWriter, r *http.Request)
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }
+
+func (f *Feedback) GetNewerFriends(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("Endpoint /friend/viewnew/{accountId}/{lastId} hit (GET Method)")
+	f.logger.Debug("Forwarding request to the Account Service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		f.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}

@@ -300,7 +300,6 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimul
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\SQLitePCLRaw.batteries_v2.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\SQLitePCLRaw.core.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\SQLitePCLRaw.provider.sqlite3.dll
-D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\build-signature\signature
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Assets.xcassets\willow.appiconset\Contents.json
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Assets.xcassets\willow.appiconset\willow20x20@2x.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Assets.xcassets\willow.appiconset\willow20x20@3x.png
@@ -319,3 +318,5 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimul
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\willow.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\willow@2x.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\willow@3x.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\AsyncAwaitBestPractices.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\Mopups.dll

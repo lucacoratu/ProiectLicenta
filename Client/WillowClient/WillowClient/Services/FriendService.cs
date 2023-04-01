@@ -51,6 +51,23 @@ namespace WillowClient.Services
             return friendsList;
         }
 
+        public async Task<List<FriendModel>> GetNewerFriends(int accountId, int lastKnownId, string session) {
+            var url = Constants.serverURL + "/friend/viewnew/" + accountId.ToString() + "/" + lastKnownId.ToString();
+            var baseAddress = new Uri(url);
+            //this.m_CookieContainer = new CookieContainer();
+            //this.m_handler.CookieContainer = this.m_CookieContainer;
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode) {
+                friendsList = await response.Content.ReadFromJsonAsync<List<FriendModel>>();
+                //Sort the friendsList
+                friendsList = friendsList.OrderByDescending(friend => friend.LastMessageTimestamp).ToList();
+            }
+
+            return friendsList;
+        }
+
         public async Task<List<FriendRecommendationModel>> GetFriendRecommendations(int accountID, string session) {
             var url = Constants.serverURL + "/account/" + accountID.ToString() + "/friendrecommendations";
             var baseAddress = new Uri(url);

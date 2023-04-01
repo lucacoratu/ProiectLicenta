@@ -15,6 +15,8 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Collections;
+using WillowClient.Database;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace WillowClient.ViewModel
 {
@@ -40,21 +42,87 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private string lastOnlineText = "Last Online:";
 
+        [ObservableProperty]
+        private bool isInPage = true;
+
         //public ObservableCollection<MessageModel> Messages { get; } = new();
         public List<MessageModel> Messages { get; } = new();
 
         [ObservableProperty]
         private bool entryEnabled = true;
 
+        private byte[] lastMessageKey = new byte[80]; 
+
         public ObservableCollection<MessageGroupModel> MessageGroups { get; } = new();
 
         private int roomId;
 
         private ChatService chatService;
-        public ChatViewModel(ChatService chatService)
+
+        private DatabaseService databaseService;
+        public ChatViewModel(ChatService chatService, DatabaseService databaseService)
         {
             this.chatService = chatService;
+            this.databaseService = databaseService;
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
+            MessagingCenter.Subscribe<MainViewModel, PrivateMessageModel>(this, "Private message received", this.PrivateMessageReceived);
+        }
+
+        ~ChatViewModel() {
+            MessagingCenter.Unsubscribe<MainViewModel, PrivateMessageModel>(this, "Private message received");
+        }
+
+        public async void PrivateMessageReceived(MainViewModel sender, PrivateMessageModel privMessageModel) {
+            if (privMessageModel.RoomId == this.roomId) {
+                if (!this.IsInPage)
+                    return;
+
+                this.Friend.SeenAllNewMessages();
+                await this.databaseService.UpdateNewMessagesForFriend(this.Friend.FriendId, int.Parse(this.Friend.NumberNewMessages));
+                
+                //This is a private message received from another user
+                //Check if the sender is the current user from the private conversation
+                if (privMessageModel.SenderId == this.friend.FriendId) {
+                    //This is the friend that sent the message
+
+                    bool added = false;
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() };
+                    foreach (var e in this.MessageGroups) {
+                        if (e.Name == "Today") {
+                            e.Add(msgModel);
+                            //e.Name = "Today";
+                            added = true;
+                        }
+                    }
+                    if (!added) {
+                        //Create the group named today and add the message to the group
+                        List<MessageModel> messageModels = new List<MessageModel>();
+                        messageModels.Add(msgModel);
+                        this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
+                    }
+                    NoMessages = false;
+                    return;
+                }
+                else {
+                    //Add the message into the collection view for the current user
+                    bool found = false;
+                    foreach (var e in this.MessageGroups) {
+                        if (e.Name == "Today") {
+                            e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
+                            //e.Name = "Today";
+                            found = true;
+                        }
+                    }
+                    //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
+                    if (!found) {
+                        List<MessageModel> messages = new();
+                        messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
+                        this.MessageGroups.Add(new MessageGroupModel("Today", messages));
+                    }
+                    NoMessages = false;
+                    return;
+                }
+            }
         }
 
         public async Task MessageReceivedOnWebsocket(string message)
@@ -123,77 +191,6 @@ namespace WillowClient.ViewModel
             {
                 PropertyNameCaseInsensitive = true,
             };
-
-            try
-            {
-                //Parse the JSON body of the message
-                PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
-                if (privMessageModel != null)
-                {
-                    if (privMessageModel.RoomId == this.roomId) {
-                        //This is a private message received from another user
-                        //Check if the sender is the current user from the private conversation
-                        if (privMessageModel.SenderId == this.friend.FriendId) {
-                            //This is the friend that sent the message
-                            //this.Messages.Add(new MessageModel
-                            //{
-                            //    Owner = MessageOwner.OtherUser,
-                            //    Text = privMessageModel.Data,
-                            //    TimeStamp = DateTime.Now.ToString("HH:mm")
-                            //});
-                            bool added = false;
-                            MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() };
-                            foreach (var e in this.MessageGroups) {
-                                if (e.Name == "Today") {
-                                    e.Add(msgModel);
-                                    //e.Name = "Today";
-                                    added = true;
-                                }
-                            }
-                            if (!added) {
-                                //Create the group named today and add the message to the group
-                                List<MessageModel> messageModels = new List<MessageModel>();
-                                messageModels.Add(msgModel);
-                                this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
-                            }
-                            NoMessages = false;
-                            return;
-                        } else {
-                            ////He is the one that sent the message so update the message id
-                            //foreach(var e in this.MessageGroups) {
-                            //    if(e.Name == "Today") {
-                            //        foreach(var m in e) {
-                            //            if(m.MessageId == "-1" && m.Text == privMessageModel.Data) {
-                            //                m.MessageId = privMessageModel.Id.ToString();
-                            //            }
-                            //        }
-                            //    }
-                            //}
-                            //Add the message into the collection view for the current user
-                            bool found = false;
-                            foreach (var e in this.MessageGroups) {
-                                if (e.Name == "Today") {
-                                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
-                                    //e.Name = "Today";
-                                    found = true;
-                                }
-                            }
-                            //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
-                            if (!found) {
-                                List<MessageModel> messages = new();
-                                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() });
-                                this.MessageGroups.Add(new MessageGroupModel("Today", messages));
-                            }
-                            NoMessages = false;
-                            return;
-                        }
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
 
             return;
         }
@@ -279,8 +276,7 @@ namespace WillowClient.ViewModel
                 NoMessages = true;
 
             //this.MessageGroups.Add(new MessageGroupModel("Today", this.Messages));
-            foreach(var e in groupsAndMessages)
-            {
+            foreach(var e in groupsAndMessages) {
                 this.MessageGroups.Add(new MessageGroupModel(e.Key as string, e.Value as List<MessageModel>));
             }
         }
@@ -429,6 +425,109 @@ namespace WillowClient.ViewModel
             }
         }
 
+        public async Task GetLocalMessages() {
+            //If there are any elements in the list then clear it
+            if (Messages.Count != 0)
+                Messages.Clear();
+
+            //The user got all the new messages
+            this.Friend.SeenAllNewMessages();
+            await this.databaseService.UpdateNewMessagesForFriend(this.Friend.FriendId, int.Parse(this.Friend.NumberNewMessages));
+
+            Dictionary<string, List<MessageModel>> groupsAndMessages = new();
+
+            await foreach(var message in this.databaseService.GetLocalMessagesInRoom(this.roomId)) {
+                //Create the MessageModel list
+                if (message.Owner != this.Account.Id) {
+                    //Convert date to a cleaner format
+                    var messageDateString = message.TimeStamp;
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else {
+                            group = messageDateString.ToString("dd MMMM yyyy");
+                        }
+                    }
+
+                    bool found = false;
+                    foreach(var messageGroup in this.MessageGroups) {
+                        if(messageGroup.Name == group) {
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        //Create the group 
+                        this.MessageGroups.Add(new MessageGroupModel(group, new List<MessageModel>()));
+                    }
+
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageId = message.Id.ToString(), Text = message.Text, TimeStamp = msgDate };
+                    //if (.Reactions != null) {
+                    //    foreach (var reaction in historyMessage.Reactions)
+                    //        msgModel.Reactions.Add(reaction);
+                    //}
+
+                    //Add the message to the new group created
+                    foreach(var messageGroup in this.MessageGroups) {
+                        if(messageGroup.Name == group) {
+                            messageGroup.Add(msgModel);
+                        }
+                    }
+
+                    this.Messages.Add(msgModel);
+                }
+                else {
+                    var messageDateString = message.TimeStamp;
+                    double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                    var msgDate = messageDateString.ToString("HH:mm");
+                    string group = "";
+                    if (diffDays < 1.0)
+                        group = "Today";
+                    else {
+                        if (diffDays >= 1.0 && diffDays < 2.0)
+                            group = "Yesterday";
+                        else {
+                            group = messageDateString.ToString("dd MMMM yyyy");
+                        }
+                    }
+
+                    bool found = false;
+                    foreach (var messageGroup in this.MessageGroups) {
+                        if (messageGroup.Name == group) {
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        //Create the group 
+                        this.MessageGroups.Add(new MessageGroupModel(group, new List<MessageModel>()));
+                    }
+
+
+                    MessageModel msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageId = message.Id.ToString(), Text = message.Text, TimeStamp = msgDate };
+                    //if (historyMessage.Reactions != null) {
+                    //    foreach (var reaction in historyMessage.Reactions)
+                    //        msgModel.Reactions.Add(reaction);
+                    //}
+
+                    //Add the message to the new group created
+                    foreach (var messageGroup in this.MessageGroups) {
+                        if (messageGroup.Name == group) {
+                            messageGroup.Add(msgModel);
+                        }
+                    }
+
+                    this.Messages.Add(msgModel);
+                }
+
+                if (this.MessageGroups.Count == 0)
+                    NoMessages = true;
+            }
+        }
+
         public async void GetRoomId()
         {
 
@@ -454,8 +553,10 @@ namespace WillowClient.ViewModel
                 this.Friend.LastOnline = "";
             }
 
+            this.isInPage = true;
             LoadingMessages = true;
-            await this.GetHistory();
+            //await this.GetHistory();
+            await this.GetLocalMessages();
             //await this.GetHistoryWithCache();
             LoadingMessages = false;
         }
@@ -464,6 +565,7 @@ namespace WillowClient.ViewModel
         public async Task GoBack()
         {
             this.EntryEnabled = false;
+            this.IsInPage = false;
             System.Threading.Thread.Sleep(1000);
             await Shell.Current.Navigation.PopAsync(true);
         }
@@ -505,8 +607,78 @@ namespace WillowClient.ViewModel
         [RelayCommand]
         public async Task SendMessage()
         {
+            //Before sending the message check if the user has internet connection
+            //Check if the application is connected to the chat service via websockets
+
+            //If this is the first message in the conversation then generate ephemeral key
+            //Then generate the master secret
+            //From the master secret generate the root key and the chain key
+            //From the chain key generate the message key
+            //Update the chain key
+            //Encrypt the message and add the public identity key and public ephemeral key to the message model
+            int numberMessagesInRoom = await this.databaseService.GetNumberMessagesInRoom(roomId: roomId);
+            byte[] messageKey = new byte[80];
+            string ephemeralPublic = "";
+            if(numberMessagesInRoom == 0) {
+                var ephemeralKey = Encryption.Utils.GenerateX25519Key();
+                string ephemeralPrivate = ephemeralKey.ExportECPrivateKeyPem();
+                ephemeralPublic = ephemeralKey.ExportSubjectPublicKeyInfoPem();
+                var masterSecret = Encryption.Utils.ComputeSenderMasterSecret(ephemeralPrivate, this.Friend.IdentityPublicKey, this.Friend.PreSignedPublicKey);
+                var rootChainKeys = Encryption.Utils.GenerateRootAndChainKeyFromMasterSecret(masterSecret);
+                //Generate the message key
+                var messageChainKey = Encryption.Utils.GenerateMessageKey(rootChainKeys.ChainKey);
+                System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+                System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, this.lastMessageKey, 0, messageChainKey.MessageKey.Length);
+                _ = await this.databaseService.SaveKeysForFriend(this.Friend.FriendId, masterSecret, messageChainKey.ChainKey, rootChainKeys.RootKey, ephemeralPrivate, ephemeralPublic);
+            } else {
+                //Get the last message in this conversation
+                var lastMessage = await this.databaseService.GetLastMessageInRoom(this.roomId);
+                //Check if the last message was sent by this user or by the friend
+                //If the last message was sent by the current user
+                if(lastMessage.Owner == this.Account.Id) {
+                    //Get the ephemeral public key from the database
+                    ephemeralPublic = await this.databaseService.GetEphemeralPublicKey(this.Friend.FriendId);
+                    //Get the chain and root keys from the database
+                    var chainKey = await this.databaseService.GetChainKeyForFriend(this.Friend.FriendId);
+                    //Compute the message key from the chain key
+                    var messageChainKey = Encryption.Utils.GenerateMessageKey(chainKey);
+                    //Save the message keys in the buffers
+                    System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+                    System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, this.lastMessageKey, 0, messageChainKey.MessageKey.Length);
+                    //Update the keys in the database for the friend
+                    _ = await this.databaseService.UpdateChainKeyForFriend(this.Friend.FriendId, messageChainKey.ChainKey);
+                }
+
+                //If the last message was sent by the friend
+                if(lastMessage.Owner == this.Friend.FriendId) {
+                    //Generate a new ephemeral key
+                    var ephemeralPrivateKey = Encryption.Utils.GenerateX25519Key();
+                    ephemeralPublic = ephemeralPrivateKey.ExportSubjectPublicKeyInfoPem();
+                    var ephemeralPrivatePem = ephemeralPrivateKey.ExportECPrivateKeyPem();
+                    //Get the party ephemeral public key from the last message
+                    var partyEphemeralKey = Encryption.Utils.GenerateX25519Key();
+                    partyEphemeralKey.ImportFromPem(lastMessage.EphemeralPublic);
+                    //Compute the ephemeral secret
+                    var ephemeralSecret = Encryption.Utils.ComputeEphemeralSecret(ephemeralPrivateKey, partyEphemeralKey);
+                    //Compute the root and chain key from the ephemeral secret
+                    //Get the previous root key from the database
+                    var previousRootKey = await this.databaseService.GetRootKeyForFriend(this.Friend.FriendId);
+                    var rootChainKeys = Encryption.Utils.ComputeRootChainFromEphemeralSecret(ephemeralSecret, previousRootKey);
+                    //Compute the message key
+                    var messageChainKey = Encryption.Utils.GenerateMessageKey(rootChainKeys.ChainKey);
+                    System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+                    System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, this.lastMessageKey, 0, messageChainKey.MessageKey.Length);
+                    //Update the keys in the database for the friend (root, chain, ephemeral secret)
+                    _ = await this.databaseService.SaveEphemeralRootChainForFriend(this.Friend.FriendId, ephemeralSecret, messageChainKey.ChainKey, rootChainKeys.RootKey, ephemeralPrivatePem, ephemeralPublic);
+                }
+            }
+
+            this.Friend.LastMessage = this.MessageText;
+            //Encrypt the data
+            var encryptedMessageData = Encryption.Utils.EncryptMessage(this.MessageText, messageKey);
+
             //Create the structure that will hold the data which will be json encoded and sent to the server
-            SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.roomId, data = this.MessageText, messageType = "Text"};
+            SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.roomId, data = encryptedMessageData, messageType = "Text", ephemeralPublicKey = ephemeralPublic, identityPublicKey = Globals.identityKey.ExportSubjectPublicKeyInfoPem()};
 
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
             await chatService.SendMessageAsync(jsonMessage);

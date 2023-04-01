@@ -44,6 +44,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.ViewsPopups.R
 build_metadata.AdditionalFiles.TargetPath = ViewsPopups\ReactMessagePopup.xaml
 build_metadata.AdditionalFiles.RelativePath = ViewsPopups\ReactMessagePopup.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/ViewsPopups/ReviewCallPopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.ViewsPopups.ReviewCallPopup.xaml
+build_metadata.AdditionalFiles.TargetPath = ViewsPopups\ReviewCallPopup.xaml
+build_metadata.AdditionalFiles.RelativePath = ViewsPopups\ReviewCallPopup.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/AddFriendPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.AddFriendPage.xaml
@@ -98,6 +104,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.EditPro
 build_metadata.AdditionalFiles.TargetPath = Views\EditProfilePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\EditProfilePage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/EditStatusPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.EditStatusPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\EditStatusPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\EditStatusPage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/FriendRequestPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.FriendRequestPage.xaml
@@ -115,6 +127,12 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.GroupDetailsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\GroupDetailsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\GroupDetailsPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/InformationPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.InformationPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\InformationPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\InformationPage.xaml
 
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
@@ -158,6 +176,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.MobileS
 build_metadata.AdditionalFiles.TargetPath = Views\MobileSettingsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\MobileSettingsPage.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/NewFeedbackPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.NewFeedbackPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\NewFeedbackPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\NewFeedbackPage.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/ProfilePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ProfilePage.xaml
@@ -175,6 +199,18 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ReportABugPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ReportABugPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ReportABugPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/SentFriendRequestPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.SentFriendRequestPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SentFriendRequestPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SentFriendRequestPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/SubmitedFeedbackPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.SubmitedFeedbackPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SubmitedFeedbackPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SubmitedFeedbackPage.xaml
 
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/UserProfilePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

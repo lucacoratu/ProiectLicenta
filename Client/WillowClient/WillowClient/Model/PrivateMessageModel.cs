@@ -13,5 +13,9 @@ namespace WillowClient.Model
         public string Data { get; set; }
         public string MessageType { get; set; }
         public int SenderId { get; set; }
+        public string EphemeralPublicKey { get; set; }
+
+        //This is the initiator identity public key base64 encoded
+        public string IdentityPublicKey { get; set; }
     }
 }

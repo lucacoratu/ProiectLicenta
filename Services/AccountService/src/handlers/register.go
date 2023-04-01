@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
-	"willow/accountservice/logging"
 	jsonerrors "willow/accountservice/errors"
+	"willow/accountservice/logging"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -74,7 +74,7 @@ func (register *Register) insertUser(regAcc *data.RegisterAccount) error {
 	register.l.Info(saltHex)
 
 	//Create the object of the account structure that will hold the information abount the new account to be registered
-	newAcc := &data.Account{Username: regAcc.Username, DisplayName: regAcc.DisplayName, Email: regAcc.Email, PasswordHash: hashHex, Salt: saltHex}
+	newAcc := &data.Account{Username: regAcc.Username, DisplayName: regAcc.DisplayName, Email: regAcc.Email, PasswordHash: hashHex, Salt: saltHex, IdentityPublicKey: regAcc.IdentityPublicKey, PreSignedPublicKey: regAcc.PreSignedPublicKey}
 	//register.l.Print(newAcc)
 
 	//Create specific errors to send back to the client

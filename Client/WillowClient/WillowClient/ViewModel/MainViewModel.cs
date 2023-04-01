@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -381,16 +382,87 @@ namespace WillowClient.ViewModel
                                 if (privMessageModel.SenderId == this.Account.Id)
                                 {
                                     //Update the last message sent in the conversation
-                                    this.Friends[i].LastMessage = "You: " + privMessageModel.Data;
+                                    //this.Friends[i].LastMessage = "You: " + privMessageModel.Data;
                                     this.Friends[i].LastMessageTimestamp = timestamp;
+
+                                    //Save the message in the database
+                                    privMessageModel.Data = this.Friends[i].LastMessage;
+                                    this.Friends[i].LastMessage = "You: " + this.Friends[i].LastMessage;
+                                    //Send a message to the subscribers to update the ui
+                                    MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private message received", privMessageModel);
+                                    _ = await this.databaseService.SaveMessageInTheDatabase(privMessageModel, this.Friends[i].RoomID, this.Account.DisplayName);
                                 }
                                 else
                                 {
-                                    this.Friends[i].LastMessage = privMessageModel.Data;
+                                    //Decrypt the message from the user
+                                    //Check how many message are in this conversation
+                                    int numberMessagesInRoom = await this.databaseService.GetNumberMessagesInRoom(this.Friends[i].RoomID);
+                                    byte[] messageKey = new byte[80];
+                                    if (numberMessagesInRoom == 0) {
+                                        //Generate the master secret then generate the root and chain key and then the message key
+                                        //Generate master secret
+                                        var masterSecret = Encryption.Utils.ComputeReceiverMasterSecret(privMessageModel.IdentityPublicKey, privMessageModel.EphemeralPublicKey);
+                                        var rootChainKeys = Encryption.Utils.GenerateRootAndChainKeyFromMasterSecret(masterSecret);
+                                        var messageChainKeys = Encryption.Utils.GenerateMessageKey(rootChainKeys.ChainKey);
+                                        System.Buffer.BlockCopy(messageChainKeys.MessageKey, 0, messageKey, 0, messageChainKeys.MessageKey.Length);
+                                        _ = await this.databaseService.SaveKeysForFriend(this.Friends[i].FriendId, masterSecret, messageChainKeys.ChainKey, rootChainKeys.RootKey, null, privMessageModel.IdentityPublicKey);
+                                    } else {
+                                        //Get the last message in this conversation
+                                        var lastMessage = await this.databaseService.GetLastMessageInRoom(this.Friends[i].RoomID);
+                                        //Check if the last message was sent by the user who sent the previous message
+                                        //If the last message was sent by the previous sender
+                                        if (lastMessage.Owner == privMessageModel.SenderId) {
+                                            //Get the chain and root keys from the database
+                                            var chainKey = await this.databaseService.GetChainKeyForFriend(this.Friends[i].FriendId);
+                                            //Compute the message key from the chain key
+                                            var messageChainKey = Encryption.Utils.GenerateMessageKey(chainKey);
+                                            //Save the message keys in the buffers
+                                            System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+                                            //Update the keys in the database for the friend
+                                            _ = await this.databaseService.UpdateChainKeyForFriend(this.Friends[i].FriendId, messageChainKey.ChainKey);
+                                        }
+
+                                        //If the last message was sent by a new sender
+                                        if (lastMessage.Owner != privMessageModel.SenderId) {
+                                            //Get the ephemeral private key from the database
+                                            var ephemeralPrivatePem = await this.databaseService.GetEphemeralPrivateKey(this.Friends[i].FriendId);
+                                            var ephemeralPrivateKey = Encryption.Utils.GenerateX25519Key();
+                                            ephemeralPrivateKey.ImportFromPem(ephemeralPrivatePem);
+                                            //Get the party ephemeral public key from the current message
+                                            var partyEphemeralKey = Encryption.Utils.GenerateX25519Key();
+                                            partyEphemeralKey.ImportFromPem(privMessageModel.EphemeralPublicKey);
+                                            //Compute the ephemeral secret
+                                            var ephemeralSecret = Encryption.Utils.ComputeEphemeralSecret(ephemeralPrivateKey, partyEphemeralKey);
+                                            //Compute the root and chain key from the ephemeral secret
+                                            //Get the previous root key from the database
+                                            var previousRootKey = await this.databaseService.GetRootKeyForFriend(this.Friends[i].FriendId);
+                                            var rootChainKeys = Encryption.Utils.ComputeRootChainFromEphemeralSecret(ephemeralSecret, previousRootKey);
+                                            //Compute the message key
+                                            var messageChainKey = Encryption.Utils.GenerateMessageKey(rootChainKeys.ChainKey);
+                                            //Save the message key in the buffer
+                                            System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+                                            //Update the keys in the database for the friend (root, chain, ephemeral secret)
+                                            _ = await this.databaseService.SaveEphemeralRootChainForFriend(this.Friends[i].FriendId, ephemeralSecret, messageChainKey.ChainKey, rootChainKeys.RootKey);
+                                        }
+                                    }
+                                    //Decrypt the message
+                                    var messageText = Encryption.Utils.DecryptMessage(privMessageModel.Data, messageKey);
+
+                                    //Save the message in the database
+                                    privMessageModel.Data = messageText;
+                                    //Increment the number of new messages in the conversation
+                                    this.Friends[i].IncrementNumberNewMessages();
+
+                                    //Send a message to the subscribers to update the ui
+                                    MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private message received", privMessageModel);
+                                    _ = await this.databaseService.SaveMessageInTheDatabase(privMessageModel, this.Friends[i].RoomID, this.Friends[i].DisplayName);
+                                    _ = await this.databaseService.UpdateNewMessagesForFriend(this.Friends[i].FriendId, int.Parse(this.Friends[i].NumberNewMessages));
+
+                                    this.Friends[i].LastMessage = messageText;
                                     this.Friends[i].LastMessageTimestamp = timestamp;
 
                                     //Send a push notification that a new message has been received from the friend
-                                    this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, privMessageModel.Data);
+                                    this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, messageText);
                                 }
                                 //Move the conversation to the top
                                 List<FriendStatusModel> CopyFriends = new();
@@ -409,7 +481,7 @@ namespace WillowClient.ViewModel
                             }
                         }
                         //Check if the message is from a group
-                        for(int i =0; i < this.Groups.Count; i++)
+                        for(int i = 0; i < this.Groups.Count; i++)
                         {
                             if(privMessageModel.RoomId == this.Groups[i].RoomId)
                             {
@@ -584,6 +656,116 @@ namespace WillowClient.ViewModel
             await this.databaseService.SaveFriends(remoteFriends);
         }
 
+        private async Task GetFriendNewMessages(FriendStatusModel friend) {
+            //Get the last id of the last message received from this friend
+            var lastMessage = await this.databaseService.GetLastMessageInRoom(friend.RoomID);
+            int lastKnownId = 0;
+            if (lastMessage != null) {
+                friend.LastMessage = lastMessage.Text;
+                //Get the number of new messages saved in the database
+                int numberNewMessages = await this.databaseService.GetNumberNewMessagesForFriend(friend.FriendId);
+                if (numberNewMessages != 0) {
+                    friend.NumberNewMessages = numberNewMessages.ToString();
+                    friend.HasNewMessages = true;
+                }
+
+                //Update the timestamp of the message
+                double diffDays = (DateTime.Now - lastMessage.TimeStamp).TotalDays;
+                if (diffDays <= 1.0 && diffDays >= 0.0) {
+                    string messageTimestamp = lastMessage.TimeStamp.ToString("HH:mm");
+                    friend.LastMessageTimestamp = messageTimestamp;
+                }
+                else if (diffDays > 1.0 && diffDays <= 2.0) {
+                    friend.LastMessageTimestamp = "Yesterday";
+                }
+                else {
+                    friend.LastMessageTimestamp = lastMessage.TimeStamp.ToString("dddd");
+                }
+                lastKnownId = lastMessage.Id;
+            }
+
+            //Ask the server for newer messages than the last known one
+            await foreach (var newMessage in this.chatService.GetMessagesWithIdGreater(friend.RoomID, lastKnownId)) {
+                //Decrypt the message and add it to the list of new messages
+                byte[] messageKey = new byte[80];
+                if (lastMessage == null) {
+                    //This is the first message in the conversation
+                    //Generate master secret
+                    var masterSecret = Encryption.Utils.ComputeReceiverMasterSecret(newMessage.IdentityPublicKey, newMessage.EphemeralPublicKey);
+                    var rootChainKeys = Encryption.Utils.GenerateRootAndChainKeyFromMasterSecret(masterSecret);
+                    var messageChainKeys = Encryption.Utils.GenerateMessageKey(rootChainKeys.ChainKey);
+                    System.Buffer.BlockCopy(messageChainKeys.MessageKey, 0, messageKey, 0, messageChainKeys.MessageKey.Length);
+                    _ = await this.databaseService.SaveKeysForFriend(friend.FriendId, masterSecret, messageChainKeys.ChainKey, rootChainKeys.RootKey, null, newMessage.IdentityPublicKey);
+                } else {
+                    //Update the chain key if the message received is from the same user as the last one
+                    if(lastMessage.Owner == newMessage.UserId) {
+                        //Get the chain and root keys from the database
+                        var chainKey = await this.databaseService.GetChainKeyForFriend(friend.FriendId);
+                        //Compute the message key from the chain key
+                        var messageChainKey = Encryption.Utils.GenerateMessageKey(chainKey);
+                        //Save the message keys in the buffers
+                        System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+                        //Update the keys in the database for the friend
+                        _ = await this.databaseService.UpdateChainKeyForFriend(friend.FriendId, messageChainKey.ChainKey);
+                    } else {
+                        //Update the ephemeral secret and the root and chain key if the message received is from the other user
+                        //Get the ephemeral private key from the database
+                        var ephemeralPrivatePem = await this.databaseService.GetEphemeralPrivateKey(friend.FriendId);
+                        var ephemeralPrivateKey = Encryption.Utils.GenerateX25519Key();
+                        ephemeralPrivateKey.ImportFromPem(ephemeralPrivatePem);
+                        //Get the party ephemeral public key from the current message
+                        var partyEphemeralKey = Encryption.Utils.GenerateX25519Key();
+                        partyEphemeralKey.ImportFromPem(newMessage.EphemeralPublicKey);
+                        //Compute the ephemeral secret
+                        var ephemeralSecret = Encryption.Utils.ComputeEphemeralSecret(ephemeralPrivateKey, partyEphemeralKey);
+                        //Compute the root and chain key from the ephemeral secret
+                        //Get the previous root key from the database
+                        var previousRootKey = await this.databaseService.GetRootKeyForFriend(friend.FriendId);
+                        var rootChainKeys = Encryption.Utils.ComputeRootChainFromEphemeralSecret(ephemeralSecret, previousRootKey);
+                        //Compute the message key
+                        var messageChainKey = Encryption.Utils.GenerateMessageKey(rootChainKeys.ChainKey);
+                        //Save the message key in the buffer
+                        System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+                        //Update the keys in the database for the friend (root, chain, ephemeral secret)
+                        _ = await this.databaseService.SaveEphemeralRootChainForFriend(friend.FriendId, ephemeralSecret, messageChainKey.ChainKey, rootChainKeys.RootKey);
+                    }
+                }
+
+                //Decrypt the message
+                var messageText = Encryption.Utils.DecryptMessage(newMessage.Data, messageKey);
+
+                friend.LastMessage = messageText;
+
+                //Set the timestamp of the new message
+                DateTime messageDate = DateTime.Parse(newMessage.SendDate);
+                double diffDays = (DateTime.Now - messageDate).TotalDays;
+                if (diffDays <= 1.0 && diffDays >= 0.0) {
+                    string messageTimestamp = messageDate.ToString("HH:mm");
+                    friend.LastMessageTimestamp = messageTimestamp;
+                }
+                else if (diffDays > 1.0 && diffDays <= 2.0) {
+                    friend.LastMessageTimestamp = "Yesterday";
+                }
+                else {
+                    friend.LastMessageTimestamp = messageDate.ToString("dddd");
+                }
+
+                //Increment the number of new messages in the conversation
+                friend.IncrementNumberNewMessages();
+
+                //MessageOwner owner = newMessage.UserId == this.Account.Id ? MessageOwner.CurrentUser : MessageOwner.OtherUser;
+                //MessageModel newMessageModel = new MessageModel { MessageId = newMessage.Id.ToString(), Owner = owner, SenderName = friend.DisplayName, Text = messageText, TimeStamp = newMessage.SendDate };
+                PrivateMessageModel newMessageModel = new PrivateMessageModel { Id = newMessage.Id, Data = messageText, EphemeralPublicKey = newMessage.EphemeralPublicKey, IdentityPublicKey = newMessage.IdentityPublicKey, MessageType = "Text", RoomId = friend.RoomID, SenderId = newMessage.UserId};
+                _ = await this.databaseService.SaveMessageInTheDatabase(newMessageModel, friend.RoomID, friend.DisplayName);
+
+                //Save the number of new messages in the database
+                _ = await this.databaseService.UpdateNewMessagesForFriend(friend.FriendId, int.Parse(friend.NumberNewMessages));
+
+                //Update the last message
+                lastMessage = await this.databaseService.GetLastMessageInRoom(friend.RoomID);
+            }
+        }
+
         [RelayCommand]
         async Task GetFriendsAsync()
         {
@@ -597,25 +779,47 @@ namespace WillowClient.ViewModel
 
                 if (FriendsSearchResults.Count != 0)
                     FriendsSearchResults.Clear();
+
+                //_ = await this.databaseService.DeleteLocalFriends();
+                //return;
+
                 //Try the local database to see if the friends are cached
                 //If there are friends cached in the local database then show them and then search for remote friends and update the details if necessary
-                //var localFriends = await this.databaseService.GetLocalFriends();
+                var localFriends = await this.databaseService.GetLocalFriends();
 
-                //////If the local list is not empty display this list then update it with the remote one where is necessary
-                //if (localFriends != null) {
-                //    foreach (var localFriend in localFriends) {
-                //        FriendStatusModel f = new FriendStatusModel(localFriend, Colors.Gray, Colors.DarkGray);
-                //        Friends.Add(f);
-                //        CreateGroupSearchResults.Add(f);
-                //        FriendsSearchResults.Add(f);
-                //    }
-                //}
+                int lastKnownFriendId = 0;
+                if (localFriends == null)
+                    lastKnownFriendId = 0;
+                if (localFriends.Count == 0)
+                    lastKnownFriendId = 0;
+                
+                if(localFriends.Count != 0) {
+                    foreach(var localFriend in localFriends) {
+                        if(localFriend.Id >  lastKnownFriendId)
+                            lastKnownFriendId = localFriend.Id;
+                    }
+                }
+
+                //Get the remote friends with id greater than lastKnownFriendId
+                var remoteNewFriends = await friendService.GetNewerFriends(this.Account.Id, lastKnownFriendId, Globals.Session);
+
+                //Save the friends in the database
+                if(remoteNewFriends.Count != 0)
+                    _ = await this.databaseService.UpdateLocalFriends(remoteNewFriends);
 
                 //Get the remote list of friends
-                string hexString = "";
-                for(int i = 1; i < hexID.Length; i++)
-                    hexString += hexID[i];
-                var friends = await friendService.GetFriends(int.Parse(hexString, System.Globalization.NumberStyles.HexNumber), Session);
+                //string hexString = "";
+                //for(int i = 1; i < hexID.Length; i++)
+                //    hexString += hexID[i];
+                //var friends = await friendService.GetFriends(int.Parse(hexString, System.Globalization.NumberStyles.HexNumber), Session);
+
+                List<FriendModel> friends = new List<FriendModel>();
+                foreach(var fr in localFriends) {
+                    friends.Add(new FriendModel { About = fr.About, BefriendDate = fr.BefriendDate, DisplayName = fr.DisplayName, FriendId = fr.Id, RoomID = fr.RoomID, IdentityPublicKey = fr.IdentityPublicKey, JoinDate = fr.JoinDate.ToString(), LastMessage = fr.LastMessage, LastMessageTimestamp = fr.LastMessageTimestamp, LastOnline = fr.LastOnline.ToString(), PreSignedPublicKey = fr.PreSignedPublicKey, ProfilePictureUrl = fr.ProfilePictureUrl, Status = fr.Status });
+                }
+                foreach(var fr in remoteNewFriends) {
+                    friends.Add(new FriendModel { About = fr.About, Status = fr.Status, BefriendDate = fr.BefriendDate, DisplayName = fr.DisplayName, FriendId = fr.FriendId, RoomID = fr.RoomID, IdentityPublicKey = fr.IdentityPublicKey, JoinDate = fr.JoinDate, LastMessage = fr.LastMessage, LastMessageTimestamp = fr.LastMessageTimestamp, LastOnline = fr.LastOnline, PreSignedPublicKey = fr.PreSignedPublicKey, ProfilePictureUrl = fr.ProfilePictureUrl });
+                }
 
                 //await this.UpdateLocalFriendsWithRemote(friends);
 
@@ -660,6 +864,11 @@ namespace WillowClient.ViewModel
                         FriendsSearchResults.Add(friendStatusModel);
                     }
 
+                }
+
+                foreach(var friendStatus in Friends) {
+                    //Get the new messages for every friend
+                    await this.GetFriendNewMessages(friendStatus);
                 }
             }
             catch (Exception e)
@@ -1264,7 +1473,7 @@ namespace WillowClient.ViewModel
         }
 
         [RelayCommand]
-        async Task AcceptFriendRequest(FriendRequestModel f)
+        public async Task AcceptFriendRequest(FriendRequestModel f)
         {
             //Accept the friend request from the user
             int myId = this.Account.Id;
@@ -1301,7 +1510,7 @@ namespace WillowClient.ViewModel
         }
 
         [RelayCommand]
-        async Task DeclineFriendRequest(FriendRequestModel f)
+        public async Task DeclineFriendRequest(FriendRequestModel f)
         {
             //Decline the friend request
             int myId = this.Account.Id;

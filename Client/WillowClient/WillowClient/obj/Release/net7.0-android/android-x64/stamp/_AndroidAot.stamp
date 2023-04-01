@@ -1,3 +1,4 @@
+obj\Release\net7.0-android\android-x64\aot\AsyncAwaitBestPractices.dll.so
 obj\Release\net7.0-android\android-x64\aot\CommunityToolkit.Maui.dll.so
 obj\Release\net7.0-android\android-x64\aot\CommunityToolkit.Maui.Core.dll.so
 obj\Release\net7.0-android\android-x64\aot\CommunityToolkit.Mvvm.dll.so
@@ -11,6 +12,7 @@ obj\Release\net7.0-android\android-x64\aot\Microsoft.Extensions.Logging.Abstract
 obj\Release\net7.0-android\android-x64\aot\Microsoft.Extensions.Options.dll.so
 obj\Release\net7.0-android\android-x64\aot\Microsoft.Extensions.Primitives.dll.so
 obj\Release\net7.0-android\android-x64\aot\Microsoft.Maui.Graphics.dll.so
+obj\Release\net7.0-android\android-x64\aot\Mopups.dll.so
 obj\Release\net7.0-android\android-x64\aot\Plainer.Maui.dll.so
 obj\Release\net7.0-android\android-x64\aot\Plugin.LocalNotification.dll.so
 obj\Release\net7.0-android\android-x64\aot\SQLite-net.dll.so
@@ -44,6 +46,7 @@ obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.Navigation.Runtime.d
 obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.Navigation.UI.dll.so
 obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.RecyclerView.dll.so
 obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.SavedState.dll.so
+obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.Security.SecurityCrypto.dll.so
 obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.SwipeRefreshLayout.dll.so
 obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.VersionedParcelable.dll.so
 obj\Release\net7.0-android\android-x64\aot\Xamarin.AndroidX.ViewPager.dll.so

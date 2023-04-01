@@ -64,6 +64,9 @@
         <member name="P:WillowClient.ViewModel.ChatViewModel.LastOnlineText">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.lastOnlineText"/>
         </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.IsInPage">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.isInPage"/>
+        </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.EntryEnabled">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.entryEnabled"/>
         </member>

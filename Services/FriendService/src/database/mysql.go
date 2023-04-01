@@ -38,7 +38,7 @@ func (conn *Connection) InitializeConnection() error {
 	dbUser := "root"
 	dbPassword := "" //Password not required
 	dbHost := "localhost"
-	dbName := "friendsdb"
+	dbName := "willow"
 	dbConn, err := sql.Open("mysql", dbUser+":"+dbPassword+"@tcp("+dbHost+":3306)/"+dbName)
 	//dbConn, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/test")
 	if err != nil {

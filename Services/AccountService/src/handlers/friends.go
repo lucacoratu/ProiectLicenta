@@ -158,6 +158,63 @@ func (f *Friends) GetFriends(rw http.ResponseWriter, r *http.Request) {
 }
 
 /*
+ * This function will get the friends of an account which have the account id greater than one specified in the get
+ */
+func (f *Friends) GetNewerFriends(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("Endpoint /friend/viewnew/{accountId}/{lastId} reached (GET method) - sending data to FriendService")
+	vars := mux.Vars(r)
+	f.logger.Debug("Id received is", vars["accountId"])
+	idReceiver, err := strconv.Atoi(vars["accountId"])
+	idRecv := int64(idReceiver)
+	lastId, err := strconv.Atoi(vars["lastId"])
+	lastFriendId := int64(lastId)
+
+	response, err := http.Get("http://localhost:8084/friend/view/" + vars["accountId"])
+	if err != nil {
+		f.logger.Error("Cannot send data to FriendService", err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Cannot send request to FriendService"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Read the data from the response
+	respData := &data.FriendResponses{}
+	respData.FromJSON(response.Body)
+	f.logger.Debug(respData)
+
+	accs := make(data.FriendAccounts, 0)
+	for _, rd := range *respData {
+		//f.logger.Info(rd)
+		frID := int64(-1)
+		if idRecv == rd.FriendID {
+			frID = rd.AccountID
+		} else {
+			frID = rd.FriendID
+		}
+		f.logger.Debug(frID)
+		//Check if an error occured while fetching the details from the database
+		accDetails, err := f.dbConn.GetAccountDetails(frID)
+		if err != nil {
+			f.logger.Info(err.Error())
+			continue
+		}
+		//f.logger.Info(*accDetails)
+		if frID > lastFriendId {
+			frAccount := data.FriendAccount{FriendID: frID, DisplayName: accDetails.DisplayName, RoomID: rd.RoomID, BefriendDate: rd.BefriendDate, LastOnline: accDetails.LastOnline, Status: accDetails.Status, JoinDate: accDetails.JoinDate, LastMessage: rd.LastMessage, LastMessageTimestamp: rd.LastMessageTimestamp, ProfilePictureUrl: accDetails.ProfilePictureUrl, About: accDetails.About, IdentityPublicKey: accDetails.IdentityPublicKey, PreSignedPublicKey: accDetails.PreSignedPublicKey}
+			f.logger.Debug(frAccount)
+			accs = append(accs, frAccount)
+		}
+	}
+	f.logger.Info(accs)
+
+	//Debug log the response from the FriendService
+	//f.logger.Debug("Response from FriendService", respBody)
+
+	rw.WriteHeader(response.StatusCode)
+	accs.ToJSON(rw)
+}
+
+/*
  * This function will forward the request to the friend service and get the response
  */
 func (f *Friends) CanSendFriendRequest(rw http.ResponseWriter, r *http.Request) {

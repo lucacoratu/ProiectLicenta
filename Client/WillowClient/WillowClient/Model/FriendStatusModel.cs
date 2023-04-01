@@ -60,6 +60,33 @@ namespace WillowClient.Model
             set => SetProperty(ref profilePictureUrl, value);
         }
 
+        private int numberNewMessages = 0;
+        public string NumberNewMessages {
+            get => numberNewMessages.ToString();
+            set => SetProperty(ref numberNewMessages, int.Parse(value));
+        }
+
+        private bool hasNewMessages = false;
+
+        public bool HasNewMessages {
+            get => hasNewMessages;
+            set => SetProperty(ref hasNewMessages, value);
+        }
+
+        public void IncrementNumberNewMessages() {
+            int newMessages = numberNewMessages + 1;
+            NumberNewMessages = newMessages.ToString();
+            HasNewMessages = true;
+        }
+
+        public void SeenAllNewMessages() {
+            NumberNewMessages = "0";
+            HasNewMessages = false;
+        }
+
+        public string IdentityPublicKey { get; set; }
+        public string PreSignedPublicKey { get; set; }
+
         public FriendStatusModel(FriendModel f, Color statusBackgroundColor, Color statusStrokeColor)
         {
             FriendId = f.FriendId;
@@ -72,6 +99,8 @@ namespace WillowClient.Model
             LastMessageTimestamp = f.LastMessageTimestamp;
             LastMessage = f.LastMessage;
             ProfilePictureUrl = f.ProfilePictureUrl;
+            IdentityPublicKey = f.IdentityPublicKey;
+            PreSignedPublicKey = f.PreSignedPublicKey;
             this.statusBackgroundColor = statusBackgroundColor;
             this.statusStrokeColor = statusStrokeColor;
         }
@@ -87,6 +116,8 @@ namespace WillowClient.Model
             LastMessageTimestamp = f.LastMessageTimestamp.ToString();
             LastMessage = f.LastMessage;
             ProfilePictureUrl = f.ProfilePictureUrl;
+            IdentityPublicKey = f.IdentityPublicKey;
+            PreSignedPublicKey = f.PreSignedPublicKey;
             this.statusBackgroundColor = statusBackgroundColor;
             this.statusStrokeColor = statusStrokeColor;
         }

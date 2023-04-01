@@ -9,17 +9,19 @@ import (
  * This structure will be used for sharing public information abount an account
  */
 type Account struct {
-	ID                int    `json:"id"`
-	Username          string `json:"-"`
-	DisplayName       string `json:"displayName"`
-	Email             string `json:"email"`
-	PasswordHash      string `json:"-"`
-	Salt              string `json:"-"`
-	LastOnline        string `json:"lastOnline"`
-	Status            string `json:"status"`
-	JoinDate          string `json:"joinDate"`
-	ProfilePictureUrl string `json:"profilePictureUrl"`
-	About             string `json:"about"`
+	ID                 int    `json:"id"`
+	Username           string `json:"-"`
+	DisplayName        string `json:"displayName"`
+	Email              string `json:"email"`
+	PasswordHash       string `json:"-"`
+	Salt               string `json:"-"`
+	LastOnline         string `json:"lastOnline"`
+	Status             string `json:"status"`
+	JoinDate           string `json:"joinDate"`
+	ProfilePictureUrl  string `json:"profilePictureUrl"`
+	About              string `json:"about"`
+	IdentityPublicKey  string `json:"idPubKey"`
+	PreSignedPublicKey string `json:"preSignedKey"`
 }
 
 /*

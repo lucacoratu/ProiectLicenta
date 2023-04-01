@@ -39,7 +39,7 @@ func (conn *MysqlConnection) InitializeConnection() error {
 	dbUser := "root"
 	dbPassword := "" //Password not required
 	dbHost := "localhost"
-	dbName := "chatdb"
+	dbName := "willow"
 	dbConn, err := sql.Open("mysql", dbUser+":"+dbPassword+"@tcp("+dbHost+":3306)/"+dbName)
 	//dbConn, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/test")
 	if err != nil {
@@ -195,9 +195,9 @@ func (conn *MysqlConnection) GetRoomId(accountId int64, friendId int64) (int64, 
  * This function will insert a message into the database. This function will need the room id, typeName, senderId and the data of the message
  * This function will return nil if everything was ok or an error != nil if something happened during the insertion of the message
  */
-func (conn *MysqlConnection) InsertMessageIntoRoom(roomId int64, typeName string, senderID int64, data string) (int64, error) {
+func (conn *MysqlConnection) InsertMessageIntoRoom(roomId int64, typeName string, senderID int64, data string, identityPublicKey string, ephemeralPublicKey string) (int64, error) {
 	//Prepare the insert message statement
-	stmtInsert, err := conn.db.Prepare("INSERT INTO messages (RoomID, TypeID, Data, UserID) VALUES (?, (SELECT ID FROM messagetypes WHERE TypeName = ?), ?, ?)")
+	stmtInsert, err := conn.db.Prepare("INSERT INTO messages (RoomID, TypeID, Data, UserID, IdentityPublicKey, EphemeralPublicKey) VALUES (?, (SELECT ID FROM messagetypes WHERE TypeName = ?), ?, ?, ?, ?)")
 	//Check if an error occured when preparing the insert statement of the message into the database
 	if err != nil {
 		//An error occured
@@ -205,7 +205,7 @@ func (conn *MysqlConnection) InsertMessageIntoRoom(roomId int64, typeName string
 		return -1, err
 	}
 	//Execute the insert statement with the data received from the client
-	result, err := stmtInsert.Exec(roomId, typeName, data, senderID)
+	result, err := stmtInsert.Exec(roomId, typeName, data, senderID, identityPublicKey, ephemeralPublicKey)
 	//Check if an error occured when inserting the message into the database
 	if err != nil {
 		//An error occured
@@ -385,7 +385,7 @@ func (conn *MysqlConnection) GetHistory(roomId int64) (data.Messages, error) {
  */
 func (conn MysqlConnection) GetHistoryWithId(roomId int64, messageId int64) (data.Messages, error) {
 	//Prepare the select statement to get the messages with greater id from room
-	stmtSelect, err := conn.db.Prepare("SELECT ID,TypeID,Data,SendDate,UserID FROM messages WHERE RoomID = ? AND ID > ?")
+	stmtSelect, err := conn.db.Prepare("SELECT ID,TypeID,Data,SendDate,UserID,EphemeralPublicKey,IdentityPublicKey FROM messages WHERE RoomID = ? AND ID > ?")
 	//Check if an error occurs
 	if err != nil {
 		//An error occured when preparing the select statement
@@ -403,7 +403,7 @@ func (conn MysqlConnection) GetHistoryWithId(roomId int64, messageId int64) (dat
 	messages := make(data.Messages, 0)
 	for rows.Next() {
 		message := data.Message{}
-		err := rows.Scan(&message.Id, &message.TypeID, &message.Data, &message.SendDate, &message.UserId)
+		err := rows.Scan(&message.Id, &message.TypeID, &message.Data, &message.SendDate, &message.UserId, &message.EphemeralPublicKey, &message.IdentityPublicKey)
 		if err != nil {
 			conn.logger.Error("Error occured during history data fetch", err.Error())
 			return make(data.Messages, 0), err

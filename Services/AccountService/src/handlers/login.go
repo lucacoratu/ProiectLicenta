@@ -1,8 +1,14 @@
 package handlers
 
 import (
+	"crypto"
+	"crypto/ecdsa"
 	"crypto/sha256"
+	"crypto/x509"
+	"encoding/base64"
 	"encoding/hex"
+	"encoding/pem"
+	"math/big"
 	"net/http"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
@@ -29,6 +35,54 @@ type Login struct {
  */
 func NewLogin(l logging.ILogger, dbConn *database.Connection) *Login {
 	return &Login{l: l, dbConn: dbConn}
+}
+
+func (login *Login) verifyLoginSignature(username string, signature string) bool {
+	//Get the public key of the username
+	identityPem, err := login.dbConn.GetAccountIdentityPublicKey(username)
+	//Check if an error occured
+	if err != nil {
+		return false
+	}
+	//Load the public key
+	login.l.Debug(identityPem)
+	pemBlock, _ := pem.Decode([]byte(identityPem))
+	key, err := x509.ParsePKIXPublicKey(pemBlock.Bytes)
+	if err != nil {
+		login.l.Error("Error occured when loading the public key", err.Error())
+		return false
+	}
+	dsaKey := key.(*ecdsa.PublicKey)
+	login.l.Debug(dsaKey.X, dsaKey.Y, dsaKey.Curve)
+
+	//Convert from base64 the signature
+	login.l.Debug(signature)
+	signatureDecoded, err := base64.StdEncoding.DecodeString(signature)
+	//Check if an error occured when decoding the signature from base64
+	if err != nil {
+		login.l.Error("Error occured when decoding the base64 signature", err.Error())
+		return false
+	}
+
+	//Hash the username value using SHA-256
+	hasher := crypto.Hash.New(crypto.SHA256)
+	_, err = hasher.Write([]byte(username))
+	//Check if the has could have been computed
+	if err != nil {
+		login.l.Error("Error occured when hashing the username", err.Error())
+		return false
+	}
+
+	//Get the r value from the signature
+	r := new(big.Int).SetBytes(signatureDecoded[:len(signatureDecoded)/2])
+	//Get the s value from the signature
+	s := new(big.Int).SetBytes(signatureDecoded[len(signatureDecoded)/2:])
+
+	//Verify the signature
+	signatureVerified := ecdsa.Verify(dsaKey, hasher.Sum(nil), r, s)
+	login.l.Debug("Signature verified", signatureVerified)
+
+	return signatureVerified
 }
 
 /*
@@ -105,6 +159,16 @@ func (login *Login) LoginAccount(rw http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		login.l.Error("Login failed for username ", data.Username)
 		jsonErr := jsonerrors.JsonError{Message: "Invalid credentials"}
+		rw.WriteHeader(http.StatusBadRequest)
+		jsonErr.ToJSON(rw)
+		return
+	}
+
+	//Verify signature
+	signatureVerified := login.verifyLoginSignature(data.Username, data.Signature)
+	if !signatureVerified {
+		login.l.Info("Login failed, invalid signature of username", data.Username)
+		jsonErr := jsonerrors.JsonError{Message: "Invalid signature"}
 		rw.WriteHeader(http.StatusBadRequest)
 		jsonErr.ToJSON(rw)
 		return

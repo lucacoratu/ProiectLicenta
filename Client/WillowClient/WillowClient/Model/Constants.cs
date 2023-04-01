@@ -64,5 +64,10 @@ namespace WillowClient.Model
             SQLite.SQLiteOpenFlags.SharedCache;
 
         public static string databasePath => Path.Combine(FileSystem.AppDataDirectory, databaseFilename);
+
+        //Secure storage keys for the identity key and the pre signed key (private)
+        public static string identityKey = "identityPrivate";
+
+        public static string preSignedPrivate = "preSignedPrivate";
     }
 }

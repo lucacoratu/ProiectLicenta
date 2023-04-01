@@ -2,6 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
              x:Class="WillowClient.Views.MainPage"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -92,21 +95,31 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:FriendRequestModel">
                             <HorizontalStackLayout Padding="10" Spacing="6">
+                                <FlyoutBase.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="Accept" Clicked="MenuFlyoutItem_Clicked" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AcceptFriendRequest}" CommandParameter="{Binding .}" >
+                                            <MenuFlyoutItem.IconImageSource>
+                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Regular.SquareCheck}" Color="{StaticResource White}" />
+                                            </MenuFlyoutItem.IconImageSource>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem Text="Reject" Clicked="MenuFlyoutItem_Clicked_1" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeclineFriendRequestCommand}" CommandParameter="{Binding .}">
+                                            <MenuFlyoutItem.IconImageSource>
+                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Regular.x}"/>
+                                            </MenuFlyoutItem.IconImageSource>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </FlyoutBase.ContextFlyout>
                                 <toolkit:AvatarView
                                         HeightRequest="50"
-                                        ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
+                                        ImageSource="{Binding ProfilePictureUrl}"
                                         WidthRequest="50"
                                         BorderWidth="0"
                                         BorderColor="WhiteSmoke"
                                         CornerRadius="32"
                                         />
-                                <VerticalStackLayout Spacing="13">
-                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
-                                    <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
-                                        <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="10,10,10,10"/>
-                                        </Border.StrokeShape>
-                                    </Border>
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="1">
+                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}"  TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding About}" TextColor="WhiteSmoke"/>
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </DataTemplate>

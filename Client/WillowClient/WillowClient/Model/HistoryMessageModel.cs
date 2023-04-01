@@ -13,6 +13,8 @@ namespace WillowClient.Model
         public string Data { get; set; }
         public string SendDate { get; set; }
         public int UserId { get; set; }
+        public string EphemeralPublicKey { get; set; }
+        public string IdentityPublicKey { get; set; }
         public List<ReactionModel> Reactions { get; set; }
     }
 }

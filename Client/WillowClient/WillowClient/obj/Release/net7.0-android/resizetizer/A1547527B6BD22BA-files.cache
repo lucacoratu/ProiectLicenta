@@ -22,6 +22,8 @@ obj\Release\net7.0-android\resizetizer\r\drawable\login_user.png
 obj\Release\net7.0-android\resizetizer\r\drawable\login_username.png
 obj\Release\net7.0-android\resizetizer\r\drawable\map.png
 obj\Release\net7.0-android\resizetizer\r\drawable\microphone.png
+obj\Release\net7.0-android\resizetizer\r\drawable\no_friends.png
+obj\Release\net7.0-android\resizetizer\r\drawable\no_groups.png
 obj\Release\net7.0-android\resizetizer\r\drawable\open_menu.png
 obj\Release\net7.0-android\resizetizer\r\drawable\plus_group.png
 obj\Release\net7.0-android\resizetizer\r\drawable\register.png

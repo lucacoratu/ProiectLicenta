@@ -80,5 +80,17 @@ public partial class MainPage : ContentPage
         //Clear the data after creating the group
         this.createGroupCollectionView.SelectedItems = null;
     }
+
+    private void MenuFlyoutItem_Clicked(object sender, EventArgs e) {
+        var vm = BindingContext as MainViewModel;
+        var flyout = sender as MenuFlyoutItem;
+        vm.AcceptFriendRequest(flyout.BindingContext as FriendRequestModel);
+    }
+
+    private void MenuFlyoutItem_Clicked_1(object sender, EventArgs e) {
+        var vm = BindingContext as MainViewModel;
+        var flyout = sender as MenuFlyoutItem;
+        vm.DeclineFriendRequest(flyout.BindingContext as FriendRequestModel);
+    }
 }
 

@@ -13,8 +13,9 @@ import (
  * it wants to login into an account (the username and the password)
  */
 type LoginAccount struct {
-	Username string `json:"username" validate:"required"` //TO DO...Add username validation
-	Password string `json:"password" validate:"required"` //TO DO...Add password validation
+	Username  string `json:"username" validate:"required"` //TO DO...Add username validation
+	Password  string `json:"password" validate:"required"` //TO DO...Add password validation
+	Signature string `json:"signature" validate:"required"`
 }
 
 /*

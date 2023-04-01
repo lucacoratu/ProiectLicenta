@@ -17,7 +17,7 @@
         <Image HorizontalOptions="Center" HeightRequest="200" Source="register_image.png" Aspect="AspectFit"/>
         <Label Margin="0,-15,0,0" FontFamily="{StaticResource ApplicationFont}" Text="Welcome" TextColor="WhiteSmoke" FontSize="20" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
         <Label Text="Register a new account" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
-        <input:FormView Padding="20" Spacing="20" SubmitCommand="{Binding RegisterCommand}">
+        <input:FormView Padding="20" Spacing="10" SubmitCommand="{Binding RegisterCommand}">
             <material:TextField x:Name="entryUsername" FontFamily="{StaticResource ApplicationFont}" Title="Username" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.User}}" Text="{Binding Username}" AccentColor="{StaticResource AccentDarkColor}" AllowClear="True">
                 <!--<validation:RequiredValidation/>-->
             </material:TextField>
