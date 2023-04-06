@@ -95,6 +95,8 @@ func InitServer(address string) error {
 	//Create the subrouter for the GET method which will use the Authentication middleware
 	getRouter := serveMuxServer.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/profile/{id:[0-9]+}", handlerProfile.ViewProfile)
+	//Add the function to get the account status
+	getRouter.HandleFunc("/status/{userId:[0-9]+}", handlerProfile.GetUserStatus)
 	//Add the function to get the friend requests
 	getRouter.HandleFunc("/friendrequest/view/{id:[0-9]+}", handlerFriendRequests.ViewFriendRequests)
 	//Add the function to get the sent friend request

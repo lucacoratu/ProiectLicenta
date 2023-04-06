@@ -24,6 +24,10 @@ namespace WillowClient.Database.Model {
         [Column("senderName")]
         public string SenderName { get; set; }
 
+        //This column is used for storing the type of message
+        [Column("type")]
+        public string Type { get; set; }
+
         //This column is used for ephemeral public key
         [Column("ephemeralPublic")]
         public string EphemeralPublic { get; set; }

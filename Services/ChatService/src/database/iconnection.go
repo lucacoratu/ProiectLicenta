@@ -28,4 +28,7 @@ type IConnection interface {
 	GetCommonGroups(idFirst int64, idSecond int64) (data.CommonGroups, error)
 	UpdateGroupPicture(roomId int64, newPicture string) (bool, error)
 	AddMessageReaction(sendReact data.SendReact) (int64, error)
+	GetReactionsWithId(roomId int64, reactionId int64) (data.HistoryReactions, error)
+	SaveDataIntoBlob(blobData []byte, uuid string) error
+	GetBlobData(uuid string) ([]byte, error)
 }

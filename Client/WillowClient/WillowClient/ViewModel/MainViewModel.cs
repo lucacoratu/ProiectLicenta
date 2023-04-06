@@ -231,8 +231,37 @@ namespace WillowClient.ViewModel
                 }
             }
 
+            //New reaction to a message
+            if (message.IndexOf("emojiReaction") != -1) {
+                var options1 = new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true,
+                };
+                try {
+                    //Parse the JSON response
+                    SendReactionModel srm = JsonSerializer.Deserialize<SendReactionModel>(message, options1);
+                    if (srm != null) {
+                        //Notify the other pages that a new reaction has been received
+                        MessagingCenter.Send(this, "New reaction", srm);
+                        //Save the reaction in the database
+                        _ = await this.databaseService.SaveReaction(srm);
+                        //Send a notification that a reaction has been received
+                        //Find the sender/group name
+                        foreach(var friend in this.Friends) {
+                            if(friend.FriendId == srm.senderId) {
+                                this.notificationService.SendReactionNotification(friend.DisplayName, srm.emojiReaction);
+                                break;
+                            }
+                        }
+                        return;
+                    }
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.ToString());
+                }
+            }
+
             //Some friend is calling
-            if(message.IndexOf("callee") != -1) {
+            if (message.IndexOf("callee") != -1) {
                 try {
                     var options = new JsonSerializerOptions {
                         PropertyNameCaseInsensitive = true,
@@ -381,16 +410,33 @@ namespace WillowClient.ViewModel
                                 var timestamp = DateTime.Now.ToString("HH:mm");
                                 if (privMessageModel.SenderId == this.Account.Id)
                                 {
+
                                     //Update the last message sent in the conversation
                                     //this.Friends[i].LastMessage = "You: " + privMessageModel.Data;
-                                    this.Friends[i].LastMessageTimestamp = timestamp;
+                                    //If the last message is text
+                                   this.Friends[i].LastMessageTimestamp = timestamp;
+                                    if (privMessageModel.MessageType == "Text") {
 
-                                    //Save the message in the database
-                                    privMessageModel.Data = this.Friends[i].LastMessage;
-                                    this.Friends[i].LastMessage = "You: " + this.Friends[i].LastMessage;
-                                    //Send a message to the subscribers to update the ui
-                                    MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private message received", privMessageModel);
+                                        //Save the message in the database
+                                        privMessageModel.Data = this.Friends[i].LastMessage;
+                                        this.Friends[i].LastMessage = "You: " + this.Friends[i].LastMessage;
+                                        //Send a message to the subscribers to update the ui
+                                        MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private message received", privMessageModel);
+                                    }
+
+                                    //If the message is an attachment
+                                    AttachmentModel attachment = null;
+                                    if(privMessageModel.MessageType == "Attachment") {
+                                        //Parse the attachment to get the type
+                                        attachment = JsonSerializer.Deserialize<AttachmentModel>(this.Friends[i].LastMessage);
+                                        privMessageModel.Data = this.Friends[i].LastMessage;
+                                        this.Friends[i].LastMessage = "You: Sent a " + attachment.AttachmentType;
+                                        MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private attachment received", privMessageModel);
+                                    }
+
                                     _ = await this.databaseService.SaveMessageInTheDatabase(privMessageModel, this.Friends[i].RoomID, this.Account.DisplayName);
+                                    if (privMessageModel.MessageType == "Attachment")
+                                        _ = await this.databaseService.UpdateMessageIdForAttachment(attachment.BlobUuid, privMessageModel.Id);
                                 }
                                 else
                                 {
@@ -453,16 +499,31 @@ namespace WillowClient.ViewModel
                                     //Increment the number of new messages in the conversation
                                     this.Friends[i].IncrementNumberNewMessages();
 
-                                    //Send a message to the subscribers to update the ui
-                                    MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private message received", privMessageModel);
-                                    _ = await this.databaseService.SaveMessageInTheDatabase(privMessageModel, this.Friends[i].RoomID, this.Friends[i].DisplayName);
-                                    _ = await this.databaseService.UpdateNewMessagesForFriend(this.Friends[i].FriendId, int.Parse(this.Friends[i].NumberNewMessages));
+                                    //Check the type of the message
 
-                                    this.Friends[i].LastMessage = messageText;
                                     this.Friends[i].LastMessageTimestamp = timestamp;
+                                    if (privMessageModel.MessageType == "Text") {
+                                        this.Friends[i].LastMessage = messageText;
+                                        //Send a message to the subscribers to update the ui
+                                        MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private message received", privMessageModel);
+                                    }
 
+                                    AttachmentModel attachment = null;
+                                    if(privMessageModel.MessageType == "Attachment") {
+                                        //Parse the message
+                                        attachment = JsonSerializer.Deserialize<AttachmentModel>(messageText);
+                                        this.Friends[i].LastMessage = "Sent a " + attachment.AttachmentType;
+                                        MessagingCenter.Send<MainViewModel, PrivateMessageModel>(this, "Private attachment received", privMessageModel);
+                                    }
+
+                                    _ = await this.databaseService.UpdateNewMessagesForFriend(this.Friends[i].FriendId, int.Parse(this.Friends[i].NumberNewMessages));
+                                    _ = await this.databaseService.SaveMessageInTheDatabase(privMessageModel, this.Friends[i].RoomID, this.Friends[i].DisplayName);
+                                    if (privMessageModel.MessageType == "Attachment")
+                                        _ = await this.databaseService.SaveUndownloadedAttachment(attachment, privMessageModel.Id);
                                     //Send a push notification that a new message has been received from the friend
                                     this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, messageText);
+                                    if (privMessageModel.MessageType == "Attachment")
+                                        this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, "Sent a photo");
                                 }
                                 //Move the conversation to the top
                                 List<FriendStatusModel> CopyFriends = new();
@@ -531,6 +592,13 @@ namespace WillowClient.ViewModel
 
         public async Task LoadData()
         {
+            LoadingFriends = true;
+            await GetFriendsAsync();
+            LoadingFriends = false;
+            if (Friends.Count == 0)
+                NoFriends = true;
+            HasFriends = !NoFriends;
+
             //await GetGroupsAsync();
             //Get the groups without the last message updated from the local database
             LoadingGroups = true;
@@ -541,13 +609,6 @@ namespace WillowClient.ViewModel
             LoadingGroups = false;
             if (Groups.Count == 0)
                 NoGroups = true;
-
-            LoadingFriends = true;
-            await GetFriendsAsync();
-            LoadingFriends = false;
-            if (Friends.Count == 0)
-                NoFriends = true;
-            HasFriends = !NoFriends;
 
             //Update the last message text and last message timestamp for groups
         }
@@ -661,7 +722,29 @@ namespace WillowClient.ViewModel
             var lastMessage = await this.databaseService.GetLastMessageInRoom(friend.RoomID);
             int lastKnownId = 0;
             if (lastMessage != null) {
-                friend.LastMessage = lastMessage.Text;
+                //If the last message was sent by the friend show the message without You:
+                if (lastMessage.Owner == friend.FriendId) {
+                    if(lastMessage.Type == "Text")
+                        friend.LastMessage = lastMessage.Text;
+                    
+                    if (lastMessage.Type == "Attachment") {
+                        var attachment = JsonSerializer.Deserialize<AttachmentModel>(lastMessage.Text);
+                        if (attachment != null) {
+                            friend.LastMessage = "Sent a " + attachment.AttachmentType;
+                        }
+                    }
+                }
+                else {
+                    if(lastMessage.Type == "Text")
+                        friend.LastMessage = "You: " + lastMessage.Text;
+                    if(lastMessage.Type == "Attachment") {
+                        var attachment = JsonSerializer.Deserialize<AttachmentModel>(lastMessage.Text);
+                        if (attachment != null) {
+                            friend.LastMessage = "You: Sent a " + attachment.AttachmentType;
+                        }
+                    }
+                }
+
                 //Get the number of new messages saved in the database
                 int numberNewMessages = await this.databaseService.GetNumberNewMessagesForFriend(friend.FriendId);
                 if (numberNewMessages != 0) {
@@ -734,7 +817,16 @@ namespace WillowClient.ViewModel
                 //Decrypt the message
                 var messageText = Encryption.Utils.DecryptMessage(newMessage.Data, messageKey);
 
-                friend.LastMessage = messageText;
+                //Show the last message
+                if (newMessage.TypeId == 1) {
+                    friend.LastMessage = messageText;
+                } else {
+                    //Parse the message because it is an attachment
+                    var attachment = JsonSerializer.Deserialize<AttachmentModel>(messageText);
+                    if (attachment != null) {
+                        friend.LastMessage = "Sent a " + attachment.AttachmentType;
+                    }
+                }
 
                 //Set the timestamp of the new message
                 DateTime messageDate = DateTime.Parse(newMessage.SendDate);
@@ -755,8 +847,33 @@ namespace WillowClient.ViewModel
 
                 //MessageOwner owner = newMessage.UserId == this.Account.Id ? MessageOwner.CurrentUser : MessageOwner.OtherUser;
                 //MessageModel newMessageModel = new MessageModel { MessageId = newMessage.Id.ToString(), Owner = owner, SenderName = friend.DisplayName, Text = messageText, TimeStamp = newMessage.SendDate };
-                PrivateMessageModel newMessageModel = new PrivateMessageModel { Id = newMessage.Id, Data = messageText, EphemeralPublicKey = newMessage.EphemeralPublicKey, IdentityPublicKey = newMessage.IdentityPublicKey, MessageType = "Text", RoomId = friend.RoomID, SenderId = newMessage.UserId};
+                string messageType = "";
+                switch (newMessage.TypeId) {
+                    case 1:
+                        messageType = "Text";
+                        break;
+                    case 2:
+                        messageType = "Photo";
+                        break;
+                    case 3:
+                        messageType = "Attachment";
+                        break;
+                    default:
+                        messageType = "Text";
+                        break;
+                }
+
+                PrivateMessageModel newMessageModel = new PrivateMessageModel { Id = newMessage.Id, Data = messageText, EphemeralPublicKey = newMessage.EphemeralPublicKey, IdentityPublicKey = newMessage.IdentityPublicKey, MessageType = messageType, RoomId = friend.RoomID, SenderId = newMessage.UserId};
                 _ = await this.databaseService.SaveMessageInTheDatabase(newMessageModel, friend.RoomID, friend.DisplayName);
+
+                //Save the reactions to the message in the local database
+                if (newMessage.Reactions != null) {
+                    if (newMessage.Reactions.Count > 0) {
+                        foreach (var reaction in newMessage.Reactions) {
+                            _ = await this.databaseService.SaveReaction(newMessage.Id, reaction);
+                        }
+                    }
+                }
 
                 //Save the number of new messages in the database
                 _ = await this.databaseService.UpdateNewMessagesForFriend(friend.FriendId, int.Parse(friend.NumberNewMessages));
@@ -764,6 +881,43 @@ namespace WillowClient.ViewModel
                 //Update the last message
                 lastMessage = await this.databaseService.GetLastMessageInRoom(friend.RoomID);
             }
+        }
+
+        private async Task GetFriendNewReactions(FriendStatusModel friend) {
+            int lastKnownId = 0;
+            var lastReaction = await this.databaseService.GetLastReaction(friend.RoomID);
+            if(lastReaction != null)
+                lastKnownId = lastReaction.Id;
+
+            var newReactions = await this.chatService.GetNewReactionsInRoom(friend.RoomID, lastKnownId);
+            foreach (var newReaction in newReactions)
+                _ = await this.databaseService.SaveReaction(newReaction);
+        }
+
+        public async Task GetFriendStatus(FriendStatusModel friend) {
+            friend.Status = await this.profileService.GetUserStatus(friend.FriendId, Globals.Session);
+            if (friend.Status == "Online") {
+                friend.StatusBackgroundColor = Colors.Green;
+                friend.StatusStrokeColor = Colors.DarkGreen;
+            }
+            else {
+                friend.StatusBackgroundColor = Colors.Gray;
+                friend.StatusStrokeColor = Colors.DarkGray;
+            }
+        }
+
+        public async Task GetFriendProfilePicture(FriendStatusModel friend) {
+            var profile = await this.profileService.GetUserProfile(friend.FriendId, Globals.Session);
+            if (profile == null)
+                return;
+
+            if (profile.ProfilePictureUrl == "NULL") {
+                friend.ProfilePictureUrl = Constants.defaultProfilePicture;
+            } else {
+                friend.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + profile.ProfilePictureUrl;
+            }
+            //Save the new profile picture in the database
+            _ = await this.databaseService.UpdateFriendProfilePicture(friend.FriendId, friend.ProfilePictureUrl);
         }
 
         [RelayCommand]
@@ -867,8 +1021,14 @@ namespace WillowClient.ViewModel
                 }
 
                 foreach(var friendStatus in Friends) {
+                    //Get the status from the server
+                    await this.GetFriendStatus(friendStatus);
                     //Get the new messages for every friend
                     await this.GetFriendNewMessages(friendStatus);
+                    //Get the friend profile picture
+                    await this.GetFriendProfilePicture(friendStatus);
+                    //Get all the new reations the user received when he was offline
+                    await this.GetFriendNewReactions(friendStatus);
                 }
             }
             catch (Exception e)

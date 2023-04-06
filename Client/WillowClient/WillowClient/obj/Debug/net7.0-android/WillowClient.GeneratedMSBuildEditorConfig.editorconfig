@@ -38,6 +38,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Resources.Sty
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/ViewsPopups/AddCaptionToMessagePopup.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.ViewsPopups.AddCaptionToMessagePopup.xaml
+build_metadata.AdditionalFiles.TargetPath = ViewsPopups\AddCaptionToMessagePopup.xaml
+build_metadata.AdditionalFiles.RelativePath = ViewsPopups\AddCaptionToMessagePopup.xaml
+
 [D:/ProiectLicenta/Client/WillowClient/WillowClient/ViewsPopups/ReactMessagePopup.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.ViewsPopups.ReactMessagePopup.xaml
@@ -229,3 +235,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.WindowsGroupCallPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\WindowsGroupCallPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\WindowsGroupCallPage.xaml
+
+[D:/ProiectLicenta/Client/WillowClient/WillowClient/Views/ZoomImagePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = WillowClient.Views.ZoomImagePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ZoomImagePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ZoomImagePage.xaml

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SQLite;
 using WillowClient.Model;
 using WillowClient.Database.Model;
+using System.Net.WebSockets;
 
 namespace WillowClient.Database {
     public class DatabaseService {
@@ -35,6 +36,15 @@ namespace WillowClient.Database {
 
             //Create the messages table where all messages will be cached
             _ = await this.databaseConnection.CreateTableAsync<Message>();
+
+            //Create the message_reaction table where corelations between messages and reactions will be stored
+            _ = await this.databaseConnection.CreateTableAsync<MessageReaction>();
+
+            //Create the reactions tables where the reactions will be stored
+            _ = await this.databaseConnection.CreateTableAsync<Reaction>();
+
+            //Create the table where attachment information will be stored
+            _ = await this.databaseConnection.CreateTableAsync<MessageAttachmentDetails>();
 
             //Create the key value table where the cached data will be stored like in a redis database
             _ = await this.databaseConnection.CreateTableAsync<KeyValue>();
@@ -137,16 +147,56 @@ namespace WillowClient.Database {
         public async Task<bool> DeleteMessages() {
             _ = await this.databaseConnection.DeleteAllAsync<Message>();
             _ = await this.databaseConnection.DeleteAllAsync<RoomMessage>();
+            _ = await this.databaseConnection.DeleteAllAsync<MessageAttachmentDetails>();
             return true;
         }
 
         public async Task<bool> SaveMessageInTheDatabase(PrivateMessageModel message, int roomId ,string senderName) {
             //Insert the message in the corresponding table
-            Message msgDb = new Message { Id = message.Id, EphemeralPublic = message.EphemeralPublicKey, IdentityPublic = message.IdentityPublicKey, Owner = message.SenderId, SenderName = senderName, Text = message.Data, TimeStamp = DateTime.Now };
+            Message msgDb = new Message { Id = message.Id, EphemeralPublic = message.EphemeralPublicKey, IdentityPublic = message.IdentityPublicKey, Owner = message.SenderId, SenderName = senderName, Text = message.Data, TimeStamp = DateTime.Now, Type = message.MessageType };
             _ = await this.databaseConnection.InsertAsync(msgDb);
             //Insert the room and message corelation
             RoomMessage roomMessage = new RoomMessage { MessageId = message.Id, RoomId = roomId };
             _ = await this.databaseConnection.InsertAsync(roomMessage);
+            return true;
+        }
+
+        public async Task<Message> GetMessage(int messageId) {
+            var message = await this.databaseConnection.Table<Message>().Where(msg => msg.Id == messageId).FirstOrDefaultAsync();
+            return message;
+        }
+
+        public async Task<bool> SaveMessageAttachment(AttachmentModel attachment, string localFilepath, long fileSize) {
+            MessageAttachmentDetails msgAttDet = new MessageAttachmentDetails { MessageId = -1, AttachmentSize = fileSize, BlobUuid = attachment.BlobUuid, Downloaded = true, LocalFilepath = localFilepath };
+            _ = await this.databaseConnection.InsertAsync(msgAttDet);
+            return true;
+        }
+
+        public async Task<bool> SaveUndownloadedAttachment(AttachmentModel attachment, int messageId) {
+            MessageAttachmentDetails msgAttDet = new MessageAttachmentDetails { MessageId = messageId, AttachmentSize = 0, BlobUuid = attachment.BlobUuid, Downloaded = false, LocalFilepath = "" };
+            _ = await this.databaseConnection.InsertAsync(msgAttDet);
+            return true;
+        }
+
+        public async Task<bool> UpdateAttachment(MessageAttachmentDetails attachment) {
+            _ = await this.databaseConnection.UpdateAsync(attachment);
+            return true;
+        }
+
+        public async Task<MessageAttachmentDetails> GetAttachment(string blobUuid) {
+            var attachment = await this.databaseConnection.Table<MessageAttachmentDetails>().Where(attach => attach.BlobUuid == blobUuid).FirstOrDefaultAsync();
+            return attachment;
+        }
+
+        public async Task<MessageAttachmentDetails> GetAttachment(int messageId) {
+            var attachment = await this.databaseConnection.Table<MessageAttachmentDetails>().Where(attach => attach.MessageId == messageId).FirstOrDefaultAsync();
+            return attachment;
+        }
+
+        public async Task<bool> UpdateMessageIdForAttachment(string blobUuid, int messageId) {
+            MessageAttachmentDetails att = await this.databaseConnection.Table<MessageAttachmentDetails>().Where(att => att.BlobUuid == blobUuid).FirstOrDefaultAsync();
+            att.MessageId = messageId;
+            await this.databaseConnection.UpdateAsync(att);
             return true;
         }
 
@@ -159,6 +209,62 @@ namespace WillowClient.Database {
                 Console.WriteLine(ex.ToString());
                 return null;
             }
+        }
+
+        public async Task<Reaction> GetLastReaction(int roomId) {
+            try {
+                var highestIdRoomMessage = await this.databaseConnection.Table<RoomMessage>().Where(roomMessage => roomMessage.RoomId == roomId).OrderByDescending(roomMessage => roomMessage.MessageId).ElementAtAsync(0);
+                var message = await this.databaseConnection.Table<Message>().Where(msg => msg.Id == highestIdRoomMessage.MessageId).FirstOrDefaultAsync();
+                var highestMessageReaction = await this.databaseConnection.Table<MessageReaction>().Where(messageReaction => messageReaction.MessageId == message.Id).OrderByDescending(messageReaction => messageReaction.ReactionId).ElementAtAsync(0);
+                var lastReaction = await this.databaseConnection.Table<Reaction>().Where(reaction => reaction.Id == highestMessageReaction.ReactionId).FirstOrDefaultAsync();
+                return lastReaction;
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        public async IAsyncEnumerable<Reaction> GetMessageReactions(int messageId) {
+            var reactionMessages = await this.databaseConnection.Table<MessageReaction>().Where(reactionMessage => reactionMessage.MessageId == messageId).ToListAsync();
+            List<Reaction> reactions = new List<Reaction>();
+            foreach(var reactionMessage in reactionMessages) {
+                yield return await this.databaseConnection.Table<Reaction>().Where(reactionDb => reactionDb.Id == reactionMessage.ReactionId).FirstOrDefaultAsync();
+            }
+        }
+
+        public async Task<int> GetNumberReactionsOfMessage(int messageId) {
+            return await this.databaseConnection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM message_reaction WHERE messageId = " + messageId.ToString());
+        }
+
+        public async Task<bool> SaveReaction(int messageId, ReactionModel reaction) {
+            MessageReaction messageReaction = new MessageReaction { MessageId = messageId, ReactionId = reaction.Id };
+            _ = await this.databaseConnection.InsertAsync(messageReaction);
+            Reaction newReaction = new Reaction { Id = reaction.Id, Emoji = reaction.Emoji, ReactionDate = DateTime.Parse(reaction.ReactionDate), SenderId = reaction.SenderId };
+            _ = await this.databaseConnection.InsertAsync(reaction);
+            return true;
+        }
+
+        public async Task<bool> SaveReaction(HistoryReactionModel reaction) {
+            MessageReaction messageReaction = new MessageReaction { MessageId = reaction.MessageId, ReactionId = reaction.ReactionId };
+            _ = await this.databaseConnection.InsertAsync(messageReaction);
+            Reaction newReaction = new Reaction { Id = reaction.ReactionId, Emoji = reaction.Emoji, ReactionDate = DateTime.Parse(reaction.ReactionDate), SenderId = reaction.SenderId };
+            _ = await this.databaseConnection.InsertAsync(newReaction);
+            return true;
+        }
+
+        public async Task<bool> SaveReaction(SendReactionModel reaction) {
+            MessageReaction messageReaction = new MessageReaction { MessageId = reaction.messageId, ReactionId = reaction.reactionId };
+            _ = await this.databaseConnection.InsertAsync(messageReaction);
+            Reaction newReaction = new Reaction { Id = reaction.reactionId, Emoji = reaction.emojiReaction, ReactionDate = DateTime.Now, SenderId = reaction.senderId };
+            _ = await this.databaseConnection.InsertAsync(newReaction);
+            return true;
+        }
+
+        public async Task<bool> DeleteAllReactions() {
+            _ = await this.databaseConnection.DeleteAllAsync<MessageReaction>();
+            _ = await this.databaseConnection.DeleteAllAsync<Reaction>();
+            return true;
         }
 
         public async Task<int> GetNumberMessagesInRoom(int roomId) {
@@ -235,6 +341,14 @@ namespace WillowClient.Database {
         public async Task<List<Friend>> GetLocalFriends() {
             await this.InitDatabase();
             return await this.databaseConnection.Table<Friend>().ToListAsync();
+        }
+
+        //Update the friend profile picture
+        public async Task<bool> UpdateFriendProfilePicture(int friendId, string profilePicture) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.ProfilePictureUrl = profilePicture;
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
         }
 
         //Get the number of new messages of a friend

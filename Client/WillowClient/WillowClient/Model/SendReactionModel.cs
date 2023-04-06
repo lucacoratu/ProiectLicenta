@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WillowClient.Model {
     public class SendReactionModel {
+        public int reactionId { get; set; }
         public int messageId { get; set; }
         public string emojiReaction { get; set; }
         public int senderId { get; set; }

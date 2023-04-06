@@ -109,6 +109,10 @@ public static class MauiProgram
 		//Database service
 		builder.Services.AddSingleton<DatabaseService>();
 
+		//The zoom image page
+		builder.Services.AddTransient<ZoomImagePage>();
+		builder.Services.AddTransient<ZoomImageViewModel>();
+
         return builder.Build();
 	}
 }

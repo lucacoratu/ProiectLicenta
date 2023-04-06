@@ -420,6 +420,30 @@ func (conn *Connection) UpdateStatus(ID int, status string) error {
 }
 
 /*
+ * This function will get the status of the account from the database
+ */
+func (conn *Connection) GetAccountStatus(accountId int64) (string, error) {
+	//Prepare the select statement for getting the account status
+	stmtSelect, err := conn.db.Prepare("SELECT accountstatus.Status FROM accounts INNER JOIN accountstatus ON accountstatus.ID = accounts.Status WHERE accounts.ID = ?")
+	//Check if an error occured
+	if err != nil {
+		conn.l.Error("Error occured when preparing the select to get the status of the account", err.Error())
+		return "", err
+	}
+	row := stmtSelect.QueryRow(accountId)
+	if row.Err() != nil {
+		conn.l.Error("Error occured when executing the select to get the status of the account", row.Err().Error())
+		return "", nil
+	}
+	var status string = ""
+	err = row.Scan(&status)
+	if err != nil {
+		conn.l.Error("Error occured when getting the data from the row", err.Error())
+	}
+	return status, nil
+}
+
+/*
  * This function will get the details of an account (DisplayName, Status, Last-Online)
  */
 func (conn *Connection) GetAccountDetails(accountID int64) (*data.Account, error) {

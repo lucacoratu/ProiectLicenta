@@ -242,3 +242,18 @@ func (f *Feedback) GetNewerFriends(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }
+
+func (f *Feedback) GetUserStatus(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("Endpoint /status/{userId:[0-9]+} hit (GET method)")
+	f.logger.Debug("Forwarding request to Account Service")
+
+	returnData, err := f.ForwardRequest("http", "localhost:8081", r)
+	if err != nil {
+		f.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}

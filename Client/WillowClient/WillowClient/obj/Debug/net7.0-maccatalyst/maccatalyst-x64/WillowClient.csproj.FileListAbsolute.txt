@@ -314,3 +314,4 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\no_groups.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\AsyncAwaitBestPractices.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-maccatalyst\maccatalyst-x64\Mopups.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\notdownloaded.jpg

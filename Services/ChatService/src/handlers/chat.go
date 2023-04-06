@@ -12,6 +12,7 @@ import (
 
 	"strconv"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -267,6 +268,48 @@ func (ch *Chat) GetRoomHistoryAfterAMessage(rw http.ResponseWriter, r *http.Requ
 	messages.ToJSON(rw)
 }
 
+func (ch *Chat) GetReactionsInRoomAfterId(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /reactions/{roomId:[0-9]+}/{knownId:[0-9]+} hit (GET method)")
+	vars := mux.Vars(r)
+	//Get the room id from the vars
+	idRoomReq := vars["roomId"]
+	//Parse the idRoomReq
+	roomId, err := strconv.Atoi(idRoomReq)
+	//Check if an error occured
+	if err != nil {
+		ch.logger.Error("Error occured when parsing the room id to get new reactions", err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Get the last known id from the vars
+	lastIdReq := vars["knownId"]
+	//Parse the last known id
+	lastId, err := strconv.Atoi(lastIdReq)
+	if err != nil {
+		ch.logger.Error("Error occured when parsing the last known id to get new reactions", err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	//Get the new reactions from the database
+	reactions, err := ch.dbConn.GetReactionsWithId(int64(roomId), int64(lastId))
+	//Check if an error occured
+	if err != nil {
+		ch.logger.Error("Error occured when getting new reactions in the room", err.Error())
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	reactions.ToJSON(rw)
+}
+
 /*
  * This function will create a new group (room that will have a name)
  */
@@ -458,4 +501,75 @@ func (ch *Chat) UpdateGroupPicture(rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(http.StatusOK)
 	rw.Write([]byte("Group picture updated"))
+}
+
+/*
+ * This function will handle the upload to the blob of files for the messages
+ */
+func (ch *Chat) UploadToBlob(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /blob/upload hit (POST method)")
+	//Parse the multipart request (maximum 20MB upload)
+	r.ParseMultipartForm(10 << 20)
+
+	file, _, err := r.FormFile("blobData")
+	//Check if an error occured
+	if err != nil {
+		ch.logger.Info("Cannot get the blob data")
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Failed!"))
+		return
+	}
+
+	//Generate a guid
+	blobUuid := uuid.New()
+	blobUuidString := blobUuid.String()
+	if blobUuidString == "" {
+		ch.logger.Error("Could not generate a valid uuid")
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Failed!"))
+		return
+	}
+
+	//Get the data from the multipart file
+	blobData, err := io.ReadAll(file)
+	if err != nil {
+		ch.logger.Error("Could not get the blob data from multipart")
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Failed!"))
+		return
+	}
+
+	err = ch.dbConn.SaveDataIntoBlob(blobData, blobUuidString)
+	if err != nil {
+		ch.logger.Error("Error occured when inserting the blob data", err.Error())
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Failed!"))
+		return
+	}
+
+	blobResponse := data.BlobResponse{}
+	blobResponse.BlobUuid = blobUuidString
+	rw.WriteHeader(http.StatusOK)
+	blobResponse.ToJSON(rw)
+}
+
+/*
+ * This function will get an item from the blob
+ */
+func (ch *Chat) GetDataFromBlob(rw http.ResponseWriter, r *http.Request) {
+	//GUID regex [0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}
+	ch.logger.Info("Endpoint /blob/{blobUuid:[0-9a-fA-F\\-]+} hit (GET method)")
+	//Get the uuid from mux variables
+	vars := mux.Vars(r)
+	uuid := vars["blobUuid"]
+	blobData, err := ch.dbConn.GetBlobData(uuid)
+	if err != nil {
+		ch.logger.Error("Could not get the blob data", err.Error())
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Failed!"))
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(blobData)
 }

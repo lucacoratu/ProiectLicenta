@@ -425,6 +425,43 @@ func (conn MysqlConnection) GetHistoryWithId(roomId int64, messageId int64) (dat
 }
 
 /*
+ * This function will get all reactions of the messages in a room with a higher id than the one specified in the parameter
+ * If an error occurs when getting the reactions then an error will be returned
+ * Else the list of new reactions will be returned to the client
+ */
+func (conn *MysqlConnection) GetReactionsWithId(roomId int64, reactionId int64) (data.HistoryReactions, error) {
+	//Prepare the select statement to get all the reactions with higher id than the one specified and in the afferent room
+	stmtSelect, err := conn.db.Prepare("SELECT messages.ID, reactions.ID,reactions.Emoji,reactions.UserId,reactions.ReactionDate FROM reactions INNER JOIN message_reaction ON reactions.ID = message_reaction.ReactionId INNER JOIN messages ON messages.ID = message_reaction.MessageId WHERE messages.RoomID = ? AND reactions.ID > ?")
+	//Check if an error occured when preparing the select statement
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the select statement to get the new reactions", err.Error())
+		return make(data.HistoryReactions, 0), err
+	}
+	//Execute the select statement
+	rows, err := stmtSelect.Query(roomId, reactionId)
+	//Check if an error occured
+	if err != nil {
+		conn.logger.Error("Error occured when executing the select statement to get new reactions", err.Error())
+		return make(data.HistoryReactions, 0), err
+	}
+
+	//Get all the data from the rows
+	reactions := make(data.HistoryReactions, 0)
+	for rows.Next() {
+		reaction := data.HistoryReaction{}
+		err := rows.Scan(&reaction.MessageId, &reaction.ReactionId, &reaction.Emoji, &reaction.SenderId, &reaction.ReactionDate)
+		if err != nil {
+			conn.logger.Error("Error occured during reactions data fetch", err.Error())
+			return make(data.HistoryReactions, 0), err
+		}
+		reactions = append(reactions, reaction)
+	}
+
+	//Return the data
+	return reactions, nil
+}
+
+/*
  * This function will create a new room and return the id of the room that it inserted
  * An error will also be returned if the room could not be created
  */
@@ -693,4 +730,52 @@ func (conn *MysqlConnection) AddMessageReaction(sendReact data.SendReact) (int64
 	}
 
 	return reactionId, nil
+}
+
+/*
+ * This function will save the blob in the blobs table
+ */
+func (conn *MysqlConnection) SaveDataIntoBlob(blobData []byte, uuid string) error {
+	//Prepare the insert statement into the blobs table
+	stmtInsert, err := conn.db.Prepare("INSERT INTO blobs(Guid,BlobData) VALUES (?,?)")
+	//Check if an error occured
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the insert into blob statement", err.Error())
+		return err
+	}
+
+	_, err = stmtInsert.Exec(uuid, blobData)
+	if err != nil {
+		conn.logger.Error("Error occured when executing the insert into blobs", err.Error())
+		return err
+	}
+
+	return nil
+}
+
+/*
+ * This function will get the blob data with the specified guid
+ */
+func (conn *MysqlConnection) GetBlobData(uuid string) ([]byte, error) {
+	//Prepare the select statement to get the blob data
+	stmtSelect, err := conn.db.Prepare("SELECT BlobData FROM blobs WHERE Guid = ?")
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the select statement for blob data", err.Error())
+		return make([]byte, 0), err
+	}
+	//Execute the select statement
+	row := stmtSelect.QueryRow(uuid)
+	if row.Err() != nil {
+		conn.logger.Error("Error occured when executing the select statement for blob data", row.Err().Error())
+		return make([]byte, 0), row.Err()
+	}
+
+	blobData := make([]byte, 0)
+	err = row.Scan(&blobData)
+	if err != nil {
+		conn.logger.Error("Error occured when getting the blob data")
+		return make([]byte, 0), err
+	}
+
+	return blobData, nil
 }

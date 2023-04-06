@@ -1081,3 +1081,4 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\andr
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\assets\Mopups.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc645f71566477e2fdd5\MopupGestureDetectorListener.java
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\android\src\crc648efb837642500d81\PopupPageRenderer.java
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\notdownloaded.jpg

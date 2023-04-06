@@ -320,3 +320,4 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimul
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\willow@3x.png
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\AsyncAwaitBestPractices.dll
 D:\ProiectLicenta\Client\WillowClient\WillowClient\bin\Debug\net7.0-ios\iossimulator-x64\Mopups.dll
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-ios\iossimulator-x64\resizetizer\r\Resources\notdownloaded.jpg

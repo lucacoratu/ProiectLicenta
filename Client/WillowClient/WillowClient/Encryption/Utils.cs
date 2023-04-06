@@ -167,6 +167,68 @@ namespace WillowClient.Encryption {
             return array;
         }
 
+        public static byte[] EncryptBlobData(Stream dataStream, byte[] key, byte[] iv) {
+            byte[] array;
+            var ms = new MemoryStream();
+            dataStream.CopyTo(ms);
+            var data = ms.ToArray();
+
+            using (Aes aes = Aes.Create()) {
+                aes.Key = key;
+                aes.IV = iv;
+                aes.Padding = PaddingMode.PKCS7;
+                aes.Mode = CipherMode.CBC;
+
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+                using (MemoryStream memoryStream = new MemoryStream()) {
+                    using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write)) {
+                        cryptoStream.Write(data, 0, data.Length);
+                        cryptoStream.FlushFinalBlock();
+                        array = memoryStream.ToArray();
+                    }
+                }
+            }
+
+            return array;
+        }
+
+        public static byte[] DecryptBlobData(byte[] blobData, byte[] key, byte[] iv) {
+            byte[] blob = new byte[blobData.Length - 32];
+            System.Buffer.BlockCopy(blobData, 0, blob, 0, blobData.Length - 32);
+
+            var plainText = default(byte[]);
+            using (Aes aes = Aes.Create()) {
+                aes.Key = key;
+                aes.IV = iv;
+                aes.Padding = PaddingMode.PKCS7;
+                aes.Mode = CipherMode.CBC;
+
+                // Create a decryptor
+                ICryptoTransform decryptor = aes.CreateDecryptor(key, iv);
+                // Create the streams used for decryption.
+                using (MemoryStream ms = new MemoryStream(blob)) {
+                    // Create crypto stream
+                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read)) {
+                        using(MemoryStream outputStream = new MemoryStream()) {
+                            cs.CopyTo(outputStream);
+
+                            plainText = outputStream.ToArray();
+                        }
+                    }
+                }
+            }
+
+            return plainText;
+        }
+
+        public static byte[] AutheticateBlobData(byte[] encryptedData, byte[] key) {
+            return HMACSHA256.HashData(key, encryptedData);
+        }
+
+        public static byte[] HashBlobCipherText(byte[] blob) {
+            return SHA256.HashData(blob);
+        }
+
         public static string EncryptMessage(string message, byte[] messageKey) {
             //First 32 bytes are used for the AES-256CBC key
             byte[] aesKey = new byte[32];

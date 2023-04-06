@@ -109,6 +109,31 @@ func (prof *Profile) UpdateStatusUnauthenticated(rw http.ResponseWriter, r *http
 	}
 }
 
+func (prof *Profile) GetUserStatus(rw http.ResponseWriter, r *http.Request) {
+	prof.l.Info("Endpoint /status/{userId:[0-9]+} hit (GET method)")
+	//Get the user id from the vars
+	vars := mux.Vars(r)
+	userIdReq := vars["userId"]
+	userId, err := strconv.Atoi(userIdReq)
+	if err != nil {
+		prof.l.Error("Error occured when parsing the user id", err.Error())
+		jsonErr := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonErr.ToJSON(rw)
+	}
+	status, err := prof.dbConn.GetAccountStatus(int64(userId))
+	if err != nil {
+		jsonErr := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonErr.ToJSON(rw)
+	}
+
+	accountStatus := data.Status{}
+	accountStatus.NewStatus = status
+	rw.WriteHeader(http.StatusOK)
+	accountStatus.ToJSON(rw)
+}
+
 /*
  * This function will update the profile picture of an account
  */

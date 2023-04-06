@@ -99,5 +99,18 @@ namespace WillowClient.Services {
             }
             return accModel;
         }
+
+        public async Task<string> GetUserStatus(int userId, string session) {
+            var url = Constants.serverURL + "/status/" + userId.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            StatusModel statusModel = new();
+            var response = await this.m_httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode) {
+                statusModel = await response.Content.ReadFromJsonAsync<StatusModel>();
+            }
+            return statusModel.Status;
+        }
     }
 }

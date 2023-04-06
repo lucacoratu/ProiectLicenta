@@ -70,6 +70,9 @@
         <member name="P:WillowClient.ViewModel.ChatViewModel.EntryEnabled">
             <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.entryEnabled"/>
         </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.PhotoMessageToSend">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.photoMessageToSend"/>
+        </member>
         <member name="F:WillowClient.ViewModel.ChatViewModel.goBackCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.GoBackCommand"/>.</summary>
         </member>
@@ -80,7 +83,7 @@
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.TakePhoto"/>.</summary>
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.TakePhoto"/>.</summary>
         </member>
         <member name="F:WillowClient.ViewModel.ChatViewModel.pickFileCommand">
             <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.PickFileCommand"/>.</summary>
@@ -111,6 +114,18 @@
         </member>
         <member name="P:WillowClient.ViewModel.ChatViewModel.GoToUserProfileCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.GoToUserProfile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.photoMessageTappedCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.PhotoMessageTappedCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.PhotoMessageTappedCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.PhotoMessageTapped(WillowClient.Model.MessageModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.downloadAttachmentCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.DownloadAttachmentCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.DownloadAttachmentCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.DownloadAttachment(WillowClient.Model.MessageModel)"/>.</summary>
         </member>
         <member name="P:WillowClient.ViewModel.FeedbackViewModel.Account">
             <inheritdoc cref="F:WillowClient.ViewModel.FeedbackViewModel.account"/>
@@ -591,6 +606,15 @@
         </member>
         <member name="P:WillowClient.ViewModel.UserProfileViewModel.TapCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.UserProfileViewModel.Tap(WillowClient.Model.CommonGroupWithParticipantsModel)"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ZoomImageViewModel.ImageFilename">
+            <inheritdoc cref="F:WillowClient.ViewModel.ZoomImageViewModel.imageFilename"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.ZoomImageViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ZoomImageViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ZoomImageViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ZoomImageViewModel.GoBack"/>.</summary>
         </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
             <summary>

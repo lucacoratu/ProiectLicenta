@@ -31,6 +31,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(GroupDetailsPage), typeof(GroupDetailsPage));
         Routing.RegisterRoute(nameof(UserProfilePage), typeof(UserProfilePage));
         Routing.RegisterRoute(nameof(WindowsGroupCallPage), typeof(WindowsGroupCallPage));
+        Routing.RegisterRoute(nameof(ZoomImagePage), typeof(ZoomImagePage));
 #if ANDROID
         Routing.RegisterRoute(nameof(AndroidCallPage), typeof(AndroidCallPage));
         Routing.RegisterRoute(nameof(AndroidGroupCallPage), typeof(AndroidGroupCallPage));

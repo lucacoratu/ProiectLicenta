@@ -21,3 +21,15 @@ func (react *Reaction) FromJSON(r io.Reader) error {
 	d := json.NewDecoder(r)
 	return d.Decode(react)
 }
+
+type Reactions []Reaction
+
+func (reacts *Reactions) ToJSON(w io.Writer) error {
+	e := json.NewEncoder(w)
+	return e.Encode(reacts)
+}
+
+func (reacts *Reactions) FromJSON(r io.Reader) error {
+	d := json.NewDecoder(r)
+	return d.Decode(reacts)
+}

@@ -179,7 +179,9 @@ public partial class LoginViewModel : BaseViewModel
 //#if CLEAR_MESSAGES
 //        _ = await databaseService.DeleteLocalFriends();
 //        _ = await databaseService.DeleteMessages();
+//        _ = await databaseService.DeleteAllReactions();
 //#endif
+
 
         bool checkRes = this.VerifyUsernameInput(Username);
         if(checkRes == false)

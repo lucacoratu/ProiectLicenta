@@ -6,6 +6,7 @@ import (
 )
 
 type SendReact struct {
+	Id            int64  `json:"reactionId"`
 	MessageId     int64  `json:"messageId"`
 	EmojiReaction string `json:"emojiReaction"`
 	SenderId      int64  `json:"senderId"`

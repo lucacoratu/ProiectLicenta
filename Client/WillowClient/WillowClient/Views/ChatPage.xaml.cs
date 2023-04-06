@@ -1,6 +1,7 @@
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
+using UraniumUI.Extensions;
 using WillowClient.Model;
 using WillowClient.ViewModel;
 using WillowClient.ViewsPopups;
@@ -41,9 +42,14 @@ public partial class ChatPage : ContentPage
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) {
         //Show the pop up to react to a message
         var senderGrid = sender as Grid;
+        //Get the label with the message id
+        var res = senderGrid.FindInChildrenHierarchy<Label>().FindByName("labelMessageId") as Label;
         var border = senderGrid.Children[1] as Border;
         var vstLayout = border.Content as VerticalStackLayout;
         var labelMessage = vstLayout.Children[0] as Label;
+        if (labelMessage == null)
+            return;
+
         string message = labelMessage.Text;
         var reactPopup = new ReactMessagePopup(message);
         var childBorder = senderGrid.Children[0] as Label;

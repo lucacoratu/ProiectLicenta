@@ -386,11 +386,12 @@ func (pool *Pool) MessageReceived(message Message) {
 	}
 	if isSendReaction && sendReactionMessage.MessageId != 0 && sendReactionMessage.SenderId != 0 && sendReactionMessage.RoomId != 0 {
 		pool.logger.Debug("Received reaction for message with id", sendReactionMessage.SenderId, "in room with id", sendReactionMessage.RoomId, "reaction", sendReactionMessage.EmojiReaction)
-		_, err := pool.dbConn.AddMessageReaction(sendReactionMessage)
+		reactionId, err := pool.dbConn.AddMessageReaction(sendReactionMessage)
 		if err != nil {
 			message.C.Conn.WriteMessage(1, []byte("could not insert reaction"))
 			return
 		}
+		sendReactionMessage.Id = reactionId
 		//Get all the participants of the room
 		participants, err := pool.dbConn.GetRoomParticipants(sendReactionMessage.SenderId, sendReactionMessage.RoomId)
 		pool.logger.Debug(participants)

@@ -157,6 +157,13 @@ namespace WillowClient.Services
             _ = await this.databaseService.SaveKeyValueData(url, JsonSerializer.Serialize(remoteMessages));
         }
 
+        public async Task<List<HistoryReactionModel>> GetNewReactionsInRoom(int roomId, int lastReactionId) {
+            var url = Constants.chatServerUrl + "/reactions/" + roomId.ToString() + "/" + lastReactionId.ToString();
+            var response = await this.m_httpClient.GetAsync(url);
+            var reactions = await response.Content.ReadFromJsonAsync<List<HistoryReactionModel>>();
+            return reactions;
+        }
+
         public async Task<List<GroupModel>> GetGroups(int accountId, string session)
         {
             try {
@@ -283,6 +290,36 @@ namespace WillowClient.Services
                     return true;
             }
             return false;
+        }
+
+        public async Task<BlobUploadResponseModel> UploadDataToBlobStorage(byte[] data) {
+            using (var multipartFormContent = new MultipartFormDataContent()) {
+                var dataStream = new MemoryStream(data);
+                var blobStream = new StreamContent(dataStream);
+                multipartFormContent.Add(blobStream, name: "blobData", fileName: "blobData");
+                var url = Constants.chatServerUrl + "blob/upload";
+                var baseAddress = new Uri(url);
+
+                var response = await this.m_httpClient.PostAsync(baseAddress, multipartFormContent);
+                //Parse the response and get the blob uuid
+                if (response.IsSuccessStatusCode) {
+                    var blobResponse = await response.Content.ReadFromJsonAsync<BlobUploadResponseModel>();
+                    return blobResponse;
+                }
+                return null;
+            }
+        }
+
+        public async Task<byte[]> DownloadDataFromBlobStorage(string blobUuid) {
+            var url = Constants.chatServerUrl + "blob/" + blobUuid;
+            var baseAddress = new Uri(url);
+
+            var response = await this.m_httpClient.GetAsync(baseAddress);
+            if (response.IsSuccessStatusCode) {
+                var blobData = await response.Content.ReadAsByteArrayAsync();
+                return blobData;
+            }
+            return null;
         }
 
         public void RegisterReadCallback(Func<string, Task> callbackFunction)
