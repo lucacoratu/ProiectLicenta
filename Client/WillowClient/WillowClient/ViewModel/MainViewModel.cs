@@ -521,9 +521,10 @@ namespace WillowClient.ViewModel
                                     if (privMessageModel.MessageType == "Attachment")
                                         _ = await this.databaseService.SaveUndownloadedAttachment(attachment, privMessageModel.Id);
                                     //Send a push notification that a new message has been received from the friend
-                                    this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, messageText);
+                                    if(privMessageModel.MessageType == "Text")
+                                        this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, messageText);
                                     if (privMessageModel.MessageType == "Attachment")
-                                        this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, "Sent a photo");
+                                        this.notificationService.SendPrivateChatNotification(this.Friends[i].DisplayName, this.Friends[i].LastMessage);
                                 }
                                 //Move the conversation to the top
                                 List<FriendStatusModel> CopyFriends = new();

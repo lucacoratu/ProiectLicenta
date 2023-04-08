@@ -22,6 +22,8 @@ using Mopups.Services;
 using WillowClient.ViewsPopups;
 using System.Security.Cryptography;
 using Microsoft.Maui.Storage;
+using System.Reflection.Metadata;
+using CommunityToolkit.Maui.Views;
 
 namespace WillowClient.ViewModel
 {
@@ -149,6 +151,12 @@ namespace WillowClient.ViewModel
                 MessageModel msgModel = null;
                 if (attachment.AttachmentType == "photo") {
                     msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.Photo, IsDownloaded = false, Text = "", TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privateMessageModel.Id.ToString() };
+                }
+                if(attachment.AttachmentType == "file") {
+                    msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.File, IsDownloaded = false, Text = "", TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privateMessageModel.Id.ToString() };
+                }
+                if(attachment.AttachmentType == "video") {
+                    msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.Video, IsDownloaded = false, Text = "", TimeStamp = DateTime.Now.ToString("HH:mm"), FileSizeString = attachment.FileSizeFormat, MessageId = privateMessageModel.Id.ToString() };
                 }
 
                 if (msgModel != null) {
@@ -586,6 +594,18 @@ namespace WillowClient.ViewModel
                                 }
                             }
                         }
+                        if(attachment.AttachmentType == "video") {
+                            if (dbAttachment != null) {
+                                //Show the message as photo if it is downloaded
+                                if (dbAttachment.Downloaded) {
+                                    msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.OtherUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true, VideoStream = MediaSource.FromFile(dbAttachment.LocalFilepath) };
+                                }
+                                else {
+                                    //Else show the message as downloadable attachment
+                                    msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.OtherUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                }
+                            }
+                        }
                     }
 
                     //Get the number of reactions for this model
@@ -639,7 +659,7 @@ namespace WillowClient.ViewModel
                         var attachment = JsonSerializer.Deserialize<AttachmentModel>(message.Text);
                         var dbAttachment = await this.databaseService.GetAttachment(attachment.BlobUuid);
                         if (attachment.AttachmentType == "photo") {
-                            if(dbAttachment != null) {
+                            if (dbAttachment != null) {
                                 //Show the message as photo if it is downloaded
                                 if (dbAttachment.Downloaded) {
                                     msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true, MediaStream = ImageSource.FromFile(dbAttachment.LocalFilepath) };
@@ -647,6 +667,18 @@ namespace WillowClient.ViewModel
                                 else {
                                     //Else show the message as downloadable attachment
                                     msgModel = new MessageModel { Owner = MessageOwner.CurrentUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                }
+                            }
+                        }
+                        if (attachment.AttachmentType == "video") {
+                            if (dbAttachment != null) {
+                                //Show the message as photo if it is downloaded
+                                if (dbAttachment.Downloaded) {
+                                    msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.CurrentUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true, VideoStream = MediaSource.FromFile(dbAttachment.LocalFilepath) };
+                                }
+                                else {
+                                    //Else show the message as downloadable attachment
+                                    msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.CurrentUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
                                 }
                             }
                         }
@@ -880,6 +912,25 @@ namespace WillowClient.ViewModel
             }
         }
 
+        private readonly string[] suffixes = { "Bytes", "KB", "MB", "GB", "TB", "PB" };
+        private string FormatSize(Int64 bytes) {
+            int counter = 0;
+            decimal number = (decimal)bytes;
+            while (Math.Round(number / 1024) >= 1) {
+                number = number / 1024;
+                counter++;
+            }
+            return string.Format("{0:n1} {1}", number, suffixes[counter]);
+        }
+
+        private int getNumberOfPdfPages(string fileName) {
+            using (StreamReader sr = new StreamReader(File.OpenRead(fileName))) {
+                Regex regex = new Regex(@"/Type\s*/Page[^s]");
+                MatchCollection matches = regex.Matches(sr.ReadToEnd());
+
+                return matches.Count;
+            }
+        }
 
         [RelayCommand]
         public async Task PickFile()
@@ -890,7 +941,7 @@ namespace WillowClient.ViewModel
                 {
                     { DevicePlatform.iOS, new[] { "public.my.comic.extension" } }, // UTType values
                     { DevicePlatform.Android, new[] { "*/*" } }, // MIME type
-                    { DevicePlatform.WinUI, new[] { ".txt", ".pdf", ".h5", ".png", ".jpg", ".jfif", ".jpeg" } }, // file extension
+                    { DevicePlatform.WinUI, new[] { ".txt", ".pdf", ".h5", ".png", ".jpg", ".jfif", ".jpeg", ".mp4", ".webm" } }, // file extension
                     { DevicePlatform.Tizen, new[] { "*/*" } },
                     { DevicePlatform.macOS, new[] { "cbr", "cbz" } }, // UTType values
                 });
@@ -899,6 +950,7 @@ namespace WillowClient.ViewModel
                 if (pickedFiles == null)
                     return;
 
+                List<MessageModel> messagesToSend = new List<MessageModel>();
                 foreach(var file in pickedFiles) {
                     if (file == null)
                         continue;
@@ -909,8 +961,44 @@ namespace WillowClient.ViewModel
                     using (var fileStream = File.Create(localFilePath)) {
                         sourceStream.CopyTo(fileStream);
                     }
-                    //Create a new message with the template for photo sent message
-                    MessageModel msgModel = new MessageModel {Filename = file.FileName, MessageId = "0", MessageType = MessageType.File, IsDownloaded = true, Text = "", MediaStream = ImageSource.FromFile(localFilePath), IsLoading = true, Owner = MessageOwner.CurrentUser, TimeStamp = DateTime.Now.ToString("HH:mm") };
+
+                    //Check if the file is a pdf
+                    var parts = file.FileName.Split(".");
+                    var extension = parts[parts.Length - 1];
+                    var previewPath = Path.Combine(FileSystem.CacheDirectory, parts[0]);
+
+                    string sizeFormat = this.FormatSize(sourceStream.Length);
+
+                    MessageModel msgModel = null;
+                    if (extension == "pdf") {
+                        //Create a message with template for pdf file
+                        //Get the data from the file
+                        sourceStream.Seek(0, SeekOrigin.Begin);
+
+                        //var html = $"""
+                        //    <!DOCTYPE html>
+                        //    <html>
+                        //      <body>
+                        //        <iframe src="file://{localFilePath}#toolbar=0"></iframe>
+                        //      </body>
+                        //    </html>
+                        //    """;
+
+                        msgModel = new MessageModel { Filename = file.FileName, FileSizeString = sizeFormat, IsLoading = true, NumberPages = this.getNumberOfPdfPages(localFilePath), MessageId = "0", MessageType = MessageType.Pdf, Owner = MessageOwner.CurrentUser, TimeStamp = DateTime.Now.ToString("HH:mm") };
+                    }
+
+                    if (extension == "png" || extension == "jpg" || extension == "jfif") {
+                        //Create a new message with the template for file sent message
+                        msgModel = new MessageModel { MediaStream = ImageSource.FromFile(localFilePath), MessageId = "0", MessageType = MessageType.Photo, IsDownloaded = true, Text = "", IsLoading = true, Owner = MessageOwner.CurrentUser, TimeStamp = DateTime.Now.ToString("HH:mm") };
+                    }
+
+                    if(extension == "webm" || extension == "mp4") {
+                        msgModel = new MessageModel { VideoStream = MediaSource.FromFile(localFilePath), MessageId = "0", MessageType = MessageType.Video, IsDownloaded = true, IsLoading = true, Owner = MessageOwner.CurrentUser, TimeStamp = DateTime.Now.ToString("HH:mm") };
+                    }
+
+                    if (extension != "png" && extension != "jpg" && extension != "jfif" && extension != "pdf" && extension != "webm" && extension != "mp4") {
+                        msgModel = new MessageModel { FileSizeString = sizeFormat, LocalPath = localFilePath, Filename = file.FileName, IsDownloaded = true, MessageId = "0", MessageType = MessageType.File, Owner = MessageOwner.CurrentUser, TimeStamp = DateTime.Now.ToString("HH:mm"), Progress = 0, IsLoading = true };
+                    }
 
                     //Add the message into the today group
                     bool found = false;
@@ -923,7 +1011,95 @@ namespace WillowClient.ViewModel
                     if (!found) {
                         this.MessageGroups.Add(new MessageGroupModel("Today", new List<MessageModel>() { msgModel }));
                     }
+
+                    messagesToSend.Add(msgModel);
                 }
+
+                foreach(var message in messagesToSend) {
+                    //Generate the keys for encrypting and authenticating the blob
+                    var aesKey = RandomNumberGenerator.GetBytes(32);
+                    var aesIv = RandomNumberGenerator.GetBytes(16);
+                    var hmacKey = RandomNumberGenerator.GetBytes(32);
+
+                    message.Progress = 0.1;
+                    FileImageSource fileImageSource = message.MediaStream as FileImageSource;
+                    FileMediaSource fileMediaSource = message.VideoStream as FileMediaSource;
+
+                    string filename = fileImageSource == null ? fileMediaSource.Path : fileImageSource.File;
+                    var sourceStream = File.OpenRead(filename);
+                    if(sourceStream == null) {
+                        sourceStream = File.OpenRead(message.LocalPath);
+                    }
+
+                    message.Progress = 0.2;
+                    var sizeFormat = this.FormatSize(sourceStream.Length);
+
+                    //Encrypt the stream using the key and the iv
+                    var encryptedData = Encryption.Utils.EncryptBlobData(sourceStream, aesKey, aesIv);
+                    message.Progress = 0.3;
+                    var hmac = Encryption.Utils.AutheticateBlobData(encryptedData, hmacKey);
+                    message.Progress = 0.4;
+
+                    //Create the blob with the hmac
+                    byte[] encBlob = new byte[encryptedData.Length + hmac.Length];
+                    System.Buffer.BlockCopy(encryptedData, 0, encBlob, 0, encryptedData.Length);
+                    System.Buffer.BlockCopy(hmac, 0, encBlob, encryptedData.Length, hmac.Length);
+
+                    //Generate the sha256 of the ciphertext
+                    var hash = Encryption.Utils.HashBlobCipherText(encryptedData);
+                    message.Progress = 0.5;
+
+                    var blobResponse = await this.chatService.UploadDataToBlobStorage(encBlob);
+                    //If the photo could not have been uploaded to the blob then show a popup to the user
+                    if (blobResponse == null) {
+                        message.Progress = 0.0;
+                        await Shell.Current.DisplayAlert("Error", "Could not send photo", "Ok");
+                        return;
+                    }
+                    message.Progress = 0.6;
+
+                    //Craft the message that will be sent to the user
+                    AttachmentModel attachment = null;
+                    if (message.MessageType == MessageType.Photo) {
+                        attachment = new AttachmentModel { Caption = "", AesIvBase64 = System.Convert.ToBase64String(aesIv), AesKeyBase64 = System.Convert.ToBase64String(aesKey), AttachmentType = "photo", BlobUuid = blobResponse.blobUuid, HashBase64 = System.Convert.ToBase64String(hash), HMACKeyBase64 = System.Convert.ToBase64String(hmacKey) };
+                    }
+                    if (message.MessageType == MessageType.File) {
+                        attachment = new AttachmentModel { Filename = message.Filename, FileSizeFormat = sizeFormat, Caption = "", AesIvBase64 = System.Convert.ToBase64String(aesIv), AesKeyBase64 = System.Convert.ToBase64String(aesKey), AttachmentType = "file", BlobUuid = blobResponse.blobUuid, HashBase64 = System.Convert.ToBase64String(hash), HMACKeyBase64 = System.Convert.ToBase64String(hmacKey) };
+                    }
+                    if(message.MessageType == MessageType.Pdf) {
+                        attachment = new AttachmentModel { Filename = message.Filename, FileSizeFormat = sizeFormat, NumberPages = this.getNumberOfPdfPages(fileImageSource.File), Caption = "", AesIvBase64 = System.Convert.ToBase64String(aesIv), AesKeyBase64 = System.Convert.ToBase64String(aesKey), AttachmentType = "pdf", BlobUuid = blobResponse.blobUuid, HashBase64 = System.Convert.ToBase64String(hash), HMACKeyBase64 = System.Convert.ToBase64String(hmacKey) };
+                    }
+                    if(message.MessageType == MessageType.Video) {
+                        attachment = new AttachmentModel { Filename = message.Filename, FileSizeFormat = sizeFormat, Caption = "", AesIvBase64 = System.Convert.ToBase64String(aesIv), AesKeyBase64 = System.Convert.ToBase64String(aesKey), AttachmentType = "video", BlobUuid = blobResponse.blobUuid, HashBase64 = System.Convert.ToBase64String(hash), HMACKeyBase64 = System.Convert.ToBase64String(hmacKey) };
+                    }
+                    message.Progress = 0.7;
+
+                    string messageBody = JsonSerializer.Serialize(attachment);
+
+                    //Get the current message key
+                    var messageEphemeral = await this.GetCurrentMessageKey();
+
+                    //Encrypt the data
+                    var encryptedMessageData = Encryption.Utils.EncryptMessage(messageBody, messageEphemeral.MessageKey);
+                    message.Progress = 0.8;
+
+                    //Create the structure that will hold the data which will be json encoded and sent to the server
+                    SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.roomId, data = encryptedMessageData, messageType = "Attachment", ephemeralPublicKey = messageEphemeral.EphemeralPublic, identityPublicKey = Globals.identityKey.ExportSubjectPublicKeyInfoPem() };
+
+                    string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
+                    await chatService.SendMessageAsync(jsonMessage);
+                    message.Progress = 0.9;
+
+                    this.Friend.LastMessage = messageBody;
+
+                    //Upload the encrypted stream to the blob
+                    message.IsLoading = false;
+
+                    //Save the attachment details in the database
+                    _ = await this.databaseService.SaveMessageAttachment(attachment, filename, sourceStream.Length);
+                    message.Progress = 1.0;
+                }
+
             } catch(Exception ex) { 
                 Console.WriteLine(ex.ToString());
             }
@@ -1152,8 +1328,15 @@ namespace WillowClient.ViewModel
             foreach (var group in this.MessageGroups) {
                 for (int i = 0; i < group.Count; i++) {
                     if (group[i] == message) {
-                        var source = ImageSource.FromFile(localFilePath);
-                        var newMessage = new MessageModel { IsDownloaded = true, IsDownloading = false, IsLoading = false, MediaStream = source, MessageId = message.MessageId, MessageType = message.MessageType, Owner = message.Owner, SenderName = message.SenderName, TimeStamp = message.TimeStamp };
+                        MessageModel newMessage = null;
+                        if (message.MessageType == MessageType.Photo) {
+                            var source = ImageSource.FromFile(localFilePath);
+                            newMessage = new MessageModel { IsDownloaded = true, IsDownloading = false, IsLoading = false, MediaStream = source, MessageId = message.MessageId, MessageType = message.MessageType, Owner = message.Owner, SenderName = message.SenderName, TimeStamp = message.TimeStamp };
+                        }
+                        if(message.MessageType == MessageType.Video) {
+                            var source = MediaSource.FromFile(localFilePath);
+                            newMessage = new MessageModel { IsDownloaded = true, IsDownloading = false, IsLoading = false, VideoStream = source, MessageId = message.MessageId, MessageType = message.MessageType, Owner = message.Owner, SenderName = message.SenderName, TimeStamp = message.TimeStamp };
+                        }
                         foreach (var reaction in message.Reactions)
                             newMessage.Reactions.Add(reaction);
                         group[i] = newMessage;

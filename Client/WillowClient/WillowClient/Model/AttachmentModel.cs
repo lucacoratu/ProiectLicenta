@@ -22,5 +22,9 @@ namespace WillowClient.Model {
         public string Filename { get; set; }
         //Caption for the attachment if is set by the user
         public string Caption { get; set; }
+        //The size of the file in a readable format
+        public string FileSizeFormat { get; set; }
+        //The number of pages in the pdf
+        public int NumberPages { get; set; }
     }
 }

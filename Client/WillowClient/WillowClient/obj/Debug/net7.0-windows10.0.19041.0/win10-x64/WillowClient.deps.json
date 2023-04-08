@@ -10,6 +10,7 @@
       "WillowClient/1.0": {
         "dependencies": {
           "CommunityToolkit.Maui": "5.0.0",
+          "CommunityToolkit.Maui.MediaElement": "1.0.2",
           "CommunityToolkit.Mvvm": "8.1.0",
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Microsoft.Extensions.DependencyInjection": "7.0.0",
@@ -828,6 +829,14 @@
           }
         }
       },
+      "CommunityToolkit.Maui.MediaElement/1.0.2": {
+        "runtime": {
+          "lib/net7.0-windows10.0.19041/CommunityToolkit.Maui.MediaElement.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "CommunityToolkit.Mvvm/8.1.0": {
         "runtime": {
           "lib/net6.0/CommunityToolkit.Mvvm.dll": {
@@ -1206,6 +1215,13 @@
       "sha512": "sha512-gZp9b++c8fR1QRVsizrQRCeKxVh+RmC9+2IsPC+qpm/nQNHSyWq6PoIp555cb05zQ/AUyM7OTYnzA1BU1JNl4Q==",
       "path": "communitytoolkit.maui.core/5.0.0",
       "hashPath": "communitytoolkit.maui.core.5.0.0.nupkg.sha512"
+    },
+    "CommunityToolkit.Maui.MediaElement/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kB2COCJfH+tWubCDcHgP8vH5LPneZEzjTAHPfilDn6ob8t2GWqJPjHuT2CtuWPBdQRDgZ2YhNTmeiAgGWmP5oA==",
+      "path": "communitytoolkit.maui.mediaelement/1.0.2",
+      "hashPath": "communitytoolkit.maui.mediaelement.1.0.2.nupkg.sha512"
     },
     "CommunityToolkit.Mvvm/8.1.0": {
       "type": "package",

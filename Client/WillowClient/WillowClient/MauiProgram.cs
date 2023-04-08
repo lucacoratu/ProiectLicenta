@@ -22,7 +22,8 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
 			.UseMauiCompatibility()
-			.ConfigureMopups()
+            .UseMauiCommunityToolkitMediaElement()
+            .ConfigureMopups()
 #if ANDROID
 			.UseLocalNotification()
 #endif

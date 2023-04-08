@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:mediatoolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="WillowClient.Views.ChatPage"
              xmlns:local="clr-namespace:WillowClient.Views"
              xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
@@ -99,6 +100,70 @@
                 </Grid>
             </DataTemplate>
             
+            <!-- Sent video template -->
+            <DataTemplate x:Key="SentVideoMessageTemplate" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
+                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='260', iOS='260', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,10,0"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout>
+                            <mediatoolkit:MediaElement HeightRequest="300" Aspect="AspectFit" ShouldAutoPlay="False" Source="{Binding VideoStream}" ShouldLoopPlayback="False" ShouldKeepScreenOn="True"/>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
+                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
+                                <CollectionView Grid.Column="1" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:ReactionModel">
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <!-- Sent pdf attachment -->
+            <DataTemplate x:Key="SentPdfMessageTemplate" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
+                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='260', iOS='260', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,10,0"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout>
+                            <Grid Padding="5" BackgroundColor="{StaticResource AccentThirdDarkColor}" RowDefinitions="*" ColumnDefinitions="64, *">
+                                <Grid Grid.Column="0" RowSpacing="1" Grid.ColumnSpan="2" ColumnDefinitions="32,*" RowDefinitions="32,*,10">
+                                    <Image Grid.Column="0" Grid.Row="0" WidthRequest="32" HeightRequest="32" Aspect="AspectFit">
+                                        <Image.Source>
+                                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.FilePdf}" Size="14" Color="WhiteSmoke"/>
+                                        </Image.Source>
+                                    </Image>
+                                    <Label Margin="3,0,0,0" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Text="{Binding Filename}" MaxLines="2" LineBreakMode="CharacterWrap" FontSize="14" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" TextColor="Whitesmoke"/>
+                                    <HorizontalStackLayout Margin="6,0,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                        <Label Text="{Binding NumberPages}" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}" FontSize="11"/>
+                                        <Label Text="pages •" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}" FontSize="11"/>
+                                        <Label Text="{Binding FileSizeString}" TextColor="WhiteSmoke" FontSize="11" FontFamily="{StaticResource ApplicationFont}"/>
+                                        <Label Text="• pdf" TextColor="WhiteSmoke" FontSize="11" FontFamily="{StaticResource ApplicationFont}"/>
+                                    </HorizontalStackLayout>
+                                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Progress="{Binding Progress}" IsVisible="{Binding IsLoading}" IsEnabled="{Binding IsLoading}" ProgressColor="WhiteSmoke"/>
+                                </Grid>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
+                                <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="End" FontSize="11"/>
+                                <CollectionView Grid.Column="0" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:ReactionModel">
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
             <!-- Sent File attachment that cannot be displayed in the ui -->
             <DataTemplate x:Key="SentUndisplayableMessageTemplate" x:DataType="model:MessageModel">
                 <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
@@ -108,27 +173,19 @@
                         </Border.StrokeShape>
                         <VerticalStackLayout>
                             <Grid Padding="5" BackgroundColor="{StaticResource AccentThirdDarkColor}" RowDefinitions="*" ColumnDefinitions="64, *">
-                                <!--<Border StrokeThickness="0" BackgroundColor="{StaticResource AccentDarkColor}" WidthRequest="40" HeightRequest="40">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="20,20,20,20"/>
-                                    </Border.StrokeShape>
-                                    <ImageButton VerticalOptions="Center" BackgroundColor="Transparent" Grid.Column="0" WidthRequest="32" HeightRequest="32">
-                                        <ImageButton.Source>
-                                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowDown}" Size="14" Color="WhiteSmoke" />
-                                        </ImageButton.Source>
-                                    </ImageButton>
-                                </Border>-->
-                                <VerticalStackLayout Grid.Column="0" Spacing="3" Grid.ColumnSpan="2">
-                                    <HorizontalStackLayout Spacing="5">
-                                        <Image WidthRequest="32" HeightRequest="32">
-                                            <Image.Source>
-                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.File}" Size="14" Color="WhiteSmoke"/>
-                                            </Image.Source>
-                                        </Image>
-                                        <Label VerticalOptions="Center" Text="{Binding Filename}" MaxLines="1" LineBreakMode="TailTruncation" FontSize="14" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" TextColor="Whitesmoke"/>
+                                <Grid Grid.Column="0" RowSpacing="1" Grid.ColumnSpan="2" ColumnDefinitions="32,*" RowDefinitions="32,*,10">
+                                    <Image Grid.Column="0" Grid.Row="0" WidthRequest="32" HeightRequest="32" Aspect="AspectFit">
+                                        <Image.Source>
+                                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.File}" Size="14" Color="WhiteSmoke"/>
+                                        </Image.Source>
+                                    </Image>
+                                    <Label Margin="3,0,0,0" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Text="{Binding Filename}" MaxLines="2" LineBreakMode="CharacterWrap" FontSize="14" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" TextColor="Whitesmoke"/>
+                                    <HorizontalStackLayout Margin="6,0,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="2">
+                                        <Label Text="{Binding FileSizeString}" TextColor="WhiteSmoke" FontSize="11" FontFamily="{StaticResource ApplicationFont}"/>
+                                        <Label Text="• file" TextColor="WhiteSmoke" FontSize="11" FontFamily="{StaticResource ApplicationFont}"/>
                                     </HorizontalStackLayout>
-                                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Progress="0.5" IsVisible="{Binding IsLoading}" IsEnabled="{Binding IsLoading}" ProgressColor="WhiteSmoke"/>
-                                </VerticalStackLayout>
+                                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Progress="{Binding Progress}" IsVisible="{Binding IsLoading}" IsEnabled="{Binding IsLoading}" ProgressColor="WhiteSmoke"/>
+                                </Grid>
                             </Grid>
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
                                 <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="End" FontSize="11"/>
@@ -240,8 +297,155 @@
                     </Border>
                 </Grid>
             </DataTemplate>
+            
+            <!-- Received undownloaded video template -->
+            <DataTemplate x:Key="ReceivedUndownloadedVideoMessageTemplate" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
+                    <Label x:Name="labelMessageId" Text="{Binding MessageId}" IsVisible="False" IsEnabled="True" TextColor="Transparent" Grid.Row="0" HeightRequest="10" BackgroundColor="Transparent" Margin="0,-50,0,0" Grid.Column="2"/>
+                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='260', iOS='260', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,0,10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout>
+                            <Grid RowDefinitions="*">
+                                <Image Source="notdownloaded.jpg" WidthRequest="200" HeightRequest="200" />
+                                <ImageButton HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" WidthRequest="24" HeightRequest="24">
+                                    <ImageButton.Source>
+                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Play}" Size="14" Color="WhiteSmoke" />
+                                    </ImageButton.Source>
+                                </ImageButton>
+                                <Border Padding="3" StrokeThickness="0" Margin="5,0,0,5" VerticalOptions="End" HorizontalOptions="Start" BackgroundColor="Black" WidthRequest="60" HeightRequest="30">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,10,10"/>
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ChatViewModel}}, Path=DownloadAttachmentCommand}" CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+                                    <HorizontalStackLayout Spacing="3">
+                                        <ImageButton VerticalOptions="Center" BackgroundColor="Transparent">
+                                            <ImageButton.Source>
+                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowDown}" Size="12" Color="WhiteSmoke"/>
+                                            </ImageButton.Source>
+                                        </ImageButton>
+                                        <Label Text="{Binding FileSizeString}" VerticalOptions="Center" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}" FontSize="12"/>
+                                    </HorizontalStackLayout>
+                                </Border>
+                                <ActivityIndicator IsVisible="{Binding IsDownloading}" IsEnabled="{Binding IsDownloading}" IsRunning="{Binding IsDownloading}" Color="WhiteSmoke" WidthRequest="32" HeightRequest="32" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
+                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
+                                <CollectionView Grid.Column="1" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:ReactionModel">
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+            
+            <!-- Received downloaded video template-->
+            <DataTemplate x:Key="ReceivedVideoMessageTemplate" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
+                    <Label x:Name="labelMessageId" Text="{Binding MessageId}" IsVisible="False" IsEnabled="True" TextColor="Transparent" Grid.Row="0" HeightRequest="10" BackgroundColor="Transparent" Margin="0,-50,0,0" Grid.Column="2"/>
+                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='260', iOS='260', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,0,10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout>
+                            <mediatoolkit:MediaElement HeightRequest="300" Aspect="AspectFit" ShouldAutoPlay="False" Source="{Binding VideoStream}" ShouldLoopPlayback="False" ShouldKeepScreenOn="True"/>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
+                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
+                                <CollectionView Grid.Column="1" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:ReactionModel">
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
 
-            <model:MessageDataTemplateSelector x:Key="MessageTemplateSelector" ReceivedMessageTemplate="{StaticResource ReceivedMessageTemplate}" SentMessageTemplate="{StaticResource SentMessageTemplate}" SentPhotoMessageTemplate="{StaticResource SentPhotoMessageTemplate}" ReceivedPhotoMessageTemplate="{StaticResource ReceivedPhotoMessageTemplate}" ReceivedUndownloadedPhotoMessageTemplate="{StaticResource ReceivedUndownloadedPhotoMessageTemplate}" SentUndowloadedPhotoMessageTemplate="{StaticResource SentUndowloadedPhotoMessageTemplate}" SentUndisplayableMessageTemplate="{StaticResource SentUndisplayableMessageTemplate}}"/>
+            <!-- Received undownloaded file that cannot be displayed template-->
+            <DataTemplate x:Key="ReceivedUndownloadedUndisplayableFile" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
+                    <Label Text="{Binding MessageId}" IsVisible="False" IsEnabled="True" TextColor="Transparent" Grid.Row="0" HeightRequest="10" BackgroundColor="Transparent" Margin="0,-50,0,0" Grid.Column="2"/>
+                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='260', iOS='260', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,0,10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout>
+                            <Grid Padding="5" BackgroundColor="{StaticResource AccentThirdDarkColor}" RowDefinitions="*" ColumnDefinitions="64, *">
+                                <Border StrokeThickness="0" BackgroundColor="{StaticResource AccentDarkColor}" WidthRequest="40" HeightRequest="40">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="20,20,20,20"/>
+                                    </Border.StrokeShape>
+                                    <ImageButton VerticalOptions="Center" BackgroundColor="Transparent" Grid.Column="0" WidthRequest="32" HeightRequest="32">
+                                        <ImageButton.Source>
+                                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowDown}" Size="14" Color="WhiteSmoke" />
+                                        </ImageButton.Source>
+                                    </ImageButton>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="0" Spacing="3" Grid.ColumnSpan="2">
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Image WidthRequest="32" HeightRequest="32">
+                                            <Image.Source>
+                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.File}" Size="14" Color="LightGray"/>
+                                            </Image.Source>
+                                        </Image>
+                                        <Label VerticalOptions="Center" Text="{Binding Filename}" MaxLines="2" LineBreakMode="CharacterWrap" FontSize="14" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" TextColor="Whitesmoke"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <!-- Received downloaded file that cannot be displayed template-->
+            <DataTemplate x:Key="ReceivedUndisplayableFile" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
+                    <Label Text="{Binding MessageId}" IsVisible="False" IsEnabled="True" TextColor="Transparent" Grid.Row="0" HeightRequest="10" BackgroundColor="Transparent" Margin="0,-50,0,0" Grid.Column="2"/>
+                    <Border Grid.Row="1" Margin="0,0,3,0" Padding="8" MaximumWidthRequest="{OnPlatform Android='260', iOS='260', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,0,10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout>
+                            <Grid Padding="5" BackgroundColor="{StaticResource AccentThirdDarkColor}" RowDefinitions="*" ColumnDefinitions="64, *">
+                                <VerticalStackLayout Grid.Column="0" Spacing="3" Grid.ColumnSpan="2">
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Image WidthRequest="32" HeightRequest="32">
+                                            <Image.Source>
+                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.File}" Size="14" Color="LightGray"/>
+                                            </Image.Source>
+                                        </Image>
+                                        <Label VerticalOptions="Center" Text="{Binding Filename}" MaxLines="2" LineBreakMode="CharacterWrap" FontSize="14" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" TextColor="Whitesmoke"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <model:MessageDataTemplateSelector x:Key="MessageTemplateSelector" 
+                                               ReceivedMessageTemplate="{StaticResource ReceivedMessageTemplate}" SentMessageTemplate="{StaticResource SentMessageTemplate}" 
+                                               SentPhotoMessageTemplate="{StaticResource SentPhotoMessageTemplate}" ReceivedPhotoMessageTemplate="{StaticResource ReceivedPhotoMessageTemplate}" 
+                                               ReceivedUndownloadedPhotoMessageTemplate="{StaticResource ReceivedUndownloadedPhotoMessageTemplate}" 
+                                               SentUndowloadedPhotoMessageTemplate="{StaticResource SentUndowloadedPhotoMessageTemplate}" 
+                                               SentUndisplayableMessageTemplate="{StaticResource SentUndisplayableMessageTemplate}" 
+                                               SentPdfMessageTemplate="{StaticResource SentPdfMessageTemplate}" 
+                                               SentVideoMessageTemplate="{StaticResource SentVideoMessageTemplate}"
+                                               ReceivedUndownloadedVideoMessageTemplate="{StaticResource ReceivedUndownloadedVideoMessageTemplate}"
+                                               ReceivedVideoMessageTemplate="{StaticResource ReceivedVideoMessageTemplate}"
+                                               ReceivedUndownloadedUndisplayableFile="{StaticResource ReceivedUndownloadedUndisplayableFile}"
+                                               ReceivedUndisplayableFile="{StaticResource ReceivedUndisplayableFile}"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 

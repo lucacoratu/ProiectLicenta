@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,6 +40,12 @@ namespace WillowClient.Model
             set => SetProperty(ref mediaStream, value);
         }
 
+        private MediaSource videoStream;
+        public MediaSource VideoStream {
+            get => videoStream;
+            set => SetProperty(ref videoStream, value);
+        }
+
         private bool isDownloaded;
         public bool IsDownloaded {
             get => isDownloaded;
@@ -65,6 +72,28 @@ namespace WillowClient.Model
             get => filename;
             set => SetProperty(ref filename, value);
         }
+
+        public string LocalPath { get; set; }
+
+        private double progress;
+        public double Progress {
+            get => progress;
+            set => SetProperty(ref progress, value);
+        }
+
+        private string htmlString;
+        public string HtmlString {
+            get => htmlString;
+            set => SetProperty(ref htmlString, value);
+        }
+
+        private ImageSource pdfPreview;
+        public ImageSource PdfPreview {
+            get => pdfPreview;
+            set => SetProperty(ref pdfPreview, value);
+        }
+        public int NumberPages { get; set; }
+        public string FileSizeString { get; set; }
 
         public ObservableCollection<ReactionModel> Reactions { get; } = new();
     }

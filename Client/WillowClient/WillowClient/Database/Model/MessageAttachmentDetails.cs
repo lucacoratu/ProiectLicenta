@@ -18,5 +18,11 @@ namespace WillowClient.Database.Model {
         public string LocalFilepath { get; set; }
         [Column("attachmentSize")]
         public long AttachmentSize { get; set; }
+        //[Column("firstFrameBlobUuid")]
+        //public string FirstFrameBlobUuid { get; set; }
+        //[Column("firstFrameLocalPath")]
+        //public string FirstFrameLocalPath { get; set; }
+        //[Column("filename")]
+        //public string Filename { get; set; }
     }
 }
