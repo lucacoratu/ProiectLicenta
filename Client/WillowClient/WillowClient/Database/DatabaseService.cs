@@ -31,6 +31,15 @@ namespace WillowClient.Database {
             //Create the friends table where the account friends will be cached
             _ = await this.databaseConnection.CreateTableAsync<Friend>();
 
+            //Create the groups table where all the groups of the account will be cached
+            _ = await this.databaseConnection.CreateTableAsync<Group>();
+
+            //Create the table where asociations between group and participants will be cached
+            _ = await this.databaseConnection.CreateTableAsync<GroupParticipant>();
+
+            //Create the table where all the participants will be stored
+            _ = await this.databaseConnection.CreateTableAsync<Participant>();
+
             //Create the friend_message table where corelations between room and messages will be cached
             _ = await this.databaseConnection.CreateTableAsync<RoomMessage>();
 
@@ -129,6 +138,7 @@ namespace WillowClient.Database {
         }
 
         public async Task<bool> UpdateLocalFriends(List<FriendModel> listRemoteFriends) {
+            await InitDatabase();
             List<Friend> friends = new List<Friend>();
             foreach(var remoteFriend in listRemoteFriends) {
                 //Compute master secret
@@ -213,10 +223,19 @@ namespace WillowClient.Database {
 
         public async Task<Reaction> GetLastReaction(int roomId) {
             try {
-                var highestIdRoomMessage = await this.databaseConnection.Table<RoomMessage>().Where(roomMessage => roomMessage.RoomId == roomId).OrderByDescending(roomMessage => roomMessage.MessageId).ElementAtAsync(0);
-                var message = await this.databaseConnection.Table<Message>().Where(msg => msg.Id == highestIdRoomMessage.MessageId).FirstOrDefaultAsync();
-                var highestMessageReaction = await this.databaseConnection.Table<MessageReaction>().Where(messageReaction => messageReaction.MessageId == message.Id).OrderByDescending(messageReaction => messageReaction.ReactionId).ElementAtAsync(0);
-                var lastReaction = await this.databaseConnection.Table<Reaction>().Where(reaction => reaction.Id == highestMessageReaction.ReactionId).FirstOrDefaultAsync();
+                Reaction lastReaction = null;
+                var roomMessages = await this.databaseConnection.Table<RoomMessage>().Where(roomMessage => roomMessage.RoomId == roomId).OrderByDescending(roomMessage => roomMessage.MessageId).ToListAsync();
+                foreach(var roomMessage in roomMessages) {
+                    var message = await this.databaseConnection.Table<Message>().Where(msg => msg.Id == roomMessage.MessageId).FirstOrDefaultAsync();
+                    var messageReaction = await this.databaseConnection.Table<MessageReaction>().Where(messageReaction => messageReaction.MessageId == roomMessage.MessageId).FirstOrDefaultAsync();
+                    if (messageReaction == null)
+                        continue;
+                    lastReaction = await this.databaseConnection.Table<Reaction>().Where(reaction => reaction.Id == messageReaction.ReactionId).FirstOrDefaultAsync();
+                }
+                //var message = await this.databaseConnection.Table<Message>().Where(msg => msg.Id == highestIdRoomMessage.MessageId).FirstOrDefaultAsync();
+                //var highestMessageReaction = await this.databaseConnection.Table<MessageReaction>().Where(messageReaction => messageReaction.MessageId == message.Id).OrderByDescending(messageReaction => messageReaction.ReactionId).ElementAtAsync(0);
+                //var lastReaction = await this.databaseConnection.Table<Reaction>().Where(reaction => reaction.Id == highestMessageReaction.ReactionId).FirstOrDefaultAsync();
+                //lastReaction = await this.databaseConnection.Table<Reaction>().OrderByDescending(reaction => reaction.Id).ElementAtAsync(0);
                 return lastReaction;
             }
             catch (Exception ex) {
@@ -370,6 +389,98 @@ namespace WillowClient.Database {
             }
         }
 
+        //Save the group in the local database
+        //public async bool SaveGroup(GroupModel group) {
+
+        //}
+
+        //Get all the groups in the database
+        public async Task<List<GroupModel>> GetLocalGroups() {
+            await this.InitDatabase();
+            try {
+                List<GroupModel> groups = new List<GroupModel>();
+                var localGroups = await this.databaseConnection.Table<Group>().ToListAsync();
+                foreach (var localGroup in localGroups) {
+                    //Get the participants of the group
+                    GroupModel groupToAdd = new GroupModel();
+                    groupToAdd.Participants = new();
+                    groupToAdd.ParticipantNames = new();
+                    var groupParticipants = await this.databaseConnection.Table<GroupParticipant>().Where(group => group.GroupId == localGroup.RoomId).ToListAsync();
+                    foreach (var groupParticipant in groupParticipants) {
+                        var participant = await this.databaseConnection.Table<Participant>().Where(participant => participant.Id == groupParticipant.ParticipantId).FirstOrDefaultAsync();
+                        groupToAdd.Participants.Add(participant.Id);
+                        groupToAdd.ParticipantNames.Add(participant.Name);
+                    }
+                    groupToAdd.RoomId = localGroup.RoomId;
+                    groupToAdd.NumberNewMessages = localGroup.NumberNewMessages;
+                    groupToAdd.CreatorId = localGroup.CreatorId;
+                    groupToAdd.GroupName = localGroup.GroupName;
+                    groupToAdd.GroupPictureUrl = localGroup.GroupPictureUrl;
+
+                    groups.Add(groupToAdd);
+                }
+                return groups;
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        public async Task<bool> UpdateLocalGroups(List<GroupModel> remoteGroups) {
+            foreach (var group in remoteGroups) {
+                //Insert the group in the database
+                Group newGroup = new Group { CreatorId = group.CreatorId, GroupName = group.GroupName, GroupPictureUrl = group.GroupPictureUrl, LastMessage = group.LastMessage, LastMessageSender = group.LastMessageSender, LastMessageTimestamp = group.LastMessageTimestamp, NumberNewMessages = "0", RoomId = group.RoomId };
+                _ = await this.databaseConnection.InsertAsync(newGroup);
+                //Add the participants in the group
+                for (int i = 0; i < group.Participants.Count; i++) {
+                    //Add in the participants table if the user is not already registered in other group
+                    Participant participant = new Participant { Id = group.Participants[i], Name = group.ParticipantNames[i] };
+                    _ = await this.databaseConnection.InsertOrReplaceAsync(participant);
+                    //Add the association between the group and the participant
+                    GroupParticipant groupParticipant = new GroupParticipant { GroupId = group.RoomId, ParticipantId = group.Participants[i] };
+                    _ = await this.databaseConnection.InsertAsync(groupParticipant);
+                }
+            }
+            return true;
+        }
+
+        public async Task<bool> SaveGroup(GroupModel group) {
+            //Insert the group in the database
+            Group newGroup = new Group { CreatorId = group.CreatorId, GroupName = group.GroupName, GroupPictureUrl = group.GroupPictureUrl, LastMessage = group.LastMessage, LastMessageSender = group.LastMessageSender, LastMessageTimestamp = group.LastMessageTimestamp, NumberNewMessages = "0", RoomId = group.RoomId };
+            _ = await this.databaseConnection.InsertAsync(newGroup);
+            //Add the participants in the group
+            for (int i = 0; i < group.Participants.Count; i++) {
+                //Add in the participants table if the user is not already registered in other group
+                Participant participant = new Participant { Id = group.Participants[i], Name = group.ParticipantNames[i] };
+                _ = await this.databaseConnection.InsertOrReplaceAsync(participant);
+                //Add the association between the group and the participant
+                GroupParticipant groupParticipant = new GroupParticipant { GroupId = group.RoomId, ParticipantId = group.Participants[i] };
+                _ = await this.databaseConnection.InsertAsync(groupParticipant);
+            }
+            return true;
+        }
+
+        //Get the number of new messages in a group
+        public async Task<int> GetNumberNewMessagesForGroup(int roomId) {
+            var group = await this.databaseConnection.Table<Group>().Where(group => group.RoomId == roomId).FirstOrDefaultAsync();
+            return group.NumberNewMessages == null ? 0 : int.Parse(group.NumberNewMessages);
+        }
+
+        //Save the new messages for a group in the database
+        public async Task<bool> UpdateNewMessagesForGroup(int roomId, int newNumberMessages) {
+            var group = await this.databaseConnection.Table<Group>().Where(group => group.RoomId == roomId).FirstOrDefaultAsync();
+            group.NumberNewMessages = newNumberMessages.ToString();
+            _ = await this.databaseConnection.UpdateAsync(group);
+            return true;
+        }
+
+        //Get the participant name from id
+        public async Task<string> GetParticipantName(int participantId) {
+            var participant = await this.databaseConnection.Table<Participant>().Where(participant => participant.Id == participantId).FirstOrDefaultAsync();
+            return participant == null ? null : participant.Name;
+        }
+
         //Save the new messages in the database
         public async Task<bool> UpdateNewMessagesForFriend(int friendId, int newNumberMessages) {
             var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
@@ -436,6 +547,15 @@ namespace WillowClient.Database {
             }
 
             //Return the result
+            return true;
+        }
+
+        //Delete all groups
+        public async Task<bool> DeleteAllGroups() {
+            await this.InitDatabase();
+            _ = await this.databaseConnection.DeleteAllAsync<Participant>();
+            _ = await this.databaseConnection.DeleteAllAsync<GroupParticipant>();
+            _ = await this.databaseConnection.DeleteAllAsync<Group>();
             return true;
         }
     }

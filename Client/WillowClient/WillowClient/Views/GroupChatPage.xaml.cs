@@ -16,7 +16,8 @@ public partial class GroupChatPage : ContentPage
     {
         var vm = BindingContext as GroupChatViewModel;
         vm.CreateGroupParticipantsList();
-        vm.GetHistory();
+        //vm.GetHistory();
+        vm.LoadLocalMessages();
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) {

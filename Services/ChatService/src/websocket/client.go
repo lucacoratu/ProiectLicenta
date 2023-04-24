@@ -66,7 +66,7 @@ type ChangeStatusMessage struct {
 type AcceptFriendRequestMessage struct {
 	AccountId int `json:"accountId"`
 	FriendId  int `json:"friendId"`
-	RoomId    int `json:"roomid"`
+	RoomId    int `json:"roomId"`
 }
 
 type PrivateMessage struct {

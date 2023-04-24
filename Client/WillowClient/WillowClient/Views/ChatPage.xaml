@@ -110,7 +110,7 @@
                         <VerticalStackLayout>
                             <mediatoolkit:MediaElement HeightRequest="300" Aspect="AspectFit" ShouldAutoPlay="False" Source="{Binding VideoStream}" ShouldLoopPlayback="False" ShouldKeepScreenOn="True"/>
                             <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
-                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
+                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="End" FontSize="11"/>
                                 <CollectionView Grid.Column="1" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="model:ReactionModel">
@@ -380,26 +380,29 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="10,10,0,10"/>
                         </Border.StrokeShape>
-                        <VerticalStackLayout>
-                            <Grid Padding="5" BackgroundColor="{StaticResource AccentThirdDarkColor}" RowDefinitions="*" ColumnDefinitions="64, *">
-                                <Border StrokeThickness="0" BackgroundColor="{StaticResource AccentDarkColor}" WidthRequest="40" HeightRequest="40">
+                        <VerticalStackLayout BackgroundColor="#505050">
+                            <Grid Padding="5" BackgroundColor="#404040" RowDefinitions="*" ColumnDefinitions="40, *">
+                                <Border Grid.Column="0" Padding="0" StrokeThickness="0" BackgroundColor="#505050" WidthRequest="32" HeightRequest="32">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="20,20,20,20"/>
                                     </Border.StrokeShape>
-                                    <ImageButton VerticalOptions="Center" BackgroundColor="Transparent" Grid.Column="0" WidthRequest="32" HeightRequest="32">
+                                    <ImageButton VerticalOptions="Center" BackgroundColor="Transparent" Grid.Column="0" WidthRequest="24" HeightRequest="24">
                                         <ImageButton.Source>
-                                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowDown}" Size="14" Color="WhiteSmoke" />
+                                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowDown}" Size="12" Color="WhiteSmoke" />
                                         </ImageButton.Source>
                                     </ImageButton>
                                 </Border>
-                                <VerticalStackLayout Grid.Column="0" Spacing="3" Grid.ColumnSpan="2">
+                                <VerticalStackLayout Grid.Column="1" Spacing="3" Grid.ColumnSpan="2">
                                     <HorizontalStackLayout Spacing="5">
-                                        <Image WidthRequest="32" HeightRequest="32">
+                                        <Image VerticalOptions="Center" WidthRequest="24" HeightRequest="24">
                                             <Image.Source>
-                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.File}" Size="14" Color="LightGray"/>
+                                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.File}" Size="12" Color="LightGray"/>
                                             </Image.Source>
                                         </Image>
-                                        <Label VerticalOptions="Center" Text="{Binding Filename}" MaxLines="2" LineBreakMode="CharacterWrap" FontSize="14" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" TextColor="Whitesmoke"/>
+                                        <VerticalStackLayout>
+                                            <Label VerticalOptions="Center" Text="{Binding Filename}" MaxLines="2" LineBreakMode="CharacterWrap" FontSize="14" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" TextColor="Whitesmoke"/>
+                                            <Label VerticalOptions="Center" Text="{Binding FileSizeString}" FontSize="10" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke"/>
+                                        </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                             </Grid>

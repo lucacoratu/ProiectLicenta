@@ -524,6 +524,57 @@ func (conn *MysqlConnection) GetUserGroups(accountID int64) (data.GetGroups, err
 }
 
 /*
+ * This function will get the groups of an user that have the id greater than the one specified by the user
+ * If an error occurs during the execution of the function then it will be returned, else error will be nil
+ * If there is no error the groups will be returned to the user
+ */
+func (conn *MysqlConnection) GetUserGroupsWithId(accountID int64, lastId int64) (data.GetGroups, error) {
+	//Prepare the select statement for getting the groups with the id greater than the one specified
+	stmtSelect, err := conn.db.Prepare("SELECT rooms.ID, rooms.groupName, rooms.CreatorId, rooms.creationDate, rooms.groupPicture FROM rooms INNER JOIN user_room ON user_room.RoomID = rooms.ID WHERE user_room.UserID = ? AND rooms.isGroup = true AND rooms.ID > ?")
+	//Check if an erorr occured when preparing the select statement
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the select statement for getting the groups with id greater", err.Error())
+		return make(data.GetGroups, 0), err
+	}
+	//Execute the query
+	rows, err := stmtSelect.Query(accountID, lastId)
+	//Check if an error occured when executing the query
+	if err != nil {
+		conn.logger.Error("Error occured when executing the query to get the groups with id greater", err.Error())
+		return make(data.GetGroups, 0), err
+	}
+
+	returnData := make(data.GetGroups, 0)
+	for rows.Next() {
+		aux := data.GetGroup{}
+		err := rows.Scan(&aux.RoomId, &aux.GroupName, &aux.CreatorId, &aux.CreationDate, &aux.GroupPictureUrl)
+		if err != nil {
+			conn.logger.Error("Error occured while fetching groups data", err.Error())
+			break
+		}
+		//Add the data into the return array
+		returnData = append(returnData, aux)
+	}
+
+	//Get all the participants in the room
+	for index, retData := range returnData {
+		participants, err := conn.GetRoomParticipants(accountID, retData.RoomId)
+		conn.logger.Debug("Participants", participants)
+		if err != nil {
+			conn.logger.Error("Error occured when getting the room participants")
+			break
+		}
+		retData.Participants = make([]int64, 0)
+		retData.Participants = append(retData.Participants, participants...)
+		conn.logger.Debug(retData.Participants)
+		returnData[index] = retData
+		conn.logger.Debug(returnData[index])
+	}
+
+	return returnData, nil
+}
+
+/*
  * This function will get the last message from a room
  */
 func (conn *MysqlConnection) GetLastMessageFromRoom(roomID int64) (string, string, int, error) {

@@ -42,11 +42,11 @@
                                 </HorizontalStackLayout>
                                 <Label HorizontalOptions="Center" FontFamily="{StaticResource ApplicationFont}" FontSize="13" Text="{Binding Question}" TextColor="WhiteSmoke"/>
                                 <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="50">
-                                    <Button Text="1" TextColor="WhiteSmoke" HeightRequest="40"/>
-                                    <Button Text="2" TextColor="WhiteSmoke" HeightRequest="40"/>
-                                    <Button Text="3" TextColor="WhiteSmoke" HeightRequest="40"/>
-                                    <Button Text="4" TextColor="WhiteSmoke" HeightRequest="40"/>
-                                    <Button Text="5" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="1" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="2" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="3" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="4" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="5" TextColor="WhiteSmoke" HeightRequest="40"/>
                                 </HorizontalStackLayout>
                                 <Grid ColumnDefinitions="*,*">
                                     <Label Grid.Column="0" HorizontalOptions="Start" Text="Not satisfied" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}"/>

@@ -606,6 +606,16 @@ namespace WillowClient.ViewModel
                                 }
                             }
                         }
+                        if (attachment.AttachmentType == "file") {
+                            if (dbAttachment != null) {
+                                if (dbAttachment.Downloaded) {
+                                    msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.OtherUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                }
+                                else {
+                                    msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.OtherUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true };
+                                }
+                            }
+                        }
                     }
 
                     //Get the number of reactions for this model
@@ -680,6 +690,14 @@ namespace WillowClient.ViewModel
                                     //Else show the message as downloadable attachment
                                     msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.CurrentUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
                                 }
+                            }
+                        }
+                        if (attachment.AttachmentType == "file") {
+                            if (dbAttachment != null) {
+                                msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.CurrentUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                            }
+                            else {
+                                msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.CurrentUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true };
                             }
                         }
                     }
@@ -1025,7 +1043,16 @@ namespace WillowClient.ViewModel
                     FileImageSource fileImageSource = message.MediaStream as FileImageSource;
                     FileMediaSource fileMediaSource = message.VideoStream as FileMediaSource;
 
-                    string filename = fileImageSource == null ? fileMediaSource.Path : fileImageSource.File;
+                    string filename = "";
+                    if(fileImageSource == null) {
+                        if(fileMediaSource == null) {
+                            filename = message.LocalPath;
+                        } else {
+                            filename = fileMediaSource.Path;
+                        }
+                    } else {
+                        filename = fileImageSource.File;
+                    }
                     var sourceStream = File.OpenRead(filename);
                     if(sourceStream == null) {
                         sourceStream = File.OpenRead(message.LocalPath);
@@ -1116,6 +1143,12 @@ namespace WillowClient.ViewModel
             if (this.MessageText == "")
                 return;
 
+            NetworkAccess accessType = Connectivity.Current.NetworkAccess;
+            if (accessType != NetworkAccess.Internet)
+                return;
+
+            if (!this.chatService.IsConnectedToWebsocket())
+                return;
 
             //If this is the first message in the conversation then generate ephemeral key
             //Then generate the master secret

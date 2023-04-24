@@ -35,5 +35,29 @@ namespace WillowClient.Model
             get => groupPictureUrl;
             set => SetProperty(ref groupPictureUrl, value);
         }
+
+        private int numberNewMessages = 0;
+        public string NumberNewMessages {
+            get => numberNewMessages.ToString();
+            set => SetProperty(ref numberNewMessages, int.Parse(value));
+        }
+
+        private bool hasNewMessages = false;
+
+        public bool HasNewMessages {
+            get => hasNewMessages;
+            set => SetProperty(ref hasNewMessages, value);
+        }
+
+        public void IncrementNumberNewMessages() {
+            int newMessages = numberNewMessages + 1;
+            NumberNewMessages = newMessages.ToString();
+            HasNewMessages = true;
+        }
+
+        public void SeenAllNewMessages() {
+            NumberNewMessages = "0";
+            HasNewMessages = false;
+        }
     }
 }

@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WillowClient.Database;
 using WillowClient.Model;
 using WillowClient.Services;
 using WillowClient.Views;
+using CommunityToolkit.Maui.Views;
 
 namespace WillowClient.ViewModel
 {
@@ -38,6 +40,8 @@ namespace WillowClient.ViewModel
 
         private ProfileService profileService;
 
+        private DatabaseService databaseService;
+
         public List<MessageModel> Messages { get; } = new();
 
         public ObservableCollection<GroupParticipantModel> Participants { get; set; } = new();
@@ -52,11 +56,14 @@ namespace WillowClient.ViewModel
 
         private int roomId;
 
-        public GroupChatViewModel(ChatService chatService, ProfileService ps)
+        bool isInConversation = true;
+
+        public GroupChatViewModel(ChatService chatService, ProfileService ps, DatabaseService databaseService)
         {
             this.chatService = chatService;
             this.chatService.RegisterReadCallback(MessageReceivedOnWebsocket);
             this.profileService = ps;
+            this.databaseService = databaseService;
         }
 
         public async Task MessageReceivedOnWebsocket(string message)
@@ -87,6 +94,7 @@ namespace WillowClient.ViewModel
                 }
                 catch (Exception e) {
                     Console.WriteLine(e.ToString());
+                    return;
                 }
             }
 
@@ -94,66 +102,266 @@ namespace WillowClient.ViewModel
                 return;
             }
 
-            try
-            {
-                //Parse the JSON body of the message
-                PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
-                if (privMessageModel != null)
-                {
-                    //This is a private message received from another user
-                    //Check if the sender is the current user from the private conversation
-                    if (privMessageModel.SenderId != this.Account.Id)
-                    {
-                        //This is the friend that sent the message
-                        //this.Messages.Add(new MessageModel
-                        //{
-                        //    Owner = MessageOwner.OtherUser,
-                        //    Text = privMessageModel.Data,
-                        //    TimeStamp = DateTime.Now.ToString("HH:mm")
-                        //});
-                        MessageModel msgModel = new MessageModel { Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() };
-                        bool added = false;
-                        foreach (var e in this.MessageGroups)
-                        {
-                            if (e.Name == "Today")
-                            {
-                                e.Add(msgModel);
-                                added = true;
-                                //e.Name = "Today";
+            if (message.IndexOf("data") != -1) {
+                try {
+                    //Parse the JSON body of the message
+                    PrivateMessageModel? privMessageModel = JsonSerializer.Deserialize<PrivateMessageModel>(message, options);
+                    if (privMessageModel != null) {
+                        //This is a private message received from another user
+                        //Check if the sender is the current user from the private conversation
+                        if (privMessageModel.SenderId != this.Account.Id) {
+                            //This is the friend that sent the message
+                            //this.Messages.Add(new MessageModel
+                            //{
+                            //    Owner = MessageOwner.OtherUser,
+                            //    Text = privMessageModel.Data,
+                            //    TimeStamp = DateTime.Now.ToString("HH:mm")
+                            //});
+                            int senderIndex = this.Group.Participants.IndexOf(privMessageModel.SenderId);
+                            MessageModel msgModel = new MessageModel { SenderName = this.Group.ParticipantNames[senderIndex] , Owner = MessageOwner.OtherUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), MessageId = privMessageModel.Id.ToString() };
+                            bool added = false;
+                            foreach (var e in this.MessageGroups) {
+                                if (e.Name == "Today") {
+                                    e.Add(msgModel);
+                                    added = true;
+                                    //e.Name = "Today";
+                                }
+                            }
+                            if (!added) {
+                                List<MessageModel> messageModels = new();
+                                messageModels.Add(msgModel);
+                                this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
+                            }
+                            NoMessages = false;
+                            return;
+                        }
+                        else {
+                            //Add the message into the collection view for the current user
+                            bool found = false;
+                            foreach (var e in this.MessageGroups) {
+                                if (e.Name == "Today") {
+                                    e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
+                                    //e.Name = "Today";
+                                    found = true;
+                                }
+                            }
+                            //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
+                            if (!found) {
+                                List<MessageModel> messages = new();
+                                messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
+                                this.MessageGroups.Add(new MessageGroupModel("Today", messages));
+                            }
+                            NoMessages = false;
+                        }
+
+                        if (isInConversation)
+                            this.Group.SeenAllNewMessages();
+                    }
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.ToString());
+                }
+            }
+
+        }
+
+        public async void LoadLocalMessages() {
+            try {
+                //If there are any elements in the list then clear it
+                if (Messages.Count != 0)
+                    Messages.Clear();
+
+                //The user got all the new messages
+                this.Group.SeenAllNewMessages();
+                await this.databaseService.UpdateNewMessagesForGroup(this.Group.RoomId, int.Parse(this.Group.NumberNewMessages));
+
+                Dictionary<string, List<MessageModel>> groupsAndMessages = new();
+
+                await foreach (var message in this.databaseService.GetLocalMessagesInRoom(this.Group.RoomId)) {
+                    //Create the MessageModel list
+                    if (message.Owner != this.Account.Id) {
+                        //Convert date to a cleaner format
+                        var messageDateString = message.TimeStamp;
+                        double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                        var msgDate = messageDateString.ToString("HH:mm");
+                        string group = "";
+                        if (diffDays < 1.0)
+                            group = "Today";
+                        else {
+                            if (diffDays >= 1.0 && diffDays < 2.0)
+                                group = "Yesterday";
+                            else {
+                                group = messageDateString.ToString("dd MMMM yyyy");
                             }
                         }
-                        if(!added) {
-                            List<MessageModel> messageModels = new();
-                            messageModels.Add(msgModel);
-                            this.MessageGroups.Add(new MessageGroupModel("Today", messageModels));
-                        }
-                        NoMessages = false;
-                        return;
-                    } else {
-                        //Add the message into the collection view for the current user
+
                         bool found = false;
-                        foreach (var e in this.MessageGroups) {
-                            if (e.Name == "Today") {
-                                e.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
-                                //e.Name = "Today";
+                        foreach (var messageGroup in this.MessageGroups) {
+                            if (messageGroup.Name == group) {
                                 found = true;
                             }
                         }
-                        //If the group Today is not found (no messages were exchanges in current they) then create the group and add the message in the group
                         if (!found) {
-                            List<MessageModel> messages = new();
-                            messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = privMessageModel.Data, TimeStamp = DateTime.Now.ToString("HH:mm"), SenderName = "You", MessageId = privMessageModel.Id.ToString() });
-                            this.MessageGroups.Add(new MessageGroupModel("Today", messages));
+                            //Create the group 
+                            this.MessageGroups.Add(new MessageGroupModel(group, new List<MessageModel>()));
                         }
-                        NoMessages = false;
+
+                        //if (message.Text.Length == 23)
+                        //    message.Text += " ";
+
+                        MessageModel msgModel = null;
+                        if (message.Type == "Text")
+                            msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.Text, MessageId = message.Id.ToString(), Text = message.Text, SenderName = message.SenderName , TimeStamp = msgDate };
+                        if (message.Type == "Attachment") {
+                            //Parse the message
+                            var attachment = JsonSerializer.Deserialize<AttachmentModel>(message.Text);
+                            var dbAttachment = await this.databaseService.GetAttachment(attachment.BlobUuid);
+                            if (attachment.AttachmentType == "photo") {
+                                if (dbAttachment != null) {
+                                    //Show the message as photo if it is downloaded
+                                    if (dbAttachment.Downloaded) {
+                                        msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), SenderName = message.SenderName, TimeStamp = msgDate, IsDownloaded = true, MediaStream = ImageSource.FromFile(dbAttachment.LocalFilepath) };
+                                    }
+                                    else {
+                                        //Else show the message as downloadable attachment
+                                        msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), SenderName = message.SenderName, TimeStamp = msgDate, IsDownloaded = false };
+                                    }
+                                }
+                            }
+                            if (attachment.AttachmentType == "video") {
+                                if (dbAttachment != null) {
+                                    //Show the message as photo if it is downloaded
+                                    if (dbAttachment.Downloaded) {
+                                        msgModel = new MessageModel { SenderName = message.SenderName, FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.OtherUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true, VideoStream = MediaSource.FromFile(dbAttachment.LocalFilepath) };
+                                    }
+                                    else {
+                                        //Else show the message as downloadable attachment
+                                        msgModel = new MessageModel { SenderName = message.SenderName, FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.OtherUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                    }
+                                }
+                            }
+                            if (attachment.AttachmentType == "file") {
+                                if (dbAttachment != null) {
+                                    if (dbAttachment.Downloaded) {
+                                        msgModel = new MessageModel { SenderName = message.SenderName, FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.OtherUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                    }
+                                    else {
+                                        msgModel = new MessageModel { SenderName = message.SenderName, FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.OtherUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true };
+                                    }
+                                }
+                            }
+                        }
+
+                        //Get the number of reactions for this model
+                        int numberReactions = await this.databaseService.GetNumberReactionsOfMessage(message.Id);
+                        if (numberReactions != 0) {
+                            await foreach (var reaction in this.databaseService.GetMessageReactions(message.Id)) {
+                                msgModel.Reactions.Add(new ReactionModel { Id = reaction.Id, Emoji = reaction.Emoji, ReactionDate = reaction.ReactionDate.ToString(), SenderId = reaction.SenderId });
+                            }
+                        }
+
+                        //Add the message to the new group created
+                        foreach (var messageGroup in this.MessageGroups) {
+                            if (messageGroup.Name == group) {
+                                messageGroup.Add(msgModel);
+                            }
+                        }
+
+                        this.Messages.Add(msgModel);
                     }
+                    else {
+                        var messageDateString = message.TimeStamp;
+                        double diffDays = (DateTime.Now - messageDateString).TotalDays;
+                        var msgDate = messageDateString.ToString("HH:mm");
+                        string group = "";
+                        if (diffDays < 1.0)
+                            group = "Today";
+                        else {
+                            if (diffDays >= 1.0 && diffDays < 2.0)
+                                group = "Yesterday";
+                            else {
+                                group = messageDateString.ToString("dd MMMM yyyy");
+                            }
+                        }
+
+                        bool found = false;
+                        foreach (var messageGroup in this.MessageGroups) {
+                            if (messageGroup.Name == group) {
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            //Create the group 
+                            this.MessageGroups.Add(new MessageGroupModel(group, new List<MessageModel>()));
+                        }
+
+                        MessageModel msgModel = null;
+                        if (message.Type == "Text")
+                            msgModel = new MessageModel { SenderName = "You", Owner = MessageOwner.CurrentUser, MessageType = MessageType.Text, MessageId = message.Id.ToString(), Text = message.Text, TimeStamp = msgDate };
+                        if (message.Type == "Attachment") {
+                            //Parse the message
+                            var attachment = JsonSerializer.Deserialize<AttachmentModel>(message.Text);
+                            var dbAttachment = await this.databaseService.GetAttachment(attachment.BlobUuid);
+                            if (attachment.AttachmentType == "photo") {
+                                if (dbAttachment != null) {
+                                    //Show the message as photo if it is downloaded
+                                    if (dbAttachment.Downloaded) {
+                                        msgModel = new MessageModel { SenderName = "You", Owner = MessageOwner.CurrentUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true, MediaStream = ImageSource.FromFile(dbAttachment.LocalFilepath) };
+                                    }
+                                    else {
+                                        //Else show the message as downloadable attachment
+                                        msgModel = new MessageModel { SenderName = "You", Owner = MessageOwner.CurrentUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                    }
+                                }
+                            }
+                            if (attachment.AttachmentType == "video") {
+                                if (dbAttachment != null) {
+                                    //Show the message as photo if it is downloaded
+                                    if (dbAttachment.Downloaded) {
+                                        msgModel = new MessageModel { SenderName = "You", FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.CurrentUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true, VideoStream = MediaSource.FromFile(dbAttachment.LocalFilepath) };
+                                    }
+                                    else {
+                                        //Else show the message as downloadable attachment
+                                        msgModel = new MessageModel { SenderName = "You", FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.CurrentUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                    }
+                                }
+                            }
+                            if (attachment.AttachmentType == "file") {
+                                if (dbAttachment != null) {
+                                    msgModel = new MessageModel { SenderName = "You", FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.CurrentUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
+                                }
+                                else {
+                                    msgModel = new MessageModel { SenderName = "You", FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.CurrentUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true };
+                                }
+                            }
+                        }
+
+                        //Get the number of reactions for this model
+                        int numberReactions = await this.databaseService.GetNumberReactionsOfMessage(message.Id);
+                        if (numberReactions != 0) {
+                            await foreach (var reaction in this.databaseService.GetMessageReactions(message.Id)) {
+                                msgModel.Reactions.Add(new ReactionModel { Id = reaction.Id, Emoji = reaction.Emoji, ReactionDate = reaction.ReactionDate.ToString(), SenderId = reaction.SenderId });
+                            }
+                        }
+
+                        //Add the message to the new group created
+                        foreach (var messageGroup in this.MessageGroups) {
+                            if (messageGroup.Name == group) {
+                                messageGroup.Add(msgModel);
+                            }
+                        }
+
+                        this.Messages.Add(msgModel);
+                    }
+
+                    if (this.MessageGroups.Count == 0)
+                        NoMessages = true;
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
+            catch(Exception e) {
+                await Shell.Current.DisplayAlert("Error", e.Message, "Ok");
+                return;
             }
-
         }
 
         public async void GetHistory()
@@ -284,7 +492,7 @@ namespace WillowClient.ViewModel
         public async Task GoBack()
         {
             this.EntryEnabled = false;
-            System.Threading.Thread.Sleep(1000);
+            this.isInConversation = false;
             await Shell.Current.Navigation.PopAsync(true);
         }
 

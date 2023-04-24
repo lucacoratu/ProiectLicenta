@@ -82,6 +82,7 @@ func InitServer(address string) error {
 	getRouter.HandleFunc("/account/{id:[0-9]+}/friendrecommendations", handlerFriendRequests.GetFriendRecommendations)
 	getRouter.HandleFunc("/friend/viewnew/{accountId:[0-9]+}/{lastId:[0-9]+}", handlerFeedback.GetNewerFriends)
 	getRouter.HandleFunc("/status/{userId:[0-9]+}", handlerFeedback.GetUserStatus)
+	getRouter.HandleFunc("/chat/groups/{id:[0-9]+}/{lastGroupId:[0-9]+}", handlerFeedback.GetGroupsWithId)
 
 	/*
 	 * Intialize the http.Server object which will have some timeout times for diferent events

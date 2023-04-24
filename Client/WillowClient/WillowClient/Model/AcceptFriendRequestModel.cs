@@ -10,5 +10,6 @@ namespace WillowClient.Model
     {
         public int accountID { get; set; }
         public int friendID { get; set; }
+        public int roomID { get; set; }
     }
 }

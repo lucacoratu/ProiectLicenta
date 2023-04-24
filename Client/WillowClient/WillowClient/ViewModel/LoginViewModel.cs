@@ -176,10 +176,11 @@ public partial class LoginViewModel : BaseViewModel
     {
         var model = new LoginModel();
 
-//#if CLEAR_MESSAGES
-//        _ = await databaseService.DeleteLocalFriends();
-//        _ = await databaseService.DeleteMessages();
-//        _ = await databaseService.DeleteAllReactions();
+        //#if CLEAR_MESSAGES
+        //_ = await databaseService.DeleteLocalFriends();
+        //_ = await databaseService.DeleteMessages();
+        //_ = await databaseService.DeleteAllReactions();
+        //_ = await databaseService.DeleteAllGroups();
 //#endif
 
 

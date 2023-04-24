@@ -362,14 +362,25 @@ namespace WillowClient.ViewModel
                         gm.ParticipantNames = new List<string>();
                         gm.LastMessage = "Start conversation";
                         gm.GroupPictureUrl = Constants.defaultGroupPicture;
-                        foreach (var participantId in resp.Participants) {
-                            gm.Participants.Add(participantId);
-                            foreach (var friend in Friends) {
-                                if (participantId == friend.FriendId)
-                                    gm.ParticipantNames.Add(friend.DisplayName);
-                            }
+
+                        //foreach (var participantId in resp.Participants) {
+                        //    gm.Participants.Add(participantId);
+                        //    foreach (var friend in Friends) {
+                        //        if (participantId == friend.FriendId)
+                        //            gm.ParticipantNames.Add(friend.DisplayName);
+                        //    }
+                        //}
+                        List<int> participants = new List<int>();
+                        foreach(var participantId in resp.Participants) {
+                            participants.Add(participantId);
                         }
-                        //gm.Participants = resp.Participants as List<int>;
+                        var groupParticipants = await this.profileService.GetGroupParticipantProfiles(participants, Globals.Session);
+                        foreach(var groupParticipant in groupParticipants) {
+                            gm.Participants.Add(groupParticipant.Id);
+                            gm.ParticipantNames.Add(groupParticipant.DisplayName);
+                        }
+
+                        //Save the new group in the database
 
                         this.Groups.Insert(0, gm);
                         this.GroupsSearchResults.Insert(0, gm);
@@ -564,6 +575,8 @@ namespace WillowClient.ViewModel
                                         }
                                     this.Groups[i].LastMessage = this.Groups[i].ParticipantNames[senderIndex] + ": " + privMessageModel.Data;
                                     this.Groups[i].LastMessageTimestamp = timestamp;
+                                    this.Groups[i].IncrementNumberNewMessages();
+                                    _ = await this.databaseService.SaveMessageInTheDatabase(privMessageModel, this.Groups[i].RoomId, this.Groups[i].ParticipantNames[senderIndex]);
                                     this.notificationService.SendGroupChatNotification(this.Groups[i].GroupName, this.Groups[i].LastMessage);
                                 }
                                 //Move the conversation to the top
@@ -605,8 +618,8 @@ namespace WillowClient.ViewModel
             LoadingGroups = true;
             NoGroups = false;
             //await GetGroupsWithCacheAsync();
-            //await GetGroupsAsync();
-            await GetGroupsAsyncEnumerable();
+            await GetGroupsAsync();
+            //await GetGroupsAsyncEnumerable();
             LoadingGroups = false;
             if (Groups.Count == 0)
                 NoGroups = true;
@@ -887,7 +900,7 @@ namespace WillowClient.ViewModel
         private async Task GetFriendNewReactions(FriendStatusModel friend) {
             int lastKnownId = 0;
             var lastReaction = await this.databaseService.GetLastReaction(friend.RoomID);
-            if(lastReaction != null)
+            if (lastReaction != null)
                 lastKnownId = lastReaction.Id;
 
             var newReactions = await this.chatService.GetNewReactionsInRoom(friend.RoomID, lastKnownId);
@@ -1064,8 +1077,8 @@ namespace WillowClient.ViewModel
 
         async Task GetGroupsWithCacheAsync() {
             try {
-                if (this.Groups.Count != 0)
-                    this.Groups.Clear();
+                if (Groups.Count != 0)
+                    Groups.Clear();
 
                 if (GroupsSearchResults.Count != 0)
                     GroupsSearchResults.Clear();
@@ -1107,42 +1120,224 @@ namespace WillowClient.ViewModel
             }
         }
 
+        async Task GetGroupNewMessages(GroupModel group) {
+            //Get the last message in the group
+            int lastKnownId = 0;
+            var lastMessage = await this.databaseService.GetLastMessageInRoom(group.RoomId);
+            if (lastMessage != null) {
+                //If the last message was sent by the friend show the message without You:
+                if (lastMessage.Owner != this.Account.Id) {
+                    if (lastMessage.Type == "Text")
+                        group.LastMessage = lastMessage.SenderName + ": " + lastMessage.Text;
+
+                    if (lastMessage.Type == "Attachment") {
+                        var attachment = JsonSerializer.Deserialize<AttachmentModel>(lastMessage.Text);
+                        if (attachment != null) {
+                            group.LastMessage = lastMessage.SenderName + "Sent a " + attachment.AttachmentType;
+                        }
+                    }
+                }
+                else {
+                    if (lastMessage.Type == "Text")
+                        group.LastMessage = "You: " + lastMessage.Text;
+                    if (lastMessage.Type == "Attachment") {
+                        var attachment = JsonSerializer.Deserialize<AttachmentModel>(lastMessage.Text);
+                        if (attachment != null) {
+                            group.LastMessage = "You: Sent a " + attachment.AttachmentType;
+                        }
+                    }
+                }
+
+                //Get the number of new messages saved in the database
+                int numberNewMessages = await this.databaseService.GetNumberNewMessagesForGroup(group.RoomId);
+                if (numberNewMessages != 0) {
+                    group.NumberNewMessages = numberNewMessages.ToString();
+                    group.HasNewMessages = true;
+                }
+
+                //Update the timestamp of the message
+                double diffDays = (DateTime.Now - lastMessage.TimeStamp).TotalDays;
+                if (diffDays <= 1.0 && diffDays >= 0.0) {
+                    string messageTimestamp = lastMessage.TimeStamp.ToString("HH:mm");
+                    group.LastMessageTimestamp = messageTimestamp;
+                }
+                else if (diffDays > 1.0 && diffDays <= 2.0) {
+                    group.LastMessageTimestamp = "Yesterday";
+                }
+                else {
+                    group.LastMessageTimestamp = lastMessage.TimeStamp.ToString("dddd");
+                }
+                lastKnownId = lastMessage.Id;
+            }
+
+
+            await foreach(var newMessage in this.chatService.GetMessagesWithIdGreater(group.RoomId, lastKnownId)) {
+
+                //Set the timestamp of the new message
+                DateTime messageDate = DateTime.Parse(newMessage.SendDate);
+                double diffDays = (DateTime.Now - messageDate).TotalDays;
+                if (diffDays <= 1.0 && diffDays >= 0.0) {
+                    string messageTimestamp = messageDate.ToString("HH:mm");
+                    group.LastMessageTimestamp = messageTimestamp;
+                }
+                else if (diffDays > 1.0 && diffDays <= 2.0) {
+                    group.LastMessageTimestamp = "Yesterday";
+                }
+                else {
+                    group.LastMessageTimestamp = messageDate.ToString("dddd");
+                }
+
+
+
+                //Increment the number of new messages in the conversation
+                group.IncrementNumberNewMessages();
+
+                //MessageOwner owner = newMessage.UserId == this.Account.Id ? MessageOwner.CurrentUser : MessageOwner.OtherUser;
+                //MessageModel newMessageModel = new MessageModel { MessageId = newMessage.Id.ToString(), Owner = owner, SenderName = friend.DisplayName, Text = messageText, TimeStamp = newMessage.SendDate };
+                string messageType = "";
+                switch (newMessage.TypeId) {
+                    case 1:
+                        messageType = "Text";
+                        break;
+                    case 2:
+                        messageType = "Photo";
+                        break;
+                    case 3:
+                        messageType = "Attachment";
+                        break;
+                    default:
+                        messageType = "Text";
+                        break;
+                }
+
+                PrivateMessageModel newMessageModel = new PrivateMessageModel { Id = newMessage.Id, Data = newMessage.Data, EphemeralPublicKey = newMessage.EphemeralPublicKey, IdentityPublicKey = newMessage.IdentityPublicKey, MessageType = messageType, RoomId = group.RoomId, SenderId = newMessage.UserId };
+                //Get the sender name from the participants list
+                string senderName = await this.databaseService.GetParticipantName(newMessage.UserId);
+                _ = await this.databaseService.SaveMessageInTheDatabase(newMessageModel, group.RoomId, senderName);
+
+                //If the last message was sent by the friend show the message without You:
+                if (newMessage.UserId != this.Account.Id) {
+                    if (newMessage.TypeId == 1)
+                        group.LastMessage = senderName + ": " + newMessage.Data;
+
+                    if (newMessage.TypeId != 1) {
+                        var attachment = JsonSerializer.Deserialize<AttachmentModel>(newMessage.Data);
+                        if (attachment != null) {
+                            group.LastMessage = senderName + "Sent a " + attachment.AttachmentType;
+                        }
+                    }
+                }
+                else {
+                    if (newMessage.TypeId == 1)
+                        group.LastMessage = "You: " + lastMessage.Text;
+                    if (newMessage.TypeId != 1) {
+                        var attachment = JsonSerializer.Deserialize<AttachmentModel>(lastMessage.Text);
+                        if (attachment != null) {
+                            group.LastMessage = "You: Sent a " + attachment.AttachmentType;
+                        }
+                    }
+                }
+
+                //Save the reactions to the message in the local database
+                if (newMessage.Reactions != null) {
+                    if (newMessage.Reactions.Count > 0) {
+                        foreach (var reaction in newMessage.Reactions) {
+                            _ = await this.databaseService.SaveReaction(newMessage.Id, reaction);
+                        }
+                    }
+                }
+
+                //Save the number of new messages in the database
+                _ = await this.databaseService.UpdateNewMessagesForGroup(group.RoomId, int.Parse(group.NumberNewMessages));
+
+                //Update the last message
+                lastMessage = await this.databaseService.GetLastMessageInRoom(group.RoomId);
+
+
+            }
+
+        }
+
+        //async Task GetGroupProfilePicture(GroupModel group) {
+        //    var profile = await this.profileService.GetUserProfile(friend.FriendId, Globals.Session);
+        //    if (profile == null)
+        //        return;
+
+        //    if (profile.ProfilePictureUrl == "NULL") {
+        //        friend.ProfilePictureUrl = Constants.defaultProfilePicture;
+        //    }
+        //    else {
+        //        friend.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + profile.ProfilePictureUrl;
+        //    }
+        //    //Save the new profile picture in the database
+        //    _ = await this.databaseService.UpdateFriendProfilePicture(friend.FriendId, friend.ProfilePictureUrl);
+        //}
+
+        async Task GetGroupNewReactions(GroupModel group) {
+            int lastKnownId = 0;
+            var lastReaction = await this.databaseService.GetLastReaction(group.RoomId);
+            if (lastReaction != null)
+                lastKnownId = lastReaction.Id;
+
+            var newReactions = await this.chatService.GetNewReactionsInRoom(group.RoomId, lastKnownId);
+            foreach (var newReaction in newReactions)
+                _ = await this.databaseService.SaveReaction(newReaction);
+        }
+
         async Task GetGroupsAsync()
         {
             try
             {
-                string hexString = "";
-                for (int i = 1; i < hexID.Length; i++)
-                    hexString += hexID[i];
-                var groups = await chatService.GetGroups(int.Parse(hexString, System.Globalization.NumberStyles.HexNumber), Session);
+                //Clear the previous data if it exists
                 if (Groups.Count != 0)
-                {
                     Groups.Clear();
-                }
 
                 if (GroupsSearchResults.Count != 0)
                     GroupsSearchResults.Clear();
 
+                //Get the local groups stored in the sqlite database
+                int lastGroupId = 0;
+                var localGroups = await this.databaseService.GetLocalGroups();
+                if (localGroups != null) {
+                    foreach (var localGroup in localGroups) {
+                        lastGroupId = localGroup.RoomId;
+                    }
+                }
+
+                //Get the remove groups with id greater than the one found in the local database
+                var newGroups = await this.chatService.GetGroupsWithId(this.Account.Id, lastGroupId, Globals.Session);
+
+                //Save the groups in the database
+                if (newGroups.Count != 0)
+                    _ = await this.databaseService.UpdateLocalGroups(newGroups);
+
+                List<GroupModel> groups = new();
+                foreach(var group in localGroups) {
+                    groups.Add(group);
+                }
+                foreach(var group in newGroups) {
+                    groups.Add(group);
+                }
+
                 foreach (var group in groups)
                 {
-                    if(group.LastMessageTimestamp != "")
-                    {
-                        DateTime messageDate = DateTime.Parse(group.LastMessageTimestamp);
-                        double diffDays = (DateTime.Now - messageDate).TotalDays;
-                        if (diffDays <= 1.0 && diffDays >= 0.0)
-                        {
-                            string messageTimestamp = messageDate.ToString("HH:mm");
-                            group.LastMessageTimestamp = messageTimestamp;
-                        }
-                        else if(diffDays > 1.0 && diffDays <= 2.0)
-                        {
-                            group.LastMessageTimestamp = "Yesterday";
-                        }
-                        else 
-                        {
-                            group.LastMessageTimestamp = messageDate.ToString("dddd");
+                    if(group.LastMessageTimestamp != null){
+                        if (group.LastMessageTimestamp != "") {
+                            DateTime messageDate = DateTime.Parse(group.LastMessageTimestamp);
+                            double diffDays = (DateTime.Now - messageDate).TotalDays;
+                            if (diffDays <= 1.0 && diffDays >= 0.0) {
+                                string messageTimestamp = messageDate.ToString("HH:mm");
+                                group.LastMessageTimestamp = messageTimestamp;
+                            }
+                            else if (diffDays > 1.0 && diffDays <= 2.0) {
+                                group.LastMessageTimestamp = "Yesterday";
+                            }
+                            else {
+                                group.LastMessageTimestamp = messageDate.ToString("dddd");
+                            }
                         }
                     }
+
                     if(group.GroupPictureUrl == "NULL" || group.GroupPictureUrl == null) {
                         group.GroupPictureUrl = Constants.defaultGroupPicture;
                     } else {
@@ -1151,6 +1346,14 @@ namespace WillowClient.ViewModel
 
                     Groups.Add(group);
                     this.GroupsSearchResults.Add(group);
+                }
+
+                foreach(var group in Groups) {
+                    //Get group profile picture
+                    //Get new messages in the group
+                    await this.GetGroupNewMessages(group);
+                    //Get group new reactions
+                    await this.GetGroupNewReactions(group);
                 }
             }
             catch (Exception e)
@@ -1653,16 +1856,27 @@ namespace WillowClient.ViewModel
                 //Update the list of friends
                 //await GetFriendsAsync();
 
-                //int roomId = 0;
-                //foreach(var friend in this.Friends) {
-                //    if(friend.FriendId == friendId) {
-                //        roomId = friend.RoomID;
-                //        break;
-                //    }
-                //}
+                //Get the room id of the friendship
+                //Get the id of the room knowing the id of the account and the friend id
+                var getRoomModel = new GetRoomIdModel { AccountId = account.Id, FriendId = friendId };
+                var res2 = await this.chatService.GetRoomId(getRoomModel);
+                //Parse the JSON
+                var options = new JsonSerializerOptions {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                GetRoomIdResponseModel? roomIdModel = JsonSerializer.Deserialize<GetRoomIdResponseModel>(res2, options);
+                if (roomIdModel != null) {
+                    foreach(var friend in this.Friends) {
+                        if(friend.FriendId == friendId) {
+                            friend.RoomID = roomIdModel.RoomId;
+                            break;
+                        }
+                    }
+                }
 
                 //Send update for the user real time
-                await this.chatService.SendMessageAsync(JsonSerializer.Serialize(new AcceptFriendRequestModel { accountID = Account.Id, friendID = friendId }));
+                await this.chatService.SendMessageAsync(JsonSerializer.Serialize(new AcceptFriendRequestModel { accountID = Account.Id, friendID = friendId, roomID = roomIdModel.RoomId }));
             }
             else
             {

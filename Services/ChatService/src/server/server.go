@@ -79,6 +79,7 @@ func InitServer(address string) error {
 	getSubrouter.HandleFunc("/privaterooms/{id:[0-9]+}", handlerChat.GetPrivateRooms)
 	getSubrouter.HandleFunc("/history/{id:[0-9]+}", handlerChat.GetRoomHistory)
 	getSubrouter.HandleFunc("/chat/groups/{id:[0-9]+}", handlerChat.GetGroups)
+	getSubrouter.HandleFunc("/chat/groups/{id:[0-9]+}/{lastGroupId:[0-9]+}", handlerChat.GetGroupsWithIdGreater)
 	getSubrouter.HandleFunc("/history/{id:[0-9]+}/lastmessage", handlerChat.GetRoomLastMessage)
 	getSubrouter.HandleFunc("/history/{id:[0-9]+}/{knownId:[0-9]+}", handlerChat.GetRoomHistoryAfterAMessage)
 	getSubrouter.HandleFunc("/reactions/{roomId:[0-9]+}/{knownId:[0-9]+}", handlerChat.GetReactionsInRoomAfterId)

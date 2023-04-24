@@ -158,7 +158,7 @@ namespace WillowClient.Services
         }
 
         public async Task<List<HistoryReactionModel>> GetNewReactionsInRoom(int roomId, int lastReactionId) {
-            var url = Constants.chatServerUrl + "/reactions/" + roomId.ToString() + "/" + lastReactionId.ToString();
+            var url = Constants.chatServerUrl + "reactions/" + roomId.ToString() + "/" + lastReactionId.ToString();
             var response = await this.m_httpClient.GetAsync(url);
             var reactions = await response.Content.ReadFromJsonAsync<List<HistoryReactionModel>>();
             return reactions;
@@ -255,7 +255,20 @@ namespace WillowClient.Services
 
             //Cache the remote groups in the local database
             _ = await this.databaseService.SaveKeyValueData(url, JsonSerializer.Serialize(remoteGroups));
-        } 
+        }
+
+        public async Task<List<GroupModel>> GetGroupsWithId(int accountId, int lastGroupId, string session) {
+            var url = Constants.serverURL + "/chat/groups/"+ accountId.ToString() +"/" + lastGroupId.ToString();
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.GetAsync(baseAddress);
+            List<GroupModel> groups = new();
+            if (response.IsSuccessStatusCode) {
+                groups = await response.Content.ReadFromJsonAsync<List<GroupModel>>();
+            }
+            return groups;
+        }
 
         public async Task<List<CommonGroupModel>> GetCommonGroups(int idFirst, int idSecond, string session) {
             var url = Constants.serverURL + "/chat/commongroups/" + idFirst.ToString() + "/" + idSecond.ToString();
@@ -292,6 +305,10 @@ namespace WillowClient.Services
             return false;
         }
 
+        //public async Task<string> GetGroupProfilePicture(int roomId, string session) {
+
+        //}
+
         public async Task<BlobUploadResponseModel> UploadDataToBlobStorage(byte[] data) {
             using (var multipartFormContent = new MultipartFormDataContent()) {
                 var dataStream = new MemoryStream(data);
@@ -320,6 +337,12 @@ namespace WillowClient.Services
                 return blobData;
             }
             return null;
+        }
+
+        public bool IsConnectedToWebsocket() {
+            if(client.State == WebSocketState.Open) 
+                return true;
+            return false;
         }
 
         public void RegisterReadCallback(Func<string, Task> callbackFunction)

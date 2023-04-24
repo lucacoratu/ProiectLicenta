@@ -166,12 +166,7 @@ func (pool *Pool) MessageReceived(message Message) {
 
 	if isAcceptRequest && acceptRequestData.AccountId != 0 && acceptRequestData.FriendId != 0 {
 		pool.logger.Info("Message is Accept Request")
-		roomId, err := pool.dbConn.GetRoomId(int64(acceptRequestData.AccountId), int64(acceptRequestData.FriendId))
-		if err != nil {
-			pool.logger.Error(err.Error())
-			return
-		}
-		acceptRequestData.RoomId = int(roomId)
+		acceptRequestData.RoomId = int(acceptRequestData.RoomId)
 		//Send the message to the friend
 		for client, _ := range pool.Clients {
 			if client.Id == int64(acceptRequestData.FriendId) {

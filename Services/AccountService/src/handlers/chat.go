@@ -186,3 +186,51 @@ func (ch *Chat) GetGroupPicture(rw http.ResponseWriter, r *http.Request) {
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }
+
+/*
+ * This function will forward the request to the chat service to get the groups that have a room id greater than
+ */
+func (ch *Chat) GetGroupsWithId(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /chat/groups/{id:[0-9]+}/{lastGroupId:[0-9]+} hit (GET method)")
+	ch.logger.Debug("Forwarding request to the chat service")
+
+	ch.logger.Debug(r.RequestURI)
+	returnData, err := ch.ForwardRequest("http", "localhost:8087", r)
+	if err != nil {
+		ch.logger.Error("Erorr occured in the chat service", err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	groups := data.GetGroups{}
+	err = json.Unmarshal(returnData, &groups)
+	if err != nil {
+		ch.logger.Error(err.Error())
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	//ch.logger.Debug(groups)
+
+	//Complete the data that will be returned to the client
+	for index, group := range groups {
+		group.ParticipantNames = make([]string, 0)
+		ch.logger.Debug(group.Participants)
+		for _, participant := range group.Participants {
+			accDetails, err := ch.dbConn.GetAccountDetails(participant)
+			ch.logger.Debug(accDetails)
+			if err != nil {
+				http.Error(rw, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			group.ParticipantNames = append(group.ParticipantNames, accDetails.DisplayName)
+			if group.LastMessageSender == int64(accDetails.ID) {
+				group.LastMessage = accDetails.DisplayName + ": " + group.LastMessage
+			}
+		}
+		groups[index] = group
+	}
+	ch.logger.Debug(groups)
+
+	rw.WriteHeader(http.StatusOK)
+	groups.ToJSON(rw)
+}

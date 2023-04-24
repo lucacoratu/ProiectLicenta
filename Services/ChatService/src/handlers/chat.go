@@ -407,6 +407,52 @@ func (ch *Chat) GetGroups(rw http.ResponseWriter, r *http.Request) {
 }
 
 /*
+ * This function will get the groups of an account with id greater than the one specified in the uri
+ */
+func (ch *Chat) GetGroupsWithIdGreater(rw http.ResponseWriter, r *http.Request) {
+	//Log that the endpoint has been hit
+	ch.logger.Info("Endpoint /chat/groups/{id:[0-9]+}/{lastGroupId:[0-9]+}")
+	//Get the id and last group id variables from the mux
+	vars := mux.Vars(r)
+	//Check if the id could be parsed (it should always be, but just to be safe, test it)
+	id, err := strconv.Atoi(vars["id"])
+	ch.logger.Debug(id)
+	if err != nil {
+		ch.logger.Error("Error occured when parsing the id", err.Error())
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+	//Get the lastGroupId variable
+	lastGroupId, err := strconv.Atoi(vars["lastGroupId"])
+	ch.logger.Debug("Last group id", lastGroupId)
+	if err != nil {
+		ch.logger.Error("Error occured when parsing the last group id", err.Error())
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	groups, err := ch.dbConn.GetUserGroupsWithId(int64(id), int64(lastGroupId))
+	if err != nil {
+		ch.logger.Error("Error occured when getting the groups from database", err.Error())
+		//Send an error message back
+		jsonError := jsonerrors.JsonError{Message: "Internal server error"}
+		rw.WriteHeader(http.StatusInternalServerError)
+		jsonError.ToJSON(rw)
+		return
+	}
+
+	ch.logger.Debug(groups)
+	rw.WriteHeader(http.StatusOK)
+	groups.ToJSON(rw)
+}
+
+/*
  * This function will return all the common groups of 2 users
  */
 func (ch *Chat) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
@@ -438,6 +484,14 @@ func (ch *Chat) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(http.StatusOK)
 	commonGroups.ToJSON(rw)
+}
+
+/*
+ * This function will get the participants of a group
+ */
+func (ch *Chat) GetGroupParticipants(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /chat/group/{id:[0-9]+}/participants hit (GET method)")
+	
 }
 
 /*
