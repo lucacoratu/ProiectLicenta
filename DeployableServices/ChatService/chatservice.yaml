@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: chatservice-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/chatservice_data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: chatservice-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: chatservice
+    spec:
+      containers:
+      - image: localhost:32000/chatservice
+        name: chatservice
+        ports:
+        - containerPort: 8087
+          name: chatservice
+        volumeMounts:
+        - name: chatservice-persistent-storage
+          mountPath: /app/static/
+      volumes:
+      - name: chatservice-persistent-storage
+        persistentVolumeClaim:
+          claimName: chatservice-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatservice
+spec:
+  ports:
+  - port: 8087
+    targetPort: 8087
+    protocol: TCP
+  externalIPs:
+  - 192.168.234.131
+  selector:
+    app: chatservice

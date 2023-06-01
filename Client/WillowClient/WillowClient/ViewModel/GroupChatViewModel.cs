@@ -12,6 +12,7 @@ using WillowClient.Model;
 using WillowClient.Services;
 using WillowClient.Views;
 using CommunityToolkit.Maui.Views;
+using System.Security.Cryptography;
 
 namespace WillowClient.ViewModel
 {
@@ -533,6 +534,48 @@ namespace WillowClient.ViewModel
         {
             if (this.MessageText == null || this.MessageText == "")
                 return;
+
+            //If the message is the first sent message by this user
+            //For every participant in the group
+            //Generate the chain key and the signature key pair
+            //Generate the message key used to encrypt the chain key and the signature key pair
+            //Upload the encrypted chain key and the signature public key to the server
+            //Derive the message key from the chain key
+            //Encrypt the message data using the message key
+            //Send the message with the encrypted chain key and the signed pub key
+
+            //Get the number of messages send by the user in the group
+            //int numberSentMessagesInGroup = await this.databaseService.GetNumberUserSentMessages(this.Group.RoomId, this.Account.Id);
+            //if (numberSentMessagesInGroup == 0) {
+            //    //Generate the chain key (32 bytes)
+            //    Random random = new Random();
+            //    byte[] chainKey = new byte[32];
+            //    random.NextBytes(chainKey);
+            //    var signatureKeyPair = Encryption.Utils.GenerateX25519Key();
+            //    //Get the participants of the group
+            //    var participants = await this.databaseService.GetGroupParticipants(this.Group.RoomId);
+            //    foreach(var participant in participants) {
+            //        //Get the participant keys
+            //        var keys = await this.databaseService.GetParticipantKeysForGroup(this.Group.RoomId, participant.Id);
+            //        if(keys == null) {
+            //            //Get the keys from the server
+            //        }
+            //        var ephemeralKey = Encryption.Utils.GenerateX25519Key();
+            //        string ephemeralPrivate = ephemeralKey.ExportECPrivateKeyPem();
+            //        var ephemeralPublic = ephemeralKey.ExportSubjectPublicKeyInfoPem();
+            //        var masterSecret = Encryption.Utils.ComputeSenderMasterSecret(ephemeralPrivate, keys.IdentityPublicKey, keys.PreSignedPublicKey);
+            //        var rootChainKeys = Encryption.Utils.GenerateRootAndChainKeyFromMasterSecret(masterSecret);
+            //        //Generate the message key
+            //        var messageChainKey = Encryption.Utils.GenerateMessageKey(rootChainKeys.ChainKey);
+            //        var encryptedChainKey = Encryption.Utils.EncryptMessage(System.Convert.ToBase64String(chainKey), messageChainKey.MessageKey);
+            //        //System.Buffer.BlockCopy(messageChainKey.MessageKey, 0, messageKey, 0, messageChainKey.MessageKey.Length);
+            //    }
+            //}
+            //else {
+
+            //}
+            //return;
+
 
             //Create the structure that will hold the data which will be json encoded and sent to the server
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.Group.RoomId, data = this.MessageText, messageType = "Text" };

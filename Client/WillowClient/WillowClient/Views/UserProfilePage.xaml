@@ -19,11 +19,7 @@
                     <RoundRectangle CornerRadius="0,0,15,15" />
                 </Border.StrokeShape>
                 <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
-                    <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
-                        <ImageButton.Source>
-                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
-                        </ImageButton.Source>
-                    </ImageButton>
+                    <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                     <HorizontalStackLayout Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center">
                         <Label FontFamily="{StaticResource ApplicationFont}"  Text="{Binding UserProfile.DisplayName}" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                         <Label FontFamily="{StaticResource ApplicationFont}"  Text="'s Profile" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
@@ -47,14 +43,14 @@
                     </Border.StrokeShape>
                 </Border>
             </HorizontalStackLayout>
-            <Label Text="{Binding UserProfile.DisplayName}" FontSize="16" FontAttributes="Bold" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            <Label Margin="10,0,0,0" Text="{Binding UserProfile.DisplayName}" FontSize="16" FontAttributes="Bold" TextColor="WhiteSmoke" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             <Grid HeightRequest="95" Margin="10,5,10,2" Padding="5,10,5,10" ColumnSpacing="60" ColumnDefinitions="*,*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
                 <Frame Grid.Column="0" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                     <VerticalStackLayout Spacing="6" >
-                        <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                            <ImageButton WidthRequest="20" HeightRequest="20">
+                        <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                            <ImageButton Padding="0" WidthRequest="20" HeightRequest="20">
                                 <ImageButton.Source>
-                                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}"/>
+                                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}" Size="20"/>
                                 </ImageButton.Source>
                             </ImageButton>
                         </Frame>
@@ -63,10 +59,10 @@
                 </Frame>
                 <Frame Grid.Column="1" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                     <VerticalStackLayout Spacing="6">
-                        <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                            <ImageButton WidthRequest="18" HeightRequest="18">
+                        <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                            <ImageButton Padding="0" WidthRequest="20" HeightRequest="20">
                                 <ImageButton.Source>
-                                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}"/>
+                                    <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20"/>
                                 </ImageButton.Source>
                             </ImageButton>
                         </Frame>
@@ -74,11 +70,11 @@
                     </VerticalStackLayout>
                 </Frame>
             </Grid>
-            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
+            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="15">
                 <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding UserProfile.About}" TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
             </Frame>
-            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
-                <HorizontalStackLayout>
+            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="15">
+                <HorizontalStackLayout Spacing="5">
                     <Label FontFamily="{StaticResource ApplicationFont}" Text="Member since: " TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
                     <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding UserProfile.JoinDate}" TextColor="{StaticResource AccentSecondDarkColor}" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
                 </HorizontalStackLayout>

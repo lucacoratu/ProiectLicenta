@@ -22,12 +22,8 @@
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
-                    </ImageButton.Source>
-                </ImageButton>
-                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Group Details" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                    <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Group Details" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
         <VerticalStackLayout Padding="10">
@@ -44,7 +40,7 @@
                     BorderColor="WhiteSmoke"
                     CornerRadius="60"
                     BackgroundColor="Transparent"/>
-                <Frame CornerRadius="15" WidthRequest="30" HeightRequest="30" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
+                <Frame Padding="0" CornerRadius="15" WidthRequest="32" HeightRequest="32" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
                     <Image WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center">
                         <Image.Source>
                             <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Color="WhiteSmoke"/>
@@ -56,10 +52,10 @@
                 <Grid HeightRequest="95" Margin="10,5,10,2" Padding="5,10,5,10" ColumnSpacing="60" ColumnDefinitions="*,*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
                     <Frame Grid.Column="0" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                         <VerticalStackLayout Spacing="6" >
-                            <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                                <ImageButton WidthRequest="20" HeightRequest="20">
+                            <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                                <ImageButton WidthRequest="24" HeightRequest="24">
                                     <ImageButton.Source>
-                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}"/>
+                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}" Size="20"/>
                                     </ImageButton.Source>
                                 </ImageButton>
                             </Frame>
@@ -68,10 +64,10 @@
                     </Frame>
                     <Frame Grid.Column="1" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                         <VerticalStackLayout Spacing="6">
-                            <Frame BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                            <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
                                 <ImageButton WidthRequest="20" HeightRequest="20">
                                     <ImageButton.Source>
-                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}"/>
+                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20"/>
                                     </ImageButton.Source>
                                 </ImageButton>
                             </Frame>
@@ -85,10 +81,10 @@
             </HorizontalStackLayout>
             <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="5,10,5,10" CornerRadius="20">
                 <HorizontalStackLayout Spacing="10" Padding="10,0,10,0">
-                    <Frame BackgroundColor="#505050" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                    <Frame Padding="0" BackgroundColor="#505050" WidthRequest="32" HeightRequest="32" CornerRadius="15">
                         <ImageButton Background="#505050" CornerRadius="20" WidthRequest="20" HeightRequest="20">
                             <ImageButton.Source>
-                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Plus}"/>
+                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Plus}" Size="20"/>
                             </ImageButton.Source>
                         </ImageButton>
                     </Frame>

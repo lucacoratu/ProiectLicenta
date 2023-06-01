@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/mysql_data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysqlbak-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/mysql_backup"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysqlbak-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: willow-db
+spec:
+  selector:
+    matchLabels:
+      app: willow-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: willow-db
+    spec:
+      containers:
+      - image: localhost:32000/willow_db
+        name: willow-db
+        ports:
+        - containerPort: 3306
+          name: willow-db
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+          name: mysqlback-persistent-storage
+          mountPath: /docker-entrypoint-initdb.d/ 
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+        name: mysqlback-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysqlbak-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: willow-db
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: willow-db

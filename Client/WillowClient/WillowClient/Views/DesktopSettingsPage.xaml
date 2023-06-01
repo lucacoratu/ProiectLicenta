@@ -9,17 +9,13 @@
              Title="DesktopSettingsPage"
              BackgroundColor="{AppThemeBinding Dark={StaticResource PageDarkBackgroundColor}, Light={StaticResource PageLightBackgroundColor}}">
     <VerticalStackLayout>
-        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="70" BackgroundColor="{StaticResource AccentDarkColor}">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
-                    </ImageButton.Source>
-                </ImageButton>
-                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Settings" FontSize="18" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Settings" FontSize="16" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
         <VerticalStackLayout Padding="20" Spacing="5">
@@ -147,7 +143,7 @@
                     <Label FontFamily="{StaticResource ApplicationFont}" HorizontalOptions="Start" Grid.Column="1" Margin="10,0,0,0" Text="New feedback" TextColor="WhiteSmoke" VerticalOptions="Center" VerticalTextAlignment="Center" FontSize="14" FontAttributes="Bold"/>
                 </HorizontalStackLayout>
             </Grid>
-            <Button FontFamily="{StaticResource ApplicationFont}" Margin="0,20,0,0" BackgroundColor="Red" TextColor="WhiteSmoke" Text="Report a bug" WidthRequest="200" Command="{Binding GoToReportABugCommand}"></Button>
+            <Button FontFamily="{StaticResource ApplicationFont}" Margin="0,20,0,0" BackgroundColor="Red" TextColor="WhiteSmoke" Text="Report a bug" WidthRequest="200" Command="{Binding GoToReportABugCommand}"/>
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

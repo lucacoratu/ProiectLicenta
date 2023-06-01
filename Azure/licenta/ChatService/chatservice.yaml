@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: chatservice
+    spec:
+      containers:
+      - image: localhost:32000/chatservice
+        name: chatservice
+        ports:
+        - containerPort: 8087
+          name: chatservice
+        volumeMounts:
+        - name: chatservice-persistent-storage
+          mountPath: /app/static/
+      volumes:
+      - name: chatservice-persistent-storage
+        persistentVolumeClaim:
+          claimName: chatservice-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatservice
+spec:
+  ports:
+  - port: 8087
+    targetPort: 8087
+    protocol: TCP
+  externalIPs:
+  - 10.2.0.4
+  selector:
+    app: chatservice

@@ -63,7 +63,7 @@
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
-                                <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" FontSize="11"/>
+                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" FontSize="11"/>
                             </Grid>
                         </VerticalStackLayout>
                     </Border>
@@ -518,10 +518,10 @@
                 <RoundRectangle CornerRadius="15,15,0,0" />
             </Border.StrokeShape>
             <FlexLayout Grid.Row="2" HeightRequest="40">
-                <Button FontFamily="{StaticResource ApplicationFont}" Text="+" FlexLayout.Basis="10%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent"  Command="{Binding PickFileCommand}"/>
-                <Entry FontFamily="{StaticResource ApplicationFont}" MaxLength="3000" x:Name="messageText" Placeholder="Insert Message" PlaceholderColor="WhiteSmoke" Text="{Binding MessageText}" FlexLayout.Basis="70%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"/>
-                <ImageButton Source="camera.png" FlexLayout.Basis="10%" Command="{Binding TakePhotoCommand}"/>
-                <Button FontFamily="{StaticResource ApplicationFont}" Text=">" Margin="0" Padding="0" BackgroundColor="Transparent" TextColor="WhiteSmoke" FlexLayout.Basis="10%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
+                <Button FontFamily="{StaticResource ApplicationFont}" Text="+" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent"  Command="{Binding PickFileCommand}"/>
+                <Entry FontFamily="{StaticResource ApplicationFont}" MaxLength="3000" x:Name="messageText" Placeholder="Insert Message" PlaceholderColor="WhiteSmoke" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"/>
+                <ImageButton BackgroundColor="Transparent" Aspect="AspectFit" Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"/>
+                <Button FontFamily="{StaticResource ApplicationFont}" Text=">" Margin="0" Padding="0" BackgroundColor="Transparent" TextColor="WhiteSmoke" FlexLayout.Basis="6%" Command="{Binding SendMessageCommand}" Clicked="Button_Clicked"/>
             </FlexLayout>
         </Border>
     </Grid>

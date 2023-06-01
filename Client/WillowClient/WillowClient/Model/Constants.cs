@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace WillowClient.Model
 {
-    public static class Constants
-    {
+    public static class Constants {
 #if ANDROID
         //public static string serverURL = "http://10.10.20.219:8080";
         //public static string wsServerUrl = "ws://10.10.20.219:8087/";
@@ -33,6 +32,11 @@ namespace WillowClient.Model
         public static string chatServerUrl = "http://192.168.137.1:8087/";
         public static string signalingServerURL = "https://192.168.137.1:8090/";
         public static string signalingWsUrl = "wss://192.168.137.1:8090/notifications";
+        //public static string serverURL = "http://104.208.70.203:8080";
+        //public static string wsServerUrl = "ws://104.208.70.203:8087/";
+        //public static string chatServerUrl = "http://104.208.70.203:8087/";
+        //public static string signalingServerURL = "https://104.208.70.203:8090/";
+        //public static string signalingWsUrl = "wss://104.208.70.203:8090/notifications";
 #else
         public static string serverURL = "http://10.0.2.2:8080";
         public static string wsServerUrl = "ws://10.0.2.2:8087/";
@@ -46,6 +50,12 @@ namespace WillowClient.Model
         public static string chatServerUrl = "http://localhost:8087/";
         public static string signalingServerURL = "https://localhost:8090/";
         public static string signalingWsUrl = "wss://localhost:8090/notifications";
+        //public static string serverURL = "http://104.208.70.203:8080";
+        //public static string wsServerUrl = "ws://104.208.70.203:8087/";
+        //public static string chatServerUrl = "http://104.208.70.203:8087/";
+        //public static string signalingServerURL = "https://104.208.70.203:8090/";
+        //public static string signalingWsUrl = "wss://104.208.70.203:8090/notifications";
+
 #endif
         //public static string defaultProfilePicture = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
         public static string defaultProfilePicture = "default_profile_icon.png";

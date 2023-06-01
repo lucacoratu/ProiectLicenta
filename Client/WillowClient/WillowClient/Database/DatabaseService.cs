@@ -370,6 +370,14 @@ namespace WillowClient.Database {
             return true;
         }
 
+        //Update the friend room id
+        public async Task<bool> UpdateFriendRoomId(int friendId, int roomId) {
+            var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
+            friend.RoomID = roomId;
+            _ = await this.databaseConnection.UpdateAsync(friend);
+            return true;
+        }
+
         //Get the number of new messages of a friend
         public async Task<int> GetNumberNewMessagesForFriend(int friendId) {
             var friend = await this.databaseConnection.Table<Friend>().Where(friend => friend.Id == friendId).FirstOrDefaultAsync();
@@ -467,6 +475,18 @@ namespace WillowClient.Database {
             return group.NumberNewMessages == null ? 0 : int.Parse(group.NumberNewMessages);
         }
 
+        //Get the number of messages send by the user in the group
+        public async Task<int> GetNumberUserSentMessages(int roomId, int accountId) {
+            var roomMessages = await this.databaseConnection.Table<RoomMessage>().Where(roomMessage => roomMessage.RoomId == roomId).ToListAsync();
+            int count = 0;
+            foreach(var roomMessage in roomMessages) {
+                var message = await this.databaseConnection.Table<Message>().Where(message => message.Id == roomMessage.MessageId).FirstOrDefaultAsync();
+                if(message.Owner == accountId)
+                    count++;
+            }
+            return count;
+        }
+
         //Save the new messages for a group in the database
         public async Task<bool> UpdateNewMessagesForGroup(int roomId, int newNumberMessages) {
             var group = await this.databaseConnection.Table<Group>().Where(group => group.RoomId == roomId).FirstOrDefaultAsync();
@@ -479,6 +499,22 @@ namespace WillowClient.Database {
         public async Task<string> GetParticipantName(int participantId) {
             var participant = await this.databaseConnection.Table<Participant>().Where(participant => participant.Id == participantId).FirstOrDefaultAsync();
             return participant == null ? null : participant.Name;
+        }
+
+        //Get the participants of the group
+        public async Task<List<Participant>> GetGroupParticipants(int roomId) {
+            return await this.databaseConnection.Table<Participant>().ToListAsync();
+        }
+
+        //Get participant keys for the group
+        public async Task<Keys> GetParticipantKeysForGroup(int roomId, int participantId) {
+            var participantKeys = await this.databaseConnection.Table<ParticipantKey>().Where(participantKey => participantKey.ParticipantId == participantId).ToListAsync();
+            foreach(var participantKey in participantKeys) {
+                var key = await this.databaseConnection.Table<Keys>().Where(key => key.KeyId == participantKey.KeyId).FirstOrDefaultAsync();
+                if (key.RoomId == roomId)
+                    return key;
+            }
+            return null;
         }
 
         //Save the new messages in the database

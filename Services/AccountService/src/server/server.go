@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"time"
+	"willow/accountservice/data"
 	"willow/accountservice/database"
 	"willow/accountservice/handlers"
 	"willow/accountservice/logging"
@@ -23,6 +24,7 @@ import (
 var server *http.Server = nil
 var serverLogger logging.ILogger = nil
 var serverDbConn *database.Connection = nil
+var configurationFile string = "test.conf"
 
 /*
  * The InitServer function will initialize the server with the address specified as a parameter to the function
@@ -39,17 +41,31 @@ func InitServer(address string) error {
 		return errors.New("server cannot be initialized more than once")
 	}
 
+	//Get the configuration data from the configuration file
+	file, err := os.OpenFile(configurationFile, os.O_RDWR, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	svc := data.Configuration{}
+	err = svc.FromJSON(file)
+	if err != nil {
+		log.Println("Cannot initialize the configuration settings from file")
+		return err
+	}
+
 	//Initialize the logger to be on stdout and with the correct prefix for this service
 	//serverLogger = log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags)
 	//serverLogger.Info("Logger initialized")
 
 	//Initialize the logger
-	serverLogger = logging.NewDebugLogger(log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags), "[INFO]", "[WARNINGS]", "[ERROR]", "[DEBUG]")
+	serverLogger = logging.NewDebugLogger(log.New(os.Stdout, "[*] - Account Service - ", log.LstdFlags), "[INFO]", "[WARNING]", "[ERROR]", "[DEBUG]")
 	serverLogger.Info("Logger has been initialized")
 
 	//Create the connection object from the database package
 	serverDbConn = database.NewConnection(serverLogger)
-	err := serverDbConn.InitializeConnection()
+	err = serverDbConn.InitializeConnection()
 	if err != nil {
 		serverLogger.Info("Database connection initialization failed: " + err.Error())
 		return err
@@ -57,19 +73,19 @@ func InitServer(address string) error {
 
 	//Create the handlers that the server will have (paths and functions to where the server will respond)
 	//Create the /login handler
-	handlerLogin := handlers.NewLogin(serverLogger, serverDbConn)
+	handlerLogin := handlers.NewLogin(serverLogger, serverDbConn, svc)
 
 	//Create the /register handler and add the database handle to the struct
-	handlerRegister := handlers.NewRegister(serverLogger, serverDbConn)
+	handlerRegister := handlers.NewRegister(serverLogger, serverDbConn, svc)
 
 	//Create the /profile handler and add the database handle to the struct
-	handlerProfile := handlers.NewProfile(serverLogger, serverDbConn)
+	handlerProfile := handlers.NewProfile(serverLogger, serverDbConn, svc)
 
 	//Create the handler for friendrequests
-	handlerFriendRequests := handlers.NewFriendRequest(serverLogger, serverDbConn)
+	handlerFriendRequests := handlers.NewFriendRequest(serverLogger, serverDbConn, svc)
 
 	//Create the handler for friends
-	handlerFriends := handlers.NewFriends(serverLogger, serverDbConn)
+	handlerFriends := handlers.NewFriends(serverLogger, serverDbConn, svc)
 
 	//Create the feedback handler
 	handlerFeedback := handlers.NewReportBug(serverLogger, serverDbConn)
@@ -78,7 +94,7 @@ func InitServer(address string) error {
 	handlerAuth := handlers.NewAuthentication(serverLogger, serverDbConn)
 
 	//Create the chat handler
-	handlerChat := handlers.NewChat(serverLogger, serverDbConn)
+	handlerChat := handlers.NewChat(serverLogger, serverDbConn, svc)
 
 	//Create the serve mux where the handlers will be assigned so can then be used by the http.Server object
 	//serveMuxServer := http.NewServeMux()
@@ -89,6 +105,7 @@ func InitServer(address string) error {
 	serveMuxServer.HandleFunc("/register", handlerRegister.RegisterAccount).Methods("POST")
 	//Add the function to get all the report bug categories
 	serveMuxServer.HandleFunc("/accounts/reportcategories", handlerFeedback.GetBugReportCategories).Methods("GET")
+	serveMuxServer.HandleFunc("/accounts/bugreports", handlerFeedback.GetAllBugReports).Methods("GET")
 	serveMuxServer.PathPrefix("/accounts/static/").Handler(http.StripPrefix("/accounts/static/", http.FileServer(http.Dir("./static/"))))
 	serveMuxServer.PathPrefix("/chat/groups/static").HandlerFunc(handlerChat.GetGroupPicture)
 

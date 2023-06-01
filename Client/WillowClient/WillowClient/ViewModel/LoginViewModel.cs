@@ -181,7 +181,7 @@ public partial class LoginViewModel : BaseViewModel
         //_ = await databaseService.DeleteMessages();
         //_ = await databaseService.DeleteAllReactions();
         //_ = await databaseService.DeleteAllGroups();
-//#endif
+        //#endif
 
 
         bool checkRes = this.VerifyUsernameInput(Username);
@@ -268,7 +268,7 @@ public partial class LoginViewModel : BaseViewModel
                 accountModel.JoinDate = joinDate;
 
                 if (accountModel.ProfilePictureUrl == "NULL") {
-                    accountModel.ProfilePictureUrl = "https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg";
+                    accountModel.ProfilePictureUrl = Constants.defaultProfilePicture;
                 }
                 else {
                     accountModel.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + accountModel.ProfilePictureUrl;

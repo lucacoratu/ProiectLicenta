@@ -19,11 +19,7 @@
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
-                    <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
-                    </ImageButton.Source>
-                </ImageButton>
+                <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                 <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Profile" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
@@ -38,13 +34,13 @@
                     CornerRadius="60" 
                     BackgroundColor="#505050"
                    />
-            <Frame CornerRadius="15" WidthRequest="30" HeightRequest="30" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
+            <Frame Padding="0" CornerRadius="15" WidthRequest="30" HeightRequest="30" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                 </Frame.GestureRecognizers>
-                <Image WidthRequest="18" HeightRequest="18" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">
                     <Image.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Pencil}" Color="WhiteSmoke"/>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Pencil}" Color="WhiteSmoke" Size="18"/>
                     </Image.Source>
                 </Image>
             </Frame>
@@ -56,10 +52,10 @@
         <Line Margin="40,20,40,0" HeightRequest="1" BackgroundColor="Gray" Opacity="0.7"/>
         <Grid Margin="40,10,40,0" ColumnDefinitions="*,Auto">
             <Label Grid.Column="0"  Text="{Binding Account.About}" VerticalOptions="Center" TextColor="WhiteSmoke" LineBreakMode="WordWrap"/>
-            <Frame HorizontalOptions="End" Grid.Column="1" VerticalOptions="Center" WidthRequest="32" HeightRequest="32" CornerRadius="20">
-                <ImageButton WidthRequest="20" HeightRequest="20" Command="{Binding GoToEditStatusCommand}">
+            <Frame Padding="0" HorizontalOptions="End" Grid.Column="1" VerticalOptions="Center" WidthRequest="32" HeightRequest="32" CornerRadius="20">
+                <ImageButton Padding="0" BackgroundColor="Transparent" WidthRequest="20" HeightRequest="20" Command="{Binding GoToEditStatusCommand}">
                     <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.PenClip}" Color="Gray"/>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.PenClip}" Color="Gray" Size="18"/>
                     </ImageButton.Source>
                 </ImageButton>
             </Frame>

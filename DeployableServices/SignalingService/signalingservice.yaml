@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sigservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sigservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: sigservice
+    spec:
+      containers:
+      - image: localhost:32000/signalingservice
+        name: sigservice
+        ports:
+        - containerPort: 8090
+          name: sigservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sigservice
+spec:
+  ports:
+  - port: 8090
+    targetPort: 8090
+    protocol: TCP
+  externalIPs:
+  - 192.168.234.131
+  selector:
+    app: sigservice

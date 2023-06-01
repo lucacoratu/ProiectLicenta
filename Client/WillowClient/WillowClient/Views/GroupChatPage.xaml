@@ -75,7 +75,7 @@
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
-            <FlexLayout Direction="Row" HeightRequest="50" BackgroundColor="{StaticResource AccentDarkColor}" JustifyContent="SpaceBetween">
+            <FlexLayout Direction="Row" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" JustifyContent="SpaceBetween">
                 <FlexLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoToGroupDetailsCommand}" />
                 </FlexLayout.GestureRecognizers>
@@ -97,12 +97,12 @@
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
                 <HorizontalStackLayout FlexLayout.AlignSelf="Center" Margin="0,0,4,0" Spacing="3">
-                    <ImageButton Margin="5,0,5,0" FlexLayout.AlignSelf="Center" Command="{Binding GoToGroupCallCommand}">
+                    <ImageButton BackgroundColor="Transparent" Margin="5,0,5,0" FlexLayout.AlignSelf="Center" Command="{Binding GoToGroupCallCommand}">
                         <ImageButton.Source>
                             <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20" Color="WhiteSmoke"/>
                         </ImageButton.Source>
                     </ImageButton>
-                    <ImageButton Margin="5,0,5,0" FlexLayout.AlignSelf="Center" Command="{Binding GoToGroupCallCommand}">
+                    <ImageButton BackgroundColor="Transparent" Margin="5,0,5,0" FlexLayout.AlignSelf="Center" Command="{Binding GoToGroupCallCommand}">
                         <ImageButton.Source>
                             <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Phone}" Size="20" Color="WhiteSmoke"/>
                         </ImageButton.Source>
@@ -133,7 +133,7 @@
             <FlexLayout Grid.Row="2" HeightRequest="40">
                 <Button FontFamily="{StaticResource ApplicationFont}" Text="+" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding PickFileCommand}"/>
                 <Entry FontFamily="{StaticResource ApplicationFont}" Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"/>
-                <ImageButton Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
+                <ImageButton Aspect="AspectFit" BackgroundColor="Transparent" Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
                 <Button FontFamily="{StaticResource ApplicationFont}" Text=">" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding SendMessageCommand}"/>
             </FlexLayout>
         </Border>

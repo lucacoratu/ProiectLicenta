@@ -65,11 +65,12 @@ func InitServer(address string) error {
 	serverLogger.Info("Database connection has been initialized")
 
 	//Create the pool
-	pool := websocket.NewPool(serverLogger, serverDb)
+	pool := websocket.NewPool(serverLogger, serverDb, *serverConfiguration)
 	go pool.Start()
 
 	//Create the routes
 	handlerChat := handlers.NewChat(serverDb, serverLogger)
+	handlerMetrics := handlers.NewMetricsHandler(serverDb, serverLogger)
 
 	//Initialize the gorilla servemux
 	serveMux := mux.NewRouter()
@@ -93,6 +94,7 @@ func InitServer(address string) error {
 	postSubrouter.HandleFunc("/privateroom", handlerChat.GetRoomId)
 	postSubrouter.HandleFunc("/chat/group/updatepicture", handlerChat.UpdateGroupPicture)
 	postSubrouter.HandleFunc("/blob/upload", handlerChat.UploadToBlob)
+	postSubrouter.HandleFunc("/metrics/collect", handlerMetrics.CollectInformation)
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 

@@ -68,5 +68,16 @@ func (report *ReportBug) GetBugReportCategories(rw http.ResponseWriter, r *http.
  * This function will handle the GET request which will send all the bugs to the client
  */
 func (report *ReportBug) GetAllBugReports(rw http.ResponseWriter, r *http.Request) {
+	report.logger.Info("Endpoint /bugreports hit (GET method)")
 
+	//Get all the bug reports from the database
+	bugReports, err := report.dbConn.GetAllBugReports()
+	if err != nil {
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte(err.Error()))
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	bugReports.ToJSON(rw)
 }

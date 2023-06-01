@@ -70,6 +70,10 @@ const transformerReceiver = new TransformStream({
 var audio = document.querySelector("#audioEnabled");
 var video = document.querySelector("#videoEnabled");
 
+//Get the device info
+var deviceInfo = document.querySelector("#deviceInfo");
+deviceInfo = deviceInfo.innerHTML;
+
 //Get the roomID
 var roomID = document.querySelector("#roomID");
 roomID = roomID.innerHTML;
@@ -77,12 +81,21 @@ roomID = roomID.innerHTML;
 var platform = document.querySelector("#platform");
 platform = platform.innerHTML;
 
+var metricsUrl = 0;
+if(platform === "android") {
+    metricsUrl = "http://192.168.137.1:8087/metrics/collect";
+} else if(platform === "windows"){
+    metricsUrl = "http://localhost:8087/metrics/collect";
+}
+
 
 //Create a pointer to remote stream object to determine the framerate
 var remoteStreamCopy = null;
 var currentFrameRate = 0;
 var localStreamCopy = null;
 var localCurrentFrameRate = 0;
+var localLatency = 0;
+var remoteLatency = 0;
 
 window.onload = function() {
     console.log("On load called");
@@ -96,6 +109,9 @@ window.onload = function() {
             //console.log(remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate);
             //console.log(remoteStreamCopy.getVideoTracks()[0].getSettings());
             currentFrameRate = remoteStreamCopy.getVideoTracks()[0].getSettings().frameRate;
+            //remoteLatency = remoteStreamCopy.getAudioTracks()[0].getSettings().latency;
+            
+            console.log("Remote latency = ", remoteLatency * 1000, "ms");
             //console.log("Remote current frame rate = ", currentFrameRate);
 
             //Show the remote value of the framerate
@@ -108,6 +124,9 @@ window.onload = function() {
         if(localStreamCopy !== null) {
             //Get the local framerate
             localCurrentFrameRate = localStreamCopy.getVideoTracks()[0].getSettings().frameRate;
+            localLatency = localStreamCopy.getAudioTracks()[0].getSettings().latency;
+
+            //console.log("Local latency = ", localLatency * 1000, "ms");
             //console.log("Local current frame rate = ", localCurrentFrameRate);
 
             //Show the local value of the framerate
@@ -115,6 +134,22 @@ window.onload = function() {
             localFrameRateLabel.innerHTML = localCurrentFrameRate.toFixed(2);
         }
     }, 1000);
+
+    //Define a function which will be called every 10 seconds to send metrics to the server
+    setInterval(function(){
+        var xhttp = new XMLHttpRequest();
+        console.log(metricsUrl);
+        xhttp.open("POST", "/metrics/collect", true);
+        xhttp.setRequestHeader("Content-Type", "application/json")
+        var metricsData = {'deviceInfo': deviceInfo, "frameRates": [localCurrentFrameRate, currentFrameRate], 'numberParticipants': 2}; 
+        console.log(JSON.stringify(metricsData));
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+               
+            }
+        };
+        xhttp.send(JSON.stringify(metricsData));
+    },10000);
 }
 
 //Join the room
@@ -125,6 +160,7 @@ if(platform === "android")
 else if(platform === "windows"){
     ws = new WebSocket("wss://localhost:8090/join?roomID=" + roomID);
 }
+
 
 ws.onopen = function(event) {
     let msg = {content: "create or join"};

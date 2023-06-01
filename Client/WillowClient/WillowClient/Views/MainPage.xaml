@@ -15,82 +15,96 @@
              Loaded="PageLoaded"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
-    <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="200,*,*,*,200">
+    <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="225,*,*,*,225">
         <Grid Grid.Column="0" RowDefinitions="30,*">
-            <Label FontFamily="{StaticResource ApplicationFont}" Grid.Row="0" Text="Groups" FontSize="Medium" FontAttributes="Bold" BackgroundColor="#7B68EE" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
-            <CollectionView Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Never">
+            <Label FontFamily="{StaticResource ApplicationFont}" Grid.Row="0" Text="Groups" FontSize="20" FontAttributes="Bold" BackgroundColor="#7B68EE" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
+            <CollectionView Grid.Row="1" Margin="0,0,5,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemTemplate FontFamily="{StaticResource ApplicationFont}">
                     <DataTemplate x:DataType="model:GroupModel">
-                        <HorizontalStackLayout Padding="10" Spacing="6">
-                            <HorizontalStackLayout.GestureRecognizers>
+                        <Grid ColumnDefinitions="42,*" Padding="5,10,10,0" ColumnSpacing="4">
+                            <Grid.GestureRecognizers>
                                 <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapGroupCommand}"
                                     CommandParameter="{Binding .}"/>
-                            </HorizontalStackLayout.GestureRecognizers>
+                            </Grid.GestureRecognizers>
                             <toolkit:AvatarView
-                                    HeightRequest="50"
+                                    Grid.Column="0"
+                                    HeightRequest="42"
                                     ImageSource="{Binding GroupPictureUrl}"
-                                    WidthRequest="50"
+                                    WidthRequest="42"
                                     BorderWidth="0"
                                     BorderColor="WhiteSmoke"
                                     CornerRadius="32"
                                     >
                             </toolkit:AvatarView>
-                            <VerticalStackLayout>
-                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
-                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                            <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
+                                <Grid ColumnDefinitions="*,50">
+                                    <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" MaxLines="1" LineBreakMode="TailTruncation" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessageTimestamp}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="End" HorizontalOptions="End" TextColor="WhiteSmoke" FontSize="12" FontAutoScalingEnabled="True"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,20">
+                                    <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="13" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                                    <Border Grid.Column="1" IsVisible="{Binding HasNewMessages}" IsEnabled="{Binding HasNewMessages}" VerticalOptions="Center" StrokeThickness="0" BackgroundColor="{StaticResource AccentDarkColor}" HorizontalOptions="End" WidthRequest="20" HeightRequest="20">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="30,30,30,30"/>
+                                        </Border.StrokeShape>
+                                        <Label HorizontalOptions="Center" VerticalOptions="Center" FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" FontSize="13" TextColor="WhiteSmoke" Text="{Binding NumberNewMessages}"/>
+                                    </Border>
+                                </Grid>
                             </VerticalStackLayout>
-                        </HorizontalStackLayout>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
-        <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*" RowDefinitions="50,*">
+        <Grid x:Name="ContentGrid"  BackgroundColor="#454545" Grid.Column="1" Grid.ColumnSpan="3" ColumnDefinitions="*" RowDefinitions="30,*">
             <!-- Middle part buttons -->
             <FlexLayout Grid.Row="0" HeightRequest="30" VerticalOptions="Start" AlignContent="Stretch" Direction="Row" JustifyContent="SpaceEvenly">
-                <Button FontFamily="{StaticResource ApplicationFont}" Text="News" FlexLayout.Basis="25%"></Button>
-                <Button FontFamily="{StaticResource ApplicationFont}" Text="Pending" FlexLayout.Basis="25%" Command="{Binding SelectPendingCommand}"></Button>
-                <Button FontFamily="{StaticResource ApplicationFont}" Text="Create Group" FlexLayout.Basis="25%" Command="{Binding SelectCreateGroupCommand}"></Button>
-                <Button FontFamily="{StaticResource ApplicationFont}" Text="Add Friend" FlexLayout.Basis="25%" Command="{Binding SelectAddFriendCommand}"></Button>
+                <Button CornerRadius="0" HeightRequest="30" FontFamily="{StaticResource ApplicationFont}" Text="News" FlexLayout.Basis="25%"></Button>
+                <Button CornerRadius="0" HeightRequest="30" FontFamily="{StaticResource ApplicationFont}" Text="Pending" FlexLayout.Basis="25%" Command="{Binding SelectPendingCommand}"></Button>
+                <Button CornerRadius="0" HeightRequest="30" FontFamily="{StaticResource ApplicationFont}" Text="Create Group" FlexLayout.Basis="25%" Command="{Binding SelectCreateGroupCommand}"></Button>
+                <Button CornerRadius="0" HeightRequest="30" FontFamily="{StaticResource ApplicationFont}" Text="Add Friend" FlexLayout.Basis="25%" Command="{Binding SelectAddFriendCommand}"></Button>
             </FlexLayout>
             <!-- Middle part controls -->
             <!-- Add friend -->
             <VerticalStackLayout Grid.Row="1" IsVisible="{Binding AddFriendSelected}" IsEnabled="{Binding AddFriendSelected}" Padding="0,10,0,0">
-                <VerticalStackLayout HeightRequest="100" WidthRequest="200" HorizontalOptions="Center" VerticalOptions="Start">
-                    <Label FontFamily="{StaticResource ApplicationFont}" Text="Add friend" HorizontalOptions="Center"></Label>
-                    <Entry FontFamily="{StaticResource ApplicationFont}" Placeholder="Insert friend name and id" Text="{Binding AddFriendEntryText}"></Entry>
-                    <Button FontFamily="{StaticResource ApplicationFont}" Text="Add friend" WidthRequest="200" Command="{Binding AddFriendCommand}"></Button>
-                </VerticalStackLayout>
-                <!-- View sent friend requests-->
-                <Label FontFamily="{StaticResource ApplicationFont}" Text="Sent friend requests" TextColor="WhiteSmoke" HorizontalOptions="Center"></Label>
-                <CollectionView x:Name="sentFriendRequestsCollectionView" ItemsSource="{Binding SentFriendRequests}" SelectionMode="None">
+                <HorizontalStackLayout Spacing="10" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Start">
+                    <!--<Label FontFamily="{StaticResource ApplicationFont}" Text="Add friend" HorizontalOptions="Center"></Label>-->
+                    <material:TextField HeightRequest="50" WidthRequest="250" AccentColor="WhiteSmoke" AllowClear="True" FontFamily="{StaticResource ApplicationFont}" Title="Insert name and id" Text="{Binding AddFriendEntryText}"/>
+                    <Button CornerRadius="8" BorderWidth="0" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="Add friend" WidthRequest="120" Command="{Binding AddFriendCommand}"/>
+                </HorizontalStackLayout>
+                <!-- View friend recommendations-->
+                <Label Margin="0,15,0,0" FontFamily="{StaticResource ApplicationFont}" Text="Friend recommendations" TextColor="WhiteSmoke" HorizontalOptions="Center" FontSize="18"/>
+                <CollectionView x:Name="sentFriendRequestsCollectionView" ItemsSource="{Binding FriendRecommendationSearchResults}" SelectionMode="Multiple">
                     <CollectionView.ItemTemplate FontFamily="{StaticResource ApplicationFont}">
-                        <DataTemplate x:DataType="model:FriendRequestModel">
+                        <DataTemplate x:DataType="model:FriendRecommendationModel">
                             <HorizontalStackLayout Padding="10" Spacing="6">
                                 <toolkit:AvatarView
-                                        HeightRequest="50"
-                                        ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                                        WidthRequest="50"
+                                        HeightRequest="44"
+                                        ImageSource="{Binding ProfilePictureUrl}"
+                                        WidthRequest="44"
                                         BorderWidth="0"
                                         BorderColor="WhiteSmoke"
                                         CornerRadius="32"
                                         />
-                                <VerticalStackLayout Spacing="13">
-                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
-                                    <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding About}" VerticalOptions="Center" TextColor="WhiteSmoke"/>
+                                    <!--<Border HorizontalOptions="Start" BackgroundColor="{Binding}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="10,10,10,10"/>
                                         </Border.StrokeShape>
-                                    </Border>
+                                    </Border>-->
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                <Button FontFamily="{StaticResource ApplicationFont}" CornerRadius="5" BorderWidth="0" BackgroundColor="{StaticResource AccentDarkColor}" FontSize="14" Padding="0" Text="Send requests" WidthRequest="210"/>
             </VerticalStackLayout>
             <!-- View friend requests -->
             <VerticalStackLayout Grid.Row="1" IsEnabled="{Binding PendingSelected}" IsVisible="{Binding PendingSelected}">
-                <Label FontFamily="{StaticResource ApplicationFont}" Text="Friend requests" FontSize="Medium" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <Label Margin="0,15,0,0" FontFamily="{StaticResource ApplicationFont}" Text="Friend requests" FontSize="18" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                 <CollectionView x:Name="friendRequestsCollectionView" ItemsSource="{Binding FriendRequests}" SelectionMode="None">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:FriendRequestModel">
@@ -127,50 +141,45 @@
                 </CollectionView>
             </VerticalStackLayout>
             <!-- Create group -->
-            <ScrollView Grid.Row="1" IsEnabled="{Binding CreateGroupSelected}" IsVisible="{Binding CreateGroupSelected}">
-                <VerticalStackLayout>
-                    <Label FontFamily="{StaticResource ApplicationFont}" Text="Choose a name for the group"/>
-                    <Entry FontFamily="{StaticResource ApplicationFont}" Placeholder="Insert the group name" Text="{Binding GroupName}"/>
-                    <Label FontFamily="{StaticResource ApplicationFont}" Text="Add participants" HorizontalOptions="CenterAndExpand"/>
+            <ScrollView Margin="0,20,0,0" Grid.Row="1" IsEnabled="{Binding CreateGroupSelected}" IsVisible="{Binding CreateGroupSelected}">
+                <VerticalStackLayout Padding="0,10,0,0">
+                    <material:TextField AccentColor="WhiteSmoke" WidthRequest="250" HorizontalOptions="Center" FontFamily="{StaticResource ApplicationFont}" Title="Group name" Text="{Binding GroupName}"/>
+                    <Label FontFamily="{StaticResource ApplicationFont}" Margin="0,10,0,0" Text="Select participants" FontSize="18" HorizontalOptions="CenterAndExpand"/>
                     <CollectionView x:Name="createGroupCollectionView" ItemsSource="{Binding Friends}" SelectionMode="Multiple" SelectionChanged="createGroupCollectionView_SelectionChanged">
                         <CollectionView.ItemTemplate FontFamily="{StaticResource ApplicationFont}">
-                            <DataTemplate x:DataType="model:FriendModel">
+                            <DataTemplate x:DataType="model:FriendStatusModel">
                                 <HorizontalStackLayout Padding="10" Spacing="6">
-                                    <!--<HorizontalStackLayout.GestureRecognizers>
-                                        <SwipeGestureRecognizer Direction="Left" Command="">
-                                            
-                                        </SwipeGestureRecognizer>
-                                    </HorizontalStackLayout.GestureRecognizers>-->
                                     <toolkit:AvatarView
-                                        HeightRequest="50"
-                                        ImageSource="https://raw.githubusercontent.com/jamesmontemagno/app-monkeys/master/baboon.jpg"
-                                        WidthRequest="50"
+                                        HeightRequest="42"
+                                        ImageSource="{Binding ProfilePictureUrl}"
+                                        WidthRequest="42"
                                         BorderWidth="0"
                                         BorderColor="WhiteSmoke"
                                         CornerRadius="32"
                                         />
-                                    <VerticalStackLayout Spacing="13">
-                                        <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"></Label>
-                                        <Border HorizontalOptions="Start" BackgroundColor="#4CBB17" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="#4CBB17" Margin="-15,0,0,0">
+                                    <Grid RowDefinitions="20,20" ColumnDefinitions="10,*">
+                                        <Label Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"/>
+                                        <Label Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="Status text"/>
+                                        <Border Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="{Binding StatusStrokeColor}" Margin="-20,5,0,0">
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="10,10,10,10"/>
                                             </Border.StrokeShape>
                                         </Border>
-                                    </VerticalStackLayout>
+                                    </Grid>
                                 </HorizontalStackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                    <Button Margin="0,10,0,0" Text="Create group" HorizontalOptions="Center" WidthRequest="150" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
+                    <Button CornerRadius="5" BackgroundColor="{StaticResource AccentDarkColor}" BorderWidth="0" Margin="0,10,0,0" Text="Create group" HorizontalOptions="Center" WidthRequest="150" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
         <Grid Grid.Column="4" ColumnDefinitions="*" RowDefinitions="30,*,80">
-            <Label Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0" BackgroundColor="#7B68EE" FontSize="Medium" FontAttributes="Bold"></Label>
-            <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,20,0" ItemsSource="{Binding Friends}" SelectionMode="None">
+            <Label FontFamily="{StaticResource ApplicationFont}"  Text="Friends" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Grid.Row="0" BackgroundColor="#7B68EE" FontSize="20" FontAttributes="Bold"/>
+            <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,0,5,0" ItemsSource="{Binding Friends}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:FriendStatusModel">
-                        <HorizontalStackLayout Padding="10" Spacing="6">
+                        <Grid ColumnDefinitions="42,*" Padding="5,10,10,0" ColumnSpacing="6">
                             <FlyoutBase.ContextFlyout FontFamily="{StaticResource ApplicationFont}">
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="Message"/>
@@ -178,20 +187,20 @@
                                     <MenuFlyoutItem Text="Video call"/>
                                 </MenuFlyout>
                             </FlyoutBase.ContextFlyout>
-                            <HorizontalStackLayout.GestureRecognizers>
+                            <Grid.GestureRecognizers>
                                 <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
                                     CommandParameter="{Binding .}"/>
-                            </HorizontalStackLayout.GestureRecognizers>
-                            <HorizontalStackLayout>
+                            </Grid.GestureRecognizers>
+                            <HorizontalStackLayout Grid.Column="0">
                                 <toolkit:AvatarView
                                     Padding="0"
-                                    HeightRequest="50"
+                                    HeightRequest="42"
                                     ImageSource="{Binding ProfilePictureUrl}"
-                                    WidthRequest="50"
+                                    WidthRequest="42"
                                     BorderWidth="0"
                                     BorderColor="WhiteSmoke"
-                                    CornerRadius="32"
+                                    CornerRadius="40"
                                     >
                                 </toolkit:AvatarView>
                                 <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="{Binding StatusStrokeColor}" Margin="-15,0,0,0" VerticalOptions="End">
@@ -200,24 +209,28 @@
                                     </Border.StrokeShape>
                                 </Border>
                             </HorizontalStackLayout>
-                            <VerticalStackLayout>
-                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"></Label>
-                                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Grid ColumnDefinitions="*,55">
+                                    <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessageTimestamp}" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End" TextColor="WhiteSmoke" FontSize="12" FontAutoScalingEnabled="True"/>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,20">
+                                    <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="13" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                                    <Border IsVisible="{Binding HasNewMessages}" IsEnabled="{Binding HasNewMessages}" VerticalOptions="Center" StrokeThickness="0" BackgroundColor="{StaticResource AccentDarkColor}" HorizontalOptions="End" Grid.Column="1" WidthRequest="20" HeightRequest="20">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="30,30,30,30"/>
+                                        </Border.StrokeShape>
+                                        <Label HorizontalOptions="Center" VerticalOptions="Center" FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" FontSize="13" TextColor="WhiteSmoke" Text="{Binding NumberNewMessages}"/>
+                                    </Border>
+                                </Grid>
                             </VerticalStackLayout>
-                            <!--<Grid ColumnDefinitions="85,*">
-                                <VerticalStackLayout Grid.Column="0">
-                                    <Label Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="16" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
-                                    <Label Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="14" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
-                                </VerticalStackLayout>
-                                <Label Grid.Column="1" Text="{Binding LastMessageTimestamp}" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Start" VerticalTextAlignment="Center"/>
-                            </Grid>-->
-                        </HorizontalStackLayout>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <VerticalStackLayout Grid.Row="2" HeightRequest="80" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Padding="0,0,0,0">
-                <HorizontalStackLayout>
-                    <toolkit:AvatarView ImageSource="{Binding Account.ProfilePictureUrl}">
+            <VerticalStackLayout Grid.Row="2" HeightRequest="60" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Padding="0,0,0,0">
+                <HorizontalStackLayout Spacing="5">
+                    <toolkit:AvatarView ImageSource="{Binding Account.ProfilePictureUrl}" BorderWidth="0" BorderColor="Transparent">
                         <FlyoutBase.ContextFlyout FontFamily="{StaticResource ApplicationFont}">
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="Settings"/>
@@ -228,7 +241,7 @@
                         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.DisplayName}" TextColor="WhiteSmoke"></Label>
                         <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding HexID}" TextColor="WhiteSmoke"></Label>
                     </VerticalStackLayout>
-                    <ImageButton Source="settings_icon.png" WidthRequest="30" HeightRequest="30" Aspect="AspectFill" Command="{Binding GoToSettingsWindowsCommand}"/>
+                    <ImageButton BackgroundColor="Transparent" Source="settings_icon.png" WidthRequest="40" HeightRequest="40" Aspect="AspectFill" Command="{Binding GoToSettingsWindowsCommand}"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Grid>

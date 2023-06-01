@@ -12,6 +12,8 @@ using System.Text.Json;
 using WillowClient.Services;
 using Mopups.Services;
 using WillowClient.ViewsPopups;
+using System.Diagnostics;
+using System.Threading;
 
 namespace WillowClient.ViewModel
 {
@@ -36,6 +38,8 @@ namespace WillowClient.ViewModel
 
         [ObservableProperty]
         private bool video;
+
+        private Task ProfilingTask;
 
         private ChatService chatService;
         public CallViewModel(ChatService chat)
@@ -157,6 +161,16 @@ namespace WillowClient.ViewModel
             this.IsBusy = false;
         }
 
+        public async void CollectProfilingInformation() {
+            //Create a new thread which will collect profiling information from the OS
+            //this.ProfilingTask = await Task.Factory.StartNew(() => {
+            //    while (true) {
+            //        //Collect the information from the OS
+                    
+            //    }
+            //}, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
         [RelayCommand]
         public async Task EndCall()
         {
@@ -189,15 +203,16 @@ namespace WillowClient.ViewModel
 #else
             webView.Eval("leaveCall()");
 #endif
+            webView.Source = "doesnotexist";
             //Shell.Current.Navigation.RemovePage(Shell.Current.Navigation.NavigationStack[Shell.Current.Navigation.NavigationStack.Count - 2]);
             await Shell.Current.Navigation.PopAsync();
             await Shell.Current.Navigation.PopAsync();
             this.IsBusy = false;
 
             //Ask the user for feedback
-#if ANDROID
-            await MopupService.Instance.PushAsync(new ReviewCallPopup(new CallFeedbackViewModel()), true);
-#endif
+//#if ANDROID
+//            await MopupService.Instance.PushAsync(new ReviewCallPopup(new CallFeedbackViewModel()), true);
+//#endif
         }
 
         public async void TerminateGroupCall(WebView webView) {
@@ -223,11 +238,19 @@ namespace WillowClient.ViewModel
 
         public void InitializeCall(WebView webView)
         {
+            //Get the device identification information
+            string deviceModel = DeviceInfo.Current.Model;
+            string manufacturer = DeviceInfo.Current.Manufacturer;
+            string deviceName = DeviceInfo.Current.Name;
+
+            string deviceInfo = manufacturer + " " + deviceName + " " + deviceModel;
+            deviceInfo = deviceInfo.Replace(" ", "_");
+
             //TO DO... Send details about the call to the signaling service
 #if ANDROID
-            webView.Source = Constants.signalingServerURL + "room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=android";
+            webView.Source = Constants.signalingServerURL + "room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=android" + "&deviceInfo=" + deviceInfo;
 #else
-            webView.Source = Constants.signalingServerURL + "room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=windows";  
+            webView.Source = Constants.signalingServerURL + "room?roomID=" + this.roomId.ToString() + "&audio=" + this.audio.ToString() + "&video=" + this.video.ToString() + "&platform=windows" + "&deviceInfo=" + deviceInfo;  
 #endif
         }
 

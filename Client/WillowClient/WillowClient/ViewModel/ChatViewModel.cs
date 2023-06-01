@@ -582,6 +582,10 @@ namespace WillowClient.ViewModel
                         //Parse the message
                         var attachment = JsonSerializer.Deserialize<AttachmentModel>(message.Text);
                         var dbAttachment = await this.databaseService.GetAttachment(attachment.BlobUuid);
+                        if(dbAttachment == null) {
+                            //Store the attachment in the database
+                            _ = await this.databaseService.SaveUndownloadedAttachment(attachment, message.Id);
+                        }
                         if (attachment.AttachmentType == "photo") {
                             if (dbAttachment != null) {
                                 //Show the message as photo if it is downloaded
@@ -592,6 +596,9 @@ namespace WillowClient.ViewModel
                                     //Else show the message as downloadable attachment
                                     msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
                                 }
+                            } else {
+                                //Else show the message as downloadable attachment
+                                msgModel = new MessageModel { Owner = MessageOwner.OtherUser, MessageType = MessageType.Photo, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
                             }
                         }
                         if(attachment.AttachmentType == "video") {
@@ -604,6 +611,9 @@ namespace WillowClient.ViewModel
                                     //Else show the message as downloadable attachment
                                     msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.OtherUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
                                 }
+                            } else {
+                                //Else show the message as downloadable attachment
+                                msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Owner = MessageOwner.OtherUser, MessageType = MessageType.Video, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = false };
                             }
                         }
                         if (attachment.AttachmentType == "file") {
@@ -614,6 +624,9 @@ namespace WillowClient.ViewModel
                                 else {
                                     msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.OtherUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true };
                                 }
+                            }
+                            else {
+                                msgModel = new MessageModel { FileSizeString = attachment.FileSizeFormat, Filename = attachment.Filename, Owner = MessageOwner.OtherUser, MessageType = MessageType.File, MessageId = message.Id.ToString(), TimeStamp = msgDate, IsDownloaded = true };
                             }
                         }
                     }
@@ -749,6 +762,9 @@ namespace WillowClient.ViewModel
                 this.LastOnlineText = "Online";
                 this.Friend.LastOnline = "";
             }
+
+            _ = await this.databaseService.UpdateFriendRoomId(this.friend.FriendId, this.roomId);
+            this.friend.RoomID = this.roomId;
 
             this.isInPage = true;
             LoadingMessages = true;

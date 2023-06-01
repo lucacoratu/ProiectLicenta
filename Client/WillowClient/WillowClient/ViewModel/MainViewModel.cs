@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -381,6 +382,7 @@ namespace WillowClient.ViewModel
                         }
 
                         //Save the new group in the database
+                        _ = await this.databaseService.SaveGroup(gm);
 
                         this.Groups.Insert(0, gm);
                         this.GroupsSearchResults.Insert(0, gm);
@@ -564,6 +566,7 @@ namespace WillowClient.ViewModel
                                 {
                                     this.Groups[i].LastMessage = "You: " + privMessageModel.Data;
                                     this.Groups[i].LastMessageTimestamp = timestamp;
+                                    _ = await this.databaseService.SaveMessageInTheDatabase(privMessageModel, this.Groups[i].RoomId, this.Account.DisplayName);
                                 }
                                 else
                                 {
@@ -839,6 +842,7 @@ namespace WillowClient.ViewModel
                     var attachment = JsonSerializer.Deserialize<AttachmentModel>(messageText);
                     if (attachment != null) {
                         friend.LastMessage = "Sent a " + attachment.AttachmentType;
+                        _ = await this.databaseService.SaveUndownloadedAttachment(attachment, newMessage.Id);
                     }
                 }
 
@@ -895,6 +899,10 @@ namespace WillowClient.ViewModel
                 //Update the last message
                 lastMessage = await this.databaseService.GetLastMessageInRoom(friend.RoomID);
             }
+
+            if(lastMessage == null) {
+                friend.LastMessage = "Start conversation";
+            }
         }
 
         private async Task GetFriendNewReactions(FriendStatusModel friend) {
@@ -934,6 +942,23 @@ namespace WillowClient.ViewModel
             _ = await this.databaseService.UpdateFriendProfilePicture(friend.FriendId, friend.ProfilePictureUrl);
         }
 
+        public async Task GetFriendRoomId(FriendStatusModel friend) {
+            //Get the id of the room knowing the id of the account and the friend id
+            var getRoomModel = new GetRoomIdModel { AccountId = this.account.Id, FriendId = friend.FriendId };
+            var res = await this.chatService.GetRoomId(getRoomModel);
+            //Parse the JSON
+            var options = new JsonSerializerOptions {
+                PropertyNameCaseInsensitive = true,
+            };
+
+            GetRoomIdResponseModel? roomIdModel = JsonSerializer.Deserialize<GetRoomIdResponseModel>(res, options);
+            if (roomIdModel != null) {
+                friend.RoomID = roomIdModel.RoomId;
+            }
+
+            _ = await this.databaseService.UpdateFriendRoomId(friend.FriendId, friend.RoomID);
+        }
+
         [RelayCommand]
         async Task GetFriendsAsync()
         {
@@ -971,9 +996,23 @@ namespace WillowClient.ViewModel
                 //Get the remote friends with id greater than lastKnownFriendId
                 var remoteNewFriends = await friendService.GetNewerFriends(this.Account.Id, lastKnownFriendId, Globals.Session);
 
+                List<FriendModel> newFriends = new List<FriendModel>();
+                foreach(var remoteFriend in remoteNewFriends) {
+                    bool found = false;
+                    foreach (var fr2 in localFriends) {
+                        if (fr2.Id == remoteFriend.FriendId) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        newFriends.Add(remoteFriend);
+                    }
+                }
+
                 //Save the friends in the database
-                if(remoteNewFriends.Count != 0)
-                    _ = await this.databaseService.UpdateLocalFriends(remoteNewFriends);
+                if(newFriends.Count != 0)
+                    _ = await this.databaseService.UpdateLocalFriends(newFriends);
 
                 //Get the remote list of friends
                 //string hexString = "";
@@ -985,8 +1024,17 @@ namespace WillowClient.ViewModel
                 foreach(var fr in localFriends) {
                     friends.Add(new FriendModel { About = fr.About, BefriendDate = fr.BefriendDate, DisplayName = fr.DisplayName, FriendId = fr.Id, RoomID = fr.RoomID, IdentityPublicKey = fr.IdentityPublicKey, JoinDate = fr.JoinDate.ToString(), LastMessage = fr.LastMessage, LastMessageTimestamp = fr.LastMessageTimestamp, LastOnline = fr.LastOnline.ToString(), PreSignedPublicKey = fr.PreSignedPublicKey, ProfilePictureUrl = fr.ProfilePictureUrl, Status = fr.Status });
                 }
-                foreach(var fr in remoteNewFriends) {
-                    friends.Add(new FriendModel { About = fr.About, Status = fr.Status, BefriendDate = fr.BefriendDate, DisplayName = fr.DisplayName, FriendId = fr.FriendId, RoomID = fr.RoomID, IdentityPublicKey = fr.IdentityPublicKey, JoinDate = fr.JoinDate, LastMessage = fr.LastMessage, LastMessageTimestamp = fr.LastMessageTimestamp, LastOnline = fr.LastOnline, PreSignedPublicKey = fr.PreSignedPublicKey, ProfilePictureUrl = fr.ProfilePictureUrl });
+                foreach (var fr in newFriends) {
+                    bool found = false;
+                    foreach (var fr2 in friends) {
+                        if (fr2.FriendId == fr.FriendId) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        friends.Add(new FriendModel { About = fr.About, Status = fr.Status, BefriendDate = fr.BefriendDate, DisplayName = fr.DisplayName, FriendId = fr.FriendId, RoomID = fr.RoomID, IdentityPublicKey = fr.IdentityPublicKey, JoinDate = fr.JoinDate, LastMessage = fr.LastMessage, LastMessageTimestamp = fr.LastMessageTimestamp, LastOnline = fr.LastOnline, PreSignedPublicKey = fr.PreSignedPublicKey, ProfilePictureUrl = fr.ProfilePictureUrl });
+                    }
                 }
 
                 //await this.UpdateLocalFriendsWithRemote(friends);
@@ -1012,6 +1060,8 @@ namespace WillowClient.ViewModel
                         }
                     }
 
+                    friend.LastMessage = "";
+
                     if (friend.ProfilePictureUrl == "NULL") {
                         friend.ProfilePictureUrl = Constants.defaultProfilePicture;
                     }
@@ -1035,6 +1085,8 @@ namespace WillowClient.ViewModel
                 }
 
                 foreach(var friendStatus in Friends) {
+                    //Get the room id for the frined
+                    await this.GetFriendRoomId(friendStatus);
                     //Get the status from the server
                     await this.GetFriendStatus(friendStatus);
                     //Get the new messages for every friend
@@ -1170,7 +1222,6 @@ namespace WillowClient.ViewModel
                 lastKnownId = lastMessage.Id;
             }
 
-
             await foreach(var newMessage in this.chatService.GetMessagesWithIdGreater(group.RoomId, lastKnownId)) {
 
                 //Set the timestamp of the new message
@@ -1252,10 +1303,11 @@ namespace WillowClient.ViewModel
 
                 //Update the last message
                 lastMessage = await this.databaseService.GetLastMessageInRoom(group.RoomId);
-
-
             }
 
+            if(lastMessage == null) {
+                group.LastMessage = "Start conversation";
+            }
         }
 
         //async Task GetGroupProfilePicture(GroupModel group) {
@@ -1338,7 +1390,7 @@ namespace WillowClient.ViewModel
                         }
                     }
 
-                    if(group.GroupPictureUrl == "NULL" || group.GroupPictureUrl == null) {
+                    if(group.GroupPictureUrl == "NULL" || group.GroupPictureUrl == null || group.GroupPictureUrl == Constants.defaultGroupPicture) {
                         group.GroupPictureUrl = Constants.defaultGroupPicture;
                     } else {
                         group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + group.GroupPictureUrl;
@@ -1453,11 +1505,14 @@ namespace WillowClient.ViewModel
                 AddFriendSelected = false;
                 return;
             }
+
             //Get all the sent friend requests of the account
             this.SentFriendRequests.Clear();
             var sentRequests = await this.friendService.GetSentFriendRequests(this.Account.Id, this.Session);
             foreach (var sentRequest in sentRequests)
                 this.SentFriendRequests.Add(sentRequest);
+
+            this.GetFriendRequestRecommendations();
 
             AddFriendSelected = true;
         }
