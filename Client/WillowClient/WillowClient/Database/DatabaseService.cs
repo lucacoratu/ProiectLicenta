@@ -244,6 +244,11 @@ namespace WillowClient.Database {
             }
         }
 
+        public async Task<bool> CheckReactionExists(int reactionId) {
+            var res = await this.databaseConnection.Table<Reaction>().Where(reaction => reaction.Id == reactionId).FirstOrDefaultAsync();
+            return res != null ? true : false;
+        }
+
         public async IAsyncEnumerable<Reaction> GetMessageReactions(int messageId) {
             var reactionMessages = await this.databaseConnection.Table<MessageReaction>().Where(reactionMessage => reactionMessage.MessageId == messageId).ToListAsync();
             List<Reaction> reactions = new List<Reaction>();
@@ -384,6 +389,8 @@ namespace WillowClient.Database {
             return friend.NumberNewMessages == null ? 0 : int.Parse(friend.NumberNewMessages);
         }
 
+
+
         //Get the local messages from the database
         public async IAsyncEnumerable<Message> GetLocalMessagesInRoom(int roomId) {
             //int countMessages = await this.databaseConnection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM friend_message WHERE roomId = " +  roomId.ToString());
@@ -492,6 +499,14 @@ namespace WillowClient.Database {
             var group = await this.databaseConnection.Table<Group>().Where(group => group.RoomId == roomId).FirstOrDefaultAsync();
             group.NumberNewMessages = newNumberMessages.ToString();
             _ = await this.databaseConnection.UpdateAsync(group);
+            return true;
+        }
+
+        //Update the group picture
+        public async Task<bool> UpdateGroupPicture(int roomId, string groupPicture) {
+            var group = await this.databaseConnection.Table<Group>().Where(group => group.RoomId == roomId).FirstOrDefaultAsync();
+            group.GroupPictureUrl = groupPicture;
+            await this.databaseConnection.UpdateAsync(group);
             return true;
         }
 

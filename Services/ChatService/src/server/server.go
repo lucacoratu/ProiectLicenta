@@ -85,6 +85,7 @@ func InitServer(address string) error {
 	getSubrouter.HandleFunc("/history/{id:[0-9]+}/{knownId:[0-9]+}", handlerChat.GetRoomHistoryAfterAMessage)
 	getSubrouter.HandleFunc("/reactions/{roomId:[0-9]+}/{knownId:[0-9]+}", handlerChat.GetReactionsInRoomAfterId)
 	getSubrouter.HandleFunc("/chat/commongroups/{idfirst:[0-9]+}/{idsecond:[0-9]+}", handlerChat.GetCommonGroups)
+	getSubrouter.HandleFunc("/chat/groups/{roomId:[0-9]+}/picture", handlerChat.GetGroupPicture)
 	getSubrouter.HandleFunc("/blob/{blobUuid:[0-9a-fA-F\\-]+}", handlerChat.GetDataFromBlob)
 	serveMux.HandleFunc("/ws", func(rw http.ResponseWriter, r *http.Request) {
 		handlerChat.ServeWs(pool, rw, r)

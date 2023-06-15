@@ -566,12 +566,44 @@ func (conn *MysqlConnection) GetUserGroupsWithId(accountID int64, lastId int64) 
 		}
 		retData.Participants = make([]int64, 0)
 		retData.Participants = append(retData.Participants, participants...)
+		//retData.Participants = append(retData.Participants, retData.CreatorId)
 		conn.logger.Debug(retData.Participants)
 		returnData[index] = retData
 		conn.logger.Debug(returnData[index])
 	}
 
 	return returnData, nil
+}
+
+/*
+ * This function will get the picture of the group
+ */
+
+func (conn *MysqlConnection) GetGroupPicture(roomID int64) (string, error) {
+	//Prepare the select statement for getting the group picture
+	stmtSelect, err := conn.db.Prepare("SELECT groupPicture FROM rooms where ID = ?")
+	//Check if an erorr occured when preparing the statement
+	if err != nil {
+		conn.logger.Error("Error occured when preparing the select statement for group picture", err.Error())
+		return "", err
+	}
+
+	row := stmtSelect.QueryRow(roomID)
+	//Check if an error occured during the execution of the select statement
+	if row.Err() != nil {
+		//An error occured when executing the select statement
+		conn.logger.Error("Error occured when executing the select statement for group picture", row.Err().Error())
+		return "", row.Err()
+	}
+
+	var result string
+	err = row.Scan(&result)
+	if err != nil {
+		conn.logger.Error("Error occured when extracting information for group picture", err)
+		return "", err
+	}
+
+	return result, nil
 }
 
 /*

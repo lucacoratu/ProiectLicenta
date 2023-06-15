@@ -491,7 +491,7 @@ func (ch *Chat) GetCommonGroups(rw http.ResponseWriter, r *http.Request) {
  */
 func (ch *Chat) GetGroupParticipants(rw http.ResponseWriter, r *http.Request) {
 	ch.logger.Info("Endpoint /chat/group/{id:[0-9]+}/participants hit (GET method)")
-	
+
 }
 
 /*
@@ -555,6 +555,29 @@ func (ch *Chat) UpdateGroupPicture(rw http.ResponseWriter, r *http.Request) {
 
 	rw.WriteHeader(http.StatusOK)
 	rw.Write([]byte("Group picture updated"))
+}
+
+/*
+ * This function will get the path of the group image
+ */
+func (ch *Chat) GetGroupPicture(rw http.ResponseWriter, r *http.Request) {
+	ch.logger.Info("Endpoint /chat/groups/{roomId:[0-9]+}/picture hit (GET method)")
+	vars := mux.Vars(r)
+	roomId, err := strconv.Atoi(vars["roomId"])
+	if err != nil {
+		http.Error(rw, "Could not get the room id", http.StatusInternalServerError)
+		return
+	}
+
+	groupPicture, err := ch.dbConn.GetGroupPicture(int64(roomId))
+	if err != nil {
+		http.Error(rw, "Could not get the group picture", http.StatusInternalServerError)
+		return
+	}
+
+	returnStructure := data.GetGroupPicture{GroupPicture: groupPicture}
+	rw.WriteHeader(http.StatusOK)
+	returnStructure.ToJSON(rw)
 }
 
 /*

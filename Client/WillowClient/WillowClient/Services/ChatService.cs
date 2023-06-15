@@ -305,9 +305,20 @@ namespace WillowClient.Services
             return false;
         }
 
-        //public async Task<string> GetGroupProfilePicture(int roomId, string session) {
+        public async Task<string> GetGroupPicture(int roomId, string session) {
+            var url = Constants.chatServerUrl + "/chat/groups/" + roomId.ToString() + "/picture";
+            var baseAddress = new Uri(url);
 
-        //}
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+
+            var response = await this.m_httpClient.GetAsync(baseAddress);
+            GetGroupPictureResponseModel result = null;
+            if (response.IsSuccessStatusCode) {
+                result = await response.Content.ReadFromJsonAsync<GetGroupPictureResponseModel>();
+            }
+
+            return result.GroupPicture;
+        }
 
         public async Task<BlobUploadResponseModel> UploadDataToBlobStorage(byte[] data) {
             using (var multipartFormContent = new MultipartFormDataContent()) {

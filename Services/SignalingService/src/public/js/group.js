@@ -186,6 +186,58 @@ function leaveCall() {
 //      content
 // }
 
+var muted = false;
+var cameraEnabled = true;
+//Function for handling muting and unmuting the microphone
+function toggleMicrophone() {
+    console.log("Toggle microphone called");
+    var muted_button = document.querySelector("#microphone_button");
+    if(muted == false) {
+        muted = true;
+        //Change the font icon of the microphone button
+        muted_button.innerHTML = '<i class="fa fa-microphone-slash" style="font-size: 30px; color: whitesmoke;" ></i>'
+        //Mute the microphone
+        console.log(localStream.getAudioTracks());
+        localStream.getAudioTracks()[0].enabled = false;
+    } else { 
+        muted = false;
+        muted_button.innerHTML = '<i class="fa fa-microphone" style="font-size: 30px; color: whitesmoke;" ></i>'
+        //Unmute the microphone
+        localStream.getAudioTracks()[0].enabled = true;
+        console.log(localStream.getAudioTracks());
+    }
+}
+
+function toggleCamera() {
+    var camera_button = document.querySelector("#camera_button");
+    if(cameraEnabled == true) {
+        cameraEnabled = false;
+        camera_button.innerHTML = '<i class="fa fa-video-slash" style="font-size: 30px; color: whitesmoke;"></i>';
+        localStream.getVideoTracks()[0].enabled = false;
+        // localStream.getVideoTracks()[0].stop();
+        // localStream.removeTrack(localStream.getVideoTracks()[0]);
+        // console.log(localStream.getVideoTracks());
+    } else {
+        cameraEnabled = true;
+        camera_button.innerHTML = '<i class="fa fa-video" style="font-size: 30px; color: whitesmoke;"></i>';
+        localStream.getVideoTracks()[0].enabled = true;
+        //Get the video stream from the camera
+        // var streamConstraints = {
+        //     audio: false,
+        //     video: { facingMode: "user" }
+        // };
+
+        // navigator.mediaDevices.getUserMedia(streamConstraints)
+        // .then((stream) => {
+        //     localStream.addTrack(stream.getVideoTracks()[0]);
+        // })
+        // .catch((error) => {
+        //     console.log("error: ", error);
+        // })
+
+    }
+}
+
 
 ws.onmessage = function(event) {
     let message = JSON.parse(event.data)

@@ -58,7 +58,14 @@ namespace WillowClient.ViewModel
         [ObservableProperty]
         private bool entryEnabled = true;
 
-        private byte[] lastMessageKey = new byte[80]; 
+        private byte[] lastMessageKey = new byte[80];
+
+        //Members needed to update the last online timestamp
+        private DateTime lastOnlineTimestamp = DateTime.Now;
+
+        private int updateLastOnlineTimestampPeriod = 1000;
+
+        Timer updateLastOnlineTimestampTimer = null;
 
         public ObservableCollection<MessageGroupModel> MessageGroups { get; } = new();
 
@@ -232,6 +239,45 @@ namespace WillowClient.ViewModel
             }
         }
 
+        private void UpdateLastOnlineTimestamp(object objectInfo) {
+            //Determine the difference
+            DateTime currentTimestamp = DateTime.Now;
+            double seconds = (currentTimestamp - this.lastOnlineTimestamp).Seconds;
+            double minutes = (currentTimestamp - this.lastOnlineTimestamp).Minutes;
+            double hours = (currentTimestamp - this.lastOnlineTimestamp).Hours;
+
+            //If he was online in the last minute
+            //if(seconds < 60.0 && minutes < 1.0 && hours < 1.0) {
+            //    this.Friend.LastOnline = $"{(int)seconds} seconds ago";
+            //    return;
+            //}
+
+            if(minutes >= 1.0 && hours < 1.0) {
+                this.Friend.LastOnline = $"{(int)minutes} minutes ago";
+                //Update the period of the callback if it was not previously updated
+                //if(this.updateLastOnlineTimestampPeriod == 1000) {
+                //    this.updateLastOnlineTimestampTimer.Change(1000, 1000 * 60);
+                //}
+                return;
+            }
+
+            if(hours >= 1.0) {
+                this.Friend.LastOnline = $"{(int)hours} hours ago";
+                //Update the period of the callback if it was not previously updated
+                if (this.updateLastOnlineTimestampPeriod == 1000) {
+                    this.updateLastOnlineTimestampTimer.Change(1000, 1000 * 60 * 60);
+                }
+
+                return;
+            }
+
+            this.Friend.LastOnline = this.lastOnlineTimestamp.ToString("d Y");
+        }
+
+        private void OnlineCallback(object objectInfo) {
+            return;
+        }
+
         public async Task MessageReceivedOnWebsocket(string message)
         {
             //Check if the message is from the user in the current conversation
@@ -244,7 +290,13 @@ namespace WillowClient.ViewModel
                 };
 
                 //Parse the response
-                ChangeStatusWebsocketResponseModel resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options1);
+                ChangeStatusWebsocketResponseModel resp = null;
+                try {
+                    resp = JsonSerializer.Deserialize<ChangeStatusWebsocketResponseModel>(message, options1);
+                } catch(Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                    return;
+                }
                 //Search through the friend accounts and see if the message that the account involved is in the list of friends
                 //Change the color depending on which status it is set
                 if (this.Friend.FriendId == resp.AccountId)
@@ -253,41 +305,26 @@ namespace WillowClient.ViewModel
                     {
                         this.LastOnlineText = "Online";
                         this.Friend.LastOnline = "";
+
+                        TimerCallback callback = OnlineCallback;
+                        this.updateLastOnlineTimestampTimer.Dispose();
+                        this.updateLastOnlineTimestampTimer = null;
                     }
                     else
                     {
                         this.LastOnlineText = "Last Online: ";
-                        this.Friend.LastOnline = DateTime.Now.ToString("f");
+                        this.Friend.LastOnline = "1 minute ago";
+
+                        //Save the moment the user became offline
+                        this.lastOnlineTimestamp = DateTime.Now;
+
+                        //Create a callback function which will be called every second to update the last time the user was online
+                        TimerCallback callback = UpdateLastOnlineTimestamp;
+                        this.updateLastOnlineTimestampTimer = new Timer(callback, "State", 1000 * 60, 1000 * 60);
                     }
                 }
                 return;
             }
-
-            ////Check if the message is new reaction
-            //if(message.IndexOf("emojiReaction") != -1) {
-            //    var options1 = new JsonSerializerOptions {
-            //        PropertyNameCaseInsensitive = true,
-            //    };
-            //    try {
-            //        //Parse the JSON response
-            //        SendReactionModel srm = JsonSerializer.Deserialize<SendReactionModel>(message, options1);
-            //        if (srm != null) {
-            //            //Add the reaction to the specific message
-            //            //Add a new reaction in the collection view
-            //            foreach (var group in this.MessageGroups) {
-            //                foreach (var messageModel in group) {
-            //                    if (Int32.Parse(messageModel.MessageId) == srm.messageId) {
-            //                        messageModel.Reactions.Add(new ReactionModel { Id = 0, Emoji = srm.emojiReaction, ReactionDate = DateTime.Now.ToString("dd MMMM yyyy"), SenderId = srm.senderId });
-            //                        return;
-            //                    }
-            //                }
-            //            }
-            //            return;
-            //        }
-            //    } catch (Exception e) {
-            //        Console.WriteLine(e.ToString());
-            //    }
-            //}
 
             if (message.IndexOf("callee") != -1) {
                 return;
@@ -738,6 +775,37 @@ namespace WillowClient.ViewModel
             }
         }
 
+        private string FormatLastOnlineTimestamp(string lastOnline) {
+            try {
+                DateTime lastOnlineTimestamp = DateTime.Parse(lastOnline);
+                double secondsDiff = (DateTime.Now - lastOnlineTimestamp).Seconds;
+                double minutesDiff = (DateTime.Now - lastOnlineTimestamp).Minutes;
+                double hoursDiff = (DateTime.Now - lastOnlineTimestamp).Hours;
+
+                string returnString = "";
+                if (minutesDiff < 1.0 && hoursDiff < 1.0) {
+                    returnString = $"{((int)secondsDiff)} seconds ago";
+                }
+
+                if (hoursDiff < 1.0 && minutesDiff >= 1.0) {
+                    returnString = $"{(int)minutesDiff} minutes ago";
+                }
+
+                if (hoursDiff >= 1.0 && hoursDiff < 24.0) {
+                    returnString = $"{(int)hoursDiff} hours ago";
+                }
+
+                if (hoursDiff >= 24.0) {
+                    returnString = lastOnlineTimestamp.ToString("d Y");
+                }
+
+                return returnString;
+            } catch(Exception e) {
+                Console.WriteLine(e.ToString());
+                return lastOnline;
+            }
+        }
+
         public async void GetRoomId()
         {
 
@@ -761,6 +829,10 @@ namespace WillowClient.ViewModel
             {
                 this.LastOnlineText = "Online";
                 this.Friend.LastOnline = "";
+            } else {
+                this.LastOnlineText = "Last Online: ";
+                //this.Friend.LastOnline = "";
+                this.Friend.LastOnline = FormatLastOnlineTimestamp(this.Friend.LastOnline);
             }
 
             _ = await this.databaseService.UpdateFriendRoomId(this.friend.FriendId, this.roomId);
@@ -779,6 +851,7 @@ namespace WillowClient.ViewModel
         {
             this.EntryEnabled = false;
             this.IsInPage = false;
+            //this.updateLastOnlineTimestampTimer.Dispose();
             System.Threading.Thread.Sleep(1000);
             await Shell.Current.Navigation.PopAsync(true);
         }

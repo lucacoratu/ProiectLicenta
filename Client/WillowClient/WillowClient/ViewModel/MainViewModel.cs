@@ -166,6 +166,7 @@ namespace WillowClient.ViewModel
                 }
             }
 
+
             //Friend request has been accepted
             if(message.IndexOf("friendId") != -1) {
                 var options = new JsonSerializerOptions {
@@ -223,12 +224,36 @@ namespace WillowClient.ViewModel
                             if (this.Friends[i].FriendId == upm.id) {
                                 this.Friends[i].ProfilePictureUrl = "";
                                 this.Friends[i].ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + upm.id.ToString() + ".png";
+                                break;
                             }
                         }
                         return;
                     }
                 } catch(Exception ex) {
                     Console.WriteLine(ex.ToString());
+                }
+            }
+
+            //Group picture update message
+            if(message.IndexOf("newGroupPicture") != -1) {
+                try {
+                    var options = new JsonSerializerOptions {
+                        PropertyNameCaseInsensitive = true,
+                    };
+
+                    UpdateGroupPictureModel ugpm = JsonSerializer.Deserialize<UpdateGroupPictureModel>(message, options);
+                    if(ugpm != null) {
+                        for(int i =0; i< this.Groups.Count; i++) {
+                            if(ugpm.roomId == this.Groups[i].RoomId) {
+                                this.Groups[i].GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + ugpm.newGroupPicture;
+                                await this.databaseService.UpdateGroupPicture(ugpm.roomId, this.Groups[i].GroupPictureUrl);
+                                break;
+                            }
+                        }
+                        return;
+                    }
+                } catch(Exception ex) { 
+                    Console.WriteLine(ex.Message);
                 }
             }
 
@@ -373,8 +398,14 @@ namespace WillowClient.ViewModel
                         //}
                         List<int> participants = new List<int>();
                         foreach(var participantId in resp.Participants) {
-                            participants.Add(participantId);
+                            if(participantId != this.Account.Id)
+                                participants.Add(participantId);
                         }
+
+                        //Add the creator to the list of participants if it is not the current account
+                        if(gm.CreatorId != this.Account.Id)
+                            participants.Add(gm.CreatorId);
+
                         var groupParticipants = await this.profileService.GetGroupParticipantProfiles(participants, Globals.Session);
                         foreach(var groupParticipant in groupParticipants) {
                             gm.Participants.Add(groupParticipant.Id);
@@ -576,6 +607,12 @@ namespace WillowClient.ViewModel
                                         if (this.Groups[i].Participants[j] == privMessageModel.SenderId) {
                                             senderIndex = j;
                                         }
+
+                                    if(senderIndex == -1) {
+                                        await Shell.Current.DisplayAlert("Error", $"Could not find the sender, with id = {privMessageModel.SenderId} of the message in room {privMessageModel.RoomId}", "Ok");
+                                        return;
+                                    }
+
                                     this.Groups[i].LastMessage = this.Groups[i].ParticipantNames[senderIndex] + ": " + privMessageModel.Data;
                                     this.Groups[i].LastMessageTimestamp = timestamp;
                                     this.Groups[i].IncrementNumberNewMessages();
@@ -912,8 +949,11 @@ namespace WillowClient.ViewModel
                 lastKnownId = lastReaction.Id;
 
             var newReactions = await this.chatService.GetNewReactionsInRoom(friend.RoomID, lastKnownId);
-            foreach (var newReaction in newReactions)
-                _ = await this.databaseService.SaveReaction(newReaction);
+            foreach (var newReaction in newReactions) {
+                var reactionIdExists = await this.databaseService.CheckReactionExists(newReaction.ReactionId);
+                if(!reactionIdExists)
+                    _ = await this.databaseService.SaveReaction(newReaction);
+            }
         }
 
         public async Task GetFriendStatus(FriendStatusModel friend) {
@@ -1310,20 +1350,20 @@ namespace WillowClient.ViewModel
             }
         }
 
-        //async Task GetGroupProfilePicture(GroupModel group) {
-        //    var profile = await this.profileService.GetUserProfile(friend.FriendId, Globals.Session);
-        //    if (profile == null)
-        //        return;
-
-        //    if (profile.ProfilePictureUrl == "NULL") {
-        //        friend.ProfilePictureUrl = Constants.defaultProfilePicture;
-        //    }
-        //    else {
-        //        friend.ProfilePictureUrl = Constants.serverURL + "/accounts/static/" + profile.ProfilePictureUrl;
-        //    }
-        //    //Save the new profile picture in the database
-        //    _ = await this.databaseService.UpdateFriendProfilePicture(friend.FriendId, friend.ProfilePictureUrl);
-        //}
+        async Task GetGroupPicture(GroupModel group) {
+            var groupPicture = await this.chatService.GetGroupPicture(group.RoomId, Session);
+            if (groupPicture != null) {
+                if (groupPicture == "NULL" || groupPicture == null || groupPicture.Contains("default")) {
+                    group.GroupPictureUrl = Constants.defaultGroupPicture;
+                }
+                else {
+                    if (!groupPicture.Contains(Constants.chatServerUrl + "chat/groups/static/"))
+                        group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + groupPicture;
+                }
+                
+                await this.databaseService.UpdateGroupPicture(group.RoomId, group.GroupPictureUrl);
+            }
+        }
 
         async Task GetGroupNewReactions(GroupModel group) {
             int lastKnownId = 0;
@@ -1393,7 +1433,8 @@ namespace WillowClient.ViewModel
                     if(group.GroupPictureUrl == "NULL" || group.GroupPictureUrl == null || group.GroupPictureUrl == Constants.defaultGroupPicture) {
                         group.GroupPictureUrl = Constants.defaultGroupPicture;
                     } else {
-                        group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + group.GroupPictureUrl;
+                        if (!group.GroupPictureUrl.Contains(Constants.chatServerUrl + "chat/groups/static/"))
+                            group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + group.GroupPictureUrl;
                     }
 
                     Groups.Add(group);
@@ -1406,6 +1447,8 @@ namespace WillowClient.ViewModel
                     await this.GetGroupNewMessages(group);
                     //Get group new reactions
                     await this.GetGroupNewReactions(group);
+                    //Get group picture if it was updated
+                    await this.GetGroupPicture(group);
                 }
             }
             catch (Exception e)
@@ -1654,10 +1697,12 @@ namespace WillowClient.ViewModel
             createGroupMessageModel.groupName = this.GroupName;
             createGroupMessageModel.creatorID = this.account.Id;
             createGroupMessageModel.participants = new();
+            
             foreach(FriendStatusModel f in this.CreateGroupSelectedFriends)
             {
                 createGroupMessageModel.participants.Add(f.FriendId);
             }
+            //createGroupMessageModel.participants.Add(this.account.Id);
 
             string jsonMessage = JsonSerializer.Serialize(createGroupMessageModel);
             await this.chatService.SendMessageAsync(jsonMessage);

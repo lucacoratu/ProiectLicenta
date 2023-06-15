@@ -10,8 +10,8 @@
              >
     <Grid RowDefinitions="*,35" ColumnDefinitions="*,40,*">
         <controls:CustomWebView x:Name="webView" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3"/>
-        <Frame Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" WidthRequest="35" HeightRequest="35" VerticalOptions="End" Margin="0,0,0,20" Background="Red" CornerRadius="60">
-            <ImageButton WidthRequest="24" HeightRequest="24" Margin="2" Source="end_call.png"/>
+        <Frame Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" WidthRequest="35" HeightRequest="35" VerticalOptions="End" Margin="0,0,0,20" Background="Red" CornerRadius="30">
+            <ImageButton WidthRequest="32" HeightRequest="32" Margin="2" Source="end_call.png" Clicked="ImageButton_Clicked"/>
         </Frame>
     </Grid>
 </ContentPage>

@@ -230,8 +230,9 @@ namespace WillowClient.ViewModel
             //while(result == "null")
             await webView.EvaluateJavaScriptAsync("leaveCall()");
 #else
-            webView.Eval(script);
+            webView.Eval("leaveCall()");
 #endif
+            webView.Source = "doesnotexist";
             await Shell.Current.Navigation.PopAsync();
             this.IsBusy = false;
         }

@@ -424,6 +424,28 @@ func (pool *Pool) MessageReceived(message Message) {
 			}
 		}
 	}
+
+	//Check if the message is update group picture
+	updateGroupPictureMessage := data.UpdateGroupPicture{}
+	err = json.Unmarshal([]byte(message.Body), &updateGroupPictureMessage)
+	isUpdateGroupPictureMessage := true
+	if err != nil {
+		pool.logger.Error(err.Error())
+		isUpdateGroupPictureMessage = false
+	}
+
+	if isUpdateGroupPictureMessage && updateGroupPictureMessage.RoomId != 0 {
+		pool.logger.Debug("Received update group picture message")
+		pool.logger.Debug(updateGroupPictureMessage.RoomId, updateGroupPictureMessage.NewGroupPicture)
+		//Send a message to all the users that the group picture has been updated
+		for client := range pool.Clients {
+			err := client.Conn.WriteJSON(updateGroupPictureMessage)
+			if err != nil {
+				pool.logger.Error("Error occured when announcing the other users that the group picture has been updated", err.Error())
+				continue
+			}
+		}
+	}
 }
 
 /*

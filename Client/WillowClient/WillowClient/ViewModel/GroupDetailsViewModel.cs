@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WillowClient.Model;
@@ -89,9 +91,12 @@ namespace WillowClient.ViewModel {
                             bool uploadedResult = await this.chatService.UpdateGroupPicture(this.Group.RoomId, photoStream, Globals.Session);
                             if (uploadedResult) {
                                 //Send a messsage to all the other clients that the profile picture has been changed
-                                //UpdateUserProfilePictureForAllUsers();
+                                UpdateGroupPictureModel updateGroupPicture = new UpdateGroupPictureModel { roomId = this.Group.RoomId, newGroupPicture = this.Group.RoomId + ".png" };
+                                await this.chatService.SendMessageAsync(JsonSerializer.Serialize(updateGroupPicture));
+
                                 this.Group.GroupPictureUrl = "";
                                 this.Group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + this.Group.RoomId + ".png";
+
 
                                 await Shell.Current.DisplayAlert("Group picture", "Group picture has been updated", "Ok");
                             }
@@ -109,7 +114,9 @@ namespace WillowClient.ViewModel {
                         bool uploadedResult = await this.chatService.UpdateGroupPicture(this.Group.RoomId, photoStream, Globals.Session);
                         if (uploadedResult) {
                             //Send a messsage to all the other clients that the profile picture has been changed
-                            //UpdateUserProfilePictureForAllUsers();
+                            UpdateGroupPictureModel updateGroupPicture = new UpdateGroupPictureModel { roomId = this.Group.RoomId, newGroupPicture = this.Group.RoomId + ".png" };
+                            await this.chatService.SendMessageAsync(JsonSerializer.Serialize(updateGroupPicture));
+
                             this.Group.GroupPictureUrl = "";
                             this.Group.GroupPictureUrl = Constants.chatServerUrl + "chat/groups/static/" + this.Group.RoomId + ".png";
 
