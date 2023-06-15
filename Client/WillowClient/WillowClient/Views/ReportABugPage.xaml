@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.ReportABugPage"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             x:DataType="viewmodel:FeedbackViewModel"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource PageDarkBackgroundColor}, Light={StaticResource PageLightBackgroundColor}}">
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*" Margin="0" Padding="0">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="24" HeightRequest="24" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitReportABugCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Report a bug" FontSize="16" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <VerticalStackLayout Grid.Row="1" Padding="25" Spacing="10">
+            <material:PickerField SelectedItem="{Binding SelectedCategory}"  FontFamily="{StaticResource ApplicationFont}" Title="Select a category" AccentColor="{StaticResource AccentSecondDarkColor}" ItemsSource="{Binding Categories}">
+            </material:PickerField>
+            <material:EditorField Text="{Binding BugReportDescription}"  FontFamily="{StaticResource ApplicationFont}" Title="Insert a description" AccentColor="{StaticResource AccentSecondDarkColor}"/>
+            <Button Command="{Binding SubmitBugReportCommand}" FontFamily="{StaticResource ApplicationFont}" WidthRequest="100" TextColor="WhiteSmoke" Text="Submit" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}"></Button>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.EditStatusPage"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:DataType="viewmodel:ProfileViewModel"
+             Title="EditStatusPage"
+             Loaded="ContentPage_Loaded"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout>
+            <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="0,0,15,15" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
+                    <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                    <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Edit Status" FontSize="16" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </Grid>
+            </Border>
+            <Label Margin="10,10,0,0" Text="Currently set to" TextColor="WhiteSmoke"/>
+            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DisplayChangeStatusActionSheetCommand}"/>
+                </Frame.GestureRecognizers>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Account.About}" TextColor="WhiteSmoke" LineBreakMode="WordWrap" VerticalTextAlignment="Center"/>
+            </Frame>
+            <Label Margin="10,10,0,0" Text="Select your status"/>
+            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="20,10,20,10" CornerRadius="20">
+                <CollectionView ItemsSource="{Binding StatusModels}" SelectionChanged="CollectionView_SelectionChanged" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:DefaultStatusModel">
+                            <Grid Margin="0,5,0,5" RowDefinitions="*,3" ColumnDefinitions="*,Auto" RowSpacing="4">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Text}" TextColor="WhiteSmoke" FontSize="16"/>
+                                <ImageButton Grid.Row="0" Grid.Column="1" IsVisible="{Binding IsSelected}" IsEnabled="{Binding IsSelected}">
+                                    <ImageButton.Source>
+                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Check}" Color="{StaticResource AccentSecondDarkColor}" Size="20"/>
+                                    </ImageButton.Source>
+                                </ImageButton>
+                                <Line IsVisible="{Binding IsLineVisible}" IsEnabled="{Binding IsLineVisible}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,2,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+            <Button Margin="0,10,0,0" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" WidthRequest="100" Text="Save" BackgroundColor="{StaticResource AccentDarkColor}" Opacity="0.8" TextColor="WhiteSmoke" Command="{Binding SaveChangesCommand}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

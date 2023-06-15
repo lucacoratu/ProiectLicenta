@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.CreateGroupPage"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:DataType="viewmodel:MainViewModel"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="ModalAnimated"
+             Loaded="ContentPage_Loaded"
+             Unloaded="ContentPage_Unloaded"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+    <ContentPage.Resources>
+        <Style TargetType="HorizontalStackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource AccentDarkColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding ExitCreateGroupCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Create new group" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <VerticalStackLayout Grid.Row="1" Padding="12">
+            <!--<Label Text="Choose a name for the group"/>-->
+            <Grid RowDefinitions="*" ColumnDefinitions="50,*" HorizontalOptions="Start" ColumnSpacing="20">
+                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <ImageButton x:Name="groupPicture" Clicked="groupPicture_Clicked" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Aspect="AspectFill" Source="add_picture.png"/>
+                    <ImageButton CornerRadius="14" Clicked="groupPicture_Clicked" Source="plus_group.png" Aspect="AspectFill" WidthRequest="20" HeightRequest="20" BackgroundColor="#505050" HorizontalOptions="End" Margin="0,-15,0,0"></ImageButton>
+                </VerticalStackLayout>
+                <!--<Entry FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Placeholder="Insert the group name" Text="{Binding GroupName}" WidthRequest="240"/>-->
+                <input:FormView Grid.Column="1" WidthRequest="240">
+                    <material:TextField x:Name="groupNameTextField" Text="{Binding GroupName}" FontFamily="{StaticResource ApplicationFont}" Title="Insert Group Name" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.UserGroup}}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" >
+                        <!--<validation:RequiredValidation/>-->
+                    </material:TextField>
+                </input:FormView>
+            </Grid>
+            <!--<SearchBar FontFamily="{StaticResource ApplicationFont}" Placeholder="Search for people to add" PlaceholderColor="Gray" FontSize="15" FontAttributes="Bold" HorizontalOptions="Center"/>-->
+            <material:TextField Padding="10" Margin="0,10,0,0" FontFamily="{StaticResource ApplicationFont}" Title="Search friends" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" TextChanged="SearchInputTextChanged">
+            </material:TextField>
+            <Frame IsVisible="{Binding HasFriends}" IsEnabled="{Binding HasFriends}" BackgroundColor="#414141" Margin="10,5,10,10" Padding="0" CornerRadius="20">
+                <CollectionView x:Name="createGroupCollectionView" ItemsSource="{Binding CreateGroupSearchResults}" SelectionMode="Multiple" SelectionChanged="createGroupCollectionView_SelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:FriendStatusModel">
+                            <HorizontalStackLayout>
+                                <HorizontalStackLayout Padding="10" Spacing="6">
+                                    <toolkit:AvatarView
+                                                HeightRequest="45"
+                                                ImageSource="{Binding ProfilePictureUrl}"
+                                                WidthRequest="45"
+                                                BorderWidth="0"
+                                                BorderColor="WhiteSmoke"
+                                                CornerRadius="32"
+                                                BackgroundColor="Transparent"
+                                                />
+                                    <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" Stroke="{Binding StatusStrokeColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Margin="-20,0,0,0" VerticalOptions="End">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10,10,10,10"/>
+                                        </Border.StrokeShape>
+                                    </Border>
+                                </HorizontalStackLayout>
+                                <Grid ColumnDefinitions="*">
+                                    <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                        <Label FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" Text="{Binding DisplayName}" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
+                                        <Label FontFamily="{StaticResource ApplicationFont}" Text="Status text" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
+                                        <!--<Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>-->
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <!--<Grid RowDefinitions="*,Auto" ColumnDefinitions="195,Auto">
+                                    -->
+                                <!--<Button FontFamily="{StaticResource ApplicationFont}" Grid.Row="0" Grid.Column="1" BackgroundColor="{StaticResource AccentDarkColor}" HorizontalOptions="Start" HeightRequest="30" WidthRequest="60" FontSize="12" Text="Add" TextColor="WhiteSmoke"/>-->
+                                <!--
+                                </Grid>-->
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+            <!--Empty view for when there are no friends to create a group with-->
+            <StackLayout IsVisible="{Binding NoFriends}" IsEnabled="{Binding NoFriends}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,10,0,0" Spacing="5">
+                <Image Source="no_friends.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill"/>
+                <Label Text="Sorry, you don't have any friends" HorizontalOptions="Center" TextColor="WhiteSmoke" FontFamily="{x:StaticResource ApplicationFont}" FontSize="14" FontAttributes="Bold"/>
+                <Label HorizontalOptions="Center" FontFamily="{x:StaticResource ApplicationFont}" Text="Make friends by sending friend requests"/>
+            </StackLayout>
+            <Button IsEnabled="{Binding HasFriends}" IsVisible="{Binding HasFriends}" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" Margin="0,10,0,0" Text="Create" TextColor="WhiteSmoke" HorizontalOptions="Center" Command="{Binding CreateGroupCommand}" Clicked="Button_Clicked"/>
+        </VerticalStackLayout>
+    <!--</ScrollView>-->
+    </Grid>
+</ContentPage>

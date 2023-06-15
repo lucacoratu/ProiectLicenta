@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.MobileMainPage"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             Shell.NavBarIsVisible="False"
+             Shell.PresentationMode="ModalAnimated"
+             Loaded="TabbedPage_Loaded"
+             Style="{StaticResource WillowTabbedPageStyle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+</TabbedPage>

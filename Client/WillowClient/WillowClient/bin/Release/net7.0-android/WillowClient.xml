@@ -1,0 +1,695 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WillowClient</name>
+    </assembly>
+    <members>
+        <member name="P:WillowClient.ViewModel.BaseViewModel.IsBusy">
+            <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.isBusy"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.BaseViewModel.Error">
+            <inheritdoc cref="F:WillowClient.ViewModel.BaseViewModel.error"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallFeedbackViewModel.FeedbackText">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallFeedbackViewModel.feedbackText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Friend">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.friend"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.RoomId">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.roomId"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Audio">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.audio"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.Video">
+            <inheritdoc cref="F:WillowClient.ViewModel.CallViewModel.video"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.CallViewModel.answerCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.CallViewModel.AnswerCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.AnswerCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.CallViewModel.AnswerCall"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.CallViewModel.denyCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.CallViewModel.DenyCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.DenyCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.CallViewModel.DenyCall"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.CallViewModel.endCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.CallViewModel.EndCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.CallViewModel.EndCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.CallViewModel.EndCall"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.Friend">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.friend"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.MessageText">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.messageText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.LoadingMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.loadingMessages"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.NoMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.noMessages"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.LastOnlineText">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.lastOnlineText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.IsInPage">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.isInPage"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.EntryEnabled">
+            <inheritdoc cref="F:WillowClient.ViewModel.ChatViewModel.entryEnabled"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.takePhotoCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.TakePhotoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.TakePhoto"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.pickFileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.PickFileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.PickFileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.PickFile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.sendMessageCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.SendMessageCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.SendMessageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.SendMessage"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.callPeerCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.CallPeerCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.CallPeerCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.CallPeer"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.videoCallPeerCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.VideoCallPeerCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.VideoCallPeerCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.VideoCallPeer"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ChatViewModel.goToUserProfileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ChatViewModel.GoToUserProfileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ChatViewModel.GoToUserProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ChatViewModel.GoToUserProfile"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.FeedbackViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.Session">
+            <inheritdoc cref="F:WillowClient.ViewModel.FeedbackViewModel.session"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.HexID">
+            <inheritdoc cref="F:WillowClient.ViewModel.FeedbackViewModel.hexID"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.SelectedCategory">
+            <inheritdoc cref="F:WillowClient.ViewModel.FeedbackViewModel.selectedCategory"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.BugReportDescription">
+            <inheritdoc cref="F:WillowClient.ViewModel.FeedbackViewModel.bugReportDescription"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.FeedbackViewModel.submitBugReportCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.FeedbackViewModel.SubmitBugReportCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.SubmitBugReportCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.FeedbackViewModel.SubmitBugReport"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.FeedbackViewModel.exitReportABugCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.FeedbackViewModel.ExitReportABugCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.ExitReportABugCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.FeedbackViewModel.ExitReportABug"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.FeedbackViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.FeedbackViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.FeedbackViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.FeedbackViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.Group">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.group"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.MessageText">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.messageText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.LoadingMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.loadingMessages"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.NoMessages">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.noMessages"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.ParticipantNames">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.participantNames"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.EntryEnabled">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupChatViewModel.entryEnabled"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.createGroupParticipantsListCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.CreateGroupParticipantsListCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.CreateGroupParticipantsListCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.CreateGroupParticipantsList"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.takePhotoCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.TakePhotoCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.TakePhotoCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.TakePhoto"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.pickFileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.PickFileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.PickFileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.PickFile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.sendMessageCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.SendMessageCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.SendMessageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.SendMessage"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.goToGroupDetailsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.GoToGroupDetails"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupChatViewModel.goToGroupCallCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupCallCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupChatViewModel.GoToGroupCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupChatViewModel.GoToGroupCall"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.Group">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.group"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.NumberParticipants">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.numberParticipants"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.IsGroupOwner">
+            <inheritdoc cref="F:WillowClient.ViewModel.GroupDetailsViewModel.isGroupOwner"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.changeGroupPictureCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.ChangeGroupPictureCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.ChangeGroupPictureCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.ChangeGroupPicture"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.participantTapCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.ParticipantTapCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.ParticipantTapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.ParticipantTap(WillowClient.Model.GroupParticipantModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.GroupDetailsViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.GroupDetailsViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.GroupDetailsViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.GroupDetailsViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.InformationViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.InformationViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.InformationViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.InformationViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.Username">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.username"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.Password">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.password"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.WindowsVisibility">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.windowsVisibility"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.PhoneVisibility">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.phoneVisibility"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.LoginViewModel.RememberMe">
+            <inheritdoc cref="F:WillowClient.ViewModel.LoginViewModel.rememberMe"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.Session">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.session"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.HexID">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.hexID"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.AddFriendSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.addFriendSelected"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.PendingSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.pendingSelected"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.CreateGroupSelected">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.createGroupSelected"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GroupName">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.groupName"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.AddFriendEntryText">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.addFriendEntryText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.StatusBackgroundColor">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.statusBackgroundColor"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.StatusStrokeColor">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.statusStrokeColor"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.LoadingGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.loadingGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.LoadingFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.loadingFriends"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noFriends"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.HasFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.hasFriends"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoFriendRequests">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noFriendRequests"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.NoSentFriendRequests">
+            <inheritdoc cref="F:WillowClient.ViewModel.MainViewModel.noSentFriendRequests"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.tapCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.TapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.Tap(WillowClient.Model.FriendStatusModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.tapGroupCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.TapGroupCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.TapGroupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.TapGroup(WillowClient.Model.GroupModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.getFriendsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GetFriendsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GetFriendsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GetFriendsAsync"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectAddFriendCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectAddFriendCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectAddFriendCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectAddFriend"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectPendingCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectPendingCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectPendingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectPending"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.addFriendCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.AddFriendCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.AddFriendCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.AddFriend"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.selectCreateGroupCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SelectCreateGroupCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SelectCreateGroupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SelectCreateGroup"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.createGroupCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.CreateGroupCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.CreateGroupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.CreateGroup"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.createGroupMobileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.CreateGroupMobileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.CreateGroupMobileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.CreateGroupMobile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToInformationCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToInformationCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToInformationCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToInformation"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToSubmitedFeedbackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToSubmitedFeedbackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToSubmitedFeedbackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToSubmitedFeedback"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToNewFeedbackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToNewFeedbackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToNewFeedbackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToNewFeedback"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.exitCreateGroupCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.ExitCreateGroupCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.ExitCreateGroupCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.ExitCreateGroup"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.addFriendMobileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.AddFriendMobileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.AddFriendMobileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.AddFriendMobile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.exitAddFriendCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.ExitAddFriendCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.ExitAddFriendCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.ExitAddFriend"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.friendRequestMobileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.FriendRequestMobileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.FriendRequestMobileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.FriendRequestMobile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.exitFriendRequestsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.ExitFriendRequestsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.ExitFriendRequestsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.ExitFriendRequests"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToSentFriendRequestsMobileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToSentFriendRequestsMobileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToSentFriendRequestsMobileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToSentFriendRequestsMobile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.exitSentFriendRequestsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.ExitSentFriendRequestsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.ExitSentFriendRequestsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.ExitSentFriendRequests"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.sendFriendRequestsToSelectedRecommendationsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.SendFriendRequestsToSelectedRecommendationsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.SendFriendRequestsToSelectedRecommendationsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.SendFriendRequestsToSelectedRecommendations"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.acceptFriendRequestCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.AcceptFriendRequestCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.AcceptFriendRequestCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.AcceptFriendRequest(WillowClient.Model.FriendRequestModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.declineFriendRequestCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.DeclineFriendRequestCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.DeclineFriendRequestCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.DeclineFriendRequest(WillowClient.Model.FriendRequestModel)"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToSettingsWindowsCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToSettingsWindowsCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToSettingsWindowsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToSettingsWindows"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.logoutCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.LogoutCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.LogoutCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.Logout"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToReportABugCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToReportABugCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToReportABugCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToReportABug"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.MainViewModel.goToProfileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.MainViewModel.GoToProfileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.MainViewModel.GoToProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.MainViewModel.GoToProfile"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.ProfileViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.NumberFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.ProfileViewModel.numberFriends"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.NumberGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.ProfileViewModel.numberGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.Session">
+            <inheritdoc cref="F:WillowClient.ViewModel.ProfileViewModel.session"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.ProfileViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ProfileViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ProfileViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ProfileViewModel.goToEditProfileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ProfileViewModel.GoToEditProfileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.GoToEditProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ProfileViewModel.GoToEditProfile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ProfileViewModel.goToEditStatusCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ProfileViewModel.GoToEditStatusCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.GoToEditStatusCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ProfileViewModel.GoToEditStatus"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ProfileViewModel.displayChangeStatusActionSheetCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ProfileViewModel.DisplayChangeStatusActionSheetCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.DisplayChangeStatusActionSheetCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ProfileViewModel.DisplayChangeStatusActionSheet"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.ProfileViewModel.saveChangesCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.ProfileViewModel.SaveChangesCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.ProfileViewModel.SaveChangesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.ProfileViewModel.SaveChanges"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Username">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.username"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Password">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.password"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.ConfirmPassword">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.confirmPassword"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.Email">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.email"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.RegisterViewModel.DisplayName">
+            <inheritdoc cref="F:WillowClient.ViewModel.RegisterViewModel.displayName"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.SettingsViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.Session">
+            <inheritdoc cref="F:WillowClient.ViewModel.SettingsViewModel.session"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.HexID">
+            <inheritdoc cref="F:WillowClient.ViewModel.SettingsViewModel.hexID"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.NumberFriends">
+            <inheritdoc cref="F:WillowClient.ViewModel.SettingsViewModel.numberFriends"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.NumberGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.SettingsViewModel.numberGroups"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.SettingsViewModel.goToReportABugCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.SettingsViewModel.GoToReportABugCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.GoToReportABugCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.SettingsViewModel.GoToReportABug"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.SettingsViewModel.goToProfileCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.SettingsViewModel.GoToProfileCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.GoToProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.SettingsViewModel.GoToProfile"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.SettingsViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.SettingsViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.SettingsViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.SettingsViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.Account">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.account"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.UserProfile">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.userProfile"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.UserId">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.userId"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.NumberCommonGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.numberCommonGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.CommonGroupsText">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.commonGroupsText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.ParticipantsText">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.participantsText"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.LoadingCommonGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.loadingCommonGroups"/>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.LoadedCommonGroups">
+            <inheritdoc cref="F:WillowClient.ViewModel.UserProfileViewModel.loadedCommonGroups"/>
+        </member>
+        <member name="F:WillowClient.ViewModel.UserProfileViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.UserProfileViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:WillowClient.ViewModel.UserProfileViewModel.GoBack"/>.</summary>
+        </member>
+        <member name="F:WillowClient.ViewModel.UserProfileViewModel.tapCommand">
+            <summary>The backing field for <see cref="P:WillowClient.ViewModel.UserProfileViewModel.TapCommand"/>.</summary>
+        </member>
+        <member name="P:WillowClient.ViewModel.UserProfileViewModel.TapCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:WillowClient.ViewModel.UserProfileViewModel.Tap(WillowClient.Model.CommonGroupWithParticipantsModel)"/>.</summary>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_DatePicker.TextColorTo(Microsoft.Maui.Controls.DatePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Editor.TextColorTo(Microsoft.Maui.Controls.Editor,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Entry.TextColorTo(Microsoft.Maui.Controls.Entry,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Label.TextColorTo(Microsoft.Maui.Controls.Label,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Picker.TextColorTo(Microsoft.Maui.Controls.Picker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_RadioButton.TextColorTo(Microsoft.Maui.Controls.RadioButton,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_SearchBar.TextColorTo(Microsoft.Maui.Controls.SearchBar,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+        <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_TimePicker.TextColorTo(Microsoft.Maui.Controls.TimePicker,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
+            <summary>
+            Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color
+            </summary>
+            <param name = "element"></param>
+            <param name = "color">The target color to animate the <see cref = "P:Microsoft.Maui.ITextStyle.TextColor"/> to</param>
+            <param name = "rate">The time, in milliseconds, between the frames of the animation</param>
+            <param name = "length">The duration, in milliseconds, of the animation</param>
+            <param name = "easing">The easing function to be used in the animation</param>
+            <returns>Value indicating if the animation completed successfully or not</returns>
+        </member>
+    </members>
+</doc>

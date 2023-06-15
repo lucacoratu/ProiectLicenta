@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frequestservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frequestservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: frequestservice
+    spec:
+      containers:
+      - image: localhost:32000/friendrequestservice
+        name: frequestservice
+        ports:
+        - containerPort: 8083
+          name: frequestservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frequestservice
+spec:
+  ports:
+  - port: 8083
+  selector:
+    app: frequestservice

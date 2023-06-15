@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:Class="WillowClient.Views.GroupChatPage"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:GroupChatViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Loaded="ContentPage_Loaded"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             Shell.NavBarIsVisible="True">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="SentMessageTemplate" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2">
+                    <Border Margin="10,0,10,0" Padding="5" MaximumWidthRequest="{OnPlatform Android='250', iOS='250', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalOptions="End" BackgroundColor="{StaticResource AccentDarkColor}" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,10,0"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout VerticalOptions="End" Spacing="0">
+                            <Label Margin="0,0,0,0" FontAttributes="Bold" BackgroundColor="{StaticResource AccentDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding SenderName}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" FontSize="13"/>
+                            <!--<Line Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="2"/>-->
+                            <Label BackgroundColor="{StaticResource AccentThirdDarkColor}" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" TextColor="WhiteSmoke" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" HorizontalOptions="Fill" LineBreakMode="WordWrap" Padding="0,0,0,0" FontSize="14"/>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
+                                <CollectionView Grid.Column="0" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:ReactionModel">
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                                <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" HorizontalTextAlignment="End" FontSize="11"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="ReceivedMessageTemplate" x:DataType="model:MessageModel">
+                <Grid ColumnDefinitions="*,*,*" Margin="0,1,0,2" RowDefinitions="1,*">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </Grid.GestureRecognizers>
+                    <Label Text="{Binding MessageId}" IsVisible="False" IsEnabled="True" TextColor="Transparent" Grid.Row="0" HeightRequest="10" BackgroundColor="Transparent" Margin="0,-50,0,0" Grid.Column="2"/>
+                    <Border Grid.Row="1" Margin="10,0,10,0" Padding="5" MaximumWidthRequest="{OnPlatform Android='300', iOS='300', WinUI='700'}" Stroke="#7B68EE" StrokeThickness="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#404040" HorizontalOptions="Start" Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10,10,0,10"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout VerticalOptions="Start" Spacing="0">
+                            <Label BackgroundColor="#404040" FontAttributes="Bold" FontFamily="{StaticResource ApplicationFont}" Text="{Binding SenderName}" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" FontSize="13"/>
+                            <!--<Line Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="2"></Line>-->
+                            <Label BackgroundColor="#505050" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Text}" LineBreakMode="WordWrap" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" Padding="0,0,0,0" FontSize="14"/>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="15">
+                                <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding TimeStamp}" TextColor="WhiteSmoke" VerticalOptions="Center" HorizontalTextAlignment="Start" FontSize="11"/>
+                                <CollectionView Grid.Column="1" ItemsLayout="HorizontalList" VerticalOptions="Start" HeightRequest="30" ItemsSource="{Binding Reactions}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:ReactionModel">
+                                            <Label Padding="0" Margin="0" Text="{Binding Emoji}" FontSize="12" VerticalTextAlignment="Start"/>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+            <model:MessageDataTemplateSelector x:Key="MessageTemplateSelector" ReceivedMessageTemplate="{StaticResource ReceivedMessageTemplate}" SentMessageTemplate="{StaticResource SentMessageTemplate}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*, Auto" ColumnDefinitions="*">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <FlexLayout Direction="Row" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" JustifyContent="SpaceBetween">
+                <FlexLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToGroupDetailsCommand}" />
+                </FlexLayout.GestureRecognizers>
+                <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" FlexLayout.AlignSelf="Center" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                <HorizontalStackLayout FlexLayout.AlignSelf="Center">
+                    <toolkit:AvatarView
+                             HeightRequest="32" Margin="0,0,10,0"
+                             ImageSource="{Binding Group.GroupPictureUrl}"
+                             WidthRequest="32"
+                             BorderWidth="0"
+                             BorderColor="WhiteSmoke"
+                             CornerRadius="32"
+                             FlexLayout.AlignSelf="Center"
+                             BackgroundColor="Transparent"
+                    />
+                    <VerticalStackLayout Spacing="0" FlexLayout.AlignSelf="Center" Margin="0,0,10,0">
+                        <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Group.GroupName}" TextColor="WhiteSmoke" FontSize="13" FontAttributes="Bold"></Label>
+                        <Label MaximumWidthRequest="130" FontSize="12" LineBreakMode="TailTruncation" MaxLines="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding ParticipantNames}" TextColor="WhiteSmoke" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout FlexLayout.AlignSelf="Center" Margin="0,0,4,0" Spacing="3">
+                    <ImageButton BackgroundColor="Transparent" Margin="5,0,5,0" FlexLayout.AlignSelf="Center" Command="{Binding GoToGroupCallCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20" Color="WhiteSmoke"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <ImageButton BackgroundColor="Transparent" Margin="5,0,5,0" FlexLayout.AlignSelf="Center" Command="{Binding GoToGroupCallCommand}">
+                        <ImageButton.Source>
+                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Phone}" Size="20" Color="WhiteSmoke"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </HorizontalStackLayout>
+            </FlexLayout>
+        </Border>
+        <CollectionView x:Name="messageGrid" Grid.Row="1" Grid.Column="0" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}" Margin="0,0,0,0" ItemTemplate="{StaticResource MessageTemplateSelector}" ItemsSource="{Binding MessageGroups}" IsGrouped="True" ItemsUpdatingScrollMode="KeepLastItemInView">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="model:MessageGroupModel">
+                    <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Name}" BackgroundColor="Transparent" Padding="0,10,0,10" HorizontalOptions="Center" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+        </CollectionView>
+        <!-- Collection view empty view -->
+        <StackLayout Grid.Row="1" Grid.Column="0" IsVisible="{Binding NoMessages}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,0" Spacing="5">
+            <Image Source="empty_chat.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill"/>
+            <Label Text="There are no messages in this group" TextColor="WhiteSmoke" FontFamily="{x:StaticResource ApplicationFont}" FontSize="14" FontAttributes="Bold"/>
+            <Label HorizontalOptions="Center" FontFamily="{x:StaticResource ApplicationFont}" Text="Be first to say hello"/>
+        </StackLayout>
+        <StackLayout Grid.Row="1" Grid.Column="0" Margin="0,-10,0,0" HorizontalOptions="Center" VerticalOptions="Start">
+            <ActivityIndicator IsRunning="True" IsEnabled="{Binding LoadingMessages}" IsVisible="{Binding LoadingMessages}"/>
+        </StackLayout>
+        <Border StrokeThickness="0" Grid.Row="2" HeightRequest="40" BackgroundColor="Black" Padding="4">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="15,15,0,0" />
+            </Border.StrokeShape>
+            <FlexLayout Grid.Row="2" HeightRequest="40">
+                <Button FontFamily="{StaticResource ApplicationFont}" Text="+" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding PickFileCommand}"/>
+                <Entry FontFamily="{StaticResource ApplicationFont}" Placeholder="Insert Message" Text="{Binding MessageText}" FlexLayout.Basis="82%" IsEnabled="{Binding EntryEnabled}" Keyboard="Chat" ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"/>
+                <ImageButton Aspect="AspectFit" BackgroundColor="Transparent" Source="camera.png" FlexLayout.Basis="6%" Command="{Binding TakePhotoCommand}"></ImageButton>
+                <Button FontFamily="{StaticResource ApplicationFont}" Text=">" FlexLayout.Basis="6%" Padding="0" Margin="0" TextColor="WhiteSmoke" BackgroundColor="Transparent" Command="{Binding SendMessageCommand}"/>
+            </FlexLayout>
+        </Border>
+    </Grid>
+</ContentPage>

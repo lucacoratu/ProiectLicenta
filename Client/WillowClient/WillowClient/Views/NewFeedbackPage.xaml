@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.NewFeedbackPage"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:DataType="viewmodel:FeedbackViewModel"
+             Title="NewFeedbackPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+    <Grid RowDefinitions="Auto,*">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="New feedback" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <VerticalStackLayout Spacing="15" Margin="0,10,0,0" Padding="20,0,20,0" Grid.Row="1">
+            <Label FontFamily="{StaticResource ApplicationFont}" FontSize="15" TextColor="WhiteSmoke" LineBreakMode="WordWrap" HorizontalOptions="Center" Text="Help me improve the application by entering your opinion in the text field below"/>
+            <material:TextField FontFamily="{StaticResource ApplicationFont}" Title="Insert a description" AccentColor="{StaticResource AccentSecondDarkColor}"/>
+            <Button WidthRequest="100" HeightRequest="40" Text="Submit" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" FontAttributes="Bold" TextColor="WhiteSmoke"/>
+            <CarouselView Margin="0,20,0,0" ItemsSource="{Binding FeedbackQuestions}" IndicatorView="indicatorView">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="model:FeedbackQuestionModel">
+                        <Frame Padding="10" CornerRadius="20" BackgroundColor="#505050">
+                            <VerticalStackLayout Spacing="10" >
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                                    <Label FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" FontSize="18" Text="Question"/>
+                                    <Label FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" FontSize="18" Text="{Binding QuestionIndex}" TextColor="WhiteSmoke"/>
+                                </HorizontalStackLayout>
+                                <Label HorizontalOptions="Center" FontFamily="{StaticResource ApplicationFont}" FontSize="13" Text="{Binding Question}" TextColor="WhiteSmoke"/>
+                                <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="50">
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="1" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="2" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="3" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="4" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                    <Button BackgroundColor="{StaticResource AccentDarkColor}" Text="5" TextColor="WhiteSmoke" HeightRequest="40"/>
+                                </HorizontalStackLayout>
+                                <Grid ColumnDefinitions="*,*">
+                                    <Label Grid.Column="0" HorizontalOptions="Start" Text="Not satisfied" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}"/>
+                                    <Label Grid.Column="1" HorizontalOptions="End" Text="Satisfied" TextColor="WhiteSmoke" FontFamily="{StaticResource ApplicationFont}"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <IndicatorView x:Name="indicatorView"
+                   IndicatorColor="LightGray"
+                   SelectedIndicatorColor="{StaticResource AccentSecondDarkColor}"
+                   HorizontalOptions="Center" />
+            <Button WidthRequest="100" HeightRequest="40" Text="Submit" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" FontAttributes="Bold" TextColor="WhiteSmoke"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

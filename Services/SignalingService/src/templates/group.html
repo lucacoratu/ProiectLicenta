@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Import SocketIO for signalling -->
+        <!-- <script src="/socket.io/socket.io.js"></script> -->
+        <!-- Import JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+        <!-- Import WebRTC adapter for compatibility with all the browsers  -->
+        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        
+        <!-- Import TURN config -->
+        <script src="js/config.js" defer></script>
+
+        <!-- Import script containing WebRTC related functions -->
+        <script src="js/group.js" defer></script>
+
+        <!-- Font awesome icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+        <!-- Import style sheet -->
+        <link rel="stylesheet" href="css/group.css">
+    </head>
+    <body>
+        <div id="remoteVideosContainer" class="remote-videos-container">
+
+        </div>
+        <video id="localVideo" class="local-video" autoplay muted playsinline></video>
+        <img id="localImage" class="local-image" src="images/user.png" hidden></image>
+
+        <!-- Buttons ui -->
+        <div class="buttonsDiv">
+            <div id="microphone_button" onclick="toggleMicrophone();">
+                <i class="fa fa-microphone" style="font-size: 30px; color: whitesmoke;" ></i>
+            </div>
+            <div id="camera_button" onclick="toggleCamera();">
+                <i class="fa fa-video" style="font-size: 30px; color: whitesmoke;"></i>
+            </div>
+        </div>
+
+        <h2 id="roomID" hidden>{{.RoomID}}</h2>
+        <h2 id="accountID" hidden>{{.AccountID}}</h2>
+        <h2 id="audioEnabled" hidden>{{.AudioEnabled}}</h2>
+        <h2 id="videoEnabled" hidden>{{.VideoEnabled}}</h2>
+        <h2 id="platform" hidden>{{.Platform}}</h2>
+    </body>
+</html> 

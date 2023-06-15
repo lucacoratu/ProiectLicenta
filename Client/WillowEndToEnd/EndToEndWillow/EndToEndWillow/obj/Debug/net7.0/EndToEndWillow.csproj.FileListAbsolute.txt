@@ -1,0 +1,17 @@
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.csproj.AssemblyReference.cache
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.GeneratedMSBuildEditorConfig.editorconfig
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.AssemblyInfoInputs.cache
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.AssemblyInfo.cs
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.csproj.CoreCompileInputs.cache
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\bin\Debug\net7.0\EndToEndWillow.exe
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\bin\Debug\net7.0\EndToEndWillow.deps.json
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\bin\Debug\net7.0\EndToEndWillow.runtimeconfig.json
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\bin\Debug\net7.0\EndToEndWillow.dll
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\bin\Debug\net7.0\EndToEndWillow.pdb
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.dll
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\refint\EndToEndWillow.dll
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.pdb
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.genruntimeconfig.cache
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\ref\EndToEndWillow.dll
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+D:\ProiectLicenta\Client\WillowEndToEnd\EndToEndWillow\EndToEndWillow\obj\Debug\net7.0\EndToEndWillow.csproj.CopyComplete

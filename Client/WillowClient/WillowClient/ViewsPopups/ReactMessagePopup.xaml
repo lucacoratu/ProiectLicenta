@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.ViewsPopups.ReactMessagePopup"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Color="Transparent"
+             x:Name="popupReactMessage"
+             Opened="Popup_Opened">
+    <VerticalStackLayout Padding="5,0,5,0" Spacing="5" VerticalOptions="Start">
+        <Frame x:Name="popupFrame" BorderColor="WhiteSmoke" CornerRadius="20" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+            <HorizontalStackLayout WidthRequest="140" Spacing="5" HorizontalOptions="Center">
+                <ImageButton Clicked="EmojiSmile_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x1F603;" Size="20"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton Clicked="EmojiLaughTear_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x1F602;" Size="20"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton Clicked="EmojiSmileRed_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x1F60A;" Size="20"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton Clicked="EmojiHearts_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x1F970;" Size="20"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton Clicked="EmojiTongue_Clicked">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="&#x1F61D;" Size="20"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame x:Name="popupFrameMessage" BorderColor="WhiteSmoke" CornerRadius="20" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+            <Label x:Name="labelMessage" TextColor="WhiteSmoke" HorizontalTextAlignment="Start" HorizontalOptions="Start" FontSize="11" MaximumHeightRequest="236" MaximumWidthRequest="140" LineBreakMode="WordWrap"/>
+        </Frame>
+        <Label TextColor="Transparent" HeightRequest="40"/>
+    </VerticalStackLayout>
+</toolkit:Popup>

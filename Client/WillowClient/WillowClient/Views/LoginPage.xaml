@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:Class="WillowClient.Views.LoginPage"
+             x:DataType="viewmodel:LoginViewModel"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             Loaded="ContentPage_Loaded"
+             >
+    <ScrollView>
+        <VerticalStackLayout>
+            <Image x:Name="loginImage" HorizontalOptions="Center" HeightRequest="160" Source="login_image.png" Aspect="AspectFit"/>
+            <Label Text="Welcome back" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="20" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            <Label Text="Login to your account" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            <input:FormView Spacing="20" Padding="20" SubmitCommand="{Binding LoginCommand}">
+                <material:TextField x:Name="entryUsername" FontFamily="{StaticResource ApplicationFont}" Title="Username" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.User}}" Text="{Binding Username}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" Unfocused="entryUsername_Unfocused">
+                    <!--<validation:RequiredValidation/>-->
+                </material:TextField>
+                <material:TextField x:Name="entryPassword" FontFamily="{StaticResource ApplicationFont}" Title="Password" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Lock}}" Text="{Binding Password}" MaxLength="20" AccentColor="{StaticResource AccentSecondDarkColor}" IsPassword="True" material:AllowClear="True" ClearButtonVisibility="WhileEditing" Unfocused="entryPassword_Unfocused">
+                    <!--<validation:RequiredValidation/>-->
+                </material:TextField>
+                <material:CheckBox Text="Remember me?" FontFamily="{StaticResource ApplicationFont}" Color="{StaticResource AccentSecondDarkColor}" IsChecked="{Binding RememberMe}" TextColor="WhiteSmoke" IconColor="WhiteSmoke" />
+                <Button Text="Login" StyleClass="FilledButton" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" TextColor="WhiteSmoke" input:FormView.IsSubmitButton="True" Clicked="Button_Clicked"></Button>
+                <HorizontalStackLayout Spacing="20">
+                    <Label Text="Don't have an account?" FontFamily="{StaticResource ApplicationFont}" Style="{StaticResource WillowMediumLabelStyle}"></Label>
+                    <Label Text="Signup" FontFamily="{StaticResource ApplicationFont}" Style="{StaticResource WillowLinkLabelStyle}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToRegisterCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </input:FormView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

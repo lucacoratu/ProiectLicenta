@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Import JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+        <!-- Import WebRTC adapter for compatibility with all the browsers  -->
+        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        
+        <!-- Import TURN config -->
+        <script src="js/config.js" defer></script>
+
+        <!-- Import script containing WebRTC related functions -->
+        <script src="js/main.js" defer></script>
+
+        <!-- Font awesome icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+        <!-- Import style sheet -->
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <video id="remoteVideo" class="remote-video" autoplay playsinline></video>
+        <div id="remote_muted" style="display: none;">
+            <i class="fa fa-microphone-slash"></i>
+        </div>
+        <!-- <img id="remoteImage" class="remote-image" src="images/user.png" hidden></image> -->
+        <video id="localVideo" class="local-video" autoplay muted playsinline></video>
+        <!-- <img id="localImage" class="local-image" src="images/user.png" hidden></image> -->
+
+        <b id="labelFrameRate" class="label-framerate">FPS</b>
+        <b id="labelLocalFrameRate" class="label-local-framerate">FPS</b>
+
+        <!-- Buttons ui -->
+        <div class="buttonsDiv">
+            <div id="microphone_button" onclick="toggleMicrophone();">
+                <i class="fa fa-microphone" style="font-size: 30px; color: whitesmoke;" ></i>
+            </div>
+            <div id="camera_button" onclick="toggleCamera();">
+                <i class="fa fa-video" style="font-size: 30px; color: whitesmoke;"></i>
+            </div>
+        </div>
+
+        <h2 id="roomID" hidden>{{.RoomID}}</h2>
+        <h2 id="audioEnabled" hidden>{{.AudioEnabled}}</h2>
+        <h2 id="videoEnabled" hidden>{{.VideoEnabled}}</h2>
+        <h2 id="platform" hidden>{{.Platform}}</h2>
+        <h2 id="deviceInfo" hidden>{{.DeviceInfo}}</h2>
+    </body>
+</html>

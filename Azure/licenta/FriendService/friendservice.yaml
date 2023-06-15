@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: friendservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: friendservice
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: friendservice
+    spec:
+      containers:
+      - image: localhost:32000/friendservice
+        name: friendservice
+        ports:
+        - containerPort: 8084
+          name: friendservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: friendservice
+spec:
+  ports:
+  - port: 8084
+  selector:
+    app: friendservice

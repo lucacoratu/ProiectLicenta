@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.GroupDetailsPage"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:GroupDetailsViewModel"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             Shell.NavBarIsVisible="True"
+             Loaded="ContentPage_Loaded"
+             >
+    <ScrollView>
+        <VerticalStackLayout>
+        <Border StrokeThickness="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
+                    <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                    <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Group Details" TextColor="WhiteSmoke" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <VerticalStackLayout Padding="10">
+            <HorizontalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeGroupPictureCommand}"/>
+                </HorizontalStackLayout.GestureRecognizers>
+                <toolkit:AvatarView 
+                    HeightRequest="110"
+                    Margin="0,0,0,0"
+                    ImageSource="{Binding Group.GroupPictureUrl}"
+                    WidthRequest="110"
+                    BorderWidth="0"
+                    BorderColor="WhiteSmoke"
+                    CornerRadius="60"
+                    BackgroundColor="Transparent"/>
+                <Frame Padding="0" CornerRadius="15" WidthRequest="32" HeightRequest="32" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" Margin="-30,0,0,0">
+                    <Image WidthRequest="16" HeightRequest="16" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image.Source>
+                            <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Color="WhiteSmoke"/>
+                        </Image.Source>
+                    </Image>
+                </Frame>
+            </HorizontalStackLayout>
+            <Label Margin="0,10,0,10" FontFamily="{StaticResource ApplicationFont}" FontSize="22" FontAttributes="Bold" Text="{Binding Group.GroupName}" HorizontalOptions="Center" HorizontalTextAlignment="Center"></Label>
+                <Grid HeightRequest="95" Margin="10,5,10,2" Padding="5,10,5,10" ColumnSpacing="60" ColumnDefinitions="*,*" BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+                    <Frame Grid.Column="0" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
+                        <VerticalStackLayout Spacing="6" >
+                            <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                                <ImageButton WidthRequest="24" HeightRequest="24">
+                                    <ImageButton.Source>
+                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}" Size="20"/>
+                                    </ImageButton.Source>
+                                </ImageButton>
+                            </Frame>
+                            <Label Text="Call" HorizontalOptions="Center" TextColor="WhiteSmoke"></Label>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame Grid.Column="1" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
+                        <VerticalStackLayout Spacing="6">
+                            <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
+                                <ImageButton WidthRequest="20" HeightRequest="20">
+                                    <ImageButton.Source>
+                                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20"/>
+                                    </ImageButton.Source>
+                                </ImageButton>
+                            </Frame>
+                            <Label Text="Video" HorizontalOptions="Center" TextColor="WhiteSmoke"></Label>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+            <HorizontalStackLayout Margin="0,0,10,0" Spacing="8">
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding NumberParticipants}" FontSize="18" FontAttributes="Bold"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Text="Participants" FontSize="18" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+            <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="5,10,5,10" CornerRadius="20">
+                <HorizontalStackLayout Spacing="10" Padding="10,0,10,0">
+                    <Frame Padding="0" BackgroundColor="#505050" WidthRequest="32" HeightRequest="32" CornerRadius="15">
+                        <ImageButton Background="#505050" CornerRadius="20" WidthRequest="20" HeightRequest="20">
+                            <ImageButton.Source>
+                                <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Plus}" Size="20"/>
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </Frame>
+                    <Label Text="Add participants" TextColor="WhiteSmoke" VerticalTextAlignment="Center"></Label>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame BackgroundColor="#414141" Margin="10" Padding="5,10,5,10" CornerRadius="20">
+                <CollectionView ItemsSource="{Binding Participants}" SelectionMode="None" VerticalScrollBarVisibility="Default" >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:GroupParticipantModel">
+                            <Grid Padding="10,0,10,0" ColumnDefinitions="45,*" ColumnSpacing="6" Margin="0,10,0,5">
+                                <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:GroupDetailsViewModel}}, Path=ParticipantTapCommand}"
+                                    CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
+                                <toolkit:AvatarView
+                                        Grid.Column="0"
+                                        HeightRequest="45"
+                                        ImageSource="{Binding ProfilePictureUrl}"
+                                        WidthRequest="45"
+                                        BorderWidth="0"
+                                        BorderColor="WhiteSmoke"
+                                        CornerRadius="32"
+                                        BackgroundColor="Transparent"
+                                        >
+                                </toolkit:AvatarView>
+                                <Grid Grid.Column="1" ColumnDefinitions="*" RowDefinitions="*,*,Auto">
+                                    <Label Grid.Row="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                    <Label Grid.Row="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding Owner}" VerticalOptions="Center" HorizontalOptions="End" TextColor="WhiteSmoke" FontSize="13"/>
+                                    <Label Grid.Row="1" Text="{Binding About}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="12"/>
+                                    <Line Margin="0,20,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"></Line>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+            <Grid Margin="10" Padding="5,10,5,10" ColumnDefinitions="*,*" ColumnSpacing="30">
+                <Button Grid.Column="0" Text="Exit group" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}"/>
+                    <Button Grid.Column="1" Text="Delete group" TextColor="WhiteSmoke" BackgroundColor="Red" IsEnabled="{Binding IsGroupOwner}" IsVisible="{Binding IsGroupOwner}"/>
+                </Grid>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

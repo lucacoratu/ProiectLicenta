@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.MobileFriendsPage"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:local="clr-namespace:WillowClient.Views"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             Title="Friends"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}"
+             IconImageSource="friends.png">
+    <Grid RowDefinitions="40,*" ColumnDefinitions="*">
+        <material:TextField x:Name="searchFriends" Title="Search messages" FontFamily="{StaticResource ApplicationFont}" AccentColor="{StaticResource AccentSecondDarkColor}" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.MagnifyingGlass}}" Margin="5" TextChanged="TextField_TextChanged"/>
+        <CollectionView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding FriendsSearchResults}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:FriendStatusModel">
+                    <Grid Padding="10" ColumnDefinitions="50,*" Margin="5,0,5,0">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=TapCommand}"
+                                    CommandParameter="{Binding .}"/>
+                        </Grid.GestureRecognizers>
+                        <HorizontalStackLayout Grid.Column="0">
+                            <toolkit:AvatarView
+                                    HeightRequest="45"
+                                    ImageSource="{Binding ProfilePictureUrl}"
+                                    WidthRequest="45"
+                                    BorderWidth="0"
+                                    BorderColor="WhiteSmoke"
+                                    CornerRadius="32"
+                                    BackgroundColor="#505050"
+                                    >
+                            </toolkit:AvatarView>
+                            <Border HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="{Binding StatusStrokeColor}" Margin="-15,-20,0,0" VerticalOptions="End">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10"/>
+                                </Border.StrokeShape>
+                            </Border>
+                        </HorizontalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Grid ColumnDefinitions="3*,*">
+                                <Label Grid.Column="0" Grid.ColumnSpan="3" FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="13" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                <Label Grid.Column="3" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessageTimestamp}" Margin="0,0,0,0" HorizontalTextAlignment="End" HorizontalOptions="End" VerticalOptions="Start" VerticalTextAlignment="Center"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*,*,20">
+                                <Label Grid.Column="0" Grid.ColumnSpan="3" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" TextColor="WhiteSmoke" FontSize="12" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
+                                <Border IsVisible="{Binding HasNewMessages}" IsEnabled="{Binding HasNewMessages}" VerticalOptions="Center" StrokeThickness="0" BackgroundColor="{StaticResource AccentDarkColor}" HorizontalOptions="End" Grid.Column="4" WidthRequest="20" HeightRequest="20">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="30,30,30,30"/>
+                                    </Border.StrokeShape>
+                                    <Label HorizontalOptions="Center" VerticalOptions="Center" FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" FontSize="13" TextColor="WhiteSmoke" Text="{Binding NumberNewMessages}"/>
+                                </Border>
+                            </Grid>
+                            <Line Margin="0,2,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <StackLayout Grid.Row="1" Grid.Column="0" IsVisible="{Binding NoFriends}" IsEnabled="{Binding NoFriends}" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,0" Spacing="5">
+            <Image Source="no_friends.png" WidthRequest="100" HeightRequest="100" Aspect="AspectFill"/>
+            <Label Text="Sorry, you don't have any friends" HorizontalOptions="Center" TextColor="WhiteSmoke" FontFamily="{x:StaticResource ApplicationFont}" FontSize="14" FontAttributes="Bold"/>
+            <Label HorizontalOptions="Center" FontFamily="{x:StaticResource ApplicationFont}" Text="Make friends by sending friend requests"/>
+        </StackLayout>
+        <StackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Start">
+            <ActivityIndicator IsRunning="True" IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=LoadingFriends}" IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=LoadingFriends}"/>
+        </StackLayout>
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" HeightRequest="35" VerticalOptions="End" Margin="10">
+            <Button Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Add Friend" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding AddFriendMobileCommand}"/>
+            <Button Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" BackgroundColor="{StaticResource AccentDarkColor}" VerticalOptions="End" HeightRequest="30" Padding="10,0,10,0" HorizontalOptions="Center" Text="Friend Requests" FontAttributes="Bold" FontSize="16" TextColor="WhiteSmoke" Command="{Binding FriendRequestMobileCommand}"/>
+        </Grid>
+        </Grid>
+</ContentPage>

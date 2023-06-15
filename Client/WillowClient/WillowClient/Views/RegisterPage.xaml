@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             x:Class="WillowClient.Views.RegisterPage"
+             x:DataType="viewmodel:RegisterViewModel"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             BackgroundColor="#303030"
+             Shell.NavBarIsVisible="True"
+             Shell.BackgroundColor="{AppThemeBinding Dark={StaticResource PageDarkBackgroundColor}, Light={StaticResource PageLightBackgroundColor}}">
+
+    <VerticalStackLayout Margin="0,-20,0,0" Padding="0">
+        <Image HorizontalOptions="Center" HeightRequest="200" Source="register_image.png" Aspect="AspectFit"/>
+        <Label Margin="0,-15,0,0" FontFamily="{StaticResource ApplicationFont}" Text="Welcome" TextColor="WhiteSmoke" FontSize="20" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+        <Label Text="Register a new account" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="15" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+        <input:FormView Padding="20" Spacing="10" SubmitCommand="{Binding RegisterCommand}">
+            <material:TextField x:Name="entryUsername" FontFamily="{StaticResource ApplicationFont}" Title="Username" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.User}}" Text="{Binding Username}" AccentColor="{StaticResource AccentDarkColor}" AllowClear="True">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryPassword" FontFamily="{StaticResource ApplicationFont}" Title="Password" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Lock}}" Text="{Binding Password}" MaxLength="20" AccentColor="{StaticResource AccentDarkColor}" IsPassword="True" material:AllowClear="True" ClearButtonVisibility="WhileEditing">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryConfirmPassword" FontFamily="{StaticResource ApplicationFont}" Title="Confirm password" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Lock}}" Text="{Binding ConfirmPassword}" MaxLength="20" AccentColor="{StaticResource AccentDarkColor}" IsPassword="True" material:AllowClear="True" ClearButtonVisibility="WhileEditing" >
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryEmail" FontFamily="{StaticResource ApplicationFont}" Title="Email" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.Envelope}}" Text="{Binding Email}" AccentColor="{StaticResource AccentDarkColor}" material:AllowClear="True" ClearButtonVisibility="WhileEditing">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <material:TextField x:Name="entryDisplayName" FontFamily="{StaticResource ApplicationFont}" Title="Display name" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.UserNinja}}" Text="{Binding DisplayName}" AccentColor="{StaticResource AccentDarkColor}" material:AllowClear="True" ClearButtonVisibility="WhileEditing">
+                <!--<validation:RequiredValidation/>-->
+            </material:TextField>
+            <Button Margin="0,10,0,0" Text="Register" FontFamily="{StaticResource ApplicationFont}" StyleClass="FilledButton" BackgroundColor="{StaticResource AccentDarkColor}" TextColor="WhiteSmoke" input:FormView.IsSubmitButton="True"/>
+            <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding Error}" Style="{StaticResource WillowErrorLabelStyle}"></Label>
+        </input:FormView>
+    </VerticalStackLayout>
+</ContentPage>
