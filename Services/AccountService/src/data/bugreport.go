@@ -10,6 +10,7 @@ type BugReport struct {
 	Category    string `json:"category"`
 	Description string `json:"description"`
 	ReportedBy  string `json:"reportedBy"`
+	Timestamp   string `json:"timestamp"`
 }
 
 func (br *BugReport) ToJSON(w io.Writer) error {

@@ -96,6 +96,8 @@ func InitServer(address string) error {
 	postSubrouter.HandleFunc("/chat/group/updatepicture", handlerChat.UpdateGroupPicture)
 	postSubrouter.HandleFunc("/blob/upload", handlerChat.UploadToBlob)
 	postSubrouter.HandleFunc("/metrics/collect", handlerMetrics.CollectInformation)
+	postSubrouter.HandleFunc("/metrics/encryption", handlerMetrics.CollectEncryptionMetrics)
+	postSubrouter.HandleFunc("/metrics/decryption", handlerMetrics.CollectDecryptionMetrics)
 
 	serverLogger.Info("Handlers have been added to the serve mux")
 

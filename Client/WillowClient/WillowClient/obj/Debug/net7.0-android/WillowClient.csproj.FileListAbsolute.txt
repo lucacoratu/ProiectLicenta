@@ -1167,3 +1167,5 @@ D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\2
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\230\jl\files.cache
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\233\jl\files.cache
 D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\lp\235\jl\files.cache
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\no_bugs.png
+D:\ProiectLicenta\Client\WillowClient\WillowClient\obj\Debug\net7.0-android\resizetizer\r\drawable\no_feedbacks.png

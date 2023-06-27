@@ -75,6 +75,9 @@
             <Label FontFamily="{StaticResource ApplicationFont}" HeightRequest="18" Text="Visual preferences" TextTransform="Uppercase" TextColor="WhiteSmoke" HorizontalOptions="Start" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
         </Frame>
         <Grid Margin="10,10,10,0" ColumnDefinitions="*,70,40">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OnlyEnglishSupportedCommand}"/>
+            </Grid.GestureRecognizers>
             <HorizontalStackLayout>
                 <Frame Grid.Column="0" HorizontalOptions="Start" WidthRequest="40" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" CornerRadius="25">
                     <ImageButton WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center">

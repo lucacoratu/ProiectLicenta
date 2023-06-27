@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WillowClient.Views.UserReportedBugsPage"
+             xmlns:viewmodel="clr-namespace:WillowClient.ViewModel"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:fa="clr-namespace:UraniumUI.Icons.FontAwesome;assembly=UraniumUI.Icons.FontAwesome"
+             xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:model="clr-namespace:WillowClient.Model"
+             x:DataType="viewmodel:FeedbackViewModel"
+             Title="UserReportedBugsPage"
+             Loaded="ContentPage_Loaded"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
+    <Grid RowDefinitions="Auto,*">
+        <Border StrokeThickness="0" Grid.Row="0" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,15,15" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
+                <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Submitted bug reports" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
+        </Border>
+        <ActivityIndicator VerticalOptions="Start" HorizontalOptions="Center" Grid.Row="1" Margin="0,-20,0,0" Color="WhiteSmoke" IsRunning="{Binding LoadingBugReports}" IsVisible="{Binding LoadingBugReports}" IsEnabled="{Binding LoadingBugReports}"/>
+        <VerticalStackLayout IsVisible="{Binding HasNoBugReports}" IsEnabled="{Binding HasNoBugReports}" Grid.Row="1" HeightRequest="250" WidthRequest="270" HorizontalOptions="Center" VerticalOptions="Center">
+            <Image IsVisible="{Binding HasNoBugReports}" IsEnabled="{Binding HasNoBugReports}"  Source="no_bugs.png" Aspect="AspectFill" HeightRequest="180" WidthRequest="200" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label  FontFamily="{StaticResource ApplicationFont}" FontSize="16" IsVisible="{Binding HasNoBugReports}" IsEnabled="{Binding HasNoBugReports}" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="You don't have any reported bugs!" TextColor="WhiteSmoke"/>
+        </VerticalStackLayout>
+        <CollectionView Grid.Row="1" Margin="0,20,0,0" ItemsSource="{Binding BugReports}" SelectionMode="None" VerticalScrollBarVisibility="Default">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:BugReportModel">
+                    <Frame CornerRadius="10" Margin="10,5,10,5"  BackgroundColor="#404040">
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" FontSize="15" Grid.Column="0" TextColor="WhiteSmoke" Text="{Binding Category}"/>
+                                <Label FontFamily="{StaticResource ApplicationFont}" FontSize="14" Grid.Column="1" TextColor="WhiteSmoke" HorizontalOptions="End" HorizontalTextAlignment="End" Text="{Binding Timestamp}"/>
+                            </Grid>
+                            <Label FontFamily="{StaticResource ApplicationFont}" FontSize="14" Text="{Binding Description}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

@@ -23,6 +23,7 @@ namespace WillowClient.Model
         public string Status { get; set; }
         public string JoinDate { get; set; }
         public int RoomID { get; set; }
+        public string About { get; set; }
 
         private Color statusBackgroundColor;
         private Color statusStrokeColor;

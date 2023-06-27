@@ -1,0 +1,22 @@
+samsung_Galaxy S8	12	123
+samsung_Galaxy S8	12	49
+samsung_Galaxy S8	12	54
+samsung_Galaxy S8	18	45
+samsung_Galaxy S8	104	58
+samsung_Galaxy S8	1210	175
+samsung_Galaxy S8	2000	48
+samsung_Galaxy S8	6000	69
+samsung_Galaxy S8	8	51
+LENOVO_LUCA	8	34
+LENOVO_LUCA	10	18
+LENOVO_LUCA	160	15
+LENOVO_LUCA	2	21
+samsung_Galaxy S8	64	108
+LENOVO_LUCA	4	31
+samsung_Galaxy S8	10	242
+samsung_Galaxy S8	48	139
+samsung_Galaxy S8	148	94
+samsung_Galaxy S8	12	111
+samsung_Galaxy S8	12	95
+samsung_Galaxy S8	136	118
+samsung_Galaxy S8	316	122

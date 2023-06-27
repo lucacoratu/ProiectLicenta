@@ -95,6 +95,7 @@ func (f *Feedback) GetAllReportCategories(rw http.ResponseWriter, r *http.Reques
 	url, err := f.configuration.GetServiceURL("accountservice")
 	if err != nil {
 		f.logger.Error("Cannot get the account service url from config")
+		http.Error(rw, "Request failed", http.StatusInternalServerError)
 		return
 	}
 
@@ -103,6 +104,28 @@ func (f *Feedback) GetAllReportCategories(rw http.ResponseWriter, r *http.Reques
 		http.Error(rw, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	rw.WriteHeader(http.StatusOK)
+	rw.Write(returnData)
+}
+
+/*
+ * This function will forward the request to the account service in order to get the bug reports of the user
+ */
+func (f *Feedback) GetUserBugReports(rw http.ResponseWriter, r *http.Request) {
+	f.logger.Info("/accounts/{id:[0-9]+}/bugreports hit (GET method)")
+	f.logger.Debug("Forwarding message to Account Service")
+	url, err := f.configuration.GetServiceURL("accountservice")
+	if err != nil {
+		f.logger.Error("Cannot get the account service url from config")
+		return
+	}
+
+	returnData, err := f.ForwardRequest("http", url, r)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	rw.WriteHeader(http.StatusOK)
 	rw.Write(returnData)
 }

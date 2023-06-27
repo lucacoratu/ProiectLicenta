@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
@@ -484,6 +485,7 @@ namespace WillowClient.ViewModel
                                 }
                                 else
                                 {
+                                    Stopwatch stopwatch = Stopwatch.StartNew();
                                     //Decrypt the message from the user
                                     //Check how many message are in this conversation
                                     int numberMessagesInRoom = await this.databaseService.GetNumberMessagesInRoom(this.Friends[i].RoomID);
@@ -537,6 +539,18 @@ namespace WillowClient.ViewModel
                                     }
                                     //Decrypt the message
                                     var messageText = Encryption.Utils.DecryptMessage(privMessageModel.Data, messageKey);
+
+                                    //Stop the stopwatch and send metrics to server
+                                    stopwatch.Stop();
+                                    long elapsedTime = stopwatch.ElapsedMilliseconds;
+                                    string deviceInfo = DeviceInfo.Manufacturer + "_" + DeviceInfo.Name;
+                                    int messageSize = System.Text.ASCIIEncoding.Unicode.GetByteCount(messageText);
+
+                                    EncryptionMetricsModel metricsModel = new EncryptionMetricsModel { deviceInfo = deviceInfo, elapsedMiliseconds = elapsedTime, messageSize = messageSize };
+                                    var res = await chatService.SendDecryptionMetrics(metricsModel);
+                                    if (res == false) {
+                                        await Shell.Current.DisplayAlert("Error", "Could not send decryption metrics!", "Ok");
+                                    }
 
                                     //Save the message in the database
                                     privMessageModel.Data = messageText;
@@ -823,6 +837,9 @@ namespace WillowClient.ViewModel
 
             //Ask the server for newer messages than the last known one
             await foreach (var newMessage in this.chatService.GetMessagesWithIdGreater(friend.RoomID, lastKnownId)) {
+                //Create the stopwatch to measure the time to decrypt the message
+                Stopwatch stopwatch = Stopwatch.StartNew();
+
                 //Decrypt the message and add it to the list of new messages
                 byte[] messageKey = new byte[80];
                 if (lastMessage == null) {
@@ -870,6 +887,18 @@ namespace WillowClient.ViewModel
 
                 //Decrypt the message
                 var messageText = Encryption.Utils.DecryptMessage(newMessage.Data, messageKey);
+
+                //Stop the stopwatch and send metrics to server
+                stopwatch.Stop();
+                long elapsedTime = stopwatch.ElapsedMilliseconds;
+                string deviceInfo = DeviceInfo.Manufacturer + "_" + DeviceInfo.Name;
+                int messageSize = System.Text.ASCIIEncoding.Unicode.GetByteCount(messageText);
+
+                EncryptionMetricsModel metricsModel = new EncryptionMetricsModel { deviceInfo = deviceInfo, elapsedMiliseconds = elapsedTime, messageSize = messageSize };
+                var res = await chatService.SendDecryptionMetrics(metricsModel);
+                if(res == false) {
+                    await Shell.Current.DisplayAlert("Error", "Could not send decryption metrics!", "Ok");
+                }
 
                 //Show the last message
                 if (newMessage.TypeId == 1) {
@@ -997,6 +1026,11 @@ namespace WillowClient.ViewModel
             }
 
             _ = await this.databaseService.UpdateFriendRoomId(friend.FriendId, friend.RoomID);
+        }
+
+        public async Task GetFriendAbout(FriendStatusModel friend) {
+            var userProfile = await this.profileService.GetUserProfile(friend.FriendId, Globals.Session);
+            friend.About = userProfile.About;
         }
 
         [RelayCommand]
@@ -1129,6 +1163,8 @@ namespace WillowClient.ViewModel
                     await this.GetFriendRoomId(friendStatus);
                     //Get the status from the server
                     await this.GetFriendStatus(friendStatus);
+                    //Get the friend profile text message
+                    await this.GetFriendAbout(friendStatus);
                     //Get the new messages for every friend
                     await this.GetFriendNewMessages(friendStatus);
                     //Get the friend profile picture
@@ -1778,7 +1814,12 @@ namespace WillowClient.ViewModel
 
         [RelayCommand]
         async Task GoToSubmitedFeedback() {
-            await Shell.Current.GoToAsync(nameof(SubmitedFeedbackPage), true);
+            await Shell.Current.GoToAsync(nameof(SubmitedFeedbackPage), true, new Dictionary<string, object>
+            {
+                {"account", this.Account },
+                {"hexID", HexID},
+                {"session", Session }
+            });
         }
 
         [RelayCommand]
@@ -2043,6 +2084,13 @@ namespace WillowClient.ViewModel
                     {"numberGroups",  this.Groups.Count},
                     {"session",  this.Session},
                 });
+        }
+
+
+        [RelayCommand]
+        async Task OnlyEnglishSupported() {
+            SnackbarOptions options = new SnackbarOptions { BackgroundColor = Color.FromRgb(0x50, 0x50, 0x50), TextColor = Colors.WhiteSmoke, ActionButtonTextColor = Colors.WhiteSmoke };
+            await Shell.Current.DisplaySnackbar("The only supported language is english!", null, "Ok", TimeSpan.FromSeconds(3.0), options, default);
         }
 
     }

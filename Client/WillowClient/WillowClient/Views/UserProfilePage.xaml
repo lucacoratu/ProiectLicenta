@@ -48,7 +48,7 @@
                 <Frame Grid.Column="0" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                     <VerticalStackLayout Spacing="6" >
                         <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                            <ImageButton Padding="0" WidthRequest="20" HeightRequest="20">
+                            <ImageButton VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Padding="0" WidthRequest="20" HeightRequest="20">
                                 <ImageButton.Source>
                                     <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}" Size="20"/>
                                 </ImageButton.Source>
@@ -60,7 +60,7 @@
                 <Frame Grid.Column="1" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                     <VerticalStackLayout Spacing="6">
                         <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                            <ImageButton Padding="0" WidthRequest="20" HeightRequest="20">
+                            <ImageButton VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Transparent" Padding="0" WidthRequest="30" HeightRequest="30">
                                 <ImageButton.Source>
                                     <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20"/>
                                 </ImageButton.Source>
@@ -108,12 +108,13 @@
                                     WidthRequest="45"
                                     BorderWidth="0"
                                     BorderColor="WhiteSmoke"
+                                    Padding="0"
                                     CornerRadius="60"
                                     BackgroundColor="#505050"/>
-                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <VerticalStackLayout Spacing="0" Grid.Column="1" VerticalOptions="Center">
                                     <Label Text="{Binding GroupName}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="14" FontAttributes="Bold"/>
                                     <Label Text="{Binding ParticipantsText}" FontFamily="{StaticResource ApplicationFont}" TextColor="WhiteSmoke" FontSize="12"/>
-                                    <Line Margin="0,3,0,0" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke" Opacity="0.4" HeightRequest="1"/>
+                                    <Line Margin="{OnPlatform WinUI='0,0,0,0', Android='0,3,0,0'}" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke" Opacity="0.4" HeightRequest="1"/>
                                 </VerticalStackLayout>
                             </Grid>
                         </DataTemplate>

@@ -18,13 +18,22 @@
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                <!--<ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
                     <ImageButton.Source>
                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
                     </ImageButton.Source>
-                </ImageButton>
+                </ImageButton>-->
+                <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
                 <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Information" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
+        <Grid Grid.Row="1" RowDefinitions="Auto, Auto" BackgroundColor="Transparent">
+            <Frame Grid.Row="0" Margin="10,10,10,0" BackgroundColor="#404040" CornerRadius="15">
+                <Label Text="This application was made by Corățu Luca, student in the final year at Military Technical Academy ''Ferdinand I'' as the bachelor coding project. "/>
+            </Frame>
+            <Frame Grid.Row="1" Margin="10,10,10,0" BackgroundColor="#404040" CornerRadius="15">
+                <Label Text="It is using Websocket to implement the real-time chat and WebRTC in order to make the audio and video calls"/>
+            </Frame>
+        </Grid>
     </Grid>
 </ContentPage>

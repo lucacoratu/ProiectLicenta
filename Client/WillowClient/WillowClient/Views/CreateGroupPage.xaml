@@ -50,16 +50,16 @@
         </Border>
         <VerticalStackLayout Grid.Row="1" Padding="12">
             <!--<Label Text="Choose a name for the group"/>-->
-            <Grid RowDefinitions="*" ColumnDefinitions="50,*" HorizontalOptions="Start" ColumnSpacing="20">
+            <Grid RowDefinitions="*" ColumnDefinitions="0,*" HorizontalOptions="Start" ColumnSpacing="50">
                 <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <ImageButton x:Name="groupPicture" Clicked="groupPicture_Clicked" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Aspect="AspectFill" Source="add_picture.png"/>
-                    <ImageButton CornerRadius="14" Clicked="groupPicture_Clicked" Source="plus_group.png" Aspect="AspectFill" WidthRequest="20" HeightRequest="20" BackgroundColor="#505050" HorizontalOptions="End" Margin="0,-15,0,0"></ImageButton>
+                    <ImageButton IsVisible="False" IsEnabled="False" x:Name="groupPicture" Clicked="groupPicture_Clicked" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Aspect="AspectFill" Source="add_picture.png"/>
+                    <ImageButton IsVisible="False" IsEnabled="False" CornerRadius="14" Clicked="groupPicture_Clicked" Source="plus_group.png" Aspect="AspectFill" WidthRequest="20" HeightRequest="20" BackgroundColor="#505050" HorizontalOptions="End" Margin="0,-15,0,0"></ImageButton>
                 </VerticalStackLayout>
                 <!--<Entry FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Placeholder="Insert the group name" Text="{Binding GroupName}" WidthRequest="240"/>-->
-                <input:FormView Grid.Column="1" WidthRequest="240">
+                <input:FormView HorizontalOptions="Center" Grid.Column="1" WidthRequest="240">
                     <material:TextField x:Name="groupNameTextField" Text="{Binding GroupName}" FontFamily="{StaticResource ApplicationFont}" Title="Insert Group Name" Icon="{FontImageSource FontFamily=FASolid, Glyph={x:Static fa:Solid.UserGroup}}" AccentColor="{StaticResource AccentSecondDarkColor}" AllowClear="True" >
                         <!--<validation:RequiredValidation/>-->
                     </material:TextField>
@@ -92,7 +92,7 @@
                                 <Grid ColumnDefinitions="*">
                                     <VerticalStackLayout VerticalOptions="Center" Spacing="0">
                                         <Label FontFamily="{StaticResource ApplicationFont}" FontAttributes="Bold" Text="{Binding DisplayName}" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
-                                        <Label FontFamily="{StaticResource ApplicationFont}" Text="Status text" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
+                                        <Label FontFamily="{StaticResource ApplicationFont}" Text="{Binding About}" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke"/>
                                         <!--<Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" BackgroundColor="#606060" Opacity="0.9" HeightRequest="1"/>-->
                                     </VerticalStackLayout>
                                 </Grid>

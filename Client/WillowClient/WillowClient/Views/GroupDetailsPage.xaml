@@ -53,7 +53,7 @@
                     <Frame Grid.Column="0" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                         <VerticalStackLayout Spacing="6" >
                             <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                                <ImageButton WidthRequest="24" HeightRequest="24">
+                                <ImageButton Padding="0" BackgroundColor="Transparent" WidthRequest="24" HeightRequest="24">
                                     <ImageButton.Source>
                                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.MicrophoneLines}" Size="20"/>
                                     </ImageButton.Source>
@@ -65,7 +65,7 @@
                     <Frame Grid.Column="1" BackgroundColor="#414141" CornerRadius="20" Padding="0,10,0,10">
                         <VerticalStackLayout Spacing="6">
                             <Frame Padding="0" BackgroundColor="Transparent" WidthRequest="30" HeightRequest="30" CornerRadius="15">
-                                <ImageButton WidthRequest="20" HeightRequest="20">
+                                <ImageButton Padding="0" BackgroundColor="Transparent" WidthRequest="20" HeightRequest="20">
                                     <ImageButton.Source>
                                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Camera}" Size="20"/>
                                     </ImageButton.Source>
@@ -80,9 +80,12 @@
                 <Label FontFamily="{StaticResource ApplicationFont}" Text="Participants" FontSize="18" FontAttributes="Bold"/>
             </HorizontalStackLayout>
             <Frame BackgroundColor="#414141" Margin="10,5,10,2" Padding="5,10,5,10" CornerRadius="20">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NotImplementedCommand}"/>
+                </Frame.GestureRecognizers>
                 <HorizontalStackLayout Spacing="10" Padding="10,0,10,0">
                     <Frame Padding="0" BackgroundColor="#505050" WidthRequest="32" HeightRequest="32" CornerRadius="15">
-                        <ImageButton Background="#505050" CornerRadius="20" WidthRequest="20" HeightRequest="20">
+                        <ImageButton Padding="0" Background="#505050" CornerRadius="20" WidthRequest="20" HeightRequest="20">
                             <ImageButton.Source>
                                 <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Plus}" Size="20"/>
                             </ImageButton.Source>
@@ -124,9 +127,9 @@
                 </CollectionView>
             </Frame>
             <Grid Margin="10" Padding="5,10,5,10" ColumnDefinitions="*,*" ColumnSpacing="30">
-                <Button Grid.Column="0" Text="Exit group" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}"/>
-                    <Button Grid.Column="1" Text="Delete group" TextColor="WhiteSmoke" BackgroundColor="Red" IsEnabled="{Binding IsGroupOwner}" IsVisible="{Binding IsGroupOwner}"/>
-                </Grid>
+                <Button Grid.Column="0" Text="Exit group" TextColor="WhiteSmoke" BackgroundColor="{StaticResource AccentDarkColor}" Command="{Binding NotImplementedCommand}"/>
+                <Button Grid.Column="1" Text="Delete group" TextColor="WhiteSmoke" BackgroundColor="Red" IsEnabled="{Binding IsGroupOwner}" IsVisible="{Binding IsGroupOwner}" Command="{Binding NotImplementedCommand}"/>
+            </Grid>
         </VerticalStackLayout>
     </VerticalStackLayout>
     </ScrollView>

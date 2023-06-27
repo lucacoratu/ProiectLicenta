@@ -20,3 +20,19 @@ func (profInfo *ProfilingInformation) FromJSON(r io.Reader) error {
 	d := json.NewDecoder(r)
 	return d.Decode(profInfo)
 }
+
+type EncryptionProfiling struct {
+	DeviceInfo         string `json:"deviceInfo"`
+	ElapsedMiliseconds int64  `json:"elapsedMiliseconds"`
+	MessageSize        int64  `json:"messageSize"`
+}
+
+func (encProf *EncryptionProfiling) ToJSON(w io.Writer) error {
+	e := json.NewEncoder(w)
+	return e.Encode(encProf)
+}
+
+func (encProf *EncryptionProfiling) FromJSON(r io.Reader) error {
+	d := json.NewDecoder(r)
+	return d.Decode(encProf)
+}

@@ -350,6 +350,26 @@ namespace WillowClient.Services
             return null;
         }
 
+        public async Task<bool> SendEncryptionMetrics(EncryptionMetricsModel model) {
+            var url = Constants.chatServerUrl + "metrics/encryption";
+            var baseAddress = new Uri(url);
+            var response = await this.m_httpClient.PostAsync(baseAddress, JsonContent.Create(model));
+            if (response.IsSuccessStatusCode) {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> SendDecryptionMetrics(EncryptionMetricsModel model) {
+            var url = Constants.chatServerUrl + "metrics/decryption";
+            var baseAddress = new Uri(url);
+            var response = await this.m_httpClient.PostAsync(baseAddress, JsonContent.Create(model));
+            if (response.IsSuccessStatusCode) {
+                return true;
+            }
+            return false;
+        }
+
         public bool IsConnectedToWebsocket() {
             if(client.State == WebSocketState.Open) 
                 return true;

@@ -18,13 +18,18 @@
                 <RoundRectangle CornerRadius="0,0,15,15" />
             </Border.StrokeShape>
             <Grid ColumnDefinitions="*,*,*,*" HeightRequest="40" BackgroundColor="{StaticResource AccentDarkColor}" >
-                <ImageButton Grid.Column="0" Margin="20,0,10,0" WidthRequest="20" HeightRequest="20" BorderColor="Transparent" HorizontalOptions="Start" Command="{Binding GoBackCommand}">
+                <ImageButton BorderColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="Start" Source="back.png" Command="{Binding GoBackCommand}" BackgroundColor="Transparent" Margin="10,0,10,0"/>
+                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Submited feedback" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <ImageButton Grid.Column="3" Margin="0,0,10,0" BorderColor="Transparent" BackgroundColor="Transparent" HeightRequest="24" WidthRequest="24" Aspect="AspectFill" HorizontalOptions="End" Command="{Binding GoToSubmittedBugReportsCommand}">
                     <ImageButton.Source>
-                        <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.ArrowLeft}" Color="WhiteSmoke"/>
+                        <FontImageSource Size="20" Color="WhiteSmoke" FontFamily="FASolid" Glyph="{x:Static fa:Solid.Bug}"/>
                     </ImageButton.Source>
                 </ImageButton>
-                <Label FontFamily="{StaticResource ApplicationFont}" Grid.Column="1" Grid.ColumnSpan="2" Text="Submited feedback" FontSize="15" TextColor="WhiteSmoke" FontAttributes="Bold" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             </Grid>
         </Border>
+        <VerticalStackLayout IsVisible="{Binding HasNoSubmittedFeedback}" IsEnabled="{Binding HasNoSubmittedFeedback}" Grid.Row="1" HeightRequest="250" WidthRequest="270" HorizontalOptions="Center" VerticalOptions="Center">
+            <Image IsVisible="{Binding HasNoSubmittedFeedback}" IsEnabled="{Binding HasNoSubmittedFeedback}"  Source="no_feedbacks.png" Aspect="AspectFill" HeightRequest="160" WidthRequest="160" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label FontFamily="{StaticResource ApplicationFont}" FontSize="16" IsVisible="{Binding HasNoSubmittedFeedback}" IsEnabled="{Binding HasNoSubmittedFeedback}" HorizontalOptions="Center" HorizontalTextAlignment="Center" Text="You don't have any submitted feedbacks!" TextColor="WhiteSmoke"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

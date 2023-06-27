@@ -9,4 +9,9 @@ public partial class NewFeedbackPage : ContentPage
 		InitializeComponent();
 		BindingContext = vm;
 	}
+
+    private void ContentPage_Loaded(object sender, EventArgs e) {
+		//FeedbackViewModel viewModel = BindingContext as FeedbackViewModel;
+		//viewModel.PopulateFeedbackQuestions();
+    }
 }

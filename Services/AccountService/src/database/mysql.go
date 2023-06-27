@@ -564,6 +564,35 @@ func (conn *Connection) GetAllBugReports() (data.BugReports, error) {
 }
 
 /*
+ * This function will get the bug reports of a specific user
+ */
+func (conn *Connection) GetUserBugReports(userId int64) (data.BugReports, error) {
+	//Prepare the select statement to get all the bug reports
+	sqlStmt, err := conn.db.Prepare("SELECT bugreports.Id, bugreportcategories.Name, bugreports.Description, accounts.DisplayName, bugreports.Timestamp FROM bugreports INNER JOIN bugreportcategories ON bugreportcategories.ID = bugreports.CategoryId INNER JOIN accounts ON accounts.ID = bugreports.ReportedBy where bugreports.ReportedBy = ?")
+	//Check if an error occured when preparing the select statement
+	if err != nil {
+		conn.l.Error("Error occured when preparing the select statement for getting the bug reports", err.Error())
+		return make(data.BugReports, 0), nil
+	}
+	//Execute the select statement
+	rows, err := sqlStmt.Query(userId)
+	//Check if an error occured
+	if err != nil {
+		conn.l.Error("Error occured when executing the statement for getting the bug reports", err.Error())
+		return nil, err
+	}
+	//Get all the categories into an array
+	returnArr := make(data.BugReports, 0)
+	for rows.Next() {
+		var bugReport data.BugReport
+		_ = rows.Scan(&bugReport.ID, &bugReport.Category, &bugReport.Description, &bugReport.ReportedBy, &bugReport.Timestamp)
+		returnArr = append(returnArr, bugReport)
+	}
+	//Return the data
+	return returnArr, nil
+}
+
+/*
  * This function will update the profile picture URL to the new value after the file has been uploaded on the server
  */
 func (conn *Connection) UpdateProfilePictureURL(accountId int64, url string) error {

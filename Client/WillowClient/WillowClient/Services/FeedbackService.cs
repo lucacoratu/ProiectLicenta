@@ -52,5 +52,17 @@ namespace WillowClient.Services
             }
             return categories;
         }
+
+        public async Task<List<BugReportModel>> GetUserBugReports(int accountId, string session) {
+            var url = Constants.serverURL + "/accounts/" + accountId.ToString() + "/bugreports";
+            var baseAddress = new Uri(url);
+            this.m_CookieContainer.Add(baseAddress, new Cookie("session", session));
+            var res = await this.m_httpClient.GetAsync(baseAddress);
+            List<BugReportModel> bugReports = new List<BugReportModel>();
+            if(res.StatusCode == HttpStatusCode.OK) {
+                bugReports = await res.Content.ReadFromJsonAsync<List<BugReportModel>>();
+            }
+            return bugReports;
+        }
     }
 }

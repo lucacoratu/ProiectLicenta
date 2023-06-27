@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -152,5 +154,10 @@ namespace WillowClient.ViewModel {
             await Shell.Current.Navigation.PopAsync(true);
         }
 
+        [RelayCommand]
+        async Task NotImplemented() {
+            SnackbarOptions options = new SnackbarOptions { BackgroundColor = Color.FromRgb(0x50, 0x50, 0x50), TextColor = Colors.WhiteSmoke, ActionButtonTextColor = Colors.WhiteSmoke };
+            await Shell.Current.DisplaySnackbar("This feature is not implemented yet!", null, "Ok", TimeSpan.FromSeconds(3.0), options, default);
+        }
     }
 }

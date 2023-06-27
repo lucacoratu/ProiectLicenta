@@ -23,6 +23,8 @@ obj\Debug\net7.0-android\resizetizer\r\drawable\login_username.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\map.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\microphone.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\notdownloaded.jpg
+obj\Debug\net7.0-android\resizetizer\r\drawable\no_bugs.png
+obj\Debug\net7.0-android\resizetizer\r\drawable\no_feedbacks.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\no_friends.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\no_groups.png
 obj\Debug\net7.0-android\resizetizer\r\drawable\open_menu.png

@@ -38,10 +38,10 @@ def plot_measurements(categorized: dict) -> None:
             plt.figure()
             plt.axes()
             plt.xlabel("Measurement")
-            plt.ylabel("FrameRate")
+            plt.ylabel("Frame Rate (Frames / sec)")
             listLegend = ['Local']
             for index in range(1, numberParticipants):
-                listLegend.append(f'Remote {index}')
+                listLegend.append(f'Remote')
             plt.title(f'{device} - {numberParticipants} participants')
             for row in np.transpose(values):
                 plt.plot(row)

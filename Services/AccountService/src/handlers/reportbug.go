@@ -2,9 +2,12 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 	"willow/accountservice/data"
 	"willow/accountservice/database"
 	"willow/accountservice/logging"
+
+	"github.com/gorilla/mux"
 )
 
 type ReportBug struct {
@@ -39,6 +42,7 @@ func (report *ReportBug) AddBugReport(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	report.logger.Debug("Insert of the bug report succeded!")
 	rw.WriteHeader(http.StatusOK)
 	rw.Write([]byte("Insert of report succeded"))
 }
@@ -75,6 +79,31 @@ func (report *ReportBug) GetAllBugReports(rw http.ResponseWriter, r *http.Reques
 	if err != nil {
 		rw.WriteHeader(http.StatusInternalServerError)
 		rw.Write([]byte(err.Error()))
+		return
+	}
+
+	rw.WriteHeader(http.StatusOK)
+	bugReports.ToJSON(rw)
+}
+
+/*
+ * This function will get all the bug reports of a specific user
+ */
+func (report *ReportBug) GetUserBugReports(rw http.ResponseWriter, r *http.Request) {
+	report.logger.Info("Endpoint /accounts/{id:[0-9]+}/bugreports hit (GET method)")
+	vars := mux.Vars(r)
+	report.logger.Debug("Id received is", vars["id"])
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Cannot parse the id of the user"))
+		return
+	}
+
+	bugReports, err := report.dbConn.GetUserBugReports(int64(id))
+	if err != nil {
+		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("Cannot get data from the database"))
 		return
 	}
 

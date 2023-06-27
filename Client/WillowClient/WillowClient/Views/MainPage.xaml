@@ -15,7 +15,7 @@
              Loaded="PageLoaded"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageLightBackgroundColor}, Dark={StaticResource PageDarkBackgroundColor}}">
 
-    <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="225,*,*,*,225">
+    <Grid IgnoreSafeArea="{OnPlatform Android=False, iOS=True}" ColumnDefinitions="230,*,*,*,230">
         <Grid Grid.Column="0" RowDefinitions="30,*">
             <Label FontFamily="{StaticResource ApplicationFont}" Grid.Row="0" Text="Groups" FontSize="20" FontAttributes="Bold" BackgroundColor="#7B68EE" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"></Label>
             <CollectionView Grid.Row="1" Margin="0,0,5,0" ItemsSource="{Binding Groups}" SelectionMode="None" VerticalScrollBarVisibility="Never">
@@ -39,8 +39,8 @@
                             </toolkit:AvatarView>
                             <VerticalStackLayout VerticalOptions="Center" Grid.Column="1">
                                 <Grid ColumnDefinitions="*,50">
-                                    <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding GroupName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" MaxLines="1" LineBreakMode="TailTruncation" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
-                                    <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessageTimestamp}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="End" HorizontalOptions="End" TextColor="WhiteSmoke" FontSize="12" FontAutoScalingEnabled="True"/>
+                                    <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding GroupName}" VerticalOptions="Center" VerticalTextAlignment="Center" TextColor="WhiteSmoke" FontSize="15" MaxLines="1" LineBreakMode="TailTruncation" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessageTimestamp}" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="End" HorizontalOptions="End" TextColor="WhiteSmoke" MaxLines="1" LineBreakMode="TailTruncation" FontSize="12" FontAutoScalingEnabled="True"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="*,20">
                                     <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="13" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>
@@ -159,7 +159,7 @@
                                         />
                                     <Grid RowDefinitions="20,20" ColumnDefinitions="10,*">
                                         <Label Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke"/>
-                                        <Label Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="Status text"/>
+                                        <Label Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding About}"/>
                                         <Border Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" BackgroundColor="{Binding StatusBackgroundColor}" WidthRequest="16" HeightRequest="16" StrokeThickness="1.1" Stroke="{Binding StatusStrokeColor}" Margin="-20,5,0,0">
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="10,10,10,10"/>
@@ -212,7 +212,7 @@
                             <VerticalStackLayout Grid.Column="1">
                                 <Grid ColumnDefinitions="*,55">
                                     <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding DisplayName}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="15" FontAutoScalingEnabled="True" FontAttributes="Bold"/>
-                                    <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessageTimestamp}" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End" TextColor="WhiteSmoke" FontSize="12" FontAutoScalingEnabled="True"/>
+                                    <Label Grid.Column="1" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessageTimestamp}" MaxLines="1" LineBreakMode="TailTruncation" VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End" TextColor="WhiteSmoke" FontSize="12" FontAutoScalingEnabled="True"/>
                                 </Grid>
                                 <Grid ColumnDefinitions="*,20">
                                     <Label Grid.Column="0" FontFamily="{StaticResource ApplicationFont}" Text="{Binding LastMessage}" VerticalOptions="Center" TextColor="WhiteSmoke" FontSize="13" FontAutoScalingEnabled="True" LineBreakMode="WordWrap" MaxLines="2"/>

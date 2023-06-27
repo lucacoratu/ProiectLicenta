@@ -130,6 +130,8 @@ func InitServer(address string) error {
 	getRouter.HandleFunc("/account/{id:[0-9]+}/friendrecommendations", handlerFriendRequests.GetFriendsRecommendations)
 	//Add the function to get the groups with room id greater than one specified
 	getRouter.HandleFunc("/chat/groups/{id:[0-9]+}/{lastGroupId:[0-9]+}", handlerChat.GetGroupsWithId)
+	//Add the function to get the bug reports of a user
+	getRouter.HandleFunc("/accounts/{id:[0-9]+}/bugreports", handlerFeedback.GetUserBugReports)
 
 	getRouter.Use(handlerAuth.ValidateSessionCookie)
 

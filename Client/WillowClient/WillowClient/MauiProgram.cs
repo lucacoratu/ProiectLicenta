@@ -84,7 +84,8 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<FeedbackViewModel>();
 		builder.Services.AddSingleton<FeedbackService>();
-		builder.Services.AddSingleton<ReportABugPage>();
+		builder.Services.AddTransient<ReportABugPage>();
+		builder.Services.AddTransient<UserReportedBugsPage>();
 		builder.Services.AddSingleton<InformationPage>();
 		builder.Services.AddSingleton<InformationViewModel>();
 		builder.Services.AddSingleton<SubmitedFeedbackPage>();
@@ -96,8 +97,8 @@ public static class MauiProgram
         builder.Services.AddTransient<EditProfilePage>();
 		builder.Services.AddTransient<EditStatusPage>();
 
-		builder.Services.AddTransient<DesktopSettingsPage>();
-		builder.Services.AddTransient<SettingsViewModel>();
+		builder.Services.AddSingleton<DesktopSettingsPage>();
+		builder.Services.AddSingleton<SettingsViewModel>();
 
 		builder.Services.AddTransient<UserProfilePage>();
 		builder.Services.AddTransient<UserProfileViewModel>();

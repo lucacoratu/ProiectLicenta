@@ -19,7 +19,12 @@
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor"
@@ -54,9 +59,9 @@
                 <CollectionView ItemsSource="{Binding StatusModels}" SelectionChanged="CollectionView_SelectionChanged" SelectionMode="Single">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:DefaultStatusModel">
-                            <Grid Margin="0,5,0,5" RowDefinitions="*,3" ColumnDefinitions="*,Auto" RowSpacing="4">
+                            <Grid Padding="10,0,10,0" Margin="0,5,0,5" RowDefinitions="*,3" ColumnDefinitions="*,Auto" RowSpacing="4">
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Text}" TextColor="WhiteSmoke" FontSize="16"/>
-                                <ImageButton Grid.Row="0" Grid.Column="1" IsVisible="{Binding IsSelected}" IsEnabled="{Binding IsSelected}">
+                                <ImageButton BackgroundColor="Transparent" Grid.Row="0" Grid.Column="1" IsVisible="{Binding IsSelected}" IsEnabled="{Binding IsSelected}">
                                     <ImageButton.Source>
                                         <FontImageSource FontFamily="FASolid" Glyph="{x:Static fa:Solid.Check}" Color="{StaticResource AccentSecondDarkColor}" Size="20"/>
                                     </ImageButton.Source>

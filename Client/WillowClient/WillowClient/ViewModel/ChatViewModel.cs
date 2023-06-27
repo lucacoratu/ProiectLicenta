@@ -24,6 +24,7 @@ using System.Security.Cryptography;
 using Microsoft.Maui.Storage;
 using System.Reflection.Metadata;
 using CommunityToolkit.Maui.Views;
+using System.Diagnostics;
 
 namespace WillowClient.ViewModel
 {
@@ -261,7 +262,7 @@ namespace WillowClient.ViewModel
                 return;
             }
 
-            if(hours >= 1.0) {
+            if (hours >= 1.0 && hours < 24.0) {
                 this.Friend.LastOnline = $"{(int)hours} hours ago";
                 //Update the period of the callback if it was not previously updated
                 if (this.updateLastOnlineTimestampPeriod == 1000) {
@@ -1232,12 +1233,18 @@ namespace WillowClient.ViewModel
             if (this.MessageText == "")
                 return;
 
+            if (this.MessageText.Length > 3000)
+                return;
+
             NetworkAccess accessType = Connectivity.Current.NetworkAccess;
             if (accessType != NetworkAccess.Internet)
                 return;
 
             if (!this.chatService.IsConnectedToWebsocket())
                 return;
+
+            //Create the stopwatch to measure the time it took to encrypt the message
+            Stopwatch stopwatch = Stopwatch.StartNew();
 
             //If this is the first message in the conversation then generate ephemeral key
             //Then generate the master secret
@@ -1306,11 +1313,27 @@ namespace WillowClient.ViewModel
             //Encrypt the data
             var encryptedMessageData = Encryption.Utils.EncryptMessage(this.MessageText, messageKey);
 
+            //Stop the stopwatch and compute the time it took to encrypt the message
+            stopwatch.Stop();
+            long elapsedTime = stopwatch.ElapsedMilliseconds;
+
             //Create the structure that will hold the data which will be json encoded and sent to the server
             SendPrivateMessageModel sendMessageModel = new SendPrivateMessageModel { roomId = this.roomId, data = encryptedMessageData, messageType = "Text", ephemeralPublicKey = ephemeralPublic, identityPublicKey = Globals.identityKey.ExportSubjectPublicKeyInfoPem()};
 
             string jsonMessage = JsonSerializer.Serialize(sendMessageModel);
+
+            
             await chatService.SendMessageAsync(jsonMessage);
+
+            //Send metrics to chat service
+            string deviceInfo = DeviceInfo.Manufacturer + "_" + DeviceInfo.Name;
+            int messageSize = System.Text.ASCIIEncoding.Unicode.GetByteCount(this.MessageText);
+            EncryptionMetricsModel metricsModel = new EncryptionMetricsModel { deviceInfo = deviceInfo, elapsedMiliseconds = elapsedTime, messageSize = messageSize };
+
+            var res = await chatService.SendEncryptionMetrics(metricsModel);
+            if(res == false) {
+                await Shell.Current.DisplayAlert("Error", "Could not send encryption metrics", "Ok");
+            }
 
             //this.Messages.Add(new MessageModel { Owner = MessageOwner.CurrentUser, Text = this.MessageText, TimeStamp = DateTime.Now.ToString("HH:mm") });
             //Clear the entry text
